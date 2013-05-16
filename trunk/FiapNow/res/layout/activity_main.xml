@@ -1,0 +1,51 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+	
+    <TextView
+        android:id="@+id/qtdPassageiros"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="120dp"
+        android:text="@string/qtdTotalPassageiros" 
+        />
+    
+    <Button
+        android:id="@+id/adicao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/qtdPassageiros"
+        android:layout_below="@+id/qtdPassageiros"
+        android:layout_marginTop="119dp"
+        android:text="@string/somar" 
+        android:onClick="somar"/>
+
+    <Button
+        android:id="@+id/subtrair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/adicao"
+        android:layout_alignBottom="@+id/adicao"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@+id/adicao"
+        android:text="@string/diminuir" 
+        android:onClick="diminuir"/>
+
+    <Button
+        android:id="@+id/confirmarPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adicao"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@+id/adicao"
+        android:text="@string/confirmarPassageiros" 
+        android:onClick="confirmar"/>
+
+    
+</RelativeLayout>

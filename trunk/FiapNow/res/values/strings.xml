@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FiapNow</string>
+    <string name="qtdTotalPassageiros">0</string>
+    <string name="menu_settings">Settings</string>
+    <string name="somar">+</string>
+    <string name="diminuir">-</string>
+    <string name="confirmarPassageiros">Confirmar</string>
+    <string name="fl_pequena">Pequena</string>
+    <string name="fl_media">Média</string>
+    <string name="fl_grande">Grande</string>
+    <string name="title_activity_fila">FilaActivity</string>
+    
+
+</resources>
