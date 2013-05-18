@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from EstoqueBOService WSDL service -->
+
+  <service name="EstoqueBO" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://BO.nac20.fiap.com"/>
+      <parameter name="wsdlServiceElement" value="EstoqueBOService"/>
+      <parameter name="schemaQualified" value="http://TO.nac20.fiap.com,http://BO.nac20.fiap.com"/>
+      <parameter name="wsdlServicePort" value="EstoqueBO"/>
+      <parameter name="className" value="com.fiap.nac20.BO.EstoqueBO"/>
+      <parameter name="wsdlPortType" value="EstoqueBO"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" xmlns:retNS="http://BO.nac20.fiap.com" xmlns:rtns="http://TO.nac20.fiap.com" name="consultarProduto" qname="operNS:consultarProduto" returnQName="retNS:consultarProdutoReturn" returnType="rtns:ProdutoTO" soapAction="">
+        <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:codProduto" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" name="adicionarProduto" qname="operNS:adicionarProduto" soapAction="">
+        <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://TO.nac20.fiap.com" qname="pns:produtoTO" type="tns:ProdutoTO"/>
+      </operation>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" xmlns:retNS="http://BO.nac20.fiap.com" xmlns:rtns="http://TO.nac20.fiap.com" name="listarProdutos" qname="operNS:listarProdutos" returnQName="retNS:listarProdutosReturn" returnType="rtns:ProdutoTO" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" name="removerProduto" qname="operNS:removerProduto" soapAction="">
+        <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://TO.nac20.fiap.com" qname="pns:produtoTO" type="tns:ProdutoTO"/>
+      </operation>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" xmlns:retNS="http://BO.nac20.fiap.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="buscarTodasDescricoesProdutos" qname="operNS:buscarTodasDescricoesProdutos" returnQName="retNS:buscarTodasDescricoesProdutosReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:descricao" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="consultarProduto buscarTodasDescricoesProdutos listarProdutos adicionarProduto removerProduto"/>
+
+      <typeMapping xmlns:ns="http://TO.nac20.fiap.com" qname="ns:ProdutoTO" type="java:com.fiap.nac20.TO.ProdutoTO" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

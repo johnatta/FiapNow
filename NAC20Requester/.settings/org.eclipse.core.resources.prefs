@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/com/fiap/nac20/BO/EstoqueBO.java=UTF-8
+encoding//src/com/fiap/nac20/BO/EstoqueBOService.java=UTF-8
+encoding//src/com/fiap/nac20/BO/EstoqueBOServiceLocator.java=UTF-8
+encoding//src/com/fiap/nac20/BO/EstoqueBOSoapBindingStub.java=UTF-8
+encoding//src/com/fiap/nac20/TO/ProdutoTO.java=UTF-8

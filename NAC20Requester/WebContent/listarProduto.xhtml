@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:form>
+	<h:messages></h:messages>
+	<h:commandButton value="Listar Produtos" action="#{produtoMB.listarProduto}"></h:commandButton>
+	
+	<h:dataTable value="#{produtoMB.produtos}" var="lista" border="1" style="width: 340px; ">
+		<h:outputText value="#{lista.codProd}"></h:outputText>
+		<h:outputText value="#{lista.descricao}"></h:outputText>
+		<h:outputText value="#{lista.preco}"></h:outputText>
+		<h:outputText value="#{lista.quantidade}"></h:outputText>
+		<h:outputText value="#{lista.campanhaPromocional}"></h:outputText>
+		<h:outputText value="#{produtoMB.totalProdutos}"></h:outputText>
+	</h:dataTable>
+</h:form>
+
+</html>

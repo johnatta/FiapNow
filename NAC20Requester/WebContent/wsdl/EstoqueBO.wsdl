@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://BO.nac20.fiap.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://BO.nac20.fiap.com" xmlns:intf="http://BO.nac20.fiap.com" xmlns:tns1="http://TO.nac20.fiap.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://BO.nac20.fiap.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://TO.nac20.fiap.com"/>
+   <element name="consultarProduto">
+    <complexType>
+     <sequence>
+      <element name="codProduto" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultarProdutoResponse">
+    <complexType>
+     <sequence>
+      <element name="consultarProdutoReturn" type="tns1:ProdutoTO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="adicionarProduto">
+    <complexType>
+     <sequence>
+      <element name="produtoTO" type="tns1:ProdutoTO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="adicionarProdutoResponse">
+    <complexType/>
+   </element>
+   <element name="listarProdutos">
+    <complexType/>
+   </element>
+   <element name="listarProdutosResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="listarProdutosReturn" type="tns1:ProdutoTO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removerProduto">
+    <complexType>
+     <sequence>
+      <element name="produtoTO" type="tns1:ProdutoTO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="removerProdutoResponse">
+    <complexType/>
+   </element>
+   <element name="buscarTodasDescricoesProdutos">
+    <complexType>
+     <sequence>
+      <element name="descricao" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="buscarTodasDescricoesProdutosResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="buscarTodasDescricoesProdutosReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://TO.nac20.fiap.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="ProdutoTO">
+    <sequence>
+     <element name="campanhaPromocional" nillable="true" type="xsd:string"/>
+     <element name="codProduto" type="xsd:int"/>
+     <element name="descricao" nillable="true" type="xsd:string"/>
+     <element name="preco" type="xsd:double"/>
+     <element name="quantidade" type="xsd:int"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="removerProdutoResponse">
+
+      <wsdl:part element="impl:removerProdutoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listarProdutosRequest">
+
+      <wsdl:part element="impl:listarProdutos" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="consultarProdutoRequest">
+
+      <wsdl:part element="impl:consultarProduto" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="removerProdutoRequest">
+
+      <wsdl:part element="impl:removerProduto" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="listarProdutosResponse">
+
+      <wsdl:part element="impl:listarProdutosResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="adicionarProdutoResponse">
+
+      <wsdl:part element="impl:adicionarProdutoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="adicionarProdutoRequest">
+
+      <wsdl:part element="impl:adicionarProduto" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="buscarTodasDescricoesProdutosRequest">
+
+      <wsdl:part element="impl:buscarTodasDescricoesProdutos" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="buscarTodasDescricoesProdutosResponse">
+
+      <wsdl:part element="impl:buscarTodasDescricoesProdutosResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="consultarProdutoResponse">
+
+      <wsdl:part element="impl:consultarProdutoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="EstoqueBO">
+
+      <wsdl:operation name="consultarProduto">
+
+         <wsdl:input message="impl:consultarProdutoRequest" name="consultarProdutoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:consultarProdutoResponse" name="consultarProdutoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="adicionarProduto">
+
+         <wsdl:input message="impl:adicionarProdutoRequest" name="adicionarProdutoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:adicionarProdutoResponse" name="adicionarProdutoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listarProdutos">
+
+         <wsdl:input message="impl:listarProdutosRequest" name="listarProdutosRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:listarProdutosResponse" name="listarProdutosResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removerProduto">
+
+         <wsdl:input message="impl:removerProdutoRequest" name="removerProdutoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:removerProdutoResponse" name="removerProdutoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="buscarTodasDescricoesProdutos">
+
+         <wsdl:input message="impl:buscarTodasDescricoesProdutosRequest" name="buscarTodasDescricoesProdutosRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:buscarTodasDescricoesProdutosResponse" name="buscarTodasDescricoesProdutosResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="EstoqueBOSoapBinding" type="impl:EstoqueBO">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="consultarProduto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultarProdutoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultarProdutoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="adicionarProduto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="adicionarProdutoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="adicionarProdutoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="listarProdutos">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="listarProdutosRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="listarProdutosResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="removerProduto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="removerProdutoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="removerProdutoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="buscarTodasDescricoesProdutos">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="buscarTodasDescricoesProdutosRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="buscarTodasDescricoesProdutosResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="EstoqueBOService">
+
+      <wsdl:port binding="impl:EstoqueBOSoapBinding" name="EstoqueBO">
+
+         <wsdlsoap:address location="http://localhost:8080/Nac20/services/EstoqueBO"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:form>
+	<h:messages></h:messages>
+	<h:panelGrid border="1" columns="4" style="width: 746px; "> 
+		<h:outputText value="Descrição do produto"></h:outputText>
+		<h:outputText value="Preço Unitário"></h:outputText>
+		<h:outputText value="Quantidade em Estoque"></h:outputText>
+		<h:outputText value="Campanha Promocional"></h:outputText>
+	</h:panelGrid>
+	<h:panelGrid border="1" columns="4" style="width: 747px; ">
+		<h:inputText value="#{produtoMB.produto.descricao}"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.preco}"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.quantidade}"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.campanhaPromocional}"></h:inputText>
+		
+	</h:panelGrid>
+	
+	<h:commandButton value="Adicionar Produto" action="#{produtoMB.adicionarProduto}"></h:commandButton>
+</h:form>
+
+</html>
