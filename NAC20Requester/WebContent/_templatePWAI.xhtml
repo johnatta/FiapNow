@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:view>
+
+	<h:head>
+		<title>FIAP - PWAI</title>
+		<h:outputStylesheet name="style.css" library="css"></h:outputStylesheet>
+		<meta http-equiv="Pragma" content="no-cache" />
+	</h:head>
+	
+	<h:body>
+
+		<div id="main_container">
+			<div id="header">
+			<ui:insert name="header">
+				<div id="logo">
+				    <h:graphicImage name="logo.gif" library="imagens"></h:graphicImage>
+					<div class="user_information">
+						Loja Web | <h:link value="Logout" outcome="login"></h:link>
+					</div>
+				</div>
+			</ui:insert>
+			
+				<div id="menu">
+				<ui:insert name="menu">
+					<ul>
+						<li><h:outputLink value="consultarProduto.xhtml">Pesquisar Produtos</h:outputLink></li>
+						<li><h:outputLink value="emissaoPedido.xhtml">Emissão de Pedidos</h:outputLink></li>
+						<li><h:outputLink>Estatística de Vendas</h:outputLink></li>
+					</ul>
+				</ui:insert>
+				</div>
+
+				<ui:insert name="menu2">
+				<p:tieredMenu style="width:180px">
+					<p:submenu label="Navegação" icon="ui-icon ui-icon-extlink">
+						<p:menuitem value="Login" outcome="login" />
+						<p:menuitem value="Consultar Produto" outcome="consultarProduto" />
+						<p:menuitem value="Emitir Pedido" outcome="emissaoPedido" />
+					</p:submenu>
+				</p:tieredMenu>
+				</ui:insert>
+
+			</div>
+
+			<div id="main_content">
+			  <ui:insert name="main_content">
+				<div id="right_content">
+					Conteúdo Padrão!
+				</div>
+				<div style="clear: both;"></div>
+				</ui:insert>
+			</div>
+			<!--fim do main content-->
+
+			<div id="footer">
+			  <ui:insert name="footer">
+				<div class="footer_links">
+					<h:outputText value="FIAP WEB  - "></h:outputText>
+					<h:outputLink value="http://www.fiap.com.br">A Empresa</h:outputLink>
+					<h:outputLink value="politicaPrivacidade.xhtml">Política de Privacidade</h:outputLink>
+				</div>
+				</ui:insert>
+			</div>
+
+		</div>
+		<!--fim main container-->
+
+	</h:body>
+
+</f:view>
+
+</html>
