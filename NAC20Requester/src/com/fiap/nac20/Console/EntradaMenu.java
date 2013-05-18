@@ -1,10 +1,12 @@
 package com.fiap.nac20.Console;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Properties;
 import java.util.Scanner;
 
 import javax.faces.application.FacesMessage;
@@ -12,11 +14,11 @@ import javax.faces.context.FacesContext;
 
 import com.fiap.nac20.BO.EstoqueBOProxy;
 import com.fiap.nac20.TO.ProdutoTO;
+import com.fiap.nac20Property.PropertySingleton;
 public class EntradaMenu {
 	
 	public static void main(String[] args) {
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
-		
 		Scanner sc = new Scanner(System.in);
 		int opcao;
 		int fim = 0;
@@ -98,7 +100,14 @@ public class EntradaMenu {
 			ProdutoTO remoProd = new ProdutoTO();
 			int codRemover = sc.nextInt();
 			remoProd.setCodProduto(codRemover);
+			try {
+				estoqueBO.removerProduto(remoProd);
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
+			
 		case 4:
 			System.out.println("4 – Listagem de Produtos");
 			
@@ -129,5 +138,8 @@ public class EntradaMenu {
 			opcao = sc.nextInt();
 		}
 	} while (fim == 0);
+		
 	}
+
+	
 }
