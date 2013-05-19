@@ -1,5 +1,6 @@
 package com.fiap.nac20.MB;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ import com.fiap.nac20.TO.ProdutoTO;
 
 @ManagedBean
 @RequestScoped
-public class ProdutoMB {
+public class ProdutoMB implements Serializable {
 	
     private ProdutoTO produto;
     private List<ProdutoTO> produtos;
@@ -28,6 +29,19 @@ public class ProdutoMB {
     @PostConstruct
     public void inicializar(){
     	produto = new ProdutoTO();
+    	
+estatistica = new PieChartModel();
+		
+		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
+    	try {
+    		produtos = Arrays.asList(estoqueBO.listarProdutos());
+			for(ProdutoTO prod : produtos){
+				estatistica.set(prod.getDescricao(), prod.getQuantidade());
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+    	
     }
     
     public List<ProdutoTO> getProdutos() {
@@ -58,28 +72,9 @@ public class ProdutoMB {
 		return estatistica;
 	}
 	
-	@PostConstruct
-	public void inicializarEstatisticas() {
-		estatistica = new PieChartModel();
-		
-		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
-    	try {
-    		produtos = Arrays.asList(estoqueBO.listarProdutos());
-			for(ProdutoTO prod : produtos){
-				estatistica.set(prod.getDescricao(), prod.getQuantidade());
-			}
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		
-	}
 	
     public PieChartModel getEstatistica() {
 		return estatistica;
-	}
-
-	public void setEstatistica(PieChartModel estatistica) {
-		this.estatistica = estatistica;
 	}
 
 	public void consultarProduto(){
