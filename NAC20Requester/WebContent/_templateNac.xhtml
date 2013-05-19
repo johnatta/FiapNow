@@ -18,9 +18,11 @@
 				<div id="logo">
 					<div id="discLogo">
 						<div id="logout">
-							<h:link>
-								<h:outputText value="Logout" />
-							</h:link>
+							<h:form>
+								<h:comandLink id="log" action="#{loginBean.logout}">
+								<h:outputText value="Logout" /> 
+								</h:comandLink>
+							</h:form>
 						</div>
 					</div>
 				</div>
@@ -32,7 +34,7 @@
 						<h:outputLink value="adicionarProduto.xhtml">Adicionar Produtos</h:outputLink>
 					</li>
 					<li>
-						<h:outputLink value="consultarProduto.xhtml" >Consultar Produto</h:outputLink>
+						<h:outputLink value="consultarProdutos.xhtml" >Consultar Produto</h:outputLink>
 					</li>
 					<li>
 						<h:outputLink value="listarProduto.xhtml" >Listar Produtos</h:outputLink>
