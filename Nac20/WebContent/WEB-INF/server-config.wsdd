@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -46,7 +46,10 @@
   <ns1:operation name="buscarTodasDescricoesProdutos" qname="ns9:buscarTodasDescricoesProdutos" returnQName="ns9:buscarTodasDescricoesProdutosReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://BO.nac20.fiap.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <ns1:parameter qname="ns9:descricao" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="consultarProduto buscarTodasDescricoesProdutos listarProdutos adicionarProduto removerProduto"/>
+  <ns1:operation name="atualizarProduto" qname="ns10:atualizarProduto" soapAction="" xmlns:ns10="http://BO.nac20.fiap.com">
+   <ns1:parameter qname="ns10:produtoTO" type="ns11:ProdutoTO" xmlns:ns11="http://TO.nac20.fiap.com"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="atualizarProduto consultarProduto buscarTodasDescricoesProdutos listarProdutos adicionarProduto removerProduto"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="EstoqueBO"/>
   <ns1:parameter name="className" value="com.fiap.nac20.BO.EstoqueBO"/>
@@ -54,7 +57,7 @@
   <ns1:parameter name="schemaQualified" value="http://TO.nac20.fiap.com,http://BO.nac20.fiap.com"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://BO.nac20.fiap.com"/>
   <ns1:parameter name="wsdlServiceElement" value="EstoqueBOService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns10:ProdutoTO" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.fiap.nac20.TO.ProdutoTO" xmlns:ns10="http://TO.nac20.fiap.com"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns12:ProdutoTO" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:com.fiap.nac20.TO.ProdutoTO" xmlns:ns12="http://TO.nac20.fiap.com"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

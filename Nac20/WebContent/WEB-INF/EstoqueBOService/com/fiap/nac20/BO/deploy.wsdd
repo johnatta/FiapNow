@@ -24,7 +24,10 @@
       <operation xmlns:operNS="http://BO.nac20.fiap.com" xmlns:retNS="http://BO.nac20.fiap.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="buscarTodasDescricoesProdutos" qname="operNS:buscarTodasDescricoesProdutos" returnQName="retNS:buscarTodasDescricoesProdutosReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:descricao" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="consultarProduto buscarTodasDescricoesProdutos listarProdutos adicionarProduto removerProduto"/>
+      <operation xmlns:operNS="http://BO.nac20.fiap.com" name="atualizarProduto" qname="operNS:atualizarProduto" soapAction="">
+        <parameter xmlns:pns="http://BO.nac20.fiap.com" xmlns:tns="http://TO.nac20.fiap.com" qname="pns:produtoTO" type="tns:ProdutoTO"/>
+      </operation>
+      <parameter name="allowedMethods" value="atualizarProduto consultarProduto buscarTodasDescricoesProdutos listarProdutos adicionarProduto removerProduto"/>
 
       <typeMapping xmlns:ns="http://TO.nac20.fiap.com" qname="ns:ProdutoTO" type="java:com.fiap.nac20.TO.ProdutoTO" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>
