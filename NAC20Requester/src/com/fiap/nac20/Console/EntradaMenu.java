@@ -21,14 +21,12 @@ public class EntradaMenu {
 		Scanner sc = new Scanner(System.in);
 		int opcao;
 		int fim = 0;
+		int menu;
 		DateFormat dfmt = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		
 
 		
 		do {
-			for (int i=0 ; i < 50 ; i++) {
-				System.out.println();
-				}
 			
 			
 			System.out.println(PropertySingleton.getInstance().getProperty("nomeFilial"));
@@ -59,8 +57,11 @@ public class EntradaMenu {
 			ProdutoTO prodCons = new ProdutoTO();
 			int codProd = sc.nextInt(); 
 			prodCons.setCodProduto(codProd);
+		
+			
+			
 			DecimalFormat df = new DecimalFormat("R$ #,#0.00");
-
+			
 			try {
 				
 				ProdutoTO prodResposta = estoqueBO.consultarProduto(codProd);
@@ -68,12 +69,24 @@ public class EntradaMenu {
 				System.out.println(prodResposta.getQuantidade());
 				System.out.println(prodResposta.getCampanhaPromocional());
 				System.out.println(prodResposta.getDescricao());
+				 System.out.println();  
+	             System.out.println ("Pressine '1' e retorne ao menu principal"); 
+	              menu = sc.nextInt();
+	              
+	              for (int i=0 ; i < 50 ; i++) {
+	  				System.out.println();
+	  				}
+	  			
+				break;
+	   
 				
 			} catch (RemoteException e1) {
 
 				e1.printStackTrace();
 			}
-			break;
+			 
+            
+			
 		
 		case 2:
 			
