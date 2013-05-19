@@ -14,6 +14,10 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class LoginBean implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5826456330627229009L;
 	private String usuario;
 	private String senha;
 	
@@ -39,7 +43,7 @@ public class LoginBean implements Serializable {
 		}
 	}
 	
-	public String logout(){
+	public String logout(){	
 		
 		String retorno;
 		
