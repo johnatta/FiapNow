@@ -62,7 +62,7 @@ public class LoginBean implements Serializable {
 				usuario.equals("Admin") && senha.equals("senhaAdm") ||
 				usuario.equals("Admin1") && senha.equals("fiapA")) {
 			
-			retorno = "consultarProduto";
+			retorno = "consultaProdutos";
 		} else {
 			fc.addMessage("", mensagem);
 			retorno = "";
