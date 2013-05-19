@@ -15,7 +15,9 @@
 	</h:panelGrid>
 	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
 	<h:outputText value="#{produtoMB.produto.descricao}"></h:outputText>
-		<h:outputText value="#{produtoMB.produto.preco}"></h:outputText>
+		<h:outputText value="#{produtoMB.produto.preco}">
+			<f:convertNumber currencyCode="BRL" groupingUsed="true" maxFractionDigits="2" type="currency" />
+		</h:outputText>
 		<h:outputText value="#{produtoMB.produto.quantidade}"></h:outputText>
 		<h:outputText value="#{produtoMB.produto.campanhaPromocional}"></h:outputText>
 	</h:panelGrid>
