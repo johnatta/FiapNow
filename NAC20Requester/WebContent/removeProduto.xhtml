@@ -5,7 +5,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-
+<ui:composition template="_templateNac.xhtml">
+<ui:define name="content">
 <h:form>
 	<h:messages></h:messages>
 	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
@@ -14,5 +15,6 @@
 	</h:panelGrid>
 	<h:commandButton value="Remover Produto" action="#{produtoMB.removerProduto}"></h:commandButton>
 </h:form>
-
+</ui:define>
+</ui:composition>
 </html>
