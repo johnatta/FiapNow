@@ -2,16 +2,19 @@ package com.fiap.nac20.Console;
 
 import java.rmi.RemoteException;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Scanner;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fiap.nac20.BO.EstoqueBOProxy;
 import com.fiap.nac20.Property.PropertySingleton;
 import com.fiap.nac20.TO.ProdutoTO;
 
 public class EntradaMenu {
-	
-	// private  static Logger	log = LoggerFactory.getLogger(EntradaMenu.class);
+ private  static Logger	log = LoggerFactory.getLogger(EntradaMenu.class);
 
 	public static void main(String[] args) {
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
@@ -31,7 +34,7 @@ public class EntradaMenu {
 			System.out.println(PropertySingleton.getInstance().getProperty("nomeFilial"));
 			System.out.println(PropertySingleton.getInstance().getProperty("nomeEmpresa"));
 			System.out.println(PropertySingleton.getInstance().getProperty("endereco"));
-			
+			System.out.println();
 			System.out.println("NAC20                            Data: " + dfmt.format(Calendar.getInstance().getTimeInMillis()));
 			System.out.println("**************************************");
 			System.out.println();
@@ -44,6 +47,7 @@ public class EntradaMenu {
 					"4 – Listagem de Produtos \n" + 
 					"0 – Encerrar a Aplicação \n");
 			opcao = sc.nextInt();
+
 		switch (opcao) {
 		case 0:
 			System.out.println("A aplicação será encerrada");
@@ -53,14 +57,14 @@ public class EntradaMenu {
 		case 1:
 			System.out.println("Código do produto: ");
 			ProdutoTO prodCons = new ProdutoTO();
-		//log.info("Obtendo codigo do produto");
 			int codProd = sc.nextInt(); 
 			prodCons.setCodProduto(codProd);
-			
+			DecimalFormat df = new DecimalFormat("R$ #,#0.00");
+
 			try {
 				
 				ProdutoTO prodResposta = estoqueBO.consultarProduto(codProd);
-				System.out.println(prodResposta.getPreco());
+				System.out.println(df.format(prodResposta.getPreco()));
 				System.out.println(prodResposta.getQuantidade());
 				System.out.println(prodResposta.getCampanhaPromocional());
 				System.out.println(prodResposta.getDescricao());
@@ -73,9 +77,9 @@ public class EntradaMenu {
 		
 		case 2:
 			
-			System.out.println("2 – Inclusão de Novo Produto");
+			System.out.println("2 – Inclusão de Novo Produto"); //log.info("Obtendo codigo do produto");
+
 			ProdutoTO prod = new ProdutoTO();
-			
 			System.out.println("Preco: ");
 			Double preco = sc.nextDouble(); 
 			prod.setPreco(preco);
