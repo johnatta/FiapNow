@@ -7,14 +7,15 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 
 <h:form>
-	<h:panelGrid border="1" columns="4" style="width: 746px; "> 
+<h:messages></h:messages>
+	<h:panelGrid border="1" columns="5" style="width: 746px; "> 
 		<h:outputText value="Codigo"></h:outputText>
 		<h:outputText value="Descrição do produto"></h:outputText>
 		<h:outputText value="Preço Unitário"></h:outputText>
 		<h:outputText value="Quantidade em Estoque"></h:outputText>
 		<h:outputText value="Campanha Promocional"></h:outputText>
 	</h:panelGrid>
-	<h:panelGrid border="1" columns="4" style="width: 747px; ">
+	<h:panelGrid border="1" columns="5" style="width: 747px; ">
 		<h:inputText value="#{produtoMB.produto.codProduto}"></h:inputText>
 		<h:inputText value="#{produtoMB.produto.descricao}"></h:inputText>
 		<h:inputText value="#{produtoMB.produto.preco}"></h:inputText>
