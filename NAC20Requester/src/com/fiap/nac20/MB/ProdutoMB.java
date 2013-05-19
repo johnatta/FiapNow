@@ -30,7 +30,7 @@ public class ProdutoMB implements Serializable {
     public void inicializar(){
     	produto = new ProdutoTO();
     	
-estatistica = new PieChartModel();
+    	estatistica = new PieChartModel();
 		
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
     	try {
