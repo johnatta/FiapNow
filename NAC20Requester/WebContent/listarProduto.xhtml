@@ -8,16 +8,49 @@
 
 <h:form>
 	<h:messages></h:messages>
-	<h:commandButton value="Listar Produtos" action="#{produtoMB.listarProduto}"></h:commandButton>
+	<h:commandButton value="Listar Produtos" action="#{produtoMB.listarProduto}" ></h:commandButton>
 	
-	<h:dataTable value="#{produtoMB.produtos}" var="lista" border="1" style="width: 340px; ">
-		<h:outputText value="#{lista.codProd}"></h:outputText>
-		<h:outputText value="#{lista.descricao}"></h:outputText>
-		<h:outputText value="#{lista.preco}"></h:outputText>
-		<h:outputText value="#{lista.quantidade}"></h:outputText>
-		<h:outputText value="#{lista.campanhaPromocional}"></h:outputText>
-		<h:outputText value="#{produtoMB.totalProdutos}"></h:outputText>
-	</h:dataTable>
-</h:form>
-
+		<h:dataTable value="#{produtoMB.produtos}" var="lista" border="1">
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Codigo:" />
+				</f:facet>
+				<h:outputText value="#{lista.codProduto}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Descricao:" />
+				</f:facet>
+				<h:outputText value="#{lista.descricao}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Preco:" />
+				</f:facet>
+				<h:outputText value="#{lista.preco}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Quantidade:" />
+				</f:facet>
+				<h:outputText value="#{lista.quantidade}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Quantidade:" />
+				</f:facet>
+				<h:outputText value="#{lista.campanhaPromocional}" />
+			</h:column>
+			
+			
+			<f:facet name="footer">
+				<h:outputText
+					value="Total: #{produtoMB.totalProdutos}" />
+			</f:facet>
+		</h:dataTable>
+		</h:form>
+	
 </html>
