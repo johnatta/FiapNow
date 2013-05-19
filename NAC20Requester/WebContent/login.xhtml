@@ -18,9 +18,8 @@
 		<h:form>
 			<h:panelGrid border="1" columns="2">
 				<h:outputText value="Usuário: "></h:outputText>
-				<h:inputText validator="#{loginBean.validaDado}" required="true" value="#{loginBean.usuario}" id="txtUsuario">
+				<h:inputText value="#{loginBean.usuario}" id="txtUsuario">
 					<f:validateLength maximum="10"></f:validateLength>
-					<f:validator validatorId="comecaComMaiuscula"></f:validator>
 				</h:inputText>
 				<h:outputText value="Senha: "></h:outputText>
 				<h:inputSecret value="#{loginBean.senha}" id="txtSenha">
