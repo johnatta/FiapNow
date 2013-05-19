@@ -97,15 +97,17 @@ public class ProdutoMB {
 	@PostConstruct
 	public void atualizarProduto(){
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
-		
-		if (produto != null){
-			produto = new ProdutoTO();
-			produto.setCodProduto(000);
-			produto.setDescricao("Produto Inexistente");
-			produto.setQuantidade(000);
-			produto.setPreco(0);
-			produto.setCampanhaPromocional("Campanha Inexistente para o produto selecionado");
+		FacesMessage fm = new FacesMessage();
+    	FacesContext fc = FacesContext.getCurrentInstance();
+    	try {
+    		estoqueBO.atualizarProduto(produto);
+			fm.setSummary("Alteracao realizada com sucesso.");
+			fc.addMessage("", fm);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+			fm.setSummary("Erro durante a alteracao");
+			fc.addMessage("", fm);
 		}
-		
 	}
+	
 }
