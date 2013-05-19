@@ -4,10 +4,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
 <ui:composition template="_templateNac.xhtml">
 <ui:define name="content">
-<h:form>
+<h:form>	
+ <p:growl id="growl" showDetail="true"/>
+
 <h:messages></h:messages>
 	<h:panelGrid border="1" columns="5" style="width: 746px; "> 
 		<h:outputText value="Codigo"></h:outputText>
@@ -17,15 +21,17 @@
 		<h:outputText value="Campanha Promocional"></h:outputText>
 	</h:panelGrid>
 	<h:panelGrid border="1" columns="5" style="width: 747px; ">
-		<h:inputText value="#{produtoMB.produto.codProduto}"></h:inputText>
-		<h:inputText value="#{produtoMB.produto.descricao}"></h:inputText>
-		<h:inputText value="#{produtoMB.produto.preco}"></h:inputText>
-		<h:inputText value="#{produtoMB.produto.quantidade}"></h:inputText>
-		<h:inputText value="#{produtoMB.produto.campanhaPromocional}"></h:inputText>
+	
+	
+	 	<h:inputText value="#{produtoMB.produto.codProduto}" required="true" requiredMessage="Campo codigo produto deve ser preenchido"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.descricao}"	required="true" requiredMessage="Campo descrição deve ser preenchido"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.preco}" required="true" requiredMessage="Campo preço deve ser preenchido"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.quantidade}" required="true" requiredMessage="Campo quantidade deve ser preenchido"></h:inputText>
+		<h:inputText value="#{produtoMB.produto.campanhaPromocional}" required="true" requiredMessage="Campo Campanha deve ser preenchido"></h:inputText>
 		
 	</h:panelGrid>
 	
-	<h:commandButton value="Adicionar Produto" action="#{produtoMB.atualizarProduto}"></h:commandButton>
+	<h:commandButton value="Atualiza Produto" action="#{produtoMB.atualizarProduto}"></h:commandButton>
 </h:form>
 </ui:define>
 </ui:composition>
