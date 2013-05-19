@@ -1,22 +1,18 @@
 package com.fiap.nac20.Console;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Properties;
 import java.util.Scanner;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
 import com.fiap.nac20.BO.EstoqueBOProxy;
+import com.fiap.nac20.Property.PropertySingleton;
 import com.fiap.nac20.TO.ProdutoTO;
-import com.fiap.nac20Property.PropertySingleton;
+
 public class EntradaMenu {
 	
+	// private  static Logger	log = LoggerFactory.getLogger(EntradaMenu.class);
+
 	public static void main(String[] args) {
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
 		Scanner sc = new Scanner(System.in);
@@ -24,10 +20,18 @@ public class EntradaMenu {
 		int fim = 0;
 		DateFormat dfmt = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		
+
+		
 		do {
 			for (int i=0 ; i < 50 ; i++) {
 				System.out.println();
 				}
+			
+			
+			System.out.println(PropertySingleton.getInstance().getProperty("nomeFilial"));
+			System.out.println(PropertySingleton.getInstance().getProperty("nomeEmpresa"));
+			System.out.println(PropertySingleton.getInstance().getProperty("endereco"));
+			
 			System.out.println("NAC20                            Data: " + dfmt.format(Calendar.getInstance().getTimeInMillis()));
 			System.out.println("**************************************");
 			System.out.println();
@@ -49,10 +53,12 @@ public class EntradaMenu {
 		case 1:
 			System.out.println("Código do produto: ");
 			ProdutoTO prodCons = new ProdutoTO();
-			int codProd = sc.nextInt();
+		//log.info("Obtendo codigo do produto");
+			int codProd = sc.nextInt(); 
 			prodCons.setCodProduto(codProd);
 			
 			try {
+				
 				ProdutoTO prodResposta = estoqueBO.consultarProduto(codProd);
 				System.out.println(prodResposta.getPreco());
 				System.out.println(prodResposta.getQuantidade());
@@ -60,7 +66,7 @@ public class EntradaMenu {
 				System.out.println(prodResposta.getDescricao());
 				
 			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
+
 				e1.printStackTrace();
 			}
 			break;
