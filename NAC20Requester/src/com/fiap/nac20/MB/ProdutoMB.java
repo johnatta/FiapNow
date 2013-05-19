@@ -3,13 +3,14 @@ package com.fiap.nac20.MB;
 import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.model.chart.PieChartModel;
 
 import com.fiap.nac20.BO.EstoqueBOProxy;
 import com.fiap.nac20.TO.ProdutoTO;
@@ -18,9 +19,11 @@ import com.fiap.nac20.TO.ProdutoTO;
 @ManagedBean
 @RequestScoped
 public class ProdutoMB {
+	
     private ProdutoTO produto;
     private List<ProdutoTO> produtos;
     private int totalProdutos; 
+    private PieChartModel estatistica;
     
     @PostConstruct
     public void inicializar(){
@@ -51,7 +54,35 @@ public class ProdutoMB {
 		this.produto = produto;
 	}
 	
-    public void consultarProduto(){
+	public PieChartModel getEstatisticaPizza() {
+		return estatistica;
+	}
+	
+	@PostConstruct
+	public void inicializarEstatisticas() {
+		estatistica = new PieChartModel();
+		
+		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
+    	try {
+    		produtos = Arrays.asList(estoqueBO.listarProdutos());
+			for(ProdutoTO prod : produtos){
+				estatistica.set(prod.getDescricao(), prod.getQuantidade());
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+    public PieChartModel getEstatistica() {
+		return estatistica;
+	}
+
+	public void setEstatistica(PieChartModel estatistica) {
+		this.estatistica = estatistica;
+	}
+
+	public void consultarProduto(){
     	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
     	try {
 			produto = estoqueBO.consultarProduto(produto.getCodProduto());
