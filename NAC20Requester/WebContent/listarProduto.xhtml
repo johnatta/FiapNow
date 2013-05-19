@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
+<ui:composition template="_templateNac.xhtml">
+<ui:define name="content">
 <h:form>
 	<h:messages></h:messages>
 	<h:commandButton value="Listar Produtos" action="#{produtoMB.listarProduto}" ></h:commandButton>
@@ -52,5 +54,7 @@
 			</f:facet>
 		</h:dataTable>
 		</h:form>
+</ui:define>
+</ui:composition>
 	
 </html>

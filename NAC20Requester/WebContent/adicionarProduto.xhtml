@@ -6,6 +6,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
+<ui:composition template="_templateNac.xhtml">
+<ui:define name="content">
 <h:form>
 	<h:messages></h:messages>
 	<h:panelGrid border="1" columns="4" style="width: 746px; "> 
@@ -24,5 +26,7 @@
 	
 	<h:commandButton value="Adicionar Produto" action="#{produtoMB.adicionarProduto}"></h:commandButton>
 </h:form>
+</ui:define>
+</ui:composition>
 
 </html>

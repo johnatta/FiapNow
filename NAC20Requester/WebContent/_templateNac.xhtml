@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <f:view>
 	<h:head>
-		<title>FIAP NOW</title>
+		<title>Javax Solutions</title>
 		<h:outputStylesheet name="estilo.css" library="css"></h:outputStylesheet>
 		<meta http-equiv="Pragma" content="no-cache" />
 	</h:head>
@@ -28,15 +28,18 @@
 			<div id="menu">
 			<ui:insert name="menu">
 				<ul>
-					<li><h:link>
-							<h:outputText value="Adicionar Produtos" />
-						</h:link></li>
-					<li><h:link>
-							<h:outputText value="Consultar Produto" />
-						</h:link></li>
-					<li><h:link>
-							<h:outputText value="Listar Produtos" />
-						</h:link></li>
+					<li>
+						<h:outputLink value="adicionarProduto.xhtml">Adicionar Produtos</h:outputLink>
+					</li>
+					<li>
+						<h:outputLink value="consultarProduto.xhtml" >Consultar Produto</h:outputLink>
+					</li>
+					<li>
+						<h:outputLink value="listarProduto.xhtml" >Listar Produtos</h:outputLink>
+					</li>
+					<li>
+						<h:outputLink value="atualizarProduto.xhtml" >Atualizar Produtos</h:outputLink>
+					</li>
 				</ul>
 			</ui:insert>
 			</div>
