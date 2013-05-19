@@ -89,7 +89,6 @@ public class ProdutoMB {
     	try {
 			produtos = Arrays.asList(estoqueBO.listarProdutos());
 			totalProdutos = produtos.size();
-			
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
