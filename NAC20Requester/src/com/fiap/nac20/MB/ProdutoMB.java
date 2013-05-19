@@ -110,4 +110,16 @@ public class ProdutoMB {
 		}
 	}
 	
+	@PostConstruct
+	public void removerProduto(){
+	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
+	produto.getCodProduto();
+	try {
+		estoqueBO.removerProduto(produto);
+	} catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+
+	}
 }
