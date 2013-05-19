@@ -113,13 +113,16 @@ public class ProdutoMB {
 	@PostConstruct
 	public void removerProduto(){
 	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
-	produto.getCodProduto();
+	FacesMessage fm = new FacesMessage();
+	FacesContext fc = FacesContext.getCurrentInstance();
 	try {
 		estoqueBO.removerProduto(produto);
+		fm.setSummary("Exclusao realizada com sucesso.");
+		fc.addMessage("", fm);
 	} catch (RemoteException e) {
-		// TODO Auto-generated catch block
 		e.printStackTrace();
-	}
-
+		fm.setSummary("Erro durante a exclusao");
+		fc.addMessage("", fm);
+		}
 	}
 }
