@@ -63,6 +63,16 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="atualizarProduto">
+    <complexType>
+     <sequence>
+      <element name="produtoTO" type="tns1:ProdutoTO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="atualizarProdutoResponse">
+    <complexType/>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://TO.nac20.fiap.com" xmlns="http://www.w3.org/2001/XMLSchema">
    <complexType name="ProdutoTO">
@@ -96,6 +106,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="consultarProdutoRequest">
 
       <wsdl:part element="impl:consultarProduto" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="atualizarProdutoRequest">
+
+      <wsdl:part element="impl:atualizarProduto" name="parameters">
 
       </wsdl:part>
 
@@ -136,6 +154,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="buscarTodasDescricoesProdutosRequest">
 
       <wsdl:part element="impl:buscarTodasDescricoesProdutos" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="atualizarProdutoResponse">
+
+      <wsdl:part element="impl:atualizarProdutoResponse" name="parameters">
 
       </wsdl:part>
 
@@ -214,6 +240,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:buscarTodasDescricoesProdutosResponse" name="buscarTodasDescricoesProdutosResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="atualizarProduto">
+
+         <wsdl:input message="impl:atualizarProdutoRequest" name="atualizarProdutoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:atualizarProdutoResponse" name="atualizarProdutoResponse">
 
        </wsdl:output>
 
@@ -308,6 +346,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="buscarTodasDescricoesProdutosResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="atualizarProduto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="atualizarProdutoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="atualizarProdutoResponse">
 
             <wsdlsoap:body use="literal"/>
 
