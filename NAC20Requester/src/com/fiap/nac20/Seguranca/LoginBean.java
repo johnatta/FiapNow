@@ -29,13 +29,27 @@ public class LoginBean implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+	
+	public void validaDado(FacesContext context, UIComponent component, Object value) {
+		String valor = value.toString();
+		if (!valor.contains("a")) { //* qualquer validação lógica
+			((UIInput)component).setValid(false);
+			FacesMessage message = new FacesMessage("Erro de Consistência Lógica");
+			context.addMessage(component.getClientId(context), message);
+		}
+	}
+	
 	public String logout(){
+		
+		String retorno;
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		map.remove("formularioBean");
 		
-		return "login";
+		retorno = "login";
+		
+		return retorno;
 	}
 	public String logar(){
 		
