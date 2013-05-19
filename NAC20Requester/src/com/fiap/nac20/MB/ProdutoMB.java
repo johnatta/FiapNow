@@ -93,4 +93,19 @@ public class ProdutoMB {
 			e.printStackTrace();
 		}
     }
+	
+	@PostConstruct
+	public void atualizarProduto(){
+		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
+		
+		if (produto != null){
+			produto = new ProdutoTO();
+			produto.setCodProduto(000);
+			produto.setDescricao("Produto Inexistente");
+			produto.setQuantidade(000);
+			produto.setPreco(0);
+			produto.setCampanhaPromocional("Campanha Inexistente para o produto selecionado");
+		}
+		
+	}
 }
