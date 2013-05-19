@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view>
+	<h:head>
+		<title>FIAP NOW</title>
+		<h:outputStylesheet name="estilo.css" library="css"></h:outputStylesheet>
+		<meta http-equiv="Pragma" content="no-cache" />
+	</h:head>
+	<h:body>
+
+		<div id="header">
+				<div id="logo">
+					<div id="discLogo">
+						<div id="logout">
+							<h:link>
+								<h:outputText value="Logout" />
+							</h:link>
+						</div>
+					</div>
+				</div>
+		</div>
+			<div id="menu">
+			<ui:insert name="menu">
+				<ul>
+					<li><h:link>
+							<h:outputText value="Adicionar Produtos" />
+						</h:link></li>
+					<li><h:link>
+							<h:outputText value="Consultar Produto" />
+						</h:link></li>
+					<li><h:link>
+							<h:outputText value="Listar Produtos" />
+						</h:link></li>
+				</ul>
+			</ui:insert>
+			</div>
+		<div id="content">
+			<div id="innerContent">
+				<ui:insert name="content">
+			Conteudo Para ser implementado!!
+			</ui:insert>
+			</div>
+		</div>
+		<div id="footer">
+			<div id="menuFooter">
+			</div>
+			<hr />
+			<div id="copyFooter">
+				Copyright© 2013 - JavaX Solutions - Desenvolvimento Web
+			</div>
+		</div>
+
+	</h:body>
+</f:view>
+</html>
