@@ -51,7 +51,6 @@ public class ProdutoMB {
 		this.produto = produto;
 	}
 	
-	@PostConstruct
     public void consultarProduto(){
     	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
     	try {
@@ -68,7 +67,7 @@ public class ProdutoMB {
 			e.printStackTrace();
 		}
     }
-	@PostConstruct
+    
     public void adicionarProduto(){
     	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
     	FacesMessage fm = new FacesMessage();
@@ -83,7 +82,7 @@ public class ProdutoMB {
 			fc.addMessage("", fm);
 		}
     }
-	@PostConstruct
+    
     public void listarProduto(){
     	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
     	try {
@@ -94,7 +93,6 @@ public class ProdutoMB {
 		}
     }
 	
-	@PostConstruct
 	public void atualizarProduto(){
 		EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
 		FacesMessage fm = new FacesMessage();
@@ -110,7 +108,6 @@ public class ProdutoMB {
 		}
 	}
 	
-	@PostConstruct
 	public void removerProduto(){
 	EstoqueBOProxy estoqueBO = new EstoqueBOProxy();
 	FacesMessage fm = new FacesMessage();
