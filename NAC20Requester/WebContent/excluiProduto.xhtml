@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="_templateNac.xhtml">
+<ui:define name="content">
+<h:form>
+	<h:messages></h:messages>
+
+	<h:outputText value="Bem-Vindo #{loginBean.usuario}"></h:outputText>
+	<p:growl id="messages" showDetail="true" life="3000"></p:growl>
+	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
+		<h:outputText value="Codigo do Produto a Excluir"/>		
+		<h:inputText value="#{produtoMB.produto.codProduto}" required="true"/>
+	</h:panelGrid>
+	<h:commandButton value="Remover Produto" action="#{produtoMB.consultarProduto}"></h:commandButton>
+	
+	<p:panel  id="result" visible="#{!empty produtoMB.produto.descricao}">
+	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
+		<h:outputText value="Descrição:"></h:outputText>
+		<h:inputText disabled="true" value="#{produtoMB.produto.descricao}"></h:inputText>
+		<h:outputText value="Preço:"></h:outputText>
+		<h:inputText disabled="true" value="#{produtoMB.produto.preco}">
+			<f:convertNumber currencyCode="BRL" groupingUsed="true" maxFractionDigits="2" type="currency" />
+		</h:inputText>
+		<h:outputText value="Quantidade:"></h:outputText>
+		<h:inputText disabled="true" value="#{produtoMB.produto.quantidade}"></h:inputText>
+		<h:outputText value="Campanha Promocional:"></h:outputText>
+		<h:inputText disabled="true" value="#{produtoMB.produto.campanhaPromocional}"></h:inputText>
+	</h:panelGrid>
+	<h:commandButton value="Confirmar Exclusão" action="#{produtoMB.consultarProduto}"></h:commandButton>
+	
+	<p:confirmDialog id="confirmDialog" message="Tem certeza que deseja excluir o produto?"  
+                header="Exclusão do produto" severity="alert" widgetVar="confirmar">  
+        <p:commandButton id="confirm" value="Sim, excluir" update="messages" oncomplete="confirmar.hide()"  
+                    actionListener="#{produtoMB.removerProduto}" />  
+        <p:commandButton id="decline" value="Cancelar" onclick="confirmar.hide()" type="button" />   
+    </p:confirmDialog>
+     
+	</p:panel>
+</h:form>
+</ui:define>
+</ui:composition>
+</html>

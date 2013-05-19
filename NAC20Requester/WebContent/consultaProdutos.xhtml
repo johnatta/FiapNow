@@ -10,6 +10,9 @@
 <ui:define name="content">
 <h:form id="formulario">
 	<h:messages></h:messages>
+	
+	<h:panelGroup rendered="#{!empty loginBean.usuario}">
+	<h:outputText value="Bem-Vindo #{loginBean.usuario}"></h:outputText>
 	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
 		<h:outputText value="Código do Produto:"></h:outputText>
 		<h:inputText value="#{produtoMB.produto.codProduto}"></h:inputText>
@@ -33,6 +36,7 @@
 		<h:outputText value="#{produtoMB.produto.campanhaPromocional}"></h:outputText>
 	</h:panelGrid>
 	</p:panel>
+	</h:panelGroup>
 </h:form>
 </ui:define>
 </ui:composition>
