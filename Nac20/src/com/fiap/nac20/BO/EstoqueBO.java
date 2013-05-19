@@ -38,4 +38,9 @@ public class EstoqueBO {
 		return descricoesArray;
 		
 	}
+	
+	public void atualizarProduto(ProdutoTO produtoTO){
+		DAO<ProdutoTO> produtoDAO = new DAO<ProdutoTO>(ProdutoTO.class);
+		produtoDAO.atualizarProduto(produtoTO);
+	}
 }
