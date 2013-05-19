@@ -1,6 +1,7 @@
 package com.fiap.nac20.Seguranca;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,7 +29,14 @@ public class LoginBean implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
+	public String logout(){
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		map.remove("formularioBean");
+		
+		return "login";
+	}
 	public String logar(){
 		
 		String retorno;
@@ -40,11 +48,12 @@ public class LoginBean implements Serializable {
 				usuario.equals("Admin") && senha.equals("senhaAdm") ||
 				usuario.equals("Admin1") && senha.equals("fiapA")) {
 			
-			retorno = "O  K !";
+			retorno = "consultarProduto";
 		} else {
-			retorno = "falhaLogin";
 			fc.addMessage("", mensagem);
+			retorno = "";
 		}
 		return retorno;
 	}
+	
 }
