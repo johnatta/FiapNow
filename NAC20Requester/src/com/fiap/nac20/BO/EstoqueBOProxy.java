@@ -74,5 +74,11 @@ public class EstoqueBOProxy implements com.fiap.nac20.BO.EstoqueBO {
     return estoqueBO.buscarTodasDescricoesProdutos(descricao);
   }
   
+  public void atualizarProduto(com.fiap.nac20.TO.ProdutoTO produtoTO) throws java.rmi.RemoteException{
+    if (estoqueBO == null)
+      _initEstoqueBOProxy();
+    estoqueBO.atualizarProduto(produtoTO);
+  }
+  
   
 }

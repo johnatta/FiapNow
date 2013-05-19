@@ -13,4 +13,5 @@ public interface EstoqueBO extends java.rmi.Remote {
     public com.fiap.nac20.TO.ProdutoTO[] listarProdutos() throws java.rmi.RemoteException;
     public void removerProduto(com.fiap.nac20.TO.ProdutoTO produtoTO) throws java.rmi.RemoteException;
     public java.lang.String[] buscarTodasDescricoesProdutos(java.lang.String descricao) throws java.rmi.RemoteException;
+    public void atualizarProduto(com.fiap.nac20.TO.ProdutoTO produtoTO) throws java.rmi.RemoteException;
 }
