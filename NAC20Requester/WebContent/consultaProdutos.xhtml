@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="_templateNac.xhtml">
+<ui:define name="content">
+<h:form id="formulario">
+	<h:messages></h:messages>
+	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
+		<h:outputText value="Código do Produto:"></h:outputText>
+		<h:inputText value="#{produtoMB.produto.codProduto}"></h:inputText>
+		
+	</h:panelGrid>
+	<h:commandButton value="Consultar Produto" action="#{produtoMB.consultarProduto}">
+		<f:ajax render="formulario:result" execute="@form"></f:ajax>
+	</h:commandButton>
+	
+	<p:panel  id="result" visible="#{!empty produtoMB.produto.descricao}">
+	<h:panelGrid border="1" columns="2" style="width: 746px; "> 
+		<h:outputText value="Descrição:"></h:outputText>
+		<h:outputText value="#{produtoMB.produto.descricao}"></h:outputText>
+		<h:outputText value="Preço:"></h:outputText>
+		<h:outputText value="#{produtoMB.produto.preco}">
+			<f:convertNumber currencyCode="BRL" groupingUsed="true" maxFractionDigits="2" type="currency" />
+		</h:outputText>
+		<h:outputText value="Quantidade:"></h:outputText>
+		<h:outputText value="#{produtoMB.produto.quantidade}"></h:outputText>
+		<h:outputText value="Campanha Promocional:"></h:outputText>
+		<h:outputText value="#{produtoMB.produto.campanhaPromocional}"></h:outputText>
+	</h:panelGrid>
+	</p:panel>
+</h:form>
+</ui:define>
+</ui:composition>
+</html>
