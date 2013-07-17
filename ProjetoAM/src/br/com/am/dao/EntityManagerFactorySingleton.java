@@ -1,0 +1,20 @@
+package br.com.am.dao;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+public class EntityManagerFactorySingleton {
+	
+	private static EntityManagerFactory factory;
+	
+	public EntityManagerFactorySingleton() {
+		super();
+	}
+	
+	public static EntityManagerFactory getInstance() {
+		if(factory == null){
+			factory = Persistence.createEntityManagerFactory("PROJETO_AM");
+		}
+		return factory;
+	}
+}
