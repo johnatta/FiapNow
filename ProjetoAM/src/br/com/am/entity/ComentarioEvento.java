@@ -20,6 +20,8 @@ import javax.persistence.TemporalType;
 @SequenceGenerator(name="seqComentarioEvento", sequenceName="SEQ_AM_COMENTARIO_EVENTO", allocationSize=1)
 public class ComentarioEvento implements Serializable {
 
+	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -41,6 +43,20 @@ public class ComentarioEvento implements Serializable {
 	@Column
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
+	
+	public ComentarioEvento(String comentario, Calendar dtHora,
+			Evento codEvento, Pessoa codPessoa) {
+		super();
+		this.comentario = comentario;
+		this.dtHora = dtHora;
+		this.codEvento = codEvento;
+		this.codPessoa = codPessoa;
+	}
+	
+	public ComentarioEvento(){
+		
+	}
+	
 
 	
 	public Calendar getDtHora() {

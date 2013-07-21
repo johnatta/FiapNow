@@ -89,6 +89,29 @@ public class Pessoa implements Serializable {
 	inverseJoinColumns={@JoinColumn(name="COD_EEVENTO")})
 	private List<Evento> eventos;
 
+	public Pessoa(String nome, String sobrenome, Calendar dtNasc,
+			String apelido, String telRes, String cel, byte[] imgPerfil,
+			byte[] imgBackGround, Usuario codUsuario, Endereco codEndereco,
+			List<Esporte> esportes, List<Grupo> grupos, List<Evento> eventos) {
+		super();
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.dtNasc = dtNasc;
+		this.apelido = apelido;
+		this.telRes = telRes;
+		this.cel = cel;
+		this.imgPerfil = imgPerfil;
+		this.imgBackGround = imgBackGround;
+		this.codUsuario = codUsuario;
+		this.codEndereco = codEndereco;
+		this.esportes = esportes;
+		this.grupos = grupos;
+		this.eventos = eventos;
+	}
+	public Pessoa(){
+		
+	}
+
 	public List<Esporte> getEsportes() {
 		return esportes;
 	}

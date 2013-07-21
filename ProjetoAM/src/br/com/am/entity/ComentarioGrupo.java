@@ -42,6 +42,19 @@ public class ComentarioGrupo implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 
+	public ComentarioGrupo(String comentario, Calendar dataHora,
+			Pessoa codPessoa, Grupo codGrupo) {
+		super();
+		this.comentario = comentario;
+		this.dataHora = dataHora;
+		this.codPessoa = codPessoa;
+		this.codGrupo = codGrupo;
+	}
+	
+	public ComentarioGrupo() {
+				
+	}
+
 	public int getCodComentario() {
 		return codComentario;
 	}

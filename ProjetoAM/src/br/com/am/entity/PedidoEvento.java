@@ -34,6 +34,16 @@ public class PedidoEvento implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Evento codEvento;
 
+	public PedidoEvento(String descricao, Pessoa codPessoa, Evento codEvento) {
+		super();
+		this.descricao = descricao;
+		this.codPessoa = codPessoa;
+		this.codEvento = codEvento;
+	}
+	public PedidoEvento(){
+		
+	}
+
 	public int getCodPedido() {
 		return codPedido;
 	}

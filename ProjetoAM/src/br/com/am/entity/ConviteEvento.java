@@ -34,6 +34,18 @@ public class ConviteEvento implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Evento codEvento;
 
+	public ConviteEvento( String descricao, Pessoa codPessoa,
+			Evento codEvento) {
+		super();
+		this.descricao = descricao;
+		this.codPessoa = codPessoa;
+		this.codEvento = codEvento;
+	}
+	 
+	public ConviteEvento() {
+		
+	}
+
 	public int getCodConvite() {
 		return codConvite;
 	}

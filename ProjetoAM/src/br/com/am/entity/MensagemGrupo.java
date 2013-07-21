@@ -37,6 +37,18 @@ public class MensagemGrupo implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 	
+	public MensagemGrupo(String descricao, Confirmacao confirmacao,
+			Pessoa codPessoa, Grupo codGrupo) {
+		super();
+		this.descricao = descricao;
+		this.confirmacao = confirmacao;
+		this.codPessoa = codPessoa;
+		this.codGrupo = codGrupo;
+	}
+
+	public MensagemGrupo(){
+		
+	}
 	public int getCodMensagem() {
 		return codMensagem;
 	}

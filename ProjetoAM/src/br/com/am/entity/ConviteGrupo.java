@@ -34,6 +34,17 @@ public class ConviteGrupo implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 
+	public ConviteGrupo(String descricao, Pessoa codPessoa, Grupo codGrupo) {
+		super();
+		this.descricao = descricao;
+		this.codPessoa = codPessoa;
+		this.codGrupo = codGrupo;
+	}
+	
+	public ConviteGrupo() {
+		
+	}
+
 	public int getCodConvite() {
 		return codConvite;
 	}

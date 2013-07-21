@@ -51,6 +51,27 @@ public class Endereco implements Serializable {
 	@Column(length = 10)
 	private float longitude;
 	
+	public Endereco(String pais, String estado, String cidade, String bairro,
+			String rua, int numero, String complemento, String cep,
+			float latitude, float longitude) {
+		super();
+		this.pais = pais;
+		this.estado = estado;
+		this.cidade = cidade;
+		this.bairro = bairro;
+		this.rua = rua;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.cep = cep;
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
+	public Endereco(){
+		
+	}
+
+
 	public int getCodEndereco() {
 		return codEndereco;
 	}

@@ -70,6 +70,26 @@ public class Evento implements Serializable {
 	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
 	private List<Grupo> grupos;
 	
+	public Evento(String nome, Calendar dtEvento, String telContato,
+			double custo, String descricao, byte[] imgEvento,
+			Privacidade privacidade, Endereco codEndereco, Esporte codEsporte,
+			List<Grupo> grupos) {
+		super();
+		this.nome = nome;
+		this.dtEvento = dtEvento;
+		this.telContato = telContato;
+		this.custo = custo;
+		this.descricao = descricao;
+		this.imgEvento = imgEvento;
+		this.privacidade = privacidade;
+		this.codEndereco = codEndereco;
+		this.codEsporte = codEsporte;
+		this.grupos = grupos;
+	}
+	public Evento(){
+		
+	}
+
 	public List<Grupo> getGrupos() {
 		return grupos;
 	}

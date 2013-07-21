@@ -37,6 +37,19 @@ public class MensagemEvento implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Evento codEvento;
 	
+	public MensagemEvento(String descricao, Confirmacao confirmacao,
+			Pessoa codPessoa, Evento codEvento) {
+		super();
+		this.descricao = descricao;
+		this.confirmacao = confirmacao;
+		this.codPessoa = codPessoa;
+		this.codEvento = codEvento;
+	}
+	
+	public MensagemEvento(){
+		
+	}
+
 	public int getCodMensagem() {
 		return codMensagem;
 	}

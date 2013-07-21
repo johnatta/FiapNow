@@ -24,6 +24,14 @@ public class Esporte implements Serializable {
 	@Column(nullable = false, length = 60)
 	private String nome;
 
+	public Esporte(String nome) {
+		super();
+		this.nome = nome;
+	}
+	 public Esporte(){
+		 
+	 }
+
 	public int getCodEsporte() {
 		return codEsporte;
 	}

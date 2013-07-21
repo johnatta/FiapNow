@@ -47,6 +47,19 @@ public class Grupo implements Serializable {
 	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
 	private List<Esporte> esportes;
 	
+	public Grupo(String nomeGrupo, byte[] imgGrupo, String descricao,
+			Privacidade privacidade, List<Esporte> esportes) {
+		super();
+		this.nomeGrupo = nomeGrupo;
+		this.imgGrupo = imgGrupo;
+		this.descricao = descricao;
+		this.privacidade = privacidade;
+		this.esportes = esportes;
+	}
+	public Grupo(){
+		
+	}
+
 	public List<Esporte> getEsportes() {
 		return esportes;
 	}

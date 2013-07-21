@@ -27,6 +27,16 @@ public class Usuario implements Serializable {
 	@Column(nullable = false, length = 25)
 	private String senha;
 	
+	public Usuario(String email, String senha) {
+		super();
+		this.email = email;
+		this.senha = senha;
+	}
+	
+	public Usuario(){
+		
+	}
+
 	/*
 	 * No relacionamento um para um apenas a entidade dona do relacionamento fica com a chave
 	 * estrangeira, sendo assim pessoa já possui codUsuario assim não há a necessidade de 

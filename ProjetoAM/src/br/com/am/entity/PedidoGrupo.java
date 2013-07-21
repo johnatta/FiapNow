@@ -34,6 +34,16 @@ public class PedidoGrupo implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 
+	public PedidoGrupo(String descricao, Pessoa codPessoa, Grupo codGrupo) {
+		super();
+		this.descricao = descricao;
+		this.codPessoa = codPessoa;
+		this.codGrupo = codGrupo;
+	}
+	public PedidoGrupo(){
+		
+	}
+
 	public int getCodPedidoGrupo() {
 		return codPedidoGrupo;
 	}

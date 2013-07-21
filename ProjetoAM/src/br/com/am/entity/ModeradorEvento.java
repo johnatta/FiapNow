@@ -29,6 +29,16 @@ public class ModeradorEvento implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
 
+	public ModeradorEvento(Evento codEvento, Pessoa codPessoa) {
+		super();
+		this.codEvento = codEvento;
+		this.codPessoa = codPessoa;
+	}
+	
+	public ModeradorEvento(){
+		
+	}
+
 	public Evento getCodEvento() {
 		return codEvento;
 	}

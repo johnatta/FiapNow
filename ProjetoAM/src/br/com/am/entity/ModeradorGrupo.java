@@ -28,6 +28,15 @@ public class ModeradorGrupo implements Serializable {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
 
+	public ModeradorGrupo(Grupo codGrupo, Pessoa codPessoa) {
+		super();
+		this.codGrupo = codGrupo;
+		this.codPessoa = codPessoa;
+	}
+
+	public ModeradorGrupo(){
+		
+	}
 	public Grupo getCodGrupo() {
 		return codGrupo;
 	}
