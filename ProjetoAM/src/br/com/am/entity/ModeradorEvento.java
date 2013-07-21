@@ -21,6 +21,8 @@ public class ModeradorEvento implements Serializable {
      
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorEvento")
+	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Evento codEvento;
 	
 	@Column

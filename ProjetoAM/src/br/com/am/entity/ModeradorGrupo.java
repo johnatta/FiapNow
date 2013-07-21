@@ -20,6 +20,8 @@ public class ModeradorGrupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorGrupo")
+	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 	
 	@Column

@@ -1,13 +1,18 @@
 package br.com.am.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -20,7 +25,6 @@ public class Grupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqGrupo")
-	@Column(nullable = false)
 	private int codGrupo;
 	
 	@Column(nullable = false , length = 50)
@@ -30,12 +34,26 @@ public class Grupo implements Serializable {
 	@Lob
 	private byte [] imgGrupo;
 	
-	
 	@Column(nullable = false , length = 300)
 	private String descricao;
 	
 	@Column(nullable = false)
 	private Privacidade privacidade;
+	
+	@Column
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_GRUPO_ESPORTE",
+	joinColumns={@JoinColumn(name="COD_GRUPO")},
+	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
+	private List<Esporte> esportes;
+	
+	public List<Esporte> getEsportes() {
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
+	}
 
 	public int getCodGrupo() {
 		return codGrupo;

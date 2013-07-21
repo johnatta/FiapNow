@@ -73,45 +73,44 @@ public class Pessoa implements Serializable {
 	@JoinTable(name="AM_PESSOA_ESPORTE",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
-	private List<Esporte> codEsporte;
+	private List<Esporte> esportes;
 	
 	@Column
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_GRUPO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
-	private List<Grupo> codGrupo;
+	private List<Grupo> grupos;
 	
 	@Column
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_EVENTO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_EEVENTO")})
-	private List<Evento> codEvento;
-	
-	
-	public List<Esporte> getCodEsporte() {
-		return codEsporte;
+	private List<Evento> eventos;
+
+	public List<Esporte> getEsportes() {
+		return esportes;
 	}
 
-	public void setCodEsporte(List<Esporte> codEsporte) {
-		this.codEsporte = codEsporte;
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
 	}
 
-	public List<Grupo> getCodGrupo() {
-		return codGrupo;
+	public List<Grupo> getGrupos() {
+		return grupos;
 	}
 
-	public void setCodGrupo(List<Grupo> codGrupo) {
-		this.codGrupo = codGrupo;
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 
-	public List<Evento> getCodEvento() {
-		return codEvento;
+	public List<Evento> getEventos() {
+		return eventos;
 	}
 
-	public void setCodEvento(List<Evento> codEvento) {
-		this.codEvento = codEvento;
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 	public Calendar getDtNasc() {

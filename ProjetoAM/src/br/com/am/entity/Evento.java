@@ -2,13 +2,19 @@ package br.com.am.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,7 +30,6 @@ public class Evento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEvento")
-	@Column(nullable = false)
 	private int codEvento;
 	
 	@Column(nullable = false , length = 40)
@@ -32,7 +37,7 @@ public class Evento implements Serializable {
 	
 	@Column(name="DATA_EVENTO", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private  Calendar dt_evento;
+	private  Calendar dtEvento;
 	
 	@Column(name = "Telefone_Contato", length = 12)
 	private String telContato;
@@ -51,10 +56,35 @@ public class Evento implements Serializable {
 	private Privacidade privacidade;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Endereco codEndereco;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Esporte codEsporte;
+
+	@Column
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_EVENTO_GRUPO",
+	joinColumns={@JoinColumn(name="COD_EVENTO")},
+	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
+	private List<Grupo> grupos;
+	
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
+	}
+
+	public Calendar getDtEvento() {
+		return dtEvento;
+	}
+
+	public void setDtEvento(Calendar dtEvento) {
+		this.dtEvento = dtEvento;
+	}
 
 	public int getCodEvento() {
 		return codEvento;
@@ -72,14 +102,7 @@ public class Evento implements Serializable {
 		this.nome = nome;
 	}
 
-	public Calendar getDt_evento() {
-		return dt_evento;
-	}
-
-	public void setDt_evento(Calendar dt_evento) {
-		this.dt_evento = dt_evento;
-	}
-
+	
 	public String getTelContato() {
 		return telContato;
 	}

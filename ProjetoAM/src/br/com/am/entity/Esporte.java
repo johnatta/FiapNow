@@ -19,7 +19,6 @@ public class Esporte implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEsporte")
-	@Column(nullable = false)
 	private int codEsporte;
 	
 	@Column(nullable = false, length = 60)

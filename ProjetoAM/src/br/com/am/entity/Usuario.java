@@ -19,7 +19,6 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqUsuario")
-	@Column(nullable = false)
 	private int codUsuario;
 	
 	@Column(nullable = false, length = 60)
@@ -28,8 +27,20 @@ public class Usuario implements Serializable {
 	@Column(nullable = false, length = 25)
 	private String senha;
 	
+	/*
+	 * No relacionamento um para um apenas a entidade dona do relacionamento fica com a chave
+	 * estrangeira, sendo assim pessoa já possui codUsuario assim não há a necessidade de 
+	 * usuario possuir o codPessoa.    -- GRAZIELE VASCONCELOS
 	private Pessoa codPessoa;
 
+	public Pessoa getCodPessoa() {
+		return codPessoa;
+	}
+	
+	public void setCodPessoa(Pessoa codPessoa) {
+		this.codPessoa = codPessoa;
+	}
+	*/
 	public int getCodUsuario() {
 		return codUsuario;
 	}
@@ -53,15 +64,4 @@ public class Usuario implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-
-	public Pessoa getCodPessoa() {
-		return codPessoa;
-	}
-
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
-	}
-
-
-
 }
