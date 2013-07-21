@@ -2,13 +2,19 @@ package br.com.am.entity;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -23,7 +29,6 @@ public class Pessoa implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqPessoa")
-	@Column(nullable = false)
 	private int codPessoa;
 	
 	@Column(nullable = false, length = 50)
@@ -34,7 +39,7 @@ public class Pessoa implements Serializable {
 	
 	@Column(name="DATA_NASCIMENTO", nullable = false)
 	@Temporal(TemporalType.DATE)
-	private  Calendar dt_nasc;
+	private  Calendar dtNasc;
 	
 	
 	@Column(nullable = false, length = 40)
@@ -56,10 +61,66 @@ public class Pessoa implements Serializable {
 	private byte [] imgBackGround;
 	
 	@Column
+	@OneToOne(cascade=CascadeType.ALL)
 	private Usuario codUsuario;
 	
 	@Column
+	@OneToOne(cascade=CascadeType.ALL)
 	private Endereco codEndereco;
+	
+	@Column
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_PESSOA_ESPORTE",
+	joinColumns={@JoinColumn(name="COD_PESSOA")},
+	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
+	private List<Esporte> codEsporte;
+	
+	@Column
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_PESSOA_GRUPO",
+	joinColumns={@JoinColumn(name="COD_PESSOA")},
+	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
+	private List<Grupo> codGrupo;
+	
+	@Column
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_PESSOA_EVENTO",
+	joinColumns={@JoinColumn(name="COD_PESSOA")},
+	inverseJoinColumns={@JoinColumn(name="COD_EEVENTO")})
+	private List<Evento> codEvento;
+	
+	
+	public List<Esporte> getCodEsporte() {
+		return codEsporte;
+	}
+
+	public void setCodEsporte(List<Esporte> codEsporte) {
+		this.codEsporte = codEsporte;
+	}
+
+	public List<Grupo> getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(List<Grupo> codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+
+	public List<Evento> getCodEvento() {
+		return codEvento;
+	}
+
+	public void setCodEvento(List<Evento> codEvento) {
+		this.codEvento = codEvento;
+	}
+
+	public Calendar getDtNasc() {
+		return dtNasc;
+	}
+
+	public void setDtNasc(Calendar dtNasc) {
+		this.dtNasc = dtNasc;
+	}
 
 	public int getCodPessoa() {
 		return codPessoa;
@@ -83,14 +144,6 @@ public class Pessoa implements Serializable {
 
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
-	}
-
-	public Calendar getDt_nascimento() {
-		return dt_nasc;
-	}
-
-	public void setDt_nascimento(Calendar dt_nascimento) {
-		this.dt_nasc = dt_nascimento;
 	}
 
 	public String getApelido() {
