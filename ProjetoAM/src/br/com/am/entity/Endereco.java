@@ -19,9 +19,7 @@ public class Endereco implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEndereco")
-	@Column(nullable = false)
 	private int codEndereco;
-	
 	
 	@Column(nullable = false, length = 40)
 	private String pais;
@@ -47,15 +45,12 @@ public class Endereco implements Serializable {
 	@Column(length = 8)
 	private String cep;
 	
-	
 	@Column(length = 10)
 	private float latitude;
 	
-	
 	@Column(length = 10)
 	private float longitude;
-
-
+	
 	public int getCodEndereco() {
 		return codEndereco;
 	}
