@@ -2,11 +2,13 @@ package br.com.am.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -19,16 +21,17 @@ public class PedidoGrupo implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqPedidoGrupo")
-	@Column(nullable = false)
 	private int codPedidoGrupo;
 	
 	@Column(nullable = false, length = 100)
 	private String descricao;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 
 	public int getCodPedidoGrupo() {

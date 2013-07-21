@@ -3,11 +3,13 @@ package br.com.am.entity;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,7 +24,6 @@ public class ComentarioEvento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioEvento")
-	@Column(nullable = false)
 	private int codComentario;
 	
 	@Column(nullable = false, length = 300)
@@ -31,13 +32,24 @@ public class ComentarioEvento implements Serializable {
 
 	@Column(name="DATA_HORA", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
-	private  Calendar dt_hora;
+	private  Calendar dtHora;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Evento codEvento;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
+
+	
+	public Calendar getDtHora() {
+		return dtHora;
+	}
+
+	public void setDtHora(Calendar dtHora) {
+		this.dtHora = dtHora;
+	}
 
 	public int getCodComentario() {
 		return codComentario;
@@ -53,14 +65,6 @@ public class ComentarioEvento implements Serializable {
 
 	public void setComentario(String comentario) {
 		this.comentario = comentario;
-	}
-
-	public Calendar getDt_hora() {
-		return dt_hora;
-	}
-
-	public void setDt_hora(Calendar dt_hora) {
-		this.dt_hora = dt_hora;
 	}
 
 	public Evento getCodEvento() {

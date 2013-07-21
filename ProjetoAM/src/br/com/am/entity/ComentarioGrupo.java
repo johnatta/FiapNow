@@ -3,11 +3,13 @@ package br.com.am.entity;
 import java.io.Serializable;
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -21,7 +23,6 @@ public class ComentarioGrupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioGrupo")
-	@Column(nullable = false)
 	private int codComentario;
 	
 	@Column(nullable = false, length = 300)
@@ -34,9 +35,11 @@ public class ComentarioGrupo implements Serializable {
 	private  Calendar dataHora;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Pessoa codPessoa;
 	
 	@Column
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Grupo codGrupo;
 
 	public int getCodComentario() {
