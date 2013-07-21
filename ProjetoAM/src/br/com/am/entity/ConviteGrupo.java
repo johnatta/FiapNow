@@ -19,16 +19,16 @@ public class ConviteGrupo implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqConviteGrupo")
-	@Column(name="COD_Convite")
+	@Column(nullable= false)
 	private int codConvite;
 	
-	@Column
+	@Column(nullable = false, length = 100)
 	private String descricao;
 	
-	@Column(name="COD_PESSOA")
+	@Column
 	private Pessoa codPessoa;
 	
-	@Column(name="COD_GRUPO")
+	@Column
 	private Grupo codGrupo;
 
 	public int getCodConvite() {

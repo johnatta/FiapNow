@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -47,10 +48,18 @@ public class Pessoa implements Serializable {
 	private String cel;
 	
 	@Column(name="IMAGEM_PERFIL", nullable = false)
+	@Lob
 	private byte [] imgPerfil;
 	
 	@Column(name="IMAGEM_BACK_GROUND", nullable = false)
+	@Lob
 	private byte [] imgBackGround;
+	
+	@Column
+	private Usuario codUsuario;
+	
+	@Column
+	private Endereco codEndereco;
 
 	public int getCodPessoa() {
 		return codPessoa;
@@ -122,6 +131,22 @@ public class Pessoa implements Serializable {
 
 	public void setImgBackGround(byte[] imgBackGround) {
 		this.imgBackGround = imgBackGround;
+	}
+
+	public Usuario getCodUsuario() {
+		return codUsuario;
+	}
+
+	public void setCodUsuario(Usuario codUsuario) {
+		this.codUsuario = codUsuario;
+	}
+
+	public Endereco getCodEndereco() {
+		return codEndereco;
+	}
+
+	public void setCodEndereco(Endereco codEndereco) {
+		this.codEndereco = codEndereco;
 	}
 	
 

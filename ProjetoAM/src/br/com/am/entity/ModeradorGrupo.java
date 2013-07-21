@@ -2,6 +2,7 @@ package br.com.am.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -10,12 +11,12 @@ import javax.persistence.Table;
 @SequenceGenerator(name="seqModeradorGrupo", sequenceName="SEQ_AM_MODERADOR_GRUPO", allocationSize=1)
 public class ModeradorGrupo implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 4412672523001437107L;
-	
-	
+	@Column
 	private Grupo codGrupo;
 	
+	@Column
 	private Pessoa codPessoa;
 
 	public Grupo getCodGrupo() {

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -14,9 +15,8 @@ import javax.persistence.Table;
 @Table(name="AM_GRUPO")
 @SequenceGenerator(name="seqGrupo", sequenceName="SEQ_AM_GRUPO", allocationSize=1)
 public class Grupo implements Serializable {
-	
-	private static final long serialVersionUID = -1460947989648440636L;
 
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqGrupo")
@@ -26,17 +26,16 @@ public class Grupo implements Serializable {
 	@Column(nullable = false , length = 50)
 	private String nomeGrupo;
 	
-	
-	// no mapeamento esta como float checar com o ariel depois
 	@Column(name="IMAGEM_GRUPO", nullable = false)
+	@Lob
 	private byte [] imgGrupo;
 	
 	
 	@Column(nullable = false , length = 300)
 	private String descricao;
 	
-	@Column(nullable = false , length = 1)
-	private char privacidade;
+	@Column(nullable = false)
+	private Privacidade privacidade;
 
 	public int getCodGrupo() {
 		return codGrupo;
@@ -70,13 +69,14 @@ public class Grupo implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public char getPrivacidade() {
+	public Privacidade getPrivacidade() {
 		return privacidade;
 	}
 
-	public void setPrivacidade(char privacidade) {
+	public void setPrivacidade(Privacidade privacidade) {
 		this.privacidade = privacidade;
 	}
-	
+
+
 
 }

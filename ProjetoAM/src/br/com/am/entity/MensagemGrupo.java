@@ -12,26 +12,26 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="AM_MENSAGEM_GRUPO")
-@SequenceGenerator(name="seqMensagemGRUPO", sequenceName="SEQ_AM_MENSAGEM_GRUPO", allocationSize=1)
+@SequenceGenerator(name="seqMensagemGrupo", sequenceName="SEQ_AM_MENSAGEM_GRUPO", allocationSize=1)
 public class MensagemGrupo implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqMensagemGRUPO")
-	@Column(name="COD_MENSAGEM")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqMensagemGrupo")
+	@Column(nullable = false)
 	private int codMensagem;
 	
-	@Column
+	@Column( nullable = false, length = 100)
 	private String descricao;
 	
-	@Column
+	@Column(nullable = false)
 	private Confirmacao confirmacao;
 	
-	@Column(name="COD_PESSOA")
+	@Column
 	private Pessoa codPessoa;
 	
-	@Column(name="COD_GRUPO")
+	@Column
 	private Grupo codGrupo;
 	
 	public int getCodMensagem() {

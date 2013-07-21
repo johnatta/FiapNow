@@ -14,9 +14,9 @@ import javax.persistence.Table;
 @Table(name="AM_USUARIO")
 @SequenceGenerator(name="seqUsuario", sequenceName="SEQ_AM_USUARIO", allocationSize=1)
 public class Usuario implements Serializable {
-
-	private static final long serialVersionUID = -8511969446755834696L;
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqUsuario")
 	@Column(nullable = false)

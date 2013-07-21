@@ -19,19 +19,19 @@ public class MensagemEvento implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqMensagemEvento")
-	@Column(name="COD_MENSAGEM")
+	@Column(nullable = false)
 	private int codMensagem;
 	
-	@Column
+	@Column( nullable = false, length = 100)
 	private String descricao;
 	
-	@Column
+	@Column(nullable = false)
 	private Confirmacao confirmacao;
 	
-	@Column(name="COD_PESSOA")
+	@Column
 	private Pessoa codPessoa;
 	
-	@Column(name="COD_EVENTO")
+	@Column
 	private Evento codEvento;
 	
 	public int getCodMensagem() {

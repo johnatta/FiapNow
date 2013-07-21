@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -18,9 +19,9 @@ import javax.persistence.TemporalType;
 @Table(name="AM_EVENTO")
 @SequenceGenerator(name="seqEvento", sequenceName="SEQ_AM_EVENTO", allocationSize=1)
 public class Evento implements Serializable {
-	
-	private static final long serialVersionUID = -3560198451472921713L;
-	
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEvento")
 	@Column(nullable = false)
@@ -43,13 +44,16 @@ public class Evento implements Serializable {
 	private String descricao;
 	
 	@Column(name="IMAGEM_EVENTO", nullable = false)
+	@Lob
 	private byte [] imgEvento;
 	
-	@Column(nullable = false, length = 1)
-	private char privacidade;
+	@Column(nullable = false)
+	private Privacidade privacidade;
 	
+	@Column
 	private Endereco codEndereco;
 	
+	@Column
 	private Esporte codEsporte;
 
 	public int getCodEvento() {
@@ -108,13 +112,6 @@ public class Evento implements Serializable {
 		this.imgEvento = imgEvento;
 	}
 
-	public char getPrivacidade() {
-		return privacidade;
-	}
-
-	public void setPrivacidade(char privacidade) {
-		this.privacidade = privacidade;
-	}
 
 	public Endereco getCodEndereco() {
 		return codEndereco;
@@ -130,6 +127,14 @@ public class Evento implements Serializable {
 
 	public void setCodEsporte(Esporte codEsporte) {
 		this.codEsporte = codEsporte;
+	}
+
+	public Privacidade getPrivacidade() {
+		return privacidade;
+	}
+
+	public void setPrivacidade(Privacidade privacidade) {
+		this.privacidade = privacidade;
 	}
 	
 	

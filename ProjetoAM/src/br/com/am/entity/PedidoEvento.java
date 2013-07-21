@@ -18,16 +18,16 @@ public class PedidoEvento implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqPedidoEvento")
-	@Column(name="COD_PEDIDO")
+	@Column(nullable = false)
 	private int codPedido;
 	
-	@Column
+	@Column( nullable = false, length = 100)
 	private String descricao;
 	
-	@Column(name="COD_PESSOA")
+	@Column
 	private Pessoa codPessoa;
 	
-	@Column(name="COD_EVENTO")
+	@Column
 	private Evento codEvento;
 
 	public int getCodPedido() {

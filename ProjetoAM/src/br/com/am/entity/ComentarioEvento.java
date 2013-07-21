@@ -18,8 +18,8 @@ import javax.persistence.TemporalType;
 @SequenceGenerator(name="seqComentarioEvento", sequenceName="SEQ_AM_COMENTARIO_EVENTO", allocationSize=1)
 public class ComentarioEvento implements Serializable {
 
-	private static final long serialVersionUID = -2020128513392338462L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioEvento")
 	@Column(nullable = false)
@@ -33,8 +33,10 @@ public class ComentarioEvento implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private  Calendar dt_hora;
 	
+	@Column
 	private Evento codEvento;
 	
+	@Column
 	private Pessoa codPessoa;
 
 	public int getCodComentario() {

@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name="seqEndereco", sequenceName="SEQ_AM_ENDERECO", allocationSize=1)
 public class Endereco implements Serializable {
 
-	private static final long serialVersionUID = 8433254535120102448L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEndereco")
 	@Column(nullable = false)

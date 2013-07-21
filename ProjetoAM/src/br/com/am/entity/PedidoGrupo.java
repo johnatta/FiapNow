@@ -19,16 +19,16 @@ public class PedidoGrupo implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqPedidoGrupo")
-	@Column(name="COD_PEDIDO")
+	@Column(nullable = false)
 	private int codPedidoGrupo;
 	
-	@Column
+	@Column(nullable = false, length = 100)
 	private String descricao;
 	
-	@Column(name="COD_PESSOA")
+	@Column
 	private Pessoa codPessoa;
 	
-	@Column(name="COD_GRUPO")
+	@Column
 	private Grupo codGrupo;
 
 	public int getCodPedidoGrupo() {

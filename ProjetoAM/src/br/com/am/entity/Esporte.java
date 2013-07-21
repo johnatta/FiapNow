@@ -15,8 +15,8 @@ import javax.persistence.Table;
 @SequenceGenerator(name="seqEsporte", sequenceName="SEQ_AM_ESPORTE", allocationSize=1)
 public class Esporte implements Serializable {
 
-	private static final long serialVersionUID = -3944768996149515464L;
-	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEsporte")
 	@Column(nullable = false)
