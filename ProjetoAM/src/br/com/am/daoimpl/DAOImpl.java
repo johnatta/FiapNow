@@ -15,29 +15,37 @@ public class DAOImpl<T,K> implements DAO<T,K> {
 	private Class<T> entityClass;
 	
 	@SuppressWarnings("all")
-	public DAOImpl(){
+	public DAOImpl(EntityManager entityManager){
 		this.entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]; 
 	}
 	
 	@Override
 	public void insert(T entity) {
+		em.getTransaction().begin();
 		em.persist(entity);		
+		em.getTransaction().commit();
 	}
 
 	@Override
 	public void remove(T entity) {
+		em.getTransaction().begin();
 		em.remove(entity);
+		em.getTransaction().commit();
 	}
 
 	@Override
 	public void removeById(K id) {
+		em.getTransaction().begin();
 		T entity = em.find(entityClass,id);
 		em.remove(entity);
+		em.getTransaction().commit();
 	}
 
 	@Override
 	public void update(T entity) {
+		em.getTransaction().begin();
 		em.merge(entity);
+		em.getTransaction().commit();
 	}
 
 	@Override
