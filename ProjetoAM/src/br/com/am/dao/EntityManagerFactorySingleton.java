@@ -7,7 +7,7 @@ public class EntityManagerFactorySingleton {
 	
 	private static EntityManagerFactory factory;
 	
-	public EntityManagerFactorySingleton() {
+	private EntityManagerFactorySingleton() {
 		super();
 	}
 	
