@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+   
+ <f:view>
+ 
+	<h:head>
+		<title>Encontros Esportivos</title>
+        <h:outputStylesheet name="main.css" library="css"></h:outputStylesheet>
+		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
+	</h:head>
+	
+	<h:body>
+    
+		<div id="main_container">
+			<div id="header">
+				<div id="content_header">
+					<div id="header_menu">
+						<a href="#"><div id="header_itemMenu">
+							Encontro Esportivo
+						</div></a>
+                        <ui:insert name="header_menu">
+						<div id="header_itemMenu">
+                            <h:outputLink value="#">
+                                <h:graphicImage name="eventos.png" library="images" height="21" width="21"></h:graphicImage>
+                            </h:outputLink>
+						</div>
+						<div id="header_itemMenu">
+							<h:outputLink value="#">
+                                <h:graphicImage name="grupos.png" library="images" height="21" width="21"></h:graphicImage>
+                            </h:outputLink>
+						</div>
+						<div id="header_itemMenu">
+							<h:outputLink value="#">
+                                <h:graphicImage name="avisos.png" library="images" height="21" width="21"></h:graphicImage>
+                            </h:outputLink>
+						</div>
+                        </ui:insert>
+					</div>
+                    <ui:insert name="header_user">
+					<div id="user_info">
+						Nome Usuário | <h:link value="Logout" outcome="_templateEE.xhtml"></h:link>
+					</div>
+                    </ui:insert>
+					<br style="clear:both;" />
+				</div>
+			</div>
+            
+			<ui:insert name="menu">
+			<div id="menu">
+				<div id="menu_content">
+					<div id="itemMenu">
+                        <h:outputLink value="#">Home</h:outputLink>
+					</div>
+					<div id="itemMenu">
+						<h:outputLink value="#">Perfil</h:outputLink>
+					</div>
+					<div id="itemMenu">
+						<h:outputLink value="#">Grupos</h:outputLink>
+					</div>
+					<div id="itemMenu">
+						<h:outputLink value="#">Eventos</h:outputLink>
+					</div>
+					<br style="clear:both;" />
+				</div>
+			</div>
+            </ui:insert>
+
+			<div id="main_content">
+                <ui:insert name="main_content">
+				<h1>Título Pág.</h1>
+				<br /><br /><br /><br />
+				Conteúdo Padrão!
+				<br /><br /><br /><br />
+                </ui:insert>
+			</div>
+
+			<div id="footer">
+                <ui:insert name="footer">
+				<div id="footer_content">
+					Javax Solutions
+				</div>
+                </ui:insert>
+			</div>
+		</div>
+        
+	</h:body>
+
+</f:view>
+	
+</html>
