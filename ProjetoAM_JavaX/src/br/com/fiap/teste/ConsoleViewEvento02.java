@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioEventoDAO;
 import br.com.fiap.dao.ConviteEventoDAO;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.MensagemEventoDAO;
 import br.com.fiap.dao.ModeradorEventoDAO;
@@ -16,6 +17,7 @@ import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorEventoDAOImpl;
@@ -35,7 +37,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 import br.com.fiap.entity.Usuario;
 
-public class ConsoleViewEvento {
+public class ConsoleViewEvento02 {
 	
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
@@ -52,134 +54,108 @@ public class ConsoleViewEvento {
 		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
 		ConviteEventoDAO convtEventoDAO = new ConviteEventoDAOImpl(em);
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		EsporteDAO esporteDAO = new EsporteDAOImpl(em);
 		
 		List<Esporte> esportes = new ArrayList<Esporte>();
-
+		List<Esporte> esportesA = new ArrayList<Esporte>();
+		//Lista de esportes 
 		Esporte esporteE = new Esporte();
-		esporteE.setNome("HandBall");
+		esporteE.setNome("Skate");
 		esportes.add(esporteE);
 		
 		Esporte esporteB = new Esporte();
-		esporteB.setNome("Futebol");
+		esporteB.setNome("Bike");
 		esportes.add(esporteB);
-		
+
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Futsal");
+		esporteC.setNome("Patins");
 		esportes.add(esporteC);
+		
+		//Lista de esportesA
+		Esporte esporteF = new Esporte();
+		esporteF.setNome("Volei");
+		esportesA.add(esporteF);
+		
+		Esporte esporteG = new Esporte();
+		esporteG.setNome("Volei de praia");
+		esportesA.add(esporteG);
 		
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		
 		Grupo grupoA = new Grupo();
-		grupoA.setNomeGrupo("Somente Amigos");
-		grupoA.setDescricao("Grupo formado por amigos da rua Max Planck");
-		grupoA.setPrivacidade(Privacidade.Fechado);
+		grupoA.setNomeGrupo("House of lions");
+		grupoA.setDescricao("Grupo para os apaixonados de esportes radicais de rua.");
+		grupoA.setPrivacidade(Privacidade.Aberto);
 		grupoA.setImgGrupo(new byte[3]);
 		grupoA.setEsportes(esportes);
 		grupos.add(grupoA);
 		
 		Grupo grupoB = new Grupo();
-		grupoB.setNomeGrupo("Futebol Arte");
-		grupoB.setDescricao("Grupo formado para aqueles que apreciam um Futebol de qualidade");
+		grupoB.setNomeGrupo("Set Point");
+		grupoB.setDescricao("Grupo formado para adeptos do Volleyball tanto de quadra como de praia.");
 		grupoB.setPrivacidade(Privacidade.Aberto);
 		grupoB.setImgGrupo(new byte[4]);
-		grupoB.setEsportes(esportes);
-		grupos.add(grupoB);
-		
-		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Joao");
-		pessoa.setSobrenome("Mendes");
-		pessoa.setDtNasc(dtNascimento);
-		pessoa.setApelido("JM");
-		pessoa.setTelRes("01120345323");
-		pessoa.setCel("011975641290");
-		pessoa.setImgPerfil(new byte[3]);
-		pessoa.setImgBackGround(new byte[5]);
-		pessoa.setEsportes(esportes);
-		pessoa.setGrupos(grupos);
-		
-		Usuario usuario = new Usuario();
-		usuario.setEmail("joaomendes.jm@gmail.com");
-		usuario.setSenha("joaoJM30");
-		pessoa.setCodUsuario(usuario);
-		
-		Endereco enderecoP = new Endereco();
-		enderecoP.setPais("Brasil");
-		enderecoP.setEstado("SP");
-		enderecoP.setCidade("São Paulo");
-		enderecoP.setBairro("Curuça");
-		enderecoP.setCep("03701000");
-		enderecoP.setRua("Max Planck");
-		enderecoP.setNumero(160);
-		enderecoP.setComplemento(null);
-		enderecoP.setLatitude((float) -23.601981);
-		enderecoP.setLongitude((float) -46.667178);
-		pessoa.setCodEndereco(enderecoP);
-		
-		pessoaDAO.insert(pessoa); 
+		grupoB.setEsportes(esportesA);
 		
 		Evento evento = new Evento();
-		evento.setNome("Futebol Amigo");
-		evento.setDescricao("Futebol para reunir a galerinha do futiba pra lembrar dos velhos tempos.");
-		evento.setPrivacidade(Privacidade.Fechado);
-		evento.setCusto(90);
-		evento.setTelContato("01120482159");
+		evento.setNome("Skate Long - Ipiranga");
+		evento.setDescricao("Andar de Long nas imediaçõs do Museu do Ipiranga, clima familiar e histórico.");
+		evento.setPrivacidade(Privacidade.Aberto);
+		evento.setCusto(0);
+		evento.setTelContato("01150652999");
 		evento.setImgEvento(new byte [4]);
-		evento.setDtEvento(dtNascimento);
+		evento.setDtEvento(Calendar.getInstance());
 		evento.setGrupos(grupos);
-		
-		Esporte esporteA = new Esporte();
-		esporteA.setNome("Futebol");
-		evento.setCodEsporte(esporteA);
+		evento.setCodEsporte(esporteB);
 		
 		Endereco endereco = new Endereco();
 		endereco.setPais("Brasil");
 		endereco.setEstado("SP");
 		endereco.setCidade("São Paulo");
-		endereco.setBairro("Vila Ribeiro de Barros");
-		endereco.setCep("05307200");
-		endereco.setRua("Av. Embaixador Macedo Soares");
-		endereco.setNumero(8000);
-		endereco.setComplemento(null);
-		endereco.setLatitude((float) -23.51734);
-		endereco.setLongitude((float) -46.730175);
+		endereco.setBairro("Ipiranga");
+		endereco.setCep("04263000");
+		endereco.setRua("Av. Nazareth");
+		endereco.setNumero(0000);
+		endereco.setComplemento("Museu do Ipiranga");
+		endereco.setLatitude((float) -23.579745);
+		endereco.setLongitude((float) -46.610244);
+		
 		evento.setCodEndereco(endereco);
-		
 		eventoDAO.insert(evento); 
+
+		//Buscando por ID - PESSOA
+		Pessoa pes = new Pessoa();
+		pes = pessoaDAO.searchByID(3);
 		
-		// PEDIDO EVENTO
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");
 		pedidoEvento.setCodEvento(evento);
-		pedidoEvento.setCodPessoa(pessoa);
+		pedidoEvento.setCodPessoa(pes);
 		pedEventoDAO.insert(pedidoEvento);  
 
-		// MODERADOR EVENTO
 		ModeradorEvento modEvento = new ModeradorEvento();
 		modEvento.setCodEvento(evento);
-		modEvento.setCodPessoa(pessoa);
+		modEvento.setCodPessoa(pes);
 		modEventoDAO.insert(modEvento);  
 		
-		// COMENTARIO EVENTO
 		ComentarioEvento comentEvento = new ComentarioEvento();
-		comentEvento.setComentario("Estou esperando todos na porta da quadra");
+		comentEvento.setComentario("Aguardando todos ao meio dia em frente ao monumento.");
 		comentEvento.setDtHora(Calendar.getInstance());
 		comentEvento.setCodEvento(evento);
-		comentEvento.setCodPessoa(pessoa);
+		comentEvento.setCodPessoa(pes);
 		comentEventoDAO.insert(comentEvento);
 		
-		// MENSAGEM EVENTO
 		MensagemEvento msgEvento = new MensagemEvento();
-		msgEvento.setDescricao("Briga e baixaria nao sera permitido. Sujeito a sair no meio do evento");
+		msgEvento.setDescricao("Favor lembre-se de levar protetores para a prática do long.");
 		msgEvento.setConfirmacao(Confirmacao.SIM);
 		msgEvento.setCodEvento(evento);
-		msgEvento.setCodPessoa(pessoa);
+		msgEvento.setCodPessoa(pes);
 		msgEventoDAO.insert(msgEvento); 
 		
-		// CONVITE EVENT0
 		ConviteEvento convtEvento = new ConviteEvento();
-		convtEvento.setDescricao("Espero você para um futebol digno.");
+		convtEvento.setDescricao("Você foi convidado para o Evento de skate no Museu do Ipiranga.");
 		convtEvento.setCodEvento(evento);
-		convtEvento.setCodPessoa(pessoa);
+		convtEvento.setCodPessoa(pes);
 		convtEventoDAO.insert(convtEvento); 
 		
 		/*
@@ -199,7 +175,7 @@ public class ConsoleViewEvento {
 		eventoN.setPrivacidade(Privacidade.Aberto);
 		eventoN.setTelContato("01130687456");
 		eventoN.setGrupos(grupos);
-		eventoN.setCodEndereco(enderecoP);
+		eventoN.setCodEndereco(endereco);
 		eventoN.setCodEsporte(esporteA);
 		eventoDAO.update(eventoN);
 		
@@ -215,7 +191,7 @@ public class ConsoleViewEvento {
 		eventoD.setPrivacidade(Privacidade.Aberto);
 		eventoD.setTelContato("01130687456");
 		eventoD.setGrupos(grupos);
-		eventoD.setCodEndereco(enderecoP);
+		eventoD.setCodEndereco(endereco);
 		eventoD.setCodEsporte(esporteA);
 		
 		eventoDAO.insert(eventoD); 

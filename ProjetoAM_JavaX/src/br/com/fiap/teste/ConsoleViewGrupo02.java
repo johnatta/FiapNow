@@ -34,12 +34,16 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 import br.com.fiap.entity.Usuario;
 
-public class ConsoleViewGrupo {
+public class ConsoleViewGrupo02 {
+
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(30, 8, 22);
+		dtNascimento.set(12, 10, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(30, 6, 12);
+		dtNascimentoA.set(91, 8, 20);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
@@ -51,114 +55,100 @@ public class ConsoleViewGrupo {
 		ConviteGrupoDAO convtGrupoDAO = new ConviteGrupoDAOImpl(em);
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		
 		List<Esporte> esportesP = new ArrayList<Esporte>();
 
-		// ESPORTE - ADICIONANDO A LISTA
 		Esporte esporteD = new Esporte();
-		esporteD.setNome("Futebol Americano");
+		esporteD.setNome("Atletismo");
 		esportesP.add(esporteD);
 		
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Rugby");
+		esporteC.setNome("Corrida");
 		esportesP.add(esporteC);
 		
-		// PESSOA
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Álvaro Michel");
-		pessoa.setSobrenome("Schmidt");
-		pessoa.setDtNasc(dtNascimento);
-		pessoa.setApelido("AMSheep");
-		pessoa.setTelRes("01150099041");
-		pessoa.setCel("011967893241");
+		pessoa.setNome("Camila");
+		pessoa.setSobrenome("Andrade");
+		pessoa.setDtNasc(dtNascimentoA);
+		pessoa.setApelido("Milla");
+		pessoa.setTelRes("01140099041");
+		pessoa.setCel("011978003241");
 		pessoa.setImgPerfil(new byte[3]);
 		pessoa.setImgBackGround(new byte[5]);
 		pessoa.setEsportes(esportes);
 		
-		// USUARIO PARA PESSOA
 		Usuario usuario = new Usuario();
-		usuario.setEmail("alvaro.schmidt@gmail.com");
-		usuario.setSenha("alvaro8790");
+		usuario.setEmail("camila.andrade@gmail.com");
+		usuario.setSenha("milla91");
 		pessoa.setCodUsuario(usuario);
 		
-		// ENDERECO PARA PESSOA
 		Endereco enderecoP = new Endereco();
 		enderecoP.setPais("Brasil");
 		enderecoP.setEstado("SP");
 		enderecoP.setCidade("São Paulo");
-		enderecoP.setBairro("São Judas");
-		enderecoP.setCep("04303191");
-		enderecoP.setRua("Rua Maurício de Lacerda");
-		enderecoP.setNumero(396);
+		enderecoP.setBairro("Moema");
+		enderecoP.setCep("04522034");
+		enderecoP.setRua("Rua Gaivota");
+		enderecoP.setNumero(1027);
 		enderecoP.setComplemento(null);
-		enderecoP.setLatitude((float) -23.625601);
-		enderecoP.setLongitude((float) -46.635383);
+		enderecoP.setLatitude((float) -23.604525);
+		enderecoP.setLongitude((float) -46.668428);
 		pessoa.setCodEndereco(enderecoP);
-
-		// INSERINDO PESSOA
+		
 		pessoaDAO.insert(pessoa); 
 		
-		// CRIANDO GRUPO
 		Grupo grupo = new Grupo();
-		grupo.setNomeGrupo("Bandeirantes Raptors");
-		grupo.setDescricao("Somos os Bandeirantes Raptors queremos construir um grupo que goste e pratique Rugby e Futebol Americano. " +
-				"Todo o membro será bem-vindo para compartilhar das mesmas paixões. " +
-				"GO B.Raptors!");
+		grupo.setNomeGrupo("Corredores Incasáveis");
+		grupo.setDescricao("Somos um grupo formando por pessoas que gostam de se exercitar, tendo as praticas de corrida como " +
+				"principal paixão. Aqui nos temos interesse de unir pessoas para corrida em dupla ou grupo.");
 		grupo.setPrivacidade(Privacidade.Aberto);
 		grupo.setImgGrupo(new byte [4]);
 		
-		// ESPORTES PARA GRUPO
 		Esporte esporteA = new Esporte();
-		esporteA.setNome("Futebol Americano");
+		esporteA.setNome("Corrida");
 		
-		Esporte esporteB = new Esporte();
-		esporteB.setNome("Rugby");
+		//Esporte esporteB = new Esporte();
+		//esporteB.setNome("Rugby");
 		
 		esportes.add(esporteA);
-		esportes.add(esporteB);
+		//esportes.add(esporteB);
 		grupo.setEsportes(esportes);
 		
-		// INSERINDO GRUPO
 		grupoDAO.insert(grupo);
 		
-		// PEDIDO GRUPO
 		PedidoGrupo pedidoGrupo = new PedidoGrupo();
-		pedidoGrupo.setDescricao("Eu desejo participar pois sou apaixonado por Rugby.");
+		pedidoGrupo.setDescricao("Eu desejo participar pois amo correr.");
 		pedidoGrupo.setCodGrupo(grupo);
 		pedidoGrupo.setCodPessoa(pessoa);
-		// INSERINDO PEDIDO
+		
 		pedGrupoDAO.insert(pedidoGrupo);
 		
-		//MODERADOR GRUPO
 		ModeradorGrupo modGrupo = new ModeradorGrupo();
 		modGrupo.setCodGrupo(grupo);
 		modGrupo.setCodPessoa(pessoa);
-		// INSERINDO MODERADOR
+		
 		modGrupoDAO.insert(modGrupo);
 		
-		//COMENTARIO NO GRUPO
 		ComentarioGrupo comentGrupo = new ComentarioGrupo();
-		comentGrupo.setComentario("Curti muito a iniciativa de criar um grupo para ambos esporte que pratico. Temos que combinar de jogar ainda neste mês.");
+		comentGrupo.setComentario("Poderíamos fazer um evento para corrida no Parque do Ibirapuera.");
 		comentGrupo.setDataHora(Calendar.getInstance());
 		comentGrupo.setCodGrupo(grupo);
 		comentGrupo.setCodPessoa(pessoa);
-		// INSERINDO COMENTARIO
+		
 		comentGrupoDAO.insert(comentGrupo);
 		
-		// CRIANDO MSG GRUPO
 		MensagemGrupo msgGrupo = new MensagemGrupo();
-		msgGrupo.setDescricao("Seja bem-vindo ao nosso grupo Bandeirantes Raptors!");
+		msgGrupo.setDescricao("Seja bem-vindo ao nosso grupo!");
 		msgGrupo.setConfirmacao(Confirmacao.SIM);
 		msgGrupo.setCodGrupo(grupo);
 		msgGrupo.setCodPessoa(pessoa);
-		// INSERINDO MSG GRUPO
+		
 		msgGrupoDAO.insert(msgGrupo);
 		
-		// CONVITE GRUPO
 		ConviteGrupo convtGrupo = new ConviteGrupo();
-		convtGrupo.setDescricao("Vi que você gosta de Futebol americano, gostaria de participar do meu grupo ?.");
+		convtGrupo.setDescricao("Gostaria de participar do meu grupo: Corredores Incasáveis.");
 		convtGrupo.setCodGrupo(grupo);
 		convtGrupo.setCodPessoa(pessoa);
-		//INSERINDO CONVITE GRUPO
 		convtGrupoDAO.insert(convtGrupo);
 	}
 
