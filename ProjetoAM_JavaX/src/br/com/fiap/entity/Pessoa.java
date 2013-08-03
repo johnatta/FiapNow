@@ -28,14 +28,14 @@ import br.com.fiap.entity.Usuario;
 
 @Entity
 @Table(name="AM_PESSOA")
-@SequenceGenerator(name="TseqPessoa", sequenceName="T_SEQ_AM_PESSOA", allocationSize=1)
+@SequenceGenerator(name="seqPessoa", sequenceName="SEQ_AM_PESSOA", allocationSize=1)
 public class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="TseqPessoa")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqPessoa")
+	@Column(name="cod_pessoa")
 	private int codPessoa;
 
 	@Column(nullable = false, length = 50)
@@ -48,10 +48,8 @@ public class Pessoa implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private  Calendar dtNasc;
 
-
 	@Column(nullable = false, length = 40)
 	private String apelido;
-
 
 	@Column(name="TELEFONE_RESIDENCIAL", length = 12)
 	private String telRes;
@@ -68,11 +66,12 @@ public class Pessoa implements Serializable {
 	private byte [] imgBackGround;
 
 	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_pessoa_usuario")
 	private Usuario codUsuario;	
 
 	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_pessoa_endereco")
 	private Endereco codEndereco;
-
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_ESPORTE",
@@ -80,18 +79,16 @@ public class Pessoa implements Serializable {
 	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
 	private List<Esporte> esportes;
 
-
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_GRUPO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
 	private List<Grupo> grupos;
 
-
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_EVENTO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
-	inverseJoinColumns={@JoinColumn(name="COD_EEVENTO")})
+	inverseJoinColumns={@JoinColumn(name="COD_EVENTO")})
 	private List<Evento> eventos;
 
 	public Pessoa(String nome, String sobrenome, Calendar dtNasc,
@@ -228,6 +225,4 @@ public class Pessoa implements Serializable {
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
 	}
-
-
 }

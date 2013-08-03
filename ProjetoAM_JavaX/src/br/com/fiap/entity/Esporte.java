@@ -19,6 +19,7 @@ public class Esporte implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEsporte")
+	@Column(name="cod_esporte")
 	private int codEsporte;
 	
 	@Column(nullable = false, length = 60)

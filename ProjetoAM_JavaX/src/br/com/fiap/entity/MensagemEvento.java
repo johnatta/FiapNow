@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,6 +25,7 @@ public class MensagemEvento implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqMensagemEvento")
+	@Column(name="cod_mensagem_evento")
 	private int codMensagem;
 
 	@Column( nullable = false, length = 100)
@@ -32,11 +34,12 @@ public class MensagemEvento implements Serializable{
 	@Column(name = "CONFIRMACAO", nullable = false)
 	private Confirmacao confirmacao;
 
-
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="msg_evento_pessoa")
 	private Pessoa codPessoa;	
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="msg_evento")
 	private Evento codEvento;	
 
 	public MensagemEvento(String descricao, Confirmacao confirmacao,

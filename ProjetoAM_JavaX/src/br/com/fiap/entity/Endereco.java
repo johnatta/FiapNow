@@ -19,6 +19,7 @@ public class Endereco implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEndereco")
+	@Column(name="cod_endereco")
 	private int codEndereco;
 	
 	@Column(nullable = false, length = 40)
@@ -180,8 +181,5 @@ public class Endereco implements Serializable {
 	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
-
-
-
 
 }

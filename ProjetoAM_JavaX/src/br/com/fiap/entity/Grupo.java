@@ -28,9 +28,10 @@ public class Grupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqGrupo")
+	@Column(name="cod_grupo")
 	private int codGrupo;
 	
-	@Column(nullable = false , length = 50)
+	@Column(nullable = false , name="nome_grupo", length = 50)
 	private String nomeGrupo;
 	
 	@Column(name="IMAGEM_GRUPO", nullable = false)

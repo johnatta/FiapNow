@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,11 +27,11 @@ public class ComentarioGrupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioGrupo")
+	@Column(name="cod_comentario_grupo")
 	private int codComentario;
 
 	@Column(nullable = false, length = 300)
 	private String comentario;	
-	
 	
 	//TimeStamp  data/Hora
 	@Column(name="DATA_HORA", nullable = false)
@@ -38,10 +39,11 @@ public class ComentarioGrupo implements Serializable {
 	private  Calendar dataHora;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="coment_grupo_pessoa")
 	private Pessoa codPessoa;
 	
-	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="coment_cod_grupo")
 	private Grupo codGrupo;
 
 	public ComentarioGrupo(String comentario, Calendar dataHora,
@@ -96,6 +98,4 @@ public class ComentarioGrupo implements Serializable {
 	public void setCodGrupo(Grupo codGrupo) {
 		this.codGrupo = codGrupo;
 	}
-
-
 }

@@ -35,6 +35,7 @@ public class Evento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqEvento")
+	@Column(name="cod_evento")
 	private int codEvento;
 
 	@Column(nullable = false , length = 40)
@@ -62,11 +63,12 @@ public class Evento implements Serializable {
 
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_evento_endereco")
 	private Endereco codEndereco;	
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_evento_esporte")
 	private Esporte codEsporte;
-
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_EVENTO_GRUPO",

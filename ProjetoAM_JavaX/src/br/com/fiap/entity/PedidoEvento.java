@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -24,15 +25,18 @@ public class PedidoEvento implements Serializable{
 
 	@Id 
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqPedidoEvento")
+	@Column(name="cod_pedido_evento")
 	private int codPedido;
 
 	@Column( nullable = false, length = 100)
 	private String descricao;
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_pedido_evento_pessoa")
 	private Pessoa codPessoa;
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_evento_ped")
 	private Evento codEvento;
 
 	public PedidoEvento(String descricao, Pessoa codPessoa, Evento codEvento) {
@@ -73,5 +77,4 @@ public class PedidoEvento implements Serializable{
 	public void setCodEvento(Evento codEvento) {
 		this.codEvento = codEvento;
 	}
-
 }

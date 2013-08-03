@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -27,6 +28,7 @@ public class ComentarioEvento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioEvento")
+	@Column(name="cod_comentario_evento")
 	private int codComentario;
 
 	@Column(nullable = false, length = 300)
@@ -37,13 +39,13 @@ public class ComentarioEvento implements Serializable {
 	private  Calendar dtHora;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="coment_evento")
 	private Evento codEvento;
 	
-	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="coment_evento_pessoa")
 	private Pessoa codPessoa;
 	
-
 	public ComentarioEvento(String comentario, Calendar dtHora,
 			Evento codEvento, Pessoa codPessoa) {
 		super();
@@ -96,7 +98,4 @@ public class ComentarioEvento implements Serializable {
 	public void setCodPessoa(Pessoa codPessoa) {
 		this.codPessoa = codPessoa;
 	}
-
-
-
 }

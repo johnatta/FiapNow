@@ -3,10 +3,12 @@ package br.com.fiap.entity;
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,11 +25,12 @@ public class ModeradorGrupo implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorGrupo")	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_moderador_grupo")
 	private Grupo codGrupo;	
 
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="cod_moderador_pessoa")
 	private Pessoa codPessoa;
-
 
 	public ModeradorGrupo(Grupo codGrupo, Pessoa codPessoa) {
 		super();
@@ -52,6 +55,4 @@ public class ModeradorGrupo implements Serializable {
 	public void setCodPessoa(Pessoa codPessoa) {
 		this.codPessoa = codPessoa;
 	}
-
-
 }

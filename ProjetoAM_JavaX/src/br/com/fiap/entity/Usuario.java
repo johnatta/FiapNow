@@ -19,6 +19,7 @@ public class Usuario implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqUsuario")
+	@Column(name="cod_usuario")
 	private int codUsuario;
 
 	@Column(nullable = false, length = 60)
