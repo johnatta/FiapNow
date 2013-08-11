@@ -17,7 +17,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public List<Grupo> buscaGruposPorUsuario(int codPessoa) {
-		TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomegrupo from Grupo g where g.codGrupo in (select cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
+		TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomeGrupo from Grupo g where codGrupo in (select cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
 		query.setFirstResult(0);
 		query.setMaxResults(3); 
 		query.setParameter("codPessoa",codPessoa);
@@ -26,7 +26,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public Grupo buscaInfoBasicas(int codGrupo) {
-		Query query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = gru.cod_grupo) as nummembros from Grupo gru order by nummembros");
+		Query query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = :cod_grupo) as nummembros from Grupo gru order by nummembros");
 		query.setParameter("codGrupo", codGrupo);
 		return (Grupo) query.getSingleResult();
 	}
