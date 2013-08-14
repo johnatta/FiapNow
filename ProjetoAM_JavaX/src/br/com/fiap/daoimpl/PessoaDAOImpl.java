@@ -17,7 +17,7 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 
 	@Override
 	public Pessoa buscarInformacoes(int codPessoa) {
-		Query query = em.createQuery("from Pessoa pes where pes.cod_pessoa_susuario = :codPessoa");
+		Query query = em.createQuery("from Pessoa pes where pes.codPessoa = :codPessoa");
 		query.setParameter("codPessoa", codPessoa);
 		return (Pessoa) query.getSingleResult();
 	}
