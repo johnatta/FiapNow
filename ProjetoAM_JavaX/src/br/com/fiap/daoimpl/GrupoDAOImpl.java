@@ -26,8 +26,10 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public Grupo buscaInfoBasicas(int codGrupo) {
-		Query query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = :cod_grupo) as nummembros from Grupo gru order by nummembros");
-		query.setParameter("codGrupo", codGrupo);
+		Query query = em.createNativeQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = ?) as nummembros from Grupo gru order by nummembros", Grupo.class);
+		//Query query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = :cod_grupo) as nummembros from Grupo gru order by nummembros");
+		query.setParameter(1, codGrupo);
+		//query.setParameter("codGrupo", codGrupo);
 		return (Grupo) query.getSingleResult();
 	}
 
