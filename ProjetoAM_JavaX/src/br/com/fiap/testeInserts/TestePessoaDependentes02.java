@@ -86,7 +86,8 @@ public class TestePessoaDependentes02 {
 		endereco.setLongitude((float) -46.535283);
 		pessoa.setCodEndereco(endereco);
 
-		/*
+		//pessoaDAO.insert(pessoa);
+
 		//Buscando por ID - PESSOA  ATUALIZANDO
 		Pessoa pes = new Pessoa();
 		Pessoa pesB = new Pessoa();
@@ -96,9 +97,8 @@ public class TestePessoaDependentes02 {
 		pesB.setDtNasc(dtNascimentoC);
 		//pessoaDAO.update(pes);
 		//pessoaDAO.update(pesB);
+		/*
 		
-		pessoaDAO.insert(pessoa);
-		 */
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
 		grupo = grupoDAO.searchByID(4);
@@ -106,7 +106,7 @@ public class TestePessoaDependentes02 {
 		
 		//Buscando por ID - PESSOA
 		Pessoa pesC = new Pessoa();
-		pesC = pessoaDAO.searchByID(8);
+		pesC = pessoaDAO.searchByID(5);
 		
 		pesC.setGrupos(grupos);
 		pessoaDAO.update(pesC);
@@ -121,6 +121,7 @@ public class TestePessoaDependentes02 {
 		pessoaE = pessoaDAO.searchByID(4);
 		pessoaE.setEventos(eventos);
 		pessoaDAO.update(pessoaE);
+		 */
 		
 	}
 

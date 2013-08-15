@@ -85,7 +85,6 @@ public class TestePessoaDependentes {
 		
 		
 		/*
-		 */
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
 		grupo = grupoDAO.searchByID(1);
@@ -108,6 +107,7 @@ public class TestePessoaDependentes {
 		pessoaE = pessoaDAO.searchByID(2);
 		pessoaE.setEventos(eventos);
 		pessoaDAO.update(pessoaE);
+		 */
 		
 	}
 
