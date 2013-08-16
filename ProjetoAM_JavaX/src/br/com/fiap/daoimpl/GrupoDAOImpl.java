@@ -1,5 +1,6 @@
 package br.com.fiap.daoimpl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -26,11 +27,22 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public Grupo buscaInfoBasicas(int codGrupo) {
-		Query query = em.createNativeQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = ?) as nummembros from Grupo gru order by nummembros", Grupo.class);
+		TypedQuery<Grupo> query = em.createQuery("from Grupo where cod_grupo = :cod",Grupo.class);
+		query.setParameter("cod", codGrupo);
+		Grupo grupo = query.getSingleResult();
+		
+		Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo a where a.cod_grupo = :cod");
+		queryQtd.setParameter("cod", codGrupo);
+		
+		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+		
+		grupo.setQuantidade(qtd);
+		
+		//Query query = em.createNativeQuery("select gru.cod_grupo, gru.nome_grupo, gru.imagem_grupo, (select count(*) from am_pessoa_grupo pg where pg.cod_grupo = ?) as nummembros from am_grupo gru order by nummembros", Grupo.class);
 		//Query query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = :cod_grupo) as nummembros from Grupo gru order by nummembros");
-		query.setParameter(1, codGrupo);
+		//query.setParameter(1, codGrupo);
 		//query.setParameter("codGrupo", codGrupo);
-		return (Grupo) query.getSingleResult();
+		return grupo;
 	}
 
 	@Override
