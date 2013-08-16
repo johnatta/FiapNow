@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,9 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import br.com.fiap.entity.Esporte;
-import br.com.fiap.entity.Privacidade;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="AM_GRUPO")
@@ -43,7 +42,9 @@ public class Grupo implements Serializable {
 	
 	@Column(name = "PRIVACIDADE", nullable = false)
 	private Privacidade privacidade;
-	
+
+	@Transient
+	private BigDecimal quantidade;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_GRUPO_ESPORTE",
@@ -112,6 +113,14 @@ public class Grupo implements Serializable {
 
 	public void setEsportes(List<Esporte> esportes) {
 		this.esportes = esportes;
+	}
+
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
 	}
 }
 
