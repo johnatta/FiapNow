@@ -4,12 +4,9 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.Pessoa;
 
 public class TesteGrazi {
 
@@ -35,8 +32,9 @@ public class TesteGrazi {
 		
 		g = gDAO.buscaInfoBasicas(2);
 		System.out.println("Nome: " + g.getNomeGrupo() );
-		System.out.println("Esporte: " + g.getEsportes().set(2, e));
+		System.out.println("Esporte: " + g.getEsportes().set(1, e).getNome());
 		System.out.println("Privacidade: " + g.getPrivacidade());
+		System.out.println("Quantidade: " + g.getQuantidade());
 		
 		
 		
