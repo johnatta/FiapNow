@@ -1,6 +1,7 @@
 package br.com.fiap.daoimpl;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,18 +19,27 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public List<Grupo> getbuscaGruposPorUsuario(Collection<Integer> codPessoa) {
-		//TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomeGrupo from Grupo g where codGrupo in (select cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
-		//query.setParameter("codPessoa",codPessoa);
-		//query.setFirstResult(0);
-		//query.setMaxResults(3); 
-		//List<Grupo> grupos = (List<Grupo>)q.getResultList();
+	public List<Grupo> buscaGruposDoUsuario(int codPessoa) {
+		/*
+		TypedQuery<Grupo> query = em.createQuery("select pg.codGrupo into g.codigosGrupo from am_pessoa_grupo pg, Grupo g where pg.cod_pessoa = :codPessoa",Grupo.class);
+		query.setParameter("codPessoa",codPessoa);
+		query.setFirstResult(0);
+		query.setMaxResults(3); 
+		List<Grupo> grupos = (List<Grupo>)query.getResultList();
+		
+		Collection<Integer> codGrupos = new ArrayList<Integer>();
+		TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomeGrupo from Grupo g where codGrupo in (select cod_grupo into :codGrupos from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
+		query.setParameter("codPessoa",codPessoa);
+		query.setParameter("codGrupos", codGrupos);
+		query.setFirstResult(0);
+		query.setMaxResults(3); 
+		List<Grupo> grupos = (List<Grupo>)query.getResultList();
+		*/
 		//query.getResultList();
 
-		//Query q = em.createNativeQuery("select cod_grupo, nome_grupo from am_grupo where cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ? and rownum <= 3)");
-		//q.setParameter(1, codPessoa);
-		
-		return null;
+		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select gru.cod_grupo, gru.nome_grupo from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ? and rownum <= 3)", Grupo.class);
+		q.setParameter(1, codPessoa);
+		return q.getResultList();
 	}
 
 	@Override
@@ -53,7 +63,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public List<Grupo> buscaGruposDoUsuario(int codPessoa) {
+	public List<Grupo> buscaGruposPorUsuario(int codPessoa) {
 		TypedQuery<Grupo> query = em.createQuery("select gru.cod_grupo, gru.nome_grupo, gru.img_grupo, (" +
 				"select count(pg) from am_pessoa_grupo pg where pg.cod_grupo = gru.cod_grupo) as nummembros " +
 				"from Grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where " +
