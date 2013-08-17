@@ -31,6 +31,23 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
 	}
+	
+	//Still doesn't work - Ariel
+	@Override
+	public List<Pessoa> buscarMembrosPorEvento(int codEvento) {
+		TypedQuery<Pessoa> query = em.createQuery("from Pessoa where codPessoa in " +
+				"(select codPessoa from Evento where codEvento = :cod)",Pessoa.class);
+		query.setParameter("cod", codEvento);
+		return query.getResultList();
+	}
+	
+	//Still doesn't work - Ariel
+	@Override
+	public List<Pessoa> buscarModeradoresDoEvento(int codEvento) {
+		TypedQuery<Pessoa> query = em.createQuery("",Pessoa.class);
+		query.setParameter("cod", codEvento);
+		return query.getResultList();
+	}
 
 	@Override
 	public List<Esporte> buscarCategoria() {

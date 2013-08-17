@@ -1,16 +1,13 @@
-package br.com.fiap.testeInserts;
+package br.com.fiap.teste;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
-import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
-import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
 	
@@ -19,8 +16,8 @@ public class TesteAriel {
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
 		//Teste do método buscarMembrosPorEvento(codEvento)
-		/*PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
-		List<Pessoa> pessoas = pessoaDAO.buscarMembrosPorEvento(1);
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<Pessoa> pessoas = eventoDAO.buscarMembrosPorEvento(1);
 		for(Pessoa pes : pessoas){
 			System.out.println("Código: " + pes.getCodPessoa());
 			System.out.println("Nome: " + pes.getNome());
@@ -29,7 +26,7 @@ public class TesteAriel {
 		
 		if(pessoas.size() == 0) {
 			System.out.println("Nenhum resultado encontrado!");
-		}*/
+		}
 		
 		/*---------------------------------------------------*/
 		
@@ -58,8 +55,8 @@ public class TesteAriel {
 		}*/
 		
 		//Teste do método buscarMembrosPorEvento(codEvento)
-		/*PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
-		List<Pessoa> pessoas = pessoaDAO.buscarModeradoresDoEvento(1);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<Pessoa> pessoas = eventoDAO.buscarModeradoresDoEvento(1);
 		for(Pessoa pes : pessoas){
 			System.out.println("Código: " + pes.getCodPessoa());
 			System.out.println("Nome: " + pes.getNome());

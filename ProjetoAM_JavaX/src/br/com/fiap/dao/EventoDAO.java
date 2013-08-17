@@ -11,6 +11,10 @@ public interface EventoDAO extends DAO<Evento, Integer>{
 	
 	public Evento buscarPeloCodigo(int codEvento);
 	
+	public List<Pessoa> buscarMembrosPorEvento(int codEvento);
+	
+	public List<Pessoa> buscarModeradoresDoEvento(int codEvento);
+	
 	public List<ComentarioEvento> buscarComentariosPeloEvento(int codEvento);
 	
 	public List<Esporte> buscarCategoria();
