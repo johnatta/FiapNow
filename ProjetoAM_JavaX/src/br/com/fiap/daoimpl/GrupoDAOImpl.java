@@ -1,6 +1,7 @@
 package br.com.fiap.daoimpl;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -17,12 +18,18 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public List<Grupo> buscaGruposPorUsuario(int codPessoa) {
-		TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomeGrupo from Grupo g where codGrupo in (select cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
-		query.setFirstResult(0);
-		query.setMaxResults(3); 
-		query.setParameter("codPessoa",codPessoa);
-		return query.getResultList();
+	public List<Grupo> getbuscaGruposPorUsuario(Collection<Integer> codPessoa) {
+		//TypedQuery<Grupo> query = em.createQuery("select codgrupo, nomeGrupo from Grupo g where codGrupo in (select cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = :codPessoa)",Grupo.class);
+		//query.setParameter("codPessoa",codPessoa);
+		//query.setFirstResult(0);
+		//query.setMaxResults(3); 
+		//List<Grupo> grupos = (List<Grupo>)q.getResultList();
+		//query.getResultList();
+
+		//Query q = em.createNativeQuery("select cod_grupo, nome_grupo from am_grupo where cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ? and rownum <= 3)");
+		//q.setParameter(1, codPessoa);
+		
+		return null;
 	}
 
 	@Override
