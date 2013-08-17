@@ -46,6 +46,9 @@ public class Grupo implements Serializable {
 	@Transient
 	private BigDecimal quantidade;
 	
+	@Transient
+	private List<Integer> codigosGrupo;
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_GRUPO_ESPORTE",
 	joinColumns={@JoinColumn(name="COD_GRUPO")},
@@ -122,6 +125,16 @@ public class Grupo implements Serializable {
 	public void setQuantidade(BigDecimal quantidade) {
 		this.quantidade = quantidade;
 	}
+
+	public List<Integer> getCodigosGrupo() {
+		return codigosGrupo;
+	}
+
+	public void setCodigosGrupo(List<Integer> codigosGrupo) {
+		this.codigosGrupo = codigosGrupo;
+	}
+	
+	
 }
 
 	
