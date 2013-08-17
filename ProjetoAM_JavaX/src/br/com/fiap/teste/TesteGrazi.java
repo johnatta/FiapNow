@@ -1,5 +1,8 @@
 package br.com.fiap.teste;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
@@ -26,18 +29,39 @@ public class TesteGrazi {
 		System.out.println("Cidade: " + pes.getCodEndereco().getCidade());
 		System.out.println("Tel: " + pes.getTelRes());
 		*/
+		List<Grupo> grupos = new ArrayList<Grupo>();
 		Grupo g = new Grupo();
-		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		GrupoDAO gDAO = new GrupoDAOImpl(em); 
 		Esporte e = new Esporte();
 		
+		/*
 		g = gDAO.buscaInfoBasicas(2);
 		System.out.println("Nome: " + g.getNomeGrupo() );
 		System.out.println("Esporte: " + g.getEsportes().set(1, e).getNome());
 		System.out.println("Privacidade: " + g.getPrivacidade());
 		System.out.println("Quantidade: " + g.getQuantidade());
+		*/
 		
+		//grupos = gDAO.buscaGruposPorUsuario(1);
+		List<Integer> cods = new ArrayList<Integer>();
+		cods.add(02);
+		//estados.add("PR");
+		grupos = gDAO.getbuscaGruposPorUsuario(cods);
+		System.out.println("COD GRUPO 00 " + grupos.set(0, g).getCodGrupo());
+		System.out.println("NOME GRUPO 00 " + grupos.set(0, g).getNomeGrupo() ) ;
+		System.out.println("COD GRUPO 01 " + grupos.set(1, g).getCodGrupo());
+		System.out.println("NOME GRUPO 01 " + grupos.set(1, g).getNomeGrupo());
 		
+		/*
+		List<Grupo> grups = new ArrayList<Grupo>();
 		
+		for(Object obj : grups) {  
+			  Grupo gru = new Grupo();  
+			  gru.setCodGrupo((Integer)obj);
+			  gru.setNomeGrupo((String) obj);
+			  grups.add(gru);  
+			} 
+		 */
 	}
 
 }
