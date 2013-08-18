@@ -15,7 +15,7 @@ public class EsporteDAOImpl extends DAOImpl<Esporte, Integer> implements Esporte
 
 	@Override
 	public List<Esporte> buscarTodosEsportes() {
-		TypedQuery<Esporte> query = em.createQuery("select codEsporte, nomegrupo from Esporte", Esporte.class);
+		TypedQuery<Esporte> query = em.createQuery("from Esporte", Esporte.class);
 		return query.getResultList();
 	}
 }
