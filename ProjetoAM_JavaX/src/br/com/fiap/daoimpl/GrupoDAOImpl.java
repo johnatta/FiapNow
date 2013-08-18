@@ -40,7 +40,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public List<Grupo> buscaGruposPorUsuario(int codPessoa) {
+	public List<Grupo> consultaMeusGrupos(int codPessoa) {
 		ArrayList<Integer> codigos  = new ArrayList<Integer>(); 
 		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ?)",Grupo.class);
 		query.setParameter(1, codPessoa);
