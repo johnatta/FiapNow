@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.Pessoa;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
@@ -53,4 +54,14 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		}
 		return grupos;
 	}
+	
+	@Override
+	public List<Pessoa> buscarUsuariosParaAdicionarAoGrupo(int codGrupo) {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Pessoa> query = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA P where cod_pessoa not in" +
+				"(select cod_pessoa from am_pessoa_grupo where cod_grupo = :codGrupo)",Pessoa.class);
+		query.setParameter("codGrupo",codGrupo);
+		return query.getResultList();
+	}
+	
 }
