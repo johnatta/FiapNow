@@ -1,5 +1,6 @@
 package br.com.fiap.teste;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -34,6 +35,7 @@ public class TesteGrazi {
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		Grupo g = new Grupo();
 		GrupoDAO gDAO = new GrupoDAOImpl(em); 
+		List<Esporte> esportes = new ArrayList<Esporte>();
 		Esporte e = new Esporte();
 		
 		/*
@@ -47,24 +49,19 @@ public class TesteGrazi {
 			System.out.println(o[0] + ", " + o[1]);
 		*/
 		
-		//grupos = gDAO.buscaGruposPorUsuario(1);
-		
-		//estados.add("PR");
-		
-		grupos = gDAO.buscaGruposPorUsuario(2);
-		System.out.println("COD GRUPO 00 " + grupos.set(0, g).getCodGrupo());
-		//System.out.println("NOME GRUPO 00 " + grupos.set(0, g).getNomeGrupo() ) ;
-		System.out.println("COD GRUPO 01 " + grupos.set(1, g).getCodGrupo());
-		//System.out.println("NOME GRUPO 01 " + grupos.set(1, g).getNomeGrupo());
 		/*
-		List<Grupo> grups = new ArrayList<Grupo>();
-		
-		for(Object obj : grups) {  
-			  Grupo gru = new Grupo();  
-			  gru.setCodGrupo((Integer)obj);
-			  gru.setNomeGrupo((String) obj);
-			  grups.add(gru);  
-			} 
+		grupos = gDAO.buscaGruposDoUsuario(2);
+		for (Grupo grupo : grupos) {
+			System.out.println("CODIGO GRUPO " + grupo.getCodGrupo());
+			System.out.println("DESCRICAO " + grupo.getDescricao());
+			System.out.println("NOME " + grupo.getNomeGrupo());
+			for(Esporte esp : grupo.getEsportes() ){
+			System.out.println("ESPORTE " + esp.getNome());
+			}
+			System.out.println("PRIVACIDADE " + grupo.getPrivacidade());
+			System.out.println("IMAGEM " + grupo.getImgGrupo());
+			System.out.println();
+		}
 		 */
 	}
 
