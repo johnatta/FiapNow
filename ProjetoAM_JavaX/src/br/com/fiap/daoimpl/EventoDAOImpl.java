@@ -6,10 +6,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.EventoDAO;
-import br.com.fiap.entity.ComentarioEvento;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.rc.ComentarioEventoRC;
 
 public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO{
 
@@ -26,8 +26,11 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	//Still doesn't work - Ariel
 	@Override
-	public List<ComentarioEvento> buscarComentariosPeloEvento(int codEvento) {
-		TypedQuery<ComentarioEvento> query = em.createQuery("", ComentarioEvento.class);
+	public List<ComentarioEventoRC> buscarComentariosPeloEvento(int codEvento) {
+		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioEventoRC(p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora) " +
+			      "FROM ComentarioEvento c JOIN c.codPessoa p " +
+			      "WHERE c.codEvento.codEvento = :cod";
+		TypedQuery<ComentarioEventoRC> query = em.createQuery(queryStr, ComentarioEventoRC.class);
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
 	}

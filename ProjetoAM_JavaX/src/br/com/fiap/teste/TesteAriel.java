@@ -7,7 +7,8 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
-import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.ComentarioEvento;
+import br.com.fiap.rc.ComentarioEventoRC;
 
 public class TesteAriel {
 	
@@ -16,7 +17,7 @@ public class TesteAriel {
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
 		//Teste do método buscarMembrosPorEvento(codEvento)
-		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		List<Pessoa> pessoas = eventoDAO.buscarMembrosPorEvento(1);
 		for(Pessoa pes : pessoas){
 			System.out.println("Código: " + pes.getCodPessoa());
@@ -26,7 +27,7 @@ public class TesteAriel {
 		
 		if(pessoas.size() == 0) {
 			System.out.println("Nenhum resultado encontrado!");
-		}
+		}*/
 		
 		/*---------------------------------------------------*/
 		
@@ -42,17 +43,22 @@ public class TesteAriel {
 		/*---------------------------------------------------*/
 		
 		//Teste do método buscarComentariosPeloEvento(int codEvento)
-		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
-		List<ComentarioEvento> comentariosEvento = eventoDAO.buscarComentariosPeloEvento(1);
-		for(ComentarioEvento comentario : comentariosEvento){
-			System.out.println("Código do comentário: " + comentario.getCodComentario());
-			System.out.println("Código da pessoa: " + comentario.getCodPessoa());
-			System.out.println("Código do evento: " + comentario.getCodEvento());
-			System.out.println("Comentário: " + comentario.getComentario());
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<ComentarioEventoRC> comentariosEvento = eventoDAO.buscarComentariosPeloEvento(2);
+		for(ComentarioEventoRC comentario : comentariosEvento){
+			System.out.println("Código do comentário: " + comentario.codPessoa);
+			System.out.println("Apelido do usuário que comentou: " + comentario.apelido);
+			System.out.println("Imagem de Perfil do usuário que comentou: " + comentario.imgPerfil);
+			System.out.println("Comentário: " + comentario.comentario);
+			System.out.println("Horá do comentário: " + comentario.dataHora);
+//			System.out.println("Código do comentário: " + comentario.getCodComentario());
+//			System.out.println("Código da pessoa: " + comentario.getCodPessoa());
+//			System.out.println("Código do evento: " + comentario.getCodEvento());
+//			System.out.println("Comentário: " + comentario.getComentario());
 		}
 		if(comentariosEvento.size() == 0){
 			System.out.println("Nenhum comentário encontrado para o evento!");
-		}*/
+		}
 		
 		//Teste do método buscarMembrosPorEvento(codEvento)
 		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
