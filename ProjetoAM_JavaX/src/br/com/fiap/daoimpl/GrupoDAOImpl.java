@@ -37,7 +37,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		*/
 		//query.getResultList();
 
-		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select gru.cod_grupo, gru.nome_grupo from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ? and rownum <= 3)", Grupo.class);
+		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select * from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ? and rownum <= 3)", Grupo.class);
 		q.setParameter(1, codPessoa);
 		return q.getResultList();
 	}
