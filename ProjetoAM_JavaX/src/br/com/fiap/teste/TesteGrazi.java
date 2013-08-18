@@ -9,7 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
@@ -37,19 +39,14 @@ public class TesteGrazi {
 		GrupoDAO gDAO = new GrupoDAOImpl(em); 
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		Esporte e = new Esporte();
-		
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		/*
 		g = gDAO.buscaInfoBasicas(2);
 		System.out.println("Nome: " + g.getNomeGrupo() );
 		System.out.println("Esporte: " + g.getEsportes().set(1, e).getNome());
 		System.out.println("Privacidade: " + g.getPrivacidade());
 		System.out.println("Quantidade: " + g.getQuantidade());
-		Collection<Object[]> resultado = q.getResultList();
-		for (Object[] o:resultado)
-			System.out.println(o[0] + ", " + o[1]);
-		*/
-		
-		/*
+
 		grupos = gDAO.buscaGruposDoUsuario(2);
 		for (Grupo grupo : grupos) {
 			System.out.println("CODIGO GRUPO " + grupo.getCodGrupo());
@@ -62,7 +59,25 @@ public class TesteGrazi {
 			System.out.println("IMAGEM " + grupo.getImgGrupo());
 			System.out.println();
 		}
+		
+		grupos = gDAO.buscaGruposPorUsuario(2);
+		for (Grupo grupo : grupos) {
+			System.out.println("CODIGO GRUPO " + grupo.getCodGrupo());
+			System.out.println("DESCRICAO " + grupo.getDescricao());
+			System.out.println("IMAGEM " + grupo.getImgGrupo());
+			System.out.println("NOME " + grupo.getNomeGrupo());
+			System.out.println("PRIVACIDADE " + grupo.getPrivacidade());
+			System.out.println("Quantidade " + grupo.getQuantidade());
+			System.out.println();
+		}
 		 */
+		
+		esportes = espDAO.buscarTodosEsportes();
+		for (Esporte esporte : esportes) {
+			System.out.println(esporte.getCodEsporte());
+			System.out.println(esporte.getNome());
+		}
+
 	}
 
 }
