@@ -46,11 +46,11 @@ public class TesteAriel {
 		EventoDAO eventoDAO = new EventoDAOImpl(em);
 		List<ComentarioEventoRC> comentariosEvento = eventoDAO.buscarComentariosPeloEvento(2);
 		for(ComentarioEventoRC comentario : comentariosEvento){
-			System.out.println("Código do comentário: " + comentario.codPessoa);
-			System.out.println("Apelido do usuário que comentou: " + comentario.apelido);
-			System.out.println("Imagem de Perfil do usuário que comentou: " + comentario.imgPerfil);
-			System.out.println("Comentário: " + comentario.comentario);
-			System.out.println("Horá do comentário: " + comentario.dataHora);
+			System.out.println("Código do comentário: " + comentario.getCodPessoa());
+			System.out.println("Apelido do usuário que comentou: " + comentario.getApelido());
+			System.out.println("Imagem de Perfil do usuário que comentou: " + comentario.getImgPerfil());
+			System.out.println("Comentário: " + comentario.getComentario());
+			System.out.println("Horá do comentário: " + comentario.getDataHora());
 //			System.out.println("Código do comentário: " + comentario.getCodComentario());
 //			System.out.println("Código da pessoa: " + comentario.getCodPessoa());
 //			System.out.println("Código do evento: " + comentario.getCodEvento());
