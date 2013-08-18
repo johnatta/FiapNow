@@ -24,7 +24,6 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		return query.getSingleResult();
 	}
 
-	//Still doesn't work - Ariel
 	@Override
 	public List<ComentarioEventoRC> buscarComentariosPeloEvento(int codEvento) {
 		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioEventoRC(p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora) " +
