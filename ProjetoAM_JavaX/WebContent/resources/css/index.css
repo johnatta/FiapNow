@@ -1,7 +1,7 @@
 body {
     margin:0px;
     padding:0px;
-    background-color:#E9E9E9;
+    background: url("images/football.png");
     font: 14px  verdana, arial, helvetica;
 }
 #main_container{
