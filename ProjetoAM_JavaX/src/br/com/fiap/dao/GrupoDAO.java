@@ -6,7 +6,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 public interface GrupoDAO extends DAO<Grupo, Integer> {
-	List<Grupo> buscaGruposPorUsuario(int codPessoa);
+	List<Grupo> consultaMeusGrupos(int codPessoa);
 	
 	Grupo buscaInfoBasicas(int codGrupo);
 	
