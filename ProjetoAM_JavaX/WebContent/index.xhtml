@@ -8,6 +8,7 @@
 
 
 <f:view>
+	<f:loadBundle var="msgs" basename="nls.mensagem" />
 	<h:head>
 		<title>Encontro Esportivo</title>
 		<h:outputStylesheet name="index.css" library="css"></h:outputStylesheet>
@@ -31,11 +32,30 @@
             
 			<div id="main_content">
 				<div id="login_box">
-					<h:outputText></h:outputText>
+					<h:form>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msgs.user_login}" />
+							<h:inputText styleClass="input_box" size="29"/>
+							<h:outputText value="#{msgs.user_password}" />
+							<h:inputText styleClass="input_box" size="29"/>
+						</h:panelGrid>
+						<h:commandButton value="#{msgs.login}" styleClass="input_button"/>
+					</h:form>
 				</div>
 				<br style="clear:both;" />
 				<div id="cadastra_box">
-					
+					<div id="titulo_cadastro">
+						<h:outputText value="#{msgs.user_new}" />
+					</div>
+					<h:form>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msgs.name}" />
+							<h:inputText styleClass="input_box" size="29"/>
+							<h:outputText value="#{msgs.email}" />
+							<h:inputText styleClass="input_box" size="29"/>
+						</h:panelGrid>
+						<h:commandButton value="#{msgs.signup}" styleClass="input_button"/>
+					</h:form>
 				</div>
 			</div>
 
