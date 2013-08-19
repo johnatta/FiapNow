@@ -32,6 +32,9 @@ a:hover #header_itemMenu {
 #header_itemMenu a:hover img{
 	background:#a9a9a9;
 }
+.header_flag {
+	margin: 0 2px 0 1px;
+}
 #content_header {
 	margin-left:auto;
 	margin-right:auto;
@@ -41,27 +44,7 @@ a:hover #header_itemMenu {
 	background:#a9a9a9;
 	padding: 1px 0 2px 0;
 }
-#menu {
-	margin: 5px 0 5px 0;
-	border-bottom-width: medium;
-	border-bottom-style: solid;
-	border-bottom-color: #656565;
-}
-#menu_content{
-	width:900px;
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom:5px;
-}
-#itemMenu{
-	float:left;
-	width:auto;
-	margin: 0 7px 0 9px;
-}
-#itemMenu a {
-	color:#000;
-}
-#user_info{
+#header_lang{
 	float:right;
     margin: 1px 0 1px 0;
 }
