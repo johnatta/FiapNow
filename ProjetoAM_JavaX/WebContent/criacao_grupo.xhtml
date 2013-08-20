@@ -26,6 +26,13 @@
 			</p:selectOneMenu>
 			<h:outputText value="Descrição:"></h:outputText>
 			<h:inputText value="#{grupoBean.grupo.descricao}"></h:inputText>
+			<h:form enctype="multipart/form-data">
+				<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
+					mode="advanced" update="messages" sizeLimit="100000"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
+					dragDropSupport="false" label="Select" />
+				<p:growl id="messages" showDetail="true" />
+			</h:form>
 			<h:form>
 				<h:commandButton value="Criar Grupo" id="btnCadastrarCliente"
 					actionListener="#{grupoBean.btnCriarGrupo}" styleClass="button"></h:commandButton>
