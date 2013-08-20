@@ -21,6 +21,17 @@ import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Privacidade;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import javax.ejb.EJB;
+import javax.faces.bean.SessionScoped;
+
+import org.apache.commons.io.IOUtils;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+
 @ManagedBean
 @RequestScoped
 public class GrupoBean implements Serializable {
@@ -33,7 +44,8 @@ public class GrupoBean implements Serializable {
 	private Grupo grupo;
 	private GrupoDAO gruDAO; 
 	private List<Privacidade> privs;
-	
+	private StreamedContent foto;
+
 	@PostConstruct
 	public void init(){
 		grupo = new Grupo();
@@ -45,7 +57,7 @@ public class GrupoBean implements Serializable {
 		esportes = espDAO.buscarTodosEsportes();
 		return esportes;
 	}
-	
+
 	public void btnCriarGrupo(ActionEvent ae){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
@@ -57,6 +69,18 @@ public class GrupoBean implements Serializable {
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
 			fc.addMessage("", fm);
+		}
+	}
+
+	public void realizarUpload(FileUploadEvent event) {
+		String arq = event.getFile().getFileName();
+		System.out.println("Nome do arquivo:" + arq);
+		System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
+		
+		try {
+			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -81,6 +105,24 @@ public class GrupoBean implements Serializable {
 	public void setPrivs(List<Privacidade> privs) {
 		this.privs = privs;
 	}
-	
-	
+	public StreamedContent getFoto() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		DefaultStreamedContent content = new DefaultStreamedContent();
+		content.setContentType("image/jpg");
+		try{
+			if (context.getRenderResponse() || grupo.getImgGrupo() == null){
+				content.setStream(context.getExternalContext().getResourceAsStream("/resources/img/semFoto.jpg"));
+			}else{
+				content.setStream(new ByteArrayInputStream(grupo.getImgGrupo()));
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return content;
+	}
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
+	}
+
+
 }
