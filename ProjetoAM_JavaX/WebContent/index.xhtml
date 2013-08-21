@@ -45,11 +45,11 @@
 					<h:form>
 						<h:panelGrid columns="2">
 							<h:outputText value="#{msgs.user_login}" />
-							<h:inputText styleClass="input_box" size="29"/>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}"/>
 							<h:outputText value="#{msgs.user_password}" />
-							<h:inputText styleClass="input_box" size="29"/>
+							<h:inputSecret styleClass="input_box" size="29" value="#{loginBean.senha}"/>
 						</h:panelGrid>
-						<h:commandButton value="#{msgs.login}" styleClass="input_button"/>
+						<h:commandButton value="#{msgs.login}" styleClass="input_button" action="#{loginBean.login}"/>
 					</h:form>
 				</div>
 				<br style="clear:both;" />
@@ -60,11 +60,11 @@
 					<h:form>
 						<h:panelGrid columns="2">
 							<h:outputText value="#{msgs.name}" />
-							<h:inputText styleClass="input_box" size="29"/>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}"/>
 							<h:outputText value="#{msgs.email}" />
-							<h:inputText styleClass="input_box" size="29"/>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}"/>
 						</h:panelGrid>
-						<h:commandButton value="#{msgs.signup}" styleClass="input_button"/>
+						<h:commandButton value="#{msgs.signup}" styleClass="input_button" action="#{loginBean.cadastrar}"/>
 					</h:form>
 				</div>
 			</div>

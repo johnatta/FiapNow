@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h:form id="form">
+
+			<p:dataGrid var="pes" value="#{gruposBean.grupos}" columns="4" rows="12"
+				paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="12,16,20">
+
+				<p:panel style="text-align:center">
+					<h:panelGrid columns="1" style="width:100%">
+						<p:graphicImage value="#{pes.imgPerfil}" />
+
+						<p:commandLink title="pes.apelido" >
+							<h:outputText value="pes.apelido" style="margin:0 auto;" />
+							<f:setPropertyActionListener value="#{pes}"
+								target="#{gruposBean.pessoa}" />
+						</p:commandLink>
+					</h:panelGrid>
+				</p:panel>
+
+			</p:dataGrid>
+
+			<p:dialog header="Car Detail" widgetVar="carDialog" modal="true">
+				<p:outputPanel id="carDetail" style="text-align:center;"
+					layout="block">
+
+					<p:graphicImage
+						value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg" />
+
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputLabel for="modelNo" value="Model No: " />
+						<h:outputText id="modelNo" value="#{tableBean.selectedCar.model}" />
+
+						<h:outputLabel for="year" value="Year: " />
+						<h:outputText id="year" value="#{tableBean.selectedCar.year}" />
+
+						<h:outputLabel for="color" value="Color: " />
+						<h:outputText id="color" value="#{tableBean.selectedCar.color}"
+							style="color:#{tableBean.selectedCar.color}" />
+					</h:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
