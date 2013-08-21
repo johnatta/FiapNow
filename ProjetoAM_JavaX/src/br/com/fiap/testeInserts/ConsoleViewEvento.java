@@ -39,9 +39,9 @@ public class ConsoleViewEvento {
 	
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(30, 8, 22);
+		dtNascimento.set(13, 10, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(30, 6, 12);
+		dtNascimentoA.set(13, 11, 12);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
@@ -157,7 +157,7 @@ public class ConsoleViewEvento {
 		ModeradorEvento modEvento = new ModeradorEvento();
 		modEvento.setCodEvento(evento);
 		modEvento.setCodPessoa(pessoa);
-		modEventoDAO.insert(modEvento);  
+		//modEventoDAO.insert(modEvento);  
 		
 		// COMENTARIO EVENTO
 		ComentarioEvento comentEvento = new ComentarioEvento();
@@ -165,7 +165,7 @@ public class ConsoleViewEvento {
 		comentEvento.setDtHora(Calendar.getInstance());
 		comentEvento.setCodEvento(evento);
 		comentEvento.setCodPessoa(pessoa);
-		comentEventoDAO.insert(comentEvento);
+		//comentEventoDAO.insert(comentEvento);
 		
 		// MENSAGEM EVENTO
 		MensagemEvento msgEvento = new MensagemEvento();
@@ -173,14 +173,14 @@ public class ConsoleViewEvento {
 		msgEvento.setConfirmacao(Confirmacao.SIM);
 		msgEvento.setCodEvento(evento);
 		msgEvento.setCodPessoa(pessoa);
-		msgEventoDAO.insert(msgEvento); 
+		//msgEventoDAO.insert(msgEvento); 
 		
 		// CONVITE EVENT0
 		ConviteEvento convtEvento = new ConviteEvento();
 		convtEvento.setDescricao("Espero você para um futebol digno.");
 		convtEvento.setCodEvento(evento);
 		convtEvento.setCodPessoa(pessoa);
-		convtEventoDAO.insert(convtEvento); 
+		//convtEventoDAO.insert(convtEvento); 
 		
 		/*
 		//Buscando por ID
