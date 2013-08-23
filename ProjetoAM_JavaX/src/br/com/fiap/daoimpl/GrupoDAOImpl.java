@@ -62,6 +62,17 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 				"(select cod_pessoa from am_pessoa_grupo where cod_grupo = :codGrupo)",Pessoa.class);
 		query.setParameter("codGrupo",codGrupo);
 		return query.getResultList();
+		
+	}
+
+	@Override
+	public Grupo buscarInfoGrupo(int codGrupo) {
+		Query query = em.createQuery(" from Grupo gr where gr.codGrupo = :codGrupo");
+		query.setParameter("codGrupo", codGrupo);
+		return (Grupo) query.getSingleResult();
 	}
 	
-}
+	
+	}
+	
+

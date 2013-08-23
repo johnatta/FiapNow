@@ -25,4 +25,8 @@ public interface EventoDAO extends DAO<Evento, Integer>{
 	
 	public Pessoa buscarPessoaEvento(int codPessoa);
 	
+	public List <Evento> buscarProximosEventos(int codGrupo);
+	
+	public List <Evento> historicoDeEventos (int codGrupo);
+	
 }

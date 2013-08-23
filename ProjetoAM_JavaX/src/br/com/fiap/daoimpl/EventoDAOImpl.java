@@ -84,4 +84,21 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		return query.getSingleResult();
 	}
 	
+	@Override //select nao ok
+	public List<Evento> buscarProximosEventos(int codGrupo) {
+		@SuppressWarnings("unchecked")
+		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery("SELECT * FROM AM_EVENTO WHERE cod_evento IN (SELECT cod_evento FROM AM_EVENTO_GRUPO  WHERE cod_grupo = ?) AND data_evento < to_char(sysdate)", Evento.class);
+		query.setParameter(1, codGrupo);
+		return query.getResultList();
+	}
+
+	@Override //select nao ok
+	public List<Evento> historicoDeEventos(int codGrupo) {
+		TypedQuery<Evento> query = em.createQuery("SELECT * FROM AM_EVENTO WHERE cod_evento IN (SELECT cod_evento FROM AM_EVENTO_GRUPO  WHERE cod_grupo = ?) AND data_evento < to_char(sysdate)", Evento.class);
+		query.setParameter(1, codGrupo);
+		return query.getResultList();
+	
+}
+	
+	
 }
