@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 
 <f:view>
@@ -17,6 +18,7 @@
 	</h:head>
 	
 	<h:body>
+				<p:growl life="3000" />
     
 		<div id="main_container">
 			<div id="header">
@@ -62,7 +64,9 @@
 							<h:outputText value="#{msgs.name}" />
 							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}"/>
 							<h:outputText value="#{msgs.email}" />
-							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}"/>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}">
+								<f:validateRegex pattern="[A-Z].*" />
+							</h:inputText>
 						</h:panelGrid>
 						<h:commandButton value="#{msgs.signup}" styleClass="input_button" action="#{loginBean.cadastrar}"/>
 					</h:form>

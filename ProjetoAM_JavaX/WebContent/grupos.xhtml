@@ -11,7 +11,7 @@
 	<ui:define name="main_content">
 		<h:form id="form">
 
-			<p:dataGrid var="pes" value="#{gruposBean.grupos}" columns="4" rows="12"
+			<p:dataGrid var="pes" value="#{gruposBean.pessoas}" columns="4" rows="12"
 				paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="12,16,20">
@@ -23,7 +23,7 @@
 						<p:commandLink title="pes.apelido" >
 							<h:outputText value="pes.apelido" style="margin:0 auto;" />
 							<f:setPropertyActionListener value="#{pes}"
-								target="#{gruposBean.pessoa}" />
+								target="#{gruposBean.selectedPessoa}" />
 						</p:commandLink>
 					</h:panelGrid>
 				</p:panel>
