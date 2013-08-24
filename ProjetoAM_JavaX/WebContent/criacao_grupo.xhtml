@@ -9,38 +9,52 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+		<h:form enctype="multipart/form-data">
+			<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
+				mode="advanced" update="messages" sizeLimit="100000"
+				allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
+				dragDropSupport="false" label="Select" />
+			<p:growl id="messages" showDetail="true" />
+		</h:form>
+		
 		<h:panelGrid border="1" columns="2">
+			<h:form>
 			<h:outputText value="Nome:"></h:outputText>
 			<h:inputText value="#{grupoBean.grupo.nomeGrupo}"></h:inputText>
-	
+
 			<h:outputText value="Privacidade:"></h:outputText>
-			<p:selectOneMenu effect="fade" value="#{grupoBean.grupo.privacidade}" >
-				<f:selectItems value="#{grupoBean.privs}" var="p" itemLabel="#{p}" itemValue="#{p}" />
+			<p:selectOneMenu effect="fade" value="#{grupoBean.grupo.privacidade}">
+				<f:selectItems value="#{grupoBean.privs}" var="p" itemLabel="#{p}"
+					itemValue="#{p}" />
 			</p:selectOneMenu>
-	
+
 			<h:outputText value="Esporte: " />
-			<p:selectOneMenu effect="fade">
-				<f:selectItem itemLabel="Esporte" itemValue="" />
+			
+			<!-- MEXI -->
+				<p:pickList id="pojoPickList" value="#{grupoBean.listaPicker}"
+					var="esporte" effect="bounce" itemValue="#{esporte}"
+					itemLabel="#{esporte.nome}" 
+					converter="esporteConverter" showTargetControls="true" showCheckbox="true"  
+                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"  >
+                    
+                     <f:facet name="sourceCaption">Opções</f:facet>  
+        			<f:facet name="targetCaption">Selecionados</f:facet>  
+				</p:pickList>
+				<!-- 
+			<p:selectManyMenu effect="fade" id="slctEsporte" value="#{grupoBean.espSelecionados}">
+				<f:selectItem itemLabel="Esporte" noSelectionOption="true"  />
 				<f:selectItems value="#{grupoBean.listaEsporte()}" var="esp"
 					itemLabel="#{esp.nome}" itemValue="#{esp.codEsporte}" />
-			</p:selectOneMenu>
+			</p:selectManyMenu>
+ -->
 			<h:outputText value="Descrição:"></h:outputText>
 			<h:inputText value="#{grupoBean.grupo.descricao}"></h:inputText>
-			<h:form enctype="multipart/form-data">
-				<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
-					mode="advanced" update="messages" sizeLimit="100000"
-					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
-					dragDropSupport="false" label="Select" />
-				<p:growl id="messages" showDetail="true" />
-			</h:form>
-			<h:form>
+
 				<h:commandButton value="Criar Grupo" id="btnCadastrarCliente"
 					actionListener="#{grupoBean.btnCriarGrupo}" styleClass="button"></h:commandButton>
 			</h:form>
-			<h:form>
-				<h:commandButton value="Enviar Imagem"></h:commandButton>
-			</h:form>
-		</h:panelGrid>
+
+		</h:panelGrid> 
 	</ui:define>
 </ui:composition>
 
