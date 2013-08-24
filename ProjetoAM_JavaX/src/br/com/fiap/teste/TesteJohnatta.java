@@ -30,19 +30,12 @@ public class TesteJohnatta {
 	public static void main(String[] args) {
 
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-
 		Pessoa pessoa = new Pessoa();
 		ModeradorGrupo mg = new ModeradorGrupo();
 		Grupo grupo = new Grupo();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-
-
-
-
-
 	/*	// Informaçoes do Grupo					
-		 	
 				GrupoDAO grupoDAO = new GrupoDAOImpl(em);
 				grupo = grupoDAO.buscarInfoGrupo(1);
 				System.out.println("-------Informaçoes do grupo-------");
@@ -51,9 +44,6 @@ public class TesteJohnatta {
 				System.out.println("Nome do Grupo: " + grupo.getNomeGrupo());
 				System.out.println("Descricao do Grupo: " + grupo.getDescricao());
 				System.out.println("Privacidade do grupo: " + grupo.getPrivacidade());
-		 
-
-
 	 */
 	
 	/*	//   Buscando Membros do grupo 
@@ -66,7 +56,6 @@ public class TesteJohnatta {
 			System.out.println();
 			System.out.println("Membro do grupo:" + resultado.getNome());
 			System.out.println("Sobrenome: " + resultado.getSobrenome());
-
 
 		} */
 
@@ -99,7 +88,7 @@ public class TesteJohnatta {
 							System.out.println();
 						for(Evento resultado1 : evento1){
 							
-							System.out.println("Historico de eventos antigo:" + sdf.format(resultado1.getDtEvento().clone()));
+							System.out.println("Historico de eventos antigo: " + sdf.format(resultado1.getDtEvento().getTime()));
 						}
 			
 		}
