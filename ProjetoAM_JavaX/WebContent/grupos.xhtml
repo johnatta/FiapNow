@@ -11,19 +11,20 @@
 	<ui:define name="main_content">
 		<h:form id="form">
 
-			<p:dataGrid var="pes" value="#{gruposBean.pessoas}" columns="4" rows="12"
+			<p:dataGrid var="gru" value="#{gruposBean.grupos}" columns="4" rows="12"
 				paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="12,16,20">
 
-				<p:panel style="text-align:center">
-					<h:panelGrid columns="1" style="width:100%">
-						<p:graphicImage value="#{pes.imgPerfil}" />
+				<p:panel style="text-align:center" >
+					<h:panelGrid columns="1" style="width:auto">
+					
+						<h:graphicImage url="#{gru.imgGrupo}" />
 
-						<p:commandLink title="pes.apelido" >
-							<h:outputText value="pes.apelido" style="margin:0 auto;" />
-							<f:setPropertyActionListener value="#{pes}"
-								target="#{gruposBean.selectedPessoa}" />
+						<p:commandLink title="#{gru.nomeGrupo}" >
+							<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;" />
+							<f:setPropertyActionListener value="#{grupo}"
+								target="#{gruposBean.selectedGrupo}"/>
 						</p:commandLink>
 					</h:panelGrid>
 				</p:panel>
