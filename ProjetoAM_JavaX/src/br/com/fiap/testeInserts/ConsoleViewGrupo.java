@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
@@ -16,6 +17,7 @@ import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
@@ -52,14 +54,16 @@ public class ConsoleViewGrupo {
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		List<Esporte> esportesP = new ArrayList<Esporte>();
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		
 
 		// ESPORTE - ADICIONANDO A LISTA
 		Esporte esporteD = new Esporte();
-		esporteD.setNome("Futebol Americano");
+		esporteD = espDAO.searchByID(6);
 		esportesP.add(esporteD);
 		
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Rugby");
+		esporteC = espDAO.searchByID(4);
 		esportesP.add(esporteC);
 		
 		// PESSOA
@@ -72,7 +76,7 @@ public class ConsoleViewGrupo {
 		pessoa.setCel("011967893241");
 		pessoa.setImgPerfil(new byte[3]);
 		pessoa.setImgBackGround(new byte[5]);
-		pessoa.setEsportes(esportes);
+		pessoa.setEsportes(esportesP);
 		
 		// USUARIO PARA PESSOA
 		Usuario usuario = new Usuario();
@@ -100,21 +104,24 @@ public class ConsoleViewGrupo {
 		// CRIANDO GRUPO
 		Grupo grupo = new Grupo();
 		grupo.setNomeGrupo("Bandeirantes Raptors");
-		grupo.setDescricao("Somos os Bandeirantes Raptors queremos construir um grupo que goste e pratique Rugby e Futebol Americano. " +
+		grupo.setDescricao("Somos os Bandeirantes Raptors queremos construir um grupo que goste e pratique Futebol Americano. " +
 				"Todo o membro será bem-vindo para compartilhar das mesmas paixões. " +
 				"GO B.Raptors!");
 		grupo.setPrivacidade(Privacidade.Aberto);
+		Pessoa pesADM = new Pessoa();
+		pesADM = pessoaDAO.searchByID(1);
+		grupo.setAdm(pesADM);
 		grupo.setImgGrupo(new byte [4]);
 		
 		// ESPORTES PARA GRUPO
-		Esporte esporteA = new Esporte();
-		esporteA.setNome("Futebol Americano");
+		//Esporte esporteA = new Esporte();
+		//
 		
-		Esporte esporteB = new Esporte();
-		esporteB.setNome("Rugby");
+		//Esporte esporteB = new Esporte();
+		//
 		
-		esportes.add(esporteA);
-		esportes.add(esporteB);
+		esportes.add(esporteD);
+		//esportes.add(esporteB);
 		grupo.setEsportes(esportes);
 		
 		// INSERINDO GRUPO
@@ -122,7 +129,7 @@ public class ConsoleViewGrupo {
 		
 		// PEDIDO GRUPO
 		PedidoGrupo pedidoGrupo = new PedidoGrupo();
-		pedidoGrupo.setDescricao("Eu desejo participar pois sou apaixonado por Rugby.");
+		pedidoGrupo.setDescricao("Eu desejo participar pois sou apaixonado por FA.");
 		pedidoGrupo.setCodGrupo(grupo);
 		pedidoGrupo.setCodPessoa(pessoa);
 		// INSERINDO PEDIDO
@@ -161,5 +168,4 @@ public class ConsoleViewGrupo {
 		//INSERINDO CONVITE GRUPO
 		convtGrupoDAO.insert(convtGrupo);
 	}
-
 }

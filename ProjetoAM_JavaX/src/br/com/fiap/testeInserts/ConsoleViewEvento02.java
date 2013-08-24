@@ -55,32 +55,24 @@ public class ConsoleViewEvento02 {
 		ConviteEventoDAO convtEventoDAO = new ConviteEventoDAOImpl(em);
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		EsporteDAO esporteDAO = new EsporteDAOImpl(em);
-		
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		List<Esporte> esportesA = new ArrayList<Esporte>();
-		//Lista de esportes 
-		Esporte esporteE = new Esporte();
-		esporteE.setNome("Skate");
-		esportes.add(esporteE);
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		Esporte espEvent = new Esporte();
+		Pessoa admEvent = new Pessoa();
 		
-		Esporte esporteB = new Esporte();
-		esporteB.setNome("Bike");
-		esportes.add(esporteB);
+		List<Grupo> grupos = new ArrayList<Grupo>();
+		Pessoa pADM = new Pessoa();
+		Pessoa pesADM = new Pessoa();
 
-		Esporte esporteC = new Esporte();
-		esporteC.setNome("Patins");
-		esportes.add(esporteC);
+		Esporte esporteE = new Esporte();
+		esporteE = espDAO.searchByID(4);
+		esportes.add(esporteE);
 		
 		//Lista de esportesA
 		Esporte esporteF = new Esporte();
-		esporteF.setNome("Volei");
+		esporteF = espDAO.searchByID(8);
 		esportesA.add(esporteF);
-		
-		Esporte esporteG = new Esporte();
-		esporteG.setNome("Volei de praia");
-		esportesA.add(esporteG);
-		
-		List<Grupo> grupos = new ArrayList<Grupo>();
 		
 		Grupo grupoA = new Grupo();
 		grupoA.setNomeGrupo("House of lions");
@@ -88,6 +80,8 @@ public class ConsoleViewEvento02 {
 		grupoA.setPrivacidade(Privacidade.Aberto);
 		grupoA.setImgGrupo(new byte[3]);
 		grupoA.setEsportes(esportes);
+		pesADM = pessoaDAO.searchByID(5);
+		grupoA.setAdm(pesADM);
 		grupos.add(grupoA);
 		
 		Grupo grupoB = new Grupo();
@@ -96,6 +90,8 @@ public class ConsoleViewEvento02 {
 		grupoB.setPrivacidade(Privacidade.Aberto);
 		grupoB.setImgGrupo(new byte[4]);
 		grupoB.setEsportes(esportesA);
+		pADM = pessoaDAO.searchByID(4);
+		grupoB.setAdm(pADM);
 		
 		Evento evento = new Evento();
 		evento.setNome("Skate Long - Ipiranga");
@@ -106,7 +102,10 @@ public class ConsoleViewEvento02 {
 		evento.setImgEvento(new byte [4]);
 		evento.setDtEvento(Calendar.getInstance());
 		evento.setGrupos(grupos);
-		evento.setCodEsporte(esporteB);
+		admEvent = pessoaDAO.searchByID(1);
+		evento.setAdm(admEvent);
+		espEvent = espDAO.searchByID(4);
+		evento.setCodEsporte(espEvent);
 		
 		Endereco endereco = new Endereco();
 		endereco.setPais("Brasil");
@@ -119,7 +118,6 @@ public class ConsoleViewEvento02 {
 		endereco.setComplemento("Museu do Ipiranga");
 		endereco.setLatitude((float) -23.579745);
 		endereco.setLongitude((float) -46.610244);
-		
 		evento.setCodEndereco(endereco);
 		eventoDAO.insert(evento); 
 

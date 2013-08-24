@@ -7,9 +7,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
@@ -44,17 +46,18 @@ public class TestePessoaDependentes02 {
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		List<Evento> eventos = new ArrayList<Evento>();
-
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		
 		Esporte esporteA = new Esporte();
-		esporteA.setNome("Skate");
+		esporteA = espDAO.searchByID(4);
 		esportes.add(esporteA);
 		
 		Esporte esporteB = new Esporte();
-		esporteB.setNome("Ciclismo");
+		esporteB = espDAO.searchByID(2);
 		esportes.add(esporteB);
 		
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Video Game");
+		esporteC = espDAO.searchByID(3);
 		esportes.add(esporteC);
 		
 		Pessoa pessoa = new Pessoa();
@@ -88,29 +91,22 @@ public class TestePessoaDependentes02 {
 
 		//pessoaDAO.insert(pessoa);
 
+		/*
 		//Buscando por ID - PESSOA  ATUALIZANDO
 		Pessoa pes = new Pessoa();
 		Pessoa pesB = new Pessoa();
-		pes = pessoaDAO.searchByID(2);
-		pesB = pessoaDAO.searchByID(3);
-		pes.setDtNasc(dtNascimentoB);
-		pesB.setDtNasc(dtNascimentoC);
-		//pessoaDAO.update(pes);
-		//pessoaDAO.update(pesB);
-		/*
 		
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
 		grupo = grupoDAO.searchByID(4);
 		grupos.add(grupo);
-		
+
 		//Buscando por ID - PESSOA
 		Pessoa pesC = new Pessoa();
-		pesC = pessoaDAO.searchByID(5);
-		
+		pesC = pessoaDAO.searchByID(4);
 		pesC.setGrupos(grupos);
 		pessoaDAO.update(pesC);
-
+		
 		//Buscando por ID - EVENTO
 		Evento evento = new Evento();
 		evento = eventoDAO.searchByID(2);
@@ -118,7 +114,7 @@ public class TestePessoaDependentes02 {
 		
 		//Buscando por ID - PESSOA
 		Pessoa pessoaE = new Pessoa();
-		pessoaE = pessoaDAO.searchByID(4);
+		pessoaE = pessoaDAO.searchByID(1);
 		pessoaE.setEventos(eventos);
 		pessoaDAO.update(pessoaE);
 		 */

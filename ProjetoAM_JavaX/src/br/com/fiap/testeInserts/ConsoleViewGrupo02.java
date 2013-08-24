@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
@@ -16,6 +17,7 @@ import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
@@ -55,15 +57,16 @@ public class ConsoleViewGrupo02 {
 		ConviteGrupoDAO convtGrupoDAO = new ConviteGrupoDAOImpl(em);
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
-		
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+
 		List<Esporte> esportesP = new ArrayList<Esporte>();
 
 		Esporte esporteD = new Esporte();
-		esporteD.setNome("Atletismo");
+		esporteD = espDAO.searchByID(2);
 		esportesP.add(esporteD);
 		
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Corrida");
+		esporteC = espDAO.searchByID(7);
 		esportesP.add(esporteC);
 		
 		Pessoa pessoa = new Pessoa();
@@ -103,30 +106,27 @@ public class ConsoleViewGrupo02 {
 				"principal paixão. Aqui nos temos interesse de unir pessoas para corrida em dupla ou grupo.");
 		grupo.setPrivacidade(Privacidade.Aberto);
 		grupo.setImgGrupo(new byte [4]);
-		
-		Esporte esporteA = new Esporte();
-		esporteA.setNome("Corrida");
-		
+		Pessoa pesADM = new Pessoa();
+		pesADM = pessoaDAO.searchByID(6);
+		grupo.setAdm(pesADM);
+		//Esporte esporteA = new Esporte();
+		//esporteA.setNome("Corrida");
 		//Esporte esporteB = new Esporte();
 		//esporteB.setNome("Rugby");
-		
-		esportes.add(esporteA);
 		//esportes.add(esporteB);
+		esportes.add(esporteD);
 		grupo.setEsportes(esportes);
-		
 		grupoDAO.insert(grupo);
 		
 		PedidoGrupo pedidoGrupo = new PedidoGrupo();
 		pedidoGrupo.setDescricao("Eu desejo participar pois amo correr.");
 		pedidoGrupo.setCodGrupo(grupo);
 		pedidoGrupo.setCodPessoa(pessoa);
-		
 		pedGrupoDAO.insert(pedidoGrupo);
-		
+
 		ModeradorGrupo modGrupo = new ModeradorGrupo();
 		modGrupo.setCodGrupo(grupo);
 		modGrupo.setCodPessoa(pessoa);
-		
 		modGrupoDAO.insert(modGrupo);
 		
 		ComentarioGrupo comentGrupo = new ComentarioGrupo();
@@ -134,7 +134,6 @@ public class ConsoleViewGrupo02 {
 		comentGrupo.setDataHora(Calendar.getInstance());
 		comentGrupo.setCodGrupo(grupo);
 		comentGrupo.setCodPessoa(pessoa);
-		
 		comentGrupoDAO.insert(comentGrupo);
 		
 		MensagemGrupo msgGrupo = new MensagemGrupo();

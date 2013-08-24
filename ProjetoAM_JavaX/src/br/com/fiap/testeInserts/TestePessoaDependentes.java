@@ -41,16 +41,36 @@ public class TestePessoaDependentes {
 		List<Evento> eventos = new ArrayList<Evento>();
 
 		Esporte esporteA = new Esporte();
-		esporteA.setNome("Futebol Americano");
+		esporteA.setNome("Basquete");
 		esportes.add(esporteA);
 		
 		Esporte esporteB = new Esporte();
-		esporteB.setNome("Basquete");
+		esporteB.setNome("Corrida");
 		esportes.add(esporteB);
 		
 		Esporte esporteC = new Esporte();
-		esporteC.setNome("Rugby");
+		esporteC.setNome("Casual");
 		esportes.add(esporteC);
+		
+		Esporte esporteD = new Esporte();
+		esporteD.setNome("Esportes Radicais");
+		esportes.add(esporteD);
+		
+		Esporte esporteE = new Esporte();
+		esporteE.setNome("Futebol");
+		esportes.add(esporteE);
+		
+		Esporte esporteF = new Esporte();
+		esporteF.setNome("Futebol Americano");
+		esportes.add(esporteF);
+
+		Esporte esporteG = new Esporte();
+		esporteG.setNome("Tênis");
+		esportes.add(esporteG);
+		
+		Esporte esporteH = new Esporte();
+		esporteH.setNome("Vôlei");
+		esportes.add(esporteH);
 		
 		Pessoa pessoa = new Pessoa();
 		pessoa.setNome("Barbara");
@@ -83,7 +103,6 @@ public class TestePessoaDependentes {
 		
 		//pessoaDAO.insert(pessoa);
 		
-		
 		/*
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
@@ -96,7 +115,7 @@ public class TestePessoaDependentes {
 		
 		pes.setGrupos(grupos);
 		pessoaDAO.update(pes);
-
+		
 		//Buscando por ID - EVENTO
 		Evento evento = new Evento();
 		evento = eventoDAO.searchByID(1);

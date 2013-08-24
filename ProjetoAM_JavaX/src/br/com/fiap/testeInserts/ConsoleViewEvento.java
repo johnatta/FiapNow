@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioEventoDAO;
 import br.com.fiap.dao.ConviteEventoDAO;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.MensagemEventoDAO;
 import br.com.fiap.dao.ModeradorEventoDAO;
@@ -16,6 +17,7 @@ import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorEventoDAOImpl;
@@ -52,22 +54,19 @@ public class ConsoleViewEvento {
 		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
 		ConviteEventoDAO convtEventoDAO = new ConviteEventoDAOImpl(em);
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
-		
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		List<Esporte> esportes = new ArrayList<Esporte>();
+		List<Grupo> grupos = new ArrayList<Grupo>();
+		Pessoa pADM = new Pessoa();
+		Pessoa pesADM = new Pessoa();
 
 		Esporte esporteE = new Esporte();
-		esporteE.setNome("HandBall");
+		esporteE = espDAO.searchByID(8);
 		esportes.add(esporteE);
 		
 		Esporte esporteB = new Esporte();
-		esporteB.setNome("Futebol");
+		esporteB = espDAO.searchByID(5);
 		esportes.add(esporteB);
-		
-		Esporte esporteC = new Esporte();
-		esporteC.setNome("Futsal");
-		esportes.add(esporteC);
-		
-		List<Grupo> grupos = new ArrayList<Grupo>();
 		
 		Grupo grupoA = new Grupo();
 		grupoA.setNomeGrupo("Somente Amigos");
@@ -75,6 +74,8 @@ public class ConsoleViewEvento {
 		grupoA.setPrivacidade(Privacidade.Fechado);
 		grupoA.setImgGrupo(new byte[3]);
 		grupoA.setEsportes(esportes);
+		pesADM = pessoaDAO.searchByID(2);
+		grupoA.setAdm(pesADM);
 		grupos.add(grupoA);
 		
 		Grupo grupoB = new Grupo();
@@ -83,6 +84,8 @@ public class ConsoleViewEvento {
 		grupoB.setPrivacidade(Privacidade.Aberto);
 		grupoB.setImgGrupo(new byte[4]);
 		grupoB.setEsportes(esportes);
+		pADM = pessoaDAO.searchByID(1);
+		grupoB.setAdm(pADM);
 		grupos.add(grupoB);
 		
 		Pessoa pessoa = new Pessoa();
@@ -120,15 +123,16 @@ public class ConsoleViewEvento {
 		Evento evento = new Evento();
 		evento.setNome("Futebol Amigo");
 		evento.setDescricao("Futebol para reunir a galerinha do futiba pra lembrar dos velhos tempos.");
-		evento.setPrivacidade(Privacidade.Fechado);
+		evento.setPrivacidade(Privacidade.Aberto);
 		evento.setCusto(90);
 		evento.setTelContato("01120482159");
 		evento.setImgEvento(new byte [4]);
 		evento.setDtEvento(dtNascimento);
+		evento.setAdm(pADM);
 		evento.setGrupos(grupos);
 		
 		Esporte esporteA = new Esporte();
-		esporteA.setNome("Futebol");
+		esporteA = espDAO.searchByID(5);
 		evento.setCodEsporte(esporteA);
 		
 		Endereco endereco = new Endereco();
