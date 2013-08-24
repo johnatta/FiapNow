@@ -1,0 +1,12 @@
+			-- CAIXA DE SELECAO DE ESPORTES
+			<p:selectOneMenu effect="fade" id="slctEsporte" value="#{grupoBean.esporte}">
+				<f:selectItem itemLabel="Esporte" noSelectionOption="true" />
+				<f:selectItems value="#{grupoBean.listaEsporte()}" var="esp"
+					itemLabel="#{esp.nome}" itemValue="#{esp.codEsporte}" />
+				<p:ajax event="change" update="frmCriacaoGrupo"></p:ajax>	
+			</p:selectOneMenu>
+
+<p:ajax event="change" update="frmCriacaoGrupo"></p:ajax>
+event: após qual evento efetuara a renderização do próximo atributo (no caso quando for selecionado o item do select)
+update: o que será renderizado, no caso o form inteiro 	
+	
