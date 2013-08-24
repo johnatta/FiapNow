@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -24,7 +25,6 @@ import br.com.fiap.entity.Endereco;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Privacidade;
-
 
 @Entity
 @Table(name="AM_EVENTO")
@@ -75,11 +75,15 @@ public class Evento implements Serializable {
 	joinColumns={@JoinColumn(name="COD_EVENTO")},
 	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
 	private List<Grupo> grupos;
-
+	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="COD_ADM", nullable = false)
+	private Pessoa adm;
+	
 	public Evento(String nome, Calendar dtEvento, String telContato,
 			double custo, String descricao, Privacidade privacidade,
 			Endereco codEndereco, Esporte codEsporte, List<Grupo> grupos,
-			byte[] imgEvento) {
+			byte[] imgEvento, Pessoa adm) {
 		super();
 		this.nome = nome;
 		this.dtEvento = dtEvento;
@@ -91,6 +95,7 @@ public class Evento implements Serializable {
 		this.codEsporte = codEsporte;
 		this.grupos = grupos;
 		this.imgEvento = imgEvento;
+		this.adm = adm;
 	}
 
 	public Evento(){
@@ -183,6 +188,14 @@ public class Evento implements Serializable {
 
 	public void setImgEvento(byte[] imgEvento) {
 		this.imgEvento = imgEvento;
+	}
+
+	public Pessoa getAdm() {
+		return adm;
+	}
+
+	public void setAdm(Pessoa adm) {
+		this.adm = adm;
 	}
 }
 

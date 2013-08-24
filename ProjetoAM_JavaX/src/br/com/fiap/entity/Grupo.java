@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -53,15 +55,19 @@ public class Grupo implements Serializable {
 	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
 	private List<Esporte> esportes;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="COD_ADM", nullable = false)
+	private Pessoa adm;
 	
 	public Grupo(String nomeGrupo, byte[] imgGrupo, String descricao,
-			Privacidade privacidade, List<Esporte> esportes) {
+			Privacidade privacidade, List<Esporte> esportes, Pessoa adm) {
 		super();
 		this.nomeGrupo = nomeGrupo;
 		this.imgGrupo = imgGrupo;
 		this.descricao = descricao;
 		this.privacidade = privacidade;
 		this.esportes = esportes;
+		this.adm = adm;
 	}
 
 	public Grupo(){
@@ -124,10 +130,13 @@ public class Grupo implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	
+	public Pessoa getAdm() {
+		return adm;
+	}
 
-
-	
+	public void setAdm(Pessoa adm) {
+		this.adm = adm;
+	}
 }
 
 	
