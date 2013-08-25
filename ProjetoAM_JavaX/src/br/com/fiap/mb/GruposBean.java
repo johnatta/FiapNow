@@ -18,15 +18,18 @@ import br.com.fiap.entity.Grupo;
 public class GruposBean implements Serializable {
 	
 	private List<Grupo> grupos;
+	private List<Grupo> meusGrupos;
 	private Grupo selectedGrupo;
 	private EntityManager em;
 	private GrupoDAO grupoDAO;
 	
+
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		grupoDAO = new GrupoDAOImpl(em);
-		grupos = grupoDAO.buscaGruposDoUsuario(3);
+		//grupos = grupoDAO.
+		meusGrupos = grupoDAO.buscaGruposDoUsuario(3);
 	}
 	
 	public List<Grupo> getGrupos() {
@@ -40,6 +43,12 @@ public class GruposBean implements Serializable {
 	}
 	public void setSelectedGrupo(Grupo selectedGrupo) {
 		this.selectedGrupo = selectedGrupo;
+	}
+	public List<Grupo> getMeusGrupos() {
+		return meusGrupos;
+	}
+	public void setMeusGrupos(List<Grupo> meusGrupos) {
+		this.meusGrupos = meusGrupos;
 	}
 
 }

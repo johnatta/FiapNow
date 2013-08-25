@@ -92,6 +92,8 @@ public class TesteAriel {
 			System.out.println("Nenhum resultado encontrado!");
 		}*/
 		
+		//buscarEventosDoUsuario(int codUsuario)
+		
 	}
 	
 }

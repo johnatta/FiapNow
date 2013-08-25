@@ -20,13 +20,13 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public List<Grupo> buscaGruposDoUsuario(int codPessoa) {
-		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select * from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ? and rownum <= 3)", Grupo.class);
+		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select * from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ?)", Grupo.class);
 		q.setParameter(1, codPessoa);
 		return q.getResultList();
 	}
 
 	@Override
-	public List<Grupo> buscaInfoBasicas() {
+	public List<Grupo> buscarGrupos() {
 		TypedQuery<Grupo> query = em.createQuery("from Grupo",Grupo.class);
 		List<Grupo> grupos = query.getResultList();
 		for (Grupo g: grupos) {

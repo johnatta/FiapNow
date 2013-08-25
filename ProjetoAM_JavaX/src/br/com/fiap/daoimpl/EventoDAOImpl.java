@@ -9,6 +9,7 @@ import javax.persistence.TypedQuery;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.rc.ComentarioEventoRC;
 
@@ -106,6 +107,13 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		  return query.getResultList();
 	
 }
+
+	@Override
+	public List<Evento> buscarEventosDoUsuario(int codUsuario) {
+		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Grupo.class);
+		q.setParameter(1, codUsuario);
+		return q.getResultList();
+	}
 	
 	
 }
