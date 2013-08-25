@@ -9,51 +9,57 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<h:form id="form">
+		<p:tabView id="tabMain">
+			<p:tab id="tabGroups" title="#{msgs.groups}">
+				<h:form id="formGrupos">
 
-			<p:dataGrid var="gru" value="#{gruposBean.grupos}" columns="6" rows="4"
-				paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="4,8,12">
+					<p:dataGrid var="gru" value="#{gruposBean.grupos}" columns="5"
+						rows="10" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30">
+						<p:panel>
+							<div id="painel">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:graphicImage url="#{gru.imgGrupo}" width="75" height="100" />
+									<p:commandLink title="#{gru.nomeGrupo}">
+										<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;"/>
+										<f:setPropertyActionListener value="#{grupo}"
+											target="#{gruposBean.selectedGrupo}" />
+									</p:commandLink>
+								</h:panelGrid>
+							</div>
+						</p:panel>
+					</p:dataGrid>
 
-				<p:panel>
-					<div id="painel">
-					<h:panelGrid columns="1">
-						<h:graphicImage url="#{gru.imgGrupo}" />
+				</h:form>
+			</p:tab>
+			
+			
+			
+			<p:tab id="tabMyGroups" title="#{msgs.my_groups}">
+				<h:form id="formMeusGrupos">
 
-						<p:commandLink title="#{gru.nomeGrupo}" >
-							<h:outputText value="#{gru.nomeGrupo}" />
-							<f:setPropertyActionListener value="#{grupo}"
-								target="#{gruposBean.selectedGrupo}"/>
-						</p:commandLink>
-					</h:panelGrid>
-					</div>
-				</p:panel>
+					<p:dataGrid var="gru" value="#{gruposBean.meusGrupos}" columns="5"
+						rows="10" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30">
+						<p:panel>
+							<div id="painel">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:graphicImage url="#{gru.imgGrupo}" width="75" height="100"/>
+									<p:commandLink title="#{gru.nomeGrupo}">
+										<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;" />
+										<f:setPropertyActionListener value="#{grupo}"
+											target="#{gruposBean.selectedGrupo}" />
+									</p:commandLink>
+								</h:panelGrid>
+							</div>
+						</p:panel>
+					</p:dataGrid>
 
-			</p:dataGrid>
-
-			<p:dialog header="Car Detail" widgetVar="carDialog" modal="true">
-				<p:outputPanel id="carDetail" style="text-align:center;"
-					layout="block">
-
-					<p:graphicImage
-						value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg" />
-
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputLabel for="modelNo" value="Model No: " />
-						<h:outputText id="modelNo" value="#{tableBean.selectedCar.model}" />
-
-						<h:outputLabel for="year" value="Year: " />
-						<h:outputText id="year" value="#{tableBean.selectedCar.year}" />
-
-						<h:outputLabel for="color" value="Color: " />
-						<h:outputText id="color" value="#{tableBean.selectedCar.color}"
-							style="color:#{tableBean.selectedCar.color}" />
-					</h:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
-
-		</h:form>
+				</h:form>
+			</p:tab>
+		</p:tabView>
 	</ui:define>
 </ui:composition>
 

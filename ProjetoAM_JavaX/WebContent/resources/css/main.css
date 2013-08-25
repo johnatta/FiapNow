@@ -110,4 +110,5 @@ h1{
 /* ----------- Fim da Estilização do TemplateEE ----------- */
 
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
-.ui-datagrid-column{ width: 80px; padding: 3px;}
+.ui-datagrid-column{ width: 100px; padding: 3px;}
+#painel{width:100px; height: 140px;}

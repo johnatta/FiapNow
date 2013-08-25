@@ -11,45 +11,26 @@
 	<ui:define name="main_content">
 		<h:form id="form">
 
-			<p:dataGrid var="pes" value="#{eventosBean.grupos}" columns="4" rows="12"
+			<p:dataGrid var="eve" value="#{eventosBean.eventos}" columns="6" rows="4"
 				paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="12,16,20">
+				rowsPerPageTemplate="4,8,12">
 
-				<p:panel style="text-align:center">
-					<h:panelGrid columns="1" style="width:100%">
-						<p:graphicImage value="#{pes.imgPerfil}" />
+				<p:panel>
+					<div id="painel">
+					<h:panelGrid columns="1">
+						<h:graphicImage url="#{eve.imgEvento}" />
 
-						<p:commandLink title="pes.apelido" >
-							<h:outputText value="pes.apelido" style="margin:0 auto;" />
-							<f:setPropertyActionListener value="#{pes}"
-								target="#{eventosBean.pessoa}" />
+						<p:commandLink title="#{eve.nomeEvento}" >
+							<h:outputText value="#{eve.nomeEvento}" />
+							<f:setPropertyActionListener value="#{evento}"
+								target="#{eventosBean.selectedEvento}"/>
 						</p:commandLink>
 					</h:panelGrid>
+					</div>
 				</p:panel>
 
 			</p:dataGrid>
-
-			<p:dialog header="Car Detail" widgetVar="carDialog" modal="true">
-				<p:outputPanel id="carDetail" style="text-align:center;"
-					layout="block">
-
-					<p:graphicImage
-						value="/images/cars/#{tableBean.selectedCar.manufacturer}.jpg" />
-
-					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputLabel for="modelNo" value="Model No: " />
-						<h:outputText id="modelNo" value="#{tableBean.selectedCar.model}" />
-
-						<h:outputLabel for="year" value="Year: " />
-						<h:outputText id="year" value="#{tableBean.selectedCar.year}" />
-
-						<h:outputLabel for="color" value="Color: " />
-						<h:outputText id="color" value="#{tableBean.selectedCar.color}"
-							style="color:#{tableBean.selectedCar.color}" />
-					</h:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
 
 		</h:form>
 	</ui:define>

@@ -28,7 +28,7 @@ public class GruposBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		grupoDAO = new GrupoDAOImpl(em);
-		//grupos = grupoDAO.
+		grupos = grupoDAO.buscarGrupos();
 		meusGrupos = grupoDAO.buscaGruposDoUsuario(3);
 	}
 	
