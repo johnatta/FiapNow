@@ -1,39 +1,37 @@
 package br.com.fiap.mb;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
-
-import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.EsporteDAO;
-import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.daoimpl.EsporteDAOImpl;
-import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.entity.Esporte;
-import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.Privacidade;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import javax.ejb.EJB;
-import javax.faces.bean.SessionScoped;
-
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
+import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.ComentarioGrupoDAO;
+import br.com.fiap.dao.EsporteDAO;
+import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
+import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.entity.ComentarioGrupo;
+import br.com.fiap.entity.Esporte;
+import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Privacidade;
 
 @ManagedBean
 @ViewScoped
@@ -46,9 +44,23 @@ public class GrupoBean implements Serializable {
 	private List<Esporte> espSelecionados; 
 	private StreamedContent foto;
 	private DualListModel<Esporte> listaPicker;
+	private int codAdm;
+	private GrupoDAO gDAO;
+	private Grupo pgGrupo;
+	private BigDecimal numMembros;
+	private ComentarioGrupo cmtGrupo;
 	
 	@PostConstruct
 	public void init(){
+		cmtGrupo = new ComentarioGrupo();
+		ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		
+		
+		gDAO = new GrupoDAOImpl(em);
+		pgGrupo = new Grupo();
+		pgGrupo = gDAO.searchByID(1);
+		//gDAO.
+		//numMembros = gDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
 		grupo = new Grupo();
 		esporte = new Esporte();
 		espSelecionados = new ArrayList<Esporte>();
@@ -64,11 +76,12 @@ public class GrupoBean implements Serializable {
 		return esportes;
 	}
 	
-	public void btnCriarGrupo(ActionEvent event){
-		
+	public String btnCriarGrupo(){
 		String retorno = "";
-		
-		
+		PessoaDAO pDAO = new PessoaDAOImpl(em);
+		Pessoa pes = new Pessoa();
+		pes = pDAO.searchByID(getCodAdm());
+		grupo.setAdm(pes);
 		grupo.setEsportes(espSelecionados);		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -84,7 +97,7 @@ public class GrupoBean implements Serializable {
 			fm.setSummary("Erro na Realização do Cadastro");
 			fc.addMessage("", fm);
 		}
-		//return retorno;
+		return retorno;
 	}
 
 	public void realizarUpload(FileUploadEvent event) {
@@ -155,5 +168,36 @@ public class GrupoBean implements Serializable {
 		this.listaPicker = listaPicker;
 	}
 
+	public int getCodAdm() {
+		return codAdm;
+	}
 
+	public void setCodAdm(int codAdm) {
+		this.codAdm = codAdm;
+	}
+
+	public GrupoDAO getgDAO() {
+		return gDAO;
+	}
+
+	public void setgDAO(GrupoDAO gDAO) {
+		this.gDAO = gDAO;
+	}
+
+	public Grupo getPgGrupo() {
+		return pgGrupo;
+	}
+
+	public void setPgGrupo(Grupo pgGrupo) {
+		this.pgGrupo = pgGrupo;
+	}
+
+	public BigDecimal getNumMembros() {
+		return numMembros;
+	}
+
+	public void setNumMembros(BigDecimal numMembros) {
+		this.numMembros = numMembros;
+	}
+	
 }
