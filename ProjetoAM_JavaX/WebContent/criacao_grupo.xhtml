@@ -9,8 +9,8 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+	<h:messages></h:messages>		
 		<h2>Cadastro Grupo</h2>
-
 		<h:panelGrid columns="2">
 			<h:form enctype="multipart/form-data">
 				<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
