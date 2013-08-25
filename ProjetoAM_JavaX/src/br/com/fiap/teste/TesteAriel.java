@@ -6,11 +6,9 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
-import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
-import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
-import br.com.fiap.rc.ComentarioEventoRC;
 
 public class TesteAriel {
 	
@@ -92,7 +90,29 @@ public class TesteAriel {
 			System.out.println("Nenhum resultado encontrado!");
 		}*/
 		
+		/*---------------------------------------------------*/
+		
 		//buscarEventosDoUsuario(int codUsuario)
+		//Teste do método buscarEventosDoUsuario(codUsuario)
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<Evento> eventos = eventoDAO.buscarEventosDoUsuario(1);
+		for(Evento eve : eventos){
+			System.out.println("Código: " + eve.getCodEvento());
+			System.out.println("Nome: " + eve.getNome());
+			System.out.println("Imagem: " + eve.getImgEvento());
+		}
+		
+		/*---------------------------------------------------*/
+		
+		//Moderadores:
+		//Teste do método buscarEventos()
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<Evento> eventos = eventoDAO.buscarEventos();
+		for(Evento eve : eventos){
+			System.out.println("Código: " + eve.getCodEvento());
+			System.out.println("Nome: " + eve.getNome());
+			System.out.println("Imagem: " + eve.getImgEvento());
+		}*/
 		
 	}
 	

@@ -1,6 +1,7 @@
 package br.com.fiap.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.fiap.entity.Endereco;
 import br.com.fiap.entity.Esporte;
@@ -60,7 +62,9 @@ public class Evento implements Serializable {
 	@Column(name="IMAGEM_EVENTO", nullable = false)
 	@Lob
 	private byte [] imgEvento;
-
+	
+	@Transient
+	private BigDecimal quantidade;
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_evento_endereco")
@@ -197,6 +201,13 @@ public class Evento implements Serializable {
 	public void setAdm(Pessoa adm) {
 		this.adm = adm;
 	}
+	public BigDecimal getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(BigDecimal quantidade) {
+		this.quantidade = quantidade;
+	}
+	
 }
 
 

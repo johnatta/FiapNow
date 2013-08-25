@@ -22,7 +22,7 @@ public interface EventoDAO extends DAO<Evento, Integer>{
 	
 	public Evento adcionarPessoaEvento(int codEvento);
 	
-	public List<Evento> buscarEventosCadastrados();
+	public List<Evento> buscarEventos();
 	
 	public Pessoa buscarPessoaEvento(int codPessoa);
 	

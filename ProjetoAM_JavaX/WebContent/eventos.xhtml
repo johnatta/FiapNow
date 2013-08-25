@@ -9,30 +9,57 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<h:form id="form">
+		<p:tabView id="tabMain">
+			<p:tab id="tabGroups" title="#{msgs.events}">
+				<h:form id="formEvento">
 
-			<p:dataGrid var="eve" value="#{eventosBean.eventos}" columns="6" rows="4"
-				paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="4,8,12">
+					<p:dataGrid var="eve" value="#{eventosBean.eventos}" columns="5"
+						rows="10" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30">
+						<p:panel>
+							<div id="painel">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
+									<p:commandLink title="#{eve.nome}" >
+										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;"/>
+										<f:setPropertyActionListener value="#{evento}"
+											target="#{eventosBean.selectedEvent}" action="#{eventosBean.visualizarEvento}" ajax="false"/>
+									</p:commandLink>
+								</h:panelGrid>
+							</div>
+						</p:panel>
+					</p:dataGrid>
 
-				<p:panel>
-					<div id="painel">
-					<h:panelGrid columns="1">
-						<h:graphicImage url="#{eve.imgEvento}" />
+				</h:form>
+			</p:tab>
+			
+			
+			
+			<p:tab id="tabMyEvents" title="#{msgs.my_events}">
+				<h:form id="formMeusEventos">
 
-						<p:commandLink title="#{eve.nomeEvento}" >
-							<h:outputText value="#{eve.nomeEvento}" />
-							<f:setPropertyActionListener value="#{evento}"
-								target="#{eventosBean.selectedEvento}"/>
-						</p:commandLink>
-					</h:panelGrid>
-					</div>
-				</p:panel>
+					<p:dataGrid var="eve" value="#{eventosBean.meusEventos}" columns="5"
+						rows="10" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="10,20,30">
+						<p:panel>
+							<div id="painel">
+								<h:panelGrid columns="1" style="width:100%">
+									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
+									<p:commandLink title="#{eve.nome}">
+										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;" />
+										<f:setPropertyActionListener value="#{evento}"
+											target="#{eventosBean.selectedEvento}" />
+									</p:commandLink>
+								</h:panelGrid>
+							</div>
+						</p:panel>
+					</p:dataGrid>
 
-			</p:dataGrid>
-
-		</h:form>
+				</h:form>
+			</p:tab>
+		</p:tabView>
 	</ui:define>
 </ui:composition>
 

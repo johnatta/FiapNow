@@ -19,6 +19,7 @@ import br.com.fiap.entity.Grupo;
 public class EventosBean implements Serializable {
 	
 	private List<Evento> eventos;
+	private List<Evento> meusEventos;
 	private Evento selectedEvento;
 	private EntityManager em;
 	private EventoDAO eventoDAO;
@@ -27,7 +28,27 @@ public class EventosBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		eventoDAO = new EventoDAOImpl(em);
-		eventos = eventoDAO.buscarEventosDoUsuario(3);
+		meusEventos = eventoDAO.buscarEventosDoUsuario(1);
+		eventos = eventoDAO.buscarEventos();
+	}
+	
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+	public Evento getSelectedEvento() {
+		return selectedEvento;
+	}
+	public void setSelectedEvento(Evento selectedEvento) {
+		this.selectedEvento = selectedEvento;
+	}
+	public List<Evento> getMeusEventos() {
+		return meusEventos;
+	}
+	public void setMeusEventos(List<Evento> meusEventos) {
+		this.meusEventos = meusEventos;
 	}
 	
 }

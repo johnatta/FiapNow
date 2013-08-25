@@ -1,9 +1,11 @@
 package br.com.fiap.daoimpl;
 
+import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.EventoDAO;
@@ -45,7 +47,6 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		return query.getResultList();
 	}
 	
-	//Still doesn't work - Ariel
 	@Override
 	public List<Pessoa> buscarModeradoresDoEvento(int codEvento) {
 		TypedQuery<Pessoa> query = em.createQuery("",Pessoa.class);
@@ -69,11 +70,16 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	}
 
 	@Override
-	public List<Evento> buscarEventosCadastrados() {
-		TypedQuery<Evento> query = em.createQuery("select eve.cod_evento, eve.nome, eve.imagem_evento," +
-				"(select count(*) from am_pessoa_evento pe where pe.cod_evento = eve.cod_evento) " +
-				"as numMembros from am_evento eve order by numMembros;",Evento.class);
-		return query.getResultList();
+	public List<Evento> buscarEventos() {
+		TypedQuery<Evento> query = em.createQuery("from Evento",Evento.class);
+		List<Evento> eventos = query.getResultList();
+		for (Evento eve: eventos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_evento pe where pe.cod_evento = :codEvento");
+			queryQtd.setParameter("codEvento", eve.getCodEvento());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			eve.setQuantidade(qtd);
+		}
+		return eventos;
 	}
 
 	@Override
@@ -110,7 +116,7 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Evento> buscarEventosDoUsuario(int codUsuario) {
-		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Grupo.class);
+		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Evento.class);
 		q.setParameter(1, codUsuario);
 		return q.getResultList();
 	}
