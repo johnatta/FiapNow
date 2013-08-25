@@ -29,10 +29,10 @@ a #header_itemMenu{
 	padding: 2px 3px 2px 1px;
 }
 a:hover #header_itemMenu {
-	background:#a9a9a9;
+	background:#feb342;
 }
 #header_itemMenu a:hover img{
-	background:#a9a9a9;
+	background:#feb342;
 }
 #content_header {
 	margin-left:auto;
@@ -40,7 +40,7 @@ a:hover #header_itemMenu {
 	width:900px;
 }
 #content_header a:hover{
-	background:#a9a9a9;
+	background:#feb342;
 	padding: 1px 0 2px 0;
 }
 #menu {
