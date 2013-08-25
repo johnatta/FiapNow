@@ -44,7 +44,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ?)",Grupo.class);
 		query.setParameter(1, codPessoa);
 		List<Grupo> grupos = query.getResultList();
-		
+
 		for (Grupo grupo : grupos) {
 			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
 			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
@@ -53,7 +53,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		}
 		return grupos;
 	}
-	
+
 	@Override
 	public List<Pessoa> buscarUsuariosParaAdicionarAoGrupo(int codGrupo) {
 		@SuppressWarnings("unchecked")
@@ -61,7 +61,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 				"(select cod_pessoa from am_pessoa_grupo where cod_grupo = :codGrupo)",Pessoa.class);
 		query.setParameter("codGrupo",codGrupo);
 		return query.getResultList();
-		
+
 	}
 
 	@Override
@@ -70,8 +70,16 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		query.setParameter("codGrupo", codGrupo);
 		return (Grupo) query.getSingleResult();
 	}
-	
-	
+
+	@Override
+	public BigDecimal buscarNumeroMembros(int codGrupo) {
+		Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+		queryQtd.setParameter("codGrupo", codGrupo);
+		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+		return qtd;
 	}
-	
+
+
+}
+
 
