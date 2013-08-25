@@ -1,3 +1,4 @@
+/* ----------- Estilização do TemplateEE ----------- */
 body {
     margin:0px;
     padding:0px;
@@ -107,3 +108,9 @@ h1{
 	font: 14px  verdana, arial, helvetica;
 	color: #A6A6A6;
 }
+/* ----------- Fim da Estilização do TemplateEE ----------- */
+
+/* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
+.ui-datagrid-column{ width: 100px; padding: 3px;}
+.ui-widget .ui-widget { width: 80px; }
+.ui-widget .ui-widget-content .ui-corner-all { height: 200px;}

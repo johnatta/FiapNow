@@ -16,17 +16,18 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="12,16,20">
 
-				<p:panel style="text-align:center" >
-					<h:panelGrid columns="1" style="width:auto">
-					
+				<p:panel>
+					<div id="painel">
+					<h:panelGrid columns="1">
 						<h:graphicImage url="#{gru.imgGrupo}" />
 
 						<p:commandLink title="#{gru.nomeGrupo}" >
-							<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;" />
+							<h:outputText value="#{gru.nomeGrupo}" />
 							<f:setPropertyActionListener value="#{grupo}"
 								target="#{gruposBean.selectedGrupo}"/>
 						</p:commandLink>
 					</h:panelGrid>
+					</div>
 				</p:panel>
 
 			</p:dataGrid>
