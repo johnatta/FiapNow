@@ -36,7 +36,7 @@ import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class GrupoBean implements Serializable {
 	/**
 	 * 
@@ -69,15 +69,8 @@ public class GrupoBean implements Serializable {
 		return esportes;
 	}
 	
-	/*
-	public void esporteSelecionado(int codEsporte){
-		esporte.setCodEsporte(codEsporte);
-		espSelecionados.add(esporte);
-		grupo.setEsportes(espSelecionados);
-	}
-	*/
-	
-	public void btnCriarGrupo(ActionEvent ae){
+	public String btnCriarGrupo(){
+		String retorno = "";
 		grupo.setEsportes(espSelecionados);		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -87,11 +80,13 @@ public class GrupoBean implements Serializable {
 			gDAO.insert(getGrupo());
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
+			retorno = "grupo";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
 			fc.addMessage("", fm);
 		}
+		return retorno;
 	}
 
 	public void realizarUpload(FileUploadEvent event) {
