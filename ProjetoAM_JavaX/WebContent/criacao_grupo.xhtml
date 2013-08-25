@@ -30,7 +30,6 @@
 				<p:inputTextarea value="#{grupoBean.grupo.descricao}"
 					required="true" rows="5" cols="48" counter="counter"
 					maxlength="300" counterTemplate="Máximo de 300 caracteres.">
-					<f:validateLength minimum="4" maximum="10"></f:validateLength>
 				</p:inputTextarea>
 				<br></br>
 				<h:outputText id="counter" />
@@ -55,10 +54,12 @@
 				</p:pickList>
 
 				<h:outputText value="Numero admnistrador: "></h:outputText>
-				<p:inputText value="#{grupoBean.grupo.adm}"></p:inputText>
-				<p:commandButton value="Criar Grupo" type="submit"
+				<p:inputText value="#{grupoBean.grupo.adm.codPessoa}"></p:inputText>
+
+				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
-					action="#{grupoBean.btnCriarGrupo}" style="margin:0" ajax="false" />
+					actionListener="#{grupoBean.btnCriarGrupo}" style="margin:0">
+				</p:commandButton>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

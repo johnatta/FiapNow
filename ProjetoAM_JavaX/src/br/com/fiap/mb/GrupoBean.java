@@ -36,7 +36,7 @@ import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -46,7 +46,7 @@ public class GrupoBean implements Serializable {
 	private List<Esporte> espSelecionados; 
 	private StreamedContent foto;
 	private DualListModel<Esporte> listaPicker;
-
+	
 	@PostConstruct
 	public void init(){
 		grupo = new Grupo();
@@ -64,8 +64,11 @@ public class GrupoBean implements Serializable {
 		return esportes;
 	}
 	
-	public String btnCriarGrupo(){
+	public void btnCriarGrupo(ActionEvent event){
+		
 		String retorno = "";
+		
+		
 		grupo.setEsportes(espSelecionados);		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -81,7 +84,7 @@ public class GrupoBean implements Serializable {
 			fm.setSummary("Erro na Realização do Cadastro");
 			fc.addMessage("", fm);
 		}
-		return retorno;
+		//return retorno;
 	}
 
 	public void realizarUpload(FileUploadEvent event) {
