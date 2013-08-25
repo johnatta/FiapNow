@@ -73,7 +73,10 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 	@Override
 	public BigDecimal buscarNumeroMembros(int codGrupo) {
-		Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+		//FAZER RESULTSET
+		
+		Grupo grupo = new Grupo();
+		Query queryQtd = em.createNativeQuery("select count(*), pg.cod_pessoa  from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
 		queryQtd.setParameter("codGrupo", codGrupo);
 		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 		return qtd;
