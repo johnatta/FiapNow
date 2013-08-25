@@ -20,11 +20,11 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<h:graphicImage url="#{gru.imgGrupo}" width="75" height="100" />
-									<p:commandLink title="#{gru.nomeGrupo}">
-										<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;"/>
+									<h:graphicImage url="#{gru.imgGrupo}" width="80" height="110" style="margin-left:15px;"/>
+									<p:commandLink title="#{gru.nomeGrupo}" >
+										<h:outputText value="#{gru.nomeGrupo} (#{gru.quantidade})" style="margin:0 auto;"/>
 										<f:setPropertyActionListener value="#{grupo}"
-											target="#{gruposBean.selectedGrupo}" />
+											target="#{gruposBean.selectedGrupo}" action="#{gruposBean.visualizarGrupo}" ajax="false"/>
 									</p:commandLink>
 								</h:panelGrid>
 							</div>
@@ -46,9 +46,9 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<h:graphicImage url="#{gru.imgGrupo}" width="75" height="100"/>
+									<h:graphicImage url="#{gru.imgGrupo}" width="80" height="110" style="margin-left:15px;"/>
 									<p:commandLink title="#{gru.nomeGrupo}">
-										<h:outputText value="#{gru.nomeGrupo}" style="margin:0 auto;" />
+										<h:outputText value="#{gru.nomeGrupo} (#{gru.quantidade})" style="margin:0 auto;" />
 										<f:setPropertyActionListener value="#{grupo}"
 											target="#{gruposBean.selectedGrupo}" />
 									</p:commandLink>

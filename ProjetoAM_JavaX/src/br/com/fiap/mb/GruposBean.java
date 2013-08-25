@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
@@ -22,7 +23,6 @@ public class GruposBean implements Serializable {
 	private Grupo selectedGrupo;
 	private EntityManager em;
 	private GrupoDAO grupoDAO;
-	
 
 	@PostConstruct
 	public void onInit(){
@@ -30,6 +30,10 @@ public class GruposBean implements Serializable {
 		grupoDAO = new GrupoDAOImpl(em);
 		grupos = grupoDAO.buscarGrupos();
 		meusGrupos = grupoDAO.buscaGruposDoUsuario(3);
+	}
+	
+	public String visualizarGrupo(){
+		return "aa";
 	}
 	
 	public List<Grupo> getGrupos() {

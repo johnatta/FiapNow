@@ -33,7 +33,7 @@ public class Grupo implements Serializable {
 	@Column(name="cod_grupo")
 	private int codGrupo;
 	
-	@Column(nullable = false , name="nome_grupo", length = 50)
+	@Column(nullable = false , name="nome_grupo", length = 40)
 	private String nomeGrupo;
 	
 	@Column(name="IMAGEM_GRUPO", nullable = false)
