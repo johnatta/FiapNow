@@ -26,17 +26,16 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public Grupo buscaInfoBasicas(int codGrupo) {
-		TypedQuery<Grupo> query = em.createQuery("from Grupo where cod_grupo = :cod",Grupo.class);
-		query.setParameter("cod", codGrupo);
-		Grupo grupo = query.getSingleResult();
-		
-		Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo a where a.cod_grupo = :cod");
-		queryQtd.setParameter("cod", codGrupo);
-		
-		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
-		grupo.setQuantidade(qtd);
-		return grupo;
+	public List<Grupo> buscaInfoBasicas() {
+		TypedQuery<Grupo> query = em.createQuery("from Grupo",Grupo.class);
+		List<Grupo> grupos = query.getResultList();
+		for (Grupo g: grupos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			queryQtd.setParameter("codGrupo", g.getCodGrupo());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			g.setQuantidade(qtd);
+		}
+		return grupos;
 	}
 
 	@Override
