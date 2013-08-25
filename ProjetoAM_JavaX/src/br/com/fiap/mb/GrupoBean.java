@@ -38,19 +38,14 @@ import org.primefaces.model.StreamedContent;
 @ManagedBean
 @SessionScoped
 public class GrupoBean implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+	private static final long serialVersionUID = 1L;
 	private Esporte esporte;
 	private Grupo grupo;
 	private List<Privacidade> privs;
 	private List<Esporte> espSelecionados; 
 	private StreamedContent foto;
-	
 	private DualListModel<Esporte> listaPicker;
-	
 
 	@PostConstruct
 	public void init(){
