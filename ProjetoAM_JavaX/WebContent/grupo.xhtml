@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h2>Cadastro Grupo</h2>
+
+		<h:panelGrid columns="2">
+			<h:form enctype="multipart/form-data">
+				<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
+					mode="advanced" update="messages" sizeLimit="100000"
+					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
+					dragDropSupport="false" label="Select" />
+				<p:growl id="messages" showDetail="true" />
+			</h:form>
+		</h:panelGrid>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nome: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
+				<h:outputLabel value="Descricao: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
+				<h:outputLabel value="Privacidade: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
+				<h:outputLabel value="Esportes: "></h:outputLabel>
+				<p:dataGrid var="gru" value="#{grupoBean.listaEsporte()}"
+					columns="4" rows="12" paginator="true"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="12,16,20">
+					<p:panel style="text-align:center">
+						<h:panelGrid columns="1" style="width:auto">
+							<h:outputText value="#{esporte.nome}" style="margin:0 auto;" />
+						</h:panelGrid>
+					</p:panel>
+				</p:dataGrid>
+				<p></p>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
