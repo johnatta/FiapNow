@@ -54,11 +54,11 @@
 				</p:pickList>
 
 				<h:outputText value="Numero admnistrador: "></h:outputText>
-				<p:inputText value="#{grupoBean.grupo.adm.codPessoa}"></p:inputText>
+				<p:inputText value="#{grupoBean.codAdm}"></p:inputText>
 
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
-					actionListener="#{grupoBean.btnCriarGrupo}" style="margin:0">
+					action="#{grupoBean.btnCriarGrupo}" style="margin:0">
 				</p:commandButton>
 			</h:panelGrid>
 		</h:form>

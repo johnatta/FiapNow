@@ -23,23 +23,20 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputLabel value="Nome: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
+				<h:outputText value="#{grupoBean.pgGrupo.nomeGrupo}"></h:outputText>
 				<h:outputLabel value="Descricao: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
+				<h:outputText value="#{grupoBean.pgGrupo.descricao}"></h:outputText>
 				<h:outputLabel value="Privacidade: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
-				<h:outputLabel value="Esportes: "></h:outputLabel>
-				<p:dataGrid var="gru" value="#{grupoBean.listaEsporte()}"
-					columns="4" rows="12" paginator="true"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="12,16,20">
-					<p:panel style="text-align:center">
-						<h:panelGrid columns="1" style="width:auto">
-							<h:outputText value="#{esporte.nome}" style="margin:0 auto;" />
-						</h:panelGrid>
-					</p:panel>
-				</p:dataGrid>
-				<p></p>
+				<h:outputText value="#{grupoBean.pgGrupo.privacidade}"></h:outputText>
+				<h:outputLabel value="Quantidade: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
+				
+				<p:dataTable var="esporte" value="#{grupoBean.pgGrupo.esportes}" style="width:80px">
+					<p:column headerText="Esporte">
+						<h:outputText value="#{esporte.nome}" />
+					</p:column>
+				</p:dataTable>
+
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
