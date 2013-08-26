@@ -1,8 +1,9 @@
 body {
     margin:0px;
     padding:0px;
-    background: url("images/football.png");
+    background: url("images/bike.png");
     font: 14px  verdana, arial, helvetica;
+    color:#233e42;
 }
 #main_container{
 	
@@ -10,10 +11,10 @@ body {
 #header{
 	color: #FFF;
 	padding:3px;
-	background-color:#969696;
+	background-color:#ff9f0f;
 }
 #header a{
-	color: #E1E1E1;
+	color: #233e42;
     text-decoration:none;
 }
 #header_itemMenu{
@@ -27,10 +28,10 @@ a #header_itemMenu{
 	padding: 2px 3px 2px 1px;
 }
 a:hover #header_itemMenu {
-	background:#a9a9a9;
+	background:#feb342;
 }
 #header_itemMenu a:hover img{
-	background:#a9a9a9;
+	background:#feb342;
 }
 .header_flag {
 	margin: 0 2px 0 1px;
@@ -41,7 +42,7 @@ a:hover #header_itemMenu {
 	width:900px;
 }
 #content_header a:hover{
-	background:#a9a9a9;
+	background:#feb342;
 	padding: 1px 0 2px 0;
 }
 #header_lang{
@@ -60,7 +61,7 @@ a:hover #header_itemMenu {
 	border-radius: 10px;
 	width:280px;
 	float:right;
-	margin-top:auto;
+	margin-top:20px;
 	margin-bottom:auto;
 	padding:7px 12px 7px 12px;
 	background-image: linear-gradient(bottom, rgb(204,204,204) 26%, rgb(240,240,240) 67%, rgb(235,235,235) 80%);
@@ -82,8 +83,9 @@ a:hover #header_itemMenu {
 }
 .input_button{
 	float:right;
+	color:#FFF;
 	margin-right:5xpx;
-	background-image: url("images/green_button.png");
+	background-image: url("images/button.png");
 	width:160px;
 	height: 30px;
 	border-radius: 10px;
@@ -92,7 +94,7 @@ a:hover #header_itemMenu {
 	border-radius: 10px;
 	width:280px;
 	float:right;
-	margin-top:300px;
+	margin-top:270px;
 	margin-bottom:auto;
 	padding:7px 12px 7px 12px;
 	background-image: linear-gradient(bottom, rgb(204,204,204) 26%, rgb(240,240,240) 67%, rgb(235,235,235) 80%);
@@ -115,7 +117,7 @@ a:hover #header_itemMenu {
 #footer{
 	color: #FFF;
 	padding:5px;
-	background-color:#969696;
+	background-color:#ff9f0f;
 	position: fixed;
 	width: 100%;
 	bottom: 0px;
@@ -127,7 +129,7 @@ a:hover #header_itemMenu {
     text-align:right;
 }
 #footer_content a{
-	color: #E1E1E1;
+	color: #1f373b;
     text-decoration:none;
 }
 h1{
