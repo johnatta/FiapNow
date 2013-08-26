@@ -15,6 +15,7 @@ body {
 }
 #header a{
 	color: #233e42;
+	font-weight:bold;
     text-decoration:none;
 }
 #header_itemMenu{
