@@ -38,7 +38,6 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		return query.getResultList();
 	}
 	
-	//Still doesn't work - Ariel
 	@Override
 	public List<Pessoa> buscarMembrosPorEvento(int codEvento) {
 		TypedQuery<Pessoa> query = em.createQuery("from Pessoa where exists " +

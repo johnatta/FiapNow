@@ -17,7 +17,26 @@ public class UsuarioDAOImpl extends DAOImpl<Usuario, Integer> implements Usuario
 		TypedQuery<Usuario> query = em.createQuery("from Usuario where email = :em and senha = :pw",Usuario.class);
 		query.setParameter("em", email);
 		query.setParameter("pw", senha);
-		return query.getSingleResult();
+		Usuario usuarioRetorno;
+		try {
+			usuarioRetorno = query.getSingleResult();
+		} catch (Exception e) {
+			usuarioRetorno = null;
+		}
+		return usuarioRetorno;
+	}
+
+	@Override
+	public Usuario buscarPorEmail(String email) {
+		TypedQuery<Usuario> query = em.createQuery("from Usuario where email = :em",Usuario.class);
+		query.setParameter("em", email);
+		Usuario usuarioRetorno;
+		try {
+			usuarioRetorno = query.getSingleResult();
+		} catch (Exception e) {
+			usuarioRetorno = null;
+		}
+		return usuarioRetorno;
 	}
 
 }

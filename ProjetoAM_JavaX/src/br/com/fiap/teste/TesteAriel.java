@@ -6,9 +6,12 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.daoimpl.UsuarioDAOImpl;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Usuario;
 
 public class TesteAriel {
 	
@@ -94,13 +97,13 @@ public class TesteAriel {
 		
 		//buscarEventosDoUsuario(int codUsuario)
 		//Teste do método buscarEventosDoUsuario(codUsuario)
-		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		List<Evento> eventos = eventoDAO.buscarEventosDoUsuario(1);
 		for(Evento eve : eventos){
 			System.out.println("Código: " + eve.getCodEvento());
 			System.out.println("Nome: " + eve.getNome());
 			System.out.println("Imagem: " + eve.getImgEvento());
-		}
+		}*/
 		
 		/*---------------------------------------------------*/
 		
@@ -113,6 +116,38 @@ public class TesteAriel {
 			System.out.println("Nome: " + eve.getNome());
 			System.out.println("Imagem: " + eve.getImgEvento());
 		}*/
+		
+		//TELA INDEX
+		//Teste do método buscarEmailESenha(email,senha)
+		/*UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario usuario = usuarioDAO.buscarEmailESenha("barbara.alves@hotmail.com", "barbaraII");
+		System.out.println(usuario.getCodUsuario());
+		System.out.println(usuario.getEmail());
+		System.out.println(usuario.getSenha());
+		usuario = usuarioDAO.buscarEmailESenha("teste", "teste");
+		if(usuario != null){
+			System.out.println(usuario.getCodUsuario());
+			System.out.println(usuario.getEmail());
+			System.out.println(usuario.getSenha());
+		} else {
+			System.out.println("Nenhum usuário encontrado!");
+		}*/
+		
+		//TELA INDEX
+		//Teste do método buscarPorEmail(email)
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		System.out.println(usuario.getCodUsuario());
+		System.out.println(usuario.getEmail());
+		System.out.println(usuario.getSenha());
+		usuario = usuarioDAO.buscarPorEmail("teste");
+		if(usuario != null){
+			System.out.println(usuario.getCodUsuario());
+			System.out.println(usuario.getEmail());
+			System.out.println(usuario.getSenha());
+		} else {
+			System.out.println("Nenhum usuário encontrado!");
+		}
 		
 	}
 	

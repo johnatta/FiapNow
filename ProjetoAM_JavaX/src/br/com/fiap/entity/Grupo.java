@@ -2,7 +2,6 @@ package br.com.fiap.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,10 +15,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.primefaces.model.StreamedContent;
 
 @Entity
 @Table(name="AM_GRUPO")
@@ -49,6 +49,9 @@ public class Grupo implements Serializable {
 	@Transient
 	private BigDecimal quantidade;
 	
+	@Transient
+	private StreamedContent foto;
+
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_GRUPO_ESPORTE",
 	joinColumns={@JoinColumn(name="COD_GRUPO")},
@@ -136,6 +139,13 @@ public class Grupo implements Serializable {
 
 	public void setAdm(Pessoa adm) {
 		this.adm = adm;
+	}
+	public StreamedContent getFoto() {
+		return foto;
+	}
+	
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
 	}
 }
 

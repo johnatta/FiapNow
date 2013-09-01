@@ -1,5 +1,6 @@
 package br.com.fiap.daoimpl;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+
+import org.primefaces.model.DefaultStreamedContent;
 
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.entity.Grupo;
@@ -34,6 +37,8 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", g.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			g.setQuantidade(qtd);
+			
+			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo())));
 		}
 		return grupos;
 	}
