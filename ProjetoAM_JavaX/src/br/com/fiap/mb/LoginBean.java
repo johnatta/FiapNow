@@ -1,6 +1,7 @@
 package br.com.fiap.mb;
 
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -113,6 +114,16 @@ public class LoginBean implements Serializable {
 		}
 		
 		return returnPage;
+		
+	}
+	
+	public String logout(){
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		map.remove("loginBean");
+		
+		return "index";
 		
 	}
 	

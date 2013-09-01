@@ -45,8 +45,13 @@
 					</div>
                     <ui:insert name="header_user">
 					<div id="user_info">
-					<ui:insert name="user">	Nome Usuário </ui:insert>
-						 | <h:link value="Logout" outcome="_templateEE.xhtml"></h:link>
+						<div class="user">
+							<ui:insert name="user">	#{loginBean.pessoa.apelido} </ui:insert>
+						</div>
+						<div style="float:left; padding: 0 3px 0 3px;"> | </div>
+						<h:form class="frmLogout">
+							<h:commandLink value="#{msgs.logout}" action="#{loginBean.logout}" />
+						</h:form>
 					</div>
                     </ui:insert>
 					<br style="clear:both;" />

@@ -65,6 +65,7 @@ a:hover #header_itemMenu {
 #user_info{
 	float:right;
     margin: 1px 0 1px 0;
+    width:auto;
 }
 #main_content{
 	border:1px solid;
@@ -107,6 +108,12 @@ h1{
 .links{
 	font: 14px  verdana, arial, helvetica;
 	color: #A6A6A6;
+}
+.frmLogout{
+	float:right;
+}
+.user{
+	float:left;
 }
 /* ----------- Fim da Estilização do TemplateEE ----------- */
 
