@@ -15,6 +15,7 @@ import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
 @RequestScoped
@@ -25,6 +26,8 @@ public class GruposBean implements Serializable {
 	private Grupo selectedGrupo;
 	private EntityManager em;
 	private GrupoDAO grupoDAO;
+	private String filtro;
+	private Pessoa pessoa;
 
 	@PostConstruct
 	public void onInit(){
@@ -36,7 +39,13 @@ public class GruposBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
-		meusGrupos = grupoDAO.buscaGruposDaPessoa(sessao.getPessoa());
+		pessoa = sessao.getPessoa();
+		meusGrupos = grupoDAO.buscaGruposDaPessoa(pessoa);
+	}
+	
+	public void filtrar(ActionEvent ae){
+		grupos = grupoDAO.buscarGruposPorNome(filtro);
+		meusGrupos = grupoDAO.buscarMeusGruposPorNome(pessoa, filtro);
 	}
 	
 	public String visualizarGrupo(){
@@ -61,5 +70,18 @@ public class GruposBean implements Serializable {
 	public void setMeusGrupos(List<Grupo> meusGrupos) {
 		this.meusGrupos = meusGrupos;
 	}
+	public String getFiltro() {
+		return filtro;
+	}
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
+	}
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 
 }
+

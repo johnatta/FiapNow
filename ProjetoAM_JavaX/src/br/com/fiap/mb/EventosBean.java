@@ -8,12 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
 @RequestScoped
@@ -24,7 +26,9 @@ public class EventosBean implements Serializable {
 	private Evento selectedEvento;
 	private EntityManager em;
 	private EventoDAO eventoDAO;
-	
+	private Pessoa pessoa;
+	private String filtro;
+
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
@@ -35,7 +39,13 @@ public class EventosBean implements Serializable {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
-		meusEventos = eventoDAO.buscarEventosDaPessoa(sessao.getPessoa());
+		pessoa = sessao.getPessoa();
+		meusEventos = eventoDAO.buscarEventosDaPessoa(pessoa);
+	}
+	
+	public void filtrar(ActionEvent ae){
+		eventos = eventoDAO.buscarEventosPorNome(filtro);
+		meusEventos = eventoDAO.buscarMeusEventosPorNome(pessoa, filtro);
 	}
 	
 	public List<Evento> getEventos() {
@@ -55,6 +65,18 @@ public class EventosBean implements Serializable {
 	}
 	public void setMeusEventos(List<Evento> meusEventos) {
 		this.meusEventos = meusEventos;
+	}
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+	public String getFiltro() {
+		return filtro;
+	}
+	public void setFiltro(String filtro) {
+		this.filtro = filtro;
 	}
 	
 }

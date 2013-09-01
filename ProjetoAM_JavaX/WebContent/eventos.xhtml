@@ -9,6 +9,13 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+		
+		<h:form id="pesqEventos" style="margin-bottom:2px;">
+			<h:outputText value="#{msgs.type_filter}" />
+			<p:inputText value="#{eventosBean.filtro}" />
+			<p:commandButton value="#{msgs.filter}" actionListener="#{eventosBean.filtrar}" icon="ui-icon-search" update=":tabMain" />
+		</h:form>
+	
 		<p:tabView id="tabMain">
 			<p:tab id="tabGroups" title="#{msgs.events}">
 				<h:form id="formEvento">

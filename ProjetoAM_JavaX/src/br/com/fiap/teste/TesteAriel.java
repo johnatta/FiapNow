@@ -99,7 +99,7 @@ public class TesteAriel {
 		
 		//buscarEventosDoUsuario(int codUsuario)
 		//Teste do método buscarEventosDoUsuario(codUsuario)
-		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		Pessoa pessoaTeste = new Pessoa();
 		pessoaTeste.setCodPessoa(1);
 		List<Evento> eventos = eventoDAO.buscarEventosDaPessoa(pessoaTeste);
@@ -107,7 +107,7 @@ public class TesteAriel {
 			System.out.println("Código: " + eve.getCodEvento());
 			System.out.println("Nome: " + eve.getNome());
 			System.out.println("Imagem: " + eve.getImgEvento());
-		}
+		}*/
 		
 		/*---------------------------------------------------*/
 		
@@ -120,6 +120,8 @@ public class TesteAriel {
 			System.out.println("Nome: " + eve.getNome());
 			System.out.println("Imagem: " + eve.getImgEvento());
 		}*/
+		
+		/*---------------------------------------------------*/
 		
 		//TELA INDEX
 		//Teste do método buscarEmailESenha(email,senha)
@@ -137,6 +139,8 @@ public class TesteAriel {
 			System.out.println("Nenhum usuário encontrado!");
 		}*/
 		
+		/*---------------------------------------------------*/
+		
 		//TELA INDEX
 		//Teste do método buscarPorEmail(email)
 		/*UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
@@ -153,16 +157,74 @@ public class TesteAriel {
 			System.out.println("Nenhum usuário encontrado!");
 		}*/
 		
+		/*---------------------------------------------------*/
+		
 		//TELA INDEX
 		//Teste do método buscarPorUsuario(usuario)
-		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		/*PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
 		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
 		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
 		System.out.println("Cód. Usuário: " + pessoa.getUsuario().getCodUsuario());
 		System.out.println("Cód. Pessoa: " + pessoa.getCodPessoa());
 		System.out.println("Nome: " + pessoa.getNome());
-		System.out.println("Apelido: " + pessoa.getApelido());
+		System.out.println("Apelido: " + pessoa.getApelido());*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA GRUPOS
+		//Teste do método buscarGruposPorNome(nome)
+		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
+		List<Grupo> grupos = grupoDAO.buscarGruposPorNome("a");
+		for(Grupo grupo : grupos){
+			System.out.println("Cód.: " + grupo.getCodGrupo());
+			System.out.println("Nome: " + grupo.getNomeGrupo());
+			System.out.println("Membros: " + grupo.getQuantidade());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA GRUPOS
+		//Teste do método buscarMeusGruposPorNome(pessoa, nome)
+		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
+		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
+		List<Grupo> grupos = grupoDAO.buscarMeusGruposPorNome(pessoa, "a");
+		for(Grupo grupo : grupos){
+			System.out.println("Cód.: " + grupo.getCodGrupo());
+			System.out.println("Nome: " + grupo.getNomeGrupo());
+			System.out.println("Membros: " + grupo.getQuantidade());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA EVENTOS
+		//Teste do método buscarEventosPorNome(nome)
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
+		List<Evento> eventos = eventoDAO.buscarEventosPorNome("p");
+		for(Evento eve : eventos){
+			System.out.println("Código: " + eve.getCodEvento());
+			System.out.println("Nome: " + eve.getNome());
+			System.out.println("Qtd. Membros: " + eve.getQuantidade());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA GRUPOS
+		//Teste do método buscarMeusEventosPorNome(pessoa, nome)
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
+		List<Evento> eventos = eventoDAO.buscarMeusEventosPorNome(pessoa, "a");
+		for(Evento evento : eventos){
+			System.out.println("Cód.: " + evento.getCodEvento());
+			System.out.println("Nome: " + evento.getNome());
+			System.out.println("Membros: " + evento.getQuantidade());
+		}
 		
 	}
 	

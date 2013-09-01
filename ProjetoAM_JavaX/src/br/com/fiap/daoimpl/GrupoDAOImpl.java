@@ -86,7 +86,38 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 		return qtd;
 	}
+	
+	@Override
+	public List<Grupo> buscarGruposPorNome(String nome){
+		TypedQuery<Grupo> query = em.createQuery("from Grupo gru where upper(gru.nomeGrupo) like upper(:nome)",Grupo.class);
+		query.setParameter("nome", "%"+nome+"%");
+		List<Grupo> grupos = query.getResultList();
 
+		for (Grupo grupo : grupos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			grupo.setQuantidade(qtd);
+		}
+		return grupos;
+	}
+	
+	@Override
+	public List<Grupo> buscarMeusGruposPorNome(Pessoa pessoa, String nome){
+		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ?)" +
+				" and upper(gru.nome_grupo) like upper(?)",Grupo.class);
+		query.setParameter(1, pessoa.getCodPessoa());
+		query.setParameter(2, "%"+nome+"%");
+		List<Grupo> grupos = query.getResultList();
+
+		for (Grupo grupo : grupos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			grupo.setQuantidade(qtd);
+		}
+		return grupos;
+	}
 
 }
 

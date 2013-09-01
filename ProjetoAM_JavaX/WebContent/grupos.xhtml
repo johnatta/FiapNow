@@ -7,8 +7,15 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="/_templateEE.xhtml">
+<ui:composition template="/_templateEE.xhtml">	
 	<ui:define name="main_content">
+	
+		<h:form id="pesqGrupos" style="margin-bottom:2px;">
+			<h:outputText value="#{msgs.type_filter}" />
+			<p:inputText value="#{gruposBean.filtro}" />
+			<p:commandButton value="#{msgs.filter}" actionListener="#{gruposBean.filtrar}" icon="ui-icon-search" update=":tabMain" />
+		</h:form>
+	
 		<p:tabView id="tabMain">
 			<p:tab id="tabGroups" title="#{msgs.groups}">
 				<h:form id="formGrupos">
