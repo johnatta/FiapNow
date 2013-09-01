@@ -86,7 +86,7 @@ public class TestePessoaDependentes {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("barbara.alves@hotmail.com");
 		usuario.setSenha("barbaraII");
-		pessoa.setCodUsuario(usuario);
+		pessoa.setUsuario(usuario);
 		
 		Endereco endereco = new Endereco();
 		endereco.setPais("Brasil");

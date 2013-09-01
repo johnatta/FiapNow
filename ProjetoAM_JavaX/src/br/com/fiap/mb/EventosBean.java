@@ -2,17 +2,18 @@ package br.com.fiap.mb;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.entity.Evento;
-import br.com.fiap.entity.Grupo;
 
 @ManagedBean
 @RequestScoped
@@ -28,8 +29,13 @@ public class EventosBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		eventoDAO = new EventoDAOImpl(em);
-		meusEventos = eventoDAO.buscarEventosDoUsuario(1);
 		eventos = eventoDAO.buscarEventos();
+		
+		//Obter a Pessoa da sessão
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		meusEventos = eventoDAO.buscarEventosDaPessoa(sessao.getPessoa());
 	}
 	
 	public List<Evento> getEventos() {

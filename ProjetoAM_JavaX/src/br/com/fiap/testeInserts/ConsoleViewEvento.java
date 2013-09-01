@@ -103,7 +103,7 @@ public class ConsoleViewEvento {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("joaomendes.jm@gmail.com");
 		usuario.setSenha("joaoJM30");
-		pessoa.setCodUsuario(usuario);
+		pessoa.setUsuario(usuario);
 		
 		Endereco enderecoP = new Endereco();
 		enderecoP.setPais("Brasil");

@@ -2,10 +2,12 @@ package br.com.fiap.mb;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
@@ -29,7 +31,12 @@ public class GruposBean implements Serializable {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		grupoDAO = new GrupoDAOImpl(em);
 		grupos = grupoDAO.buscarGrupos();
-		meusGrupos = grupoDAO.buscaGruposDoUsuario(3);
+		
+		//Obter a Pessoa da sessão
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		meusGrupos = grupoDAO.buscaGruposDaPessoa(sessao.getPessoa());
 	}
 	
 	public String visualizarGrupo(){

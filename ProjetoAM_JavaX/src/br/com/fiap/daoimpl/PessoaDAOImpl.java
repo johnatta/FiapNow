@@ -8,6 +8,7 @@ import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Usuario;
 
 public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO{
 
@@ -29,5 +30,12 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 
+	}
+
+	@Override
+	public Pessoa buscarPorUsuario(Usuario usuario) {
+		TypedQuery<Pessoa> query = em.createQuery("from Pessoa pes where pes.usuario = :codUsuario",Pessoa.class);
+		query.setParameter("codUsuario", usuario);
+		return query.getSingleResult();
 	}
 }

@@ -67,7 +67,7 @@ public class Pessoa implements Serializable {
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_pessoa_usuario")
-	private Usuario codUsuario;	
+	private Usuario usuario;	
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_pessoa_endereco")
@@ -104,7 +104,7 @@ public class Pessoa implements Serializable {
 		this.cel = cel;
 		this.imgPerfil = imgPerfil;
 		this.imgBackGround = imgBackGround;
-		this.codUsuario = codUsuario;
+		this.usuario = codUsuario;
 		this.codEndereco = codEndereco;
 		this.esportes = esportes;
 		this.grupos = grupos;
@@ -186,12 +186,12 @@ public class Pessoa implements Serializable {
 		this.imgBackGround = imgBackGround;
 	}
 
-	public Usuario getCodUsuario() {
-		return codUsuario;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setCodUsuario(Usuario codUsuario) {
-		this.codUsuario = codUsuario;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Endereco getCodEndereco() {

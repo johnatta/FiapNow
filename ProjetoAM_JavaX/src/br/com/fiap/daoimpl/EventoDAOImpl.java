@@ -114,9 +114,9 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 }
 
 	@Override
-	public List<Evento> buscarEventosDoUsuario(int codUsuario) {
+	public List<Evento> buscarEventosDaPessoa(Pessoa pessoa) {
 		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Evento.class);
-		q.setParameter(1, codUsuario);
+		q.setParameter(1, pessoa.getCodPessoa());
 		return q.getResultList();
 	}
 	

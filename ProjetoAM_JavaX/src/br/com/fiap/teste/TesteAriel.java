@@ -6,8 +6,10 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.daoimpl.UsuarioDAOImpl;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
@@ -97,13 +99,15 @@ public class TesteAriel {
 		
 		//buscarEventosDoUsuario(int codUsuario)
 		//Teste do método buscarEventosDoUsuario(codUsuario)
-		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
-		List<Evento> eventos = eventoDAO.buscarEventosDoUsuario(1);
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		Pessoa pessoaTeste = new Pessoa();
+		pessoaTeste.setCodPessoa(1);
+		List<Evento> eventos = eventoDAO.buscarEventosDaPessoa(pessoaTeste);
 		for(Evento eve : eventos){
 			System.out.println("Código: " + eve.getCodEvento());
 			System.out.println("Nome: " + eve.getNome());
 			System.out.println("Imagem: " + eve.getImgEvento());
-		}*/
+		}
 		
 		/*---------------------------------------------------*/
 		
@@ -135,7 +139,7 @@ public class TesteAriel {
 		
 		//TELA INDEX
 		//Teste do método buscarPorEmail(email)
-		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		/*UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
 		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
 		System.out.println(usuario.getCodUsuario());
 		System.out.println(usuario.getEmail());
@@ -147,7 +151,18 @@ public class TesteAriel {
 			System.out.println(usuario.getSenha());
 		} else {
 			System.out.println("Nenhum usuário encontrado!");
-		}
+		}*/
+		
+		//TELA INDEX
+		//Teste do método buscarPorUsuario(usuario)
+		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
+		System.out.println("Cód. Usuário: " + pessoa.getUsuario().getCodUsuario());
+		System.out.println("Cód. Pessoa: " + pessoa.getCodPessoa());
+		System.out.println("Nome: " + pessoa.getNome());
+		System.out.println("Apelido: " + pessoa.getApelido());
 		
 	}
 	

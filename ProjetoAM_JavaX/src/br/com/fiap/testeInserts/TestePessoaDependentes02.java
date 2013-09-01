@@ -74,7 +74,7 @@ public class TestePessoaDependentes02 {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("gui.medina@yahoo.com.br");
 		usuario.setSenha("gui0201");
-		pessoa.setCodUsuario(usuario);
+		pessoa.setUsuario(usuario);
 		
 		Endereco endereco = new Endereco();
 		endereco.setPais("Brasil");

@@ -83,7 +83,7 @@ public class ConsoleViewGrupo02 {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("camila.andrade@gmail.com");
 		usuario.setSenha("milla91");
-		pessoa.setCodUsuario(usuario);
+		pessoa.setUsuario(usuario);
 		
 		Endereco enderecoP = new Endereco();
 		enderecoP.setPais("Brasil");

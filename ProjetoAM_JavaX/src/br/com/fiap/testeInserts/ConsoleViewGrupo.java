@@ -82,7 +82,7 @@ public class ConsoleViewGrupo {
 		Usuario usuario = new Usuario();
 		usuario.setEmail("alvaro.schmidt@gmail.com");
 		usuario.setSenha("alvaro8790");
-		pessoa.setCodUsuario(usuario);
+		pessoa.setUsuario(usuario);
 		
 		// ENDERECO PARA PESSOA
 		Endereco enderecoP = new Endereco();

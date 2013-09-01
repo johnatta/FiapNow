@@ -11,8 +11,11 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.dao.UsuarioDAO;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.daoimpl.UsuarioDAOImpl;
+import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Usuario;
 
 @ManagedBean
@@ -24,6 +27,7 @@ public class LoginBean implements Serializable {
 	private String senha;
 	private String nome;
 	private String email;
+	private Pessoa pessoa;
 	
 	@PostConstruct
 	public void onInit(){
@@ -54,6 +58,12 @@ public class LoginBean implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 
 	public String login(){
 		
@@ -71,6 +81,8 @@ public class LoginBean implements Serializable {
 		Usuario user = usuarioDAO.buscarEmailESenha(usuario, senha);
 		
 		if(user != null){
+			PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+			pessoa = pessoaDAO.buscarPorUsuario(user);
 			returnPage = "grupos";
 		} else {
 			fc.addMessage("", fm);
