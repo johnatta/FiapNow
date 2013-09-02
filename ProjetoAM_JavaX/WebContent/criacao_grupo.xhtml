@@ -52,13 +52,15 @@
 					<f:facet name="sourceCaption">Opções</f:facet>
 					<f:facet name="targetCaption">Selecionados</f:facet>
 				</p:pickList>
-
+				<!-- 
 				<h:outputText value="Numero admnistrador: "></h:outputText>
 				<p:inputText value="#{grupoBean.codAdm}"></p:inputText>
-
+				 -->
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
 					action="#{grupoBean.btnCriarGrupo}" style="margin:0">
+					<f:setPropertyActionListener value="#{grupo.getCodGrupo}"
+						target="#{grupoBean.codGrupo}" />
 				</p:commandButton>
 			</h:panelGrid>
 		</h:form>

@@ -49,23 +49,29 @@ public class GrupoBean implements Serializable {
 	private Grupo pgGrupo;
 	private BigDecimal numMembros;
 	private ComentarioGrupo cmtGrupo;
+	private int codGrupo;
 	
 	@PostConstruct
 	public void init(){
-		cmtGrupo = new ComentarioGrupo();
-		ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		
-		
-		gDAO = new GrupoDAOImpl(em);
-		pgGrupo = new Grupo();
-		pgGrupo = gDAO.searchByID(1);
-		//gDAO.
-		//numMembros = gDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
 		grupo = new Grupo();
 		esporte = new Esporte();
 		espSelecionados = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 		setListaPicker(new DualListModel<Esporte>(listaEsporte(), espSelecionados));
+	}
+	
+	@PostConstruct
+	public void meusGrupos(){
+		gDAO = new GrupoDAOImpl(em);
+		pgGrupo = new Grupo();
+		System.out.println("antes " + codGrupo);
+		System.out.println("depois " + codGrupo);
+		pgGrupo = gDAO.searchByID(codGrupo);
+		numMembros = gDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
+		//cmtGrupo = new ComentarioGrupo();
+		//ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		//gDAO.
+		//
 	}
 	
 	@PostConstruct
@@ -78,10 +84,8 @@ public class GrupoBean implements Serializable {
 	
 	public String btnCriarGrupo(){
 		String retorno = "";
-		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		Pessoa pes = new Pessoa();
-		pes = pDAO.searchByID(getCodAdm());
-		grupo.setAdm(pes);
+		GruposBean gpsMB = new GruposBean();
+		grupo.setAdm(gpsMB.getPessoa());
 		grupo.setEsportes(espSelecionados);		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -99,11 +103,11 @@ public class GrupoBean implements Serializable {
 		}
 		return retorno;
 	}
-
+	
 	public void realizarUpload(FileUploadEvent event) {
 		String arq = event.getFile().getFileName();
-		System.out.println("Nome do arquivo:" + arq);
-		System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
+		//System.out.println("Nome do arquivo:" + arq);
+		//System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
 		
 		try {
 			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
@@ -199,5 +203,23 @@ public class GrupoBean implements Serializable {
 	public void setNumMembros(BigDecimal numMembros) {
 		this.numMembros = numMembros;
 	}
+
+	public ComentarioGrupo getCmtGrupo() {
+		return cmtGrupo;
+	}
+
+	public void setCmtGrupo(ComentarioGrupo cmtGrupo) {
+		this.cmtGrupo = cmtGrupo;
+	}
+
+	public int getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(int codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+	
+	
 	
 }
