@@ -5,15 +5,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.EventoDAO;
-import br.com.fiap.dao.PessoaDAO;
-import br.com.fiap.dao.UsuarioDAO;
-import br.com.fiap.daoimpl.EventoDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
-import br.com.fiap.daoimpl.UsuarioDAOImpl;
-import br.com.fiap.entity.Evento;
+import br.com.fiap.dao.PedidoEventoDAO;
+import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
+import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.Pessoa;
-import br.com.fiap.entity.Usuario;
 
 public class TesteAriel {
 	
@@ -214,7 +209,7 @@ public class TesteAriel {
 		
 		//TELA GRUPOS
 		//Teste do método buscarMeusEventosPorNome(pessoa, nome)
-		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
 		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
@@ -224,6 +219,36 @@ public class TesteAriel {
 			System.out.println("Cód.: " + evento.getCodEvento());
 			System.out.println("Nome: " + evento.getNome());
 			System.out.println("Membros: " + evento.getQuantidade());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA CONVITE PEDIDO EVENTO
+		//Teste do método buscarConviteEventoPorPessoa(pessoa)
+		/*ConviteEventoDAO conviteEventoDAO = new ConviteEventoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(3);
+		List<ConviteEvento> convitesEvento = conviteEventoDAO.buscarConviteEventoPorPessoa(pessoa);
+		for(ConviteEvento ce : convitesEvento){
+			System.out.println("Cód.: " + ce.getCodConvite());
+			System.out.println("Desc.: " + ce.getDescricao());
+			System.out.println("Cód Pessoa: " + ce.getPessoa().getCodPessoa());
+			System.out.println("Cód Evento: " + ce.getEvento().getCodEvento());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA CONVITE PEDIDO EVENTO
+		//Teste do método buscarConviteEventoPorPessoa(pessoa)
+		PedidoEventoDAO pedidoEventoDAO = new PedidoEventoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(1);
+		List<PedidoEvento> pedidosEvento = pedidoEventoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+		for(PedidoEvento pe : pedidosEvento){
+			System.out.println("Cód.: " + pe.getCodPedido());
+			System.out.println("Desc.: " + pe.getDescricao());
+			System.out.println("Cód. Evento: " + pe.getEvento().getCodEvento());
+			System.out.println("Cód. Pessoa: " + pe.getPessoa().getCodPessoa());
 		}
 		
 	}

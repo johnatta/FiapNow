@@ -33,17 +33,17 @@ public class PedidoEvento implements Serializable{
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_pedido_evento_pessoa")
-	private Pessoa codPessoa;
+	private Pessoa pessoa;
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_evento_ped")
-	private Evento codEvento;
+	private Evento evento;
 
 	public PedidoEvento(String descricao, Pessoa codPessoa, Evento codEvento) {
 		super();
 		this.descricao = descricao;
-		this.codPessoa = codPessoa;
-		this.codEvento = codEvento;
+		this.pessoa = codPessoa;
+		this.evento = codEvento;
 	}
 
 	public PedidoEvento(){
@@ -65,16 +65,20 @@ public class PedidoEvento implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
-	public Evento getCodEvento() {
-		return codEvento;
+
+	public Evento getEvento() {
+		return evento;
 	}
-	public void setCodEvento(Evento codEvento) {
-		this.codEvento = codEvento;
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 }

@@ -153,8 +153,8 @@ public class ConsoleViewEvento {
 		// PEDIDO EVENTO
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");
-		pedidoEvento.setCodEvento(evento);
-		pedidoEvento.setCodPessoa(pessoa);
+		pedidoEvento.setEvento(evento);
+		pedidoEvento.setPessoa(pessoa);
 		pedEventoDAO.insert(pedidoEvento);  
 
 		// MODERADOR EVENTO
@@ -182,8 +182,8 @@ public class ConsoleViewEvento {
 		// CONVITE EVENT0
 		ConviteEvento convtEvento = new ConviteEvento();
 		convtEvento.setDescricao("Espero você para um futebol digno.");
-		convtEvento.setCodEvento(evento);
-		convtEvento.setCodPessoa(pessoa);
+		convtEvento.setEvento(evento);
+		convtEvento.setPessoa(pessoa);
 		//convtEventoDAO.insert(convtEvento); 
 		
 		/*

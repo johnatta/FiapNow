@@ -1,12 +1,14 @@
 package br.com.fiap.mb;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -29,10 +31,12 @@ public class LoginBean implements Serializable {
 	private String nome;
 	private String email;
 	private Pessoa pessoa;
+	private Locale locale;
 	
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
 	}
 	
 	public String getUsuario() {
@@ -65,7 +69,14 @@ public class LoginBean implements Serializable {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+	public Locale getLocale() {
+		return locale;
+	}
+	public void setLocale(Locale locale) {
+		this.locale = locale;
+	}
 
+	
 	public String login(){
 		
 		String returnPage = "";
@@ -125,6 +136,20 @@ public class LoginBean implements Serializable {
 		
 		return "index";
 		
+	}
+	
+	public void changeEnglish() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		UIViewRoot view = context.getViewRoot();
+		locale = Locale.ENGLISH;
+		view.setLocale(locale);
+	}
+
+	public void changePortuguese() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		UIViewRoot view = context.getViewRoot();
+		locale = new Locale("pt", "BR");
+		view.setLocale(locale);
 	}
 	
 }
