@@ -9,21 +9,21 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<h2>Convite/Pedido de Eventos</h2>
+		<h2>Convite/Pedido de Grupos</h2>
 		<p:tabView id="tabMain">
 			<p:tab id="tabInvites" title="#{msgs.invites}">
 				<h:form id="formInvites">
 
-					<p:dataGrid var="cnv" value="#{convitePedidoEventosBean.convites}" columns="1"
+					<p:dataGrid var="cnv" value="#{convitePedidoGruposBean.convites}" columns="1"
 						rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{cnv.evento.nome}" >
+						<p:panel header="#{cnv.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{cnv.evento.imgEvento}" width="80" height="110"/>
+								<h:graphicImage url="#{cnv.grupo.imgGrupo}" width="80" height="110"/>
 								<h:outputText value="#{cnv.descricao}"/>
-								<p:commandButton value="#{msgs.accept}" ajax="false" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
+								<p:commandButton value="#{msgs.accept}" ajax="false" actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}" />
+								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
@@ -35,16 +35,16 @@
 			<p:tab id="tabRequests" title="#{msgs.requests}">
 				<h:form id="formRequests">
 
-					<p:dataGrid var="ped" value="#{convitePedidoEventosBean.pedidos}" columns="1"
+					<p:dataGrid var="ped" value="#{convitePedidoGruposBean.pedidos}" columns="1"
 						rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{ped.evento.nome}" >
+						<p:panel header="#{ped.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
 								<h:outputText value="#{ped.descricao}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido}" value="#{msgs.accept}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido}" value="#{msgs.decline}" />
+								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarPedido}" value="#{msgs.accept}" />
+								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarPedido}" value="#{msgs.decline}" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
