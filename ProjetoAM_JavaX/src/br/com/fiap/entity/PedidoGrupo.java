@@ -33,17 +33,17 @@ public class PedidoGrupo implements Serializable {
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_pedido_grupo_pessoa")
-	private Pessoa codPessoa;
+	private Pessoa pessoa;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_grupo_pedido")
-	private Grupo codGrupo;		
+	private Grupo grupo;		
 	
 	public PedidoGrupo(String descricao, Pessoa codPessoa, Grupo codGrupo) {
 		super();
 		this.descricao = descricao;
-		this.codPessoa = codPessoa;
-		this.codGrupo = codGrupo;
+		this.pessoa = codPessoa;
+		this.grupo = codGrupo;
 	}
 
 	public PedidoGrupo(){
@@ -65,19 +65,21 @@ public class PedidoGrupo implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public Pessoa getCodPessoa() {
-		return codPessoa;
-	}
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
-	}
-	public Grupo getCodGrupo() {
-		return codGrupo;
-	}
-	public void setCodGrupo(Grupo codGrupo) {
-		this.codGrupo = codGrupo;
+
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
 	
 }

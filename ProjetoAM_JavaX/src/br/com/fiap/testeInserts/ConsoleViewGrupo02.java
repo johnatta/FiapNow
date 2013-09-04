@@ -120,8 +120,8 @@ public class ConsoleViewGrupo02 {
 		
 		PedidoGrupo pedidoGrupo = new PedidoGrupo();
 		pedidoGrupo.setDescricao("Eu desejo participar pois amo correr.");
-		pedidoGrupo.setCodGrupo(grupo);
-		pedidoGrupo.setCodPessoa(pessoa);
+		pedidoGrupo.setGrupo(grupo);
+		pedidoGrupo.setPessoa(pessoa);
 		pedGrupoDAO.insert(pedidoGrupo);
 
 		ModeradorGrupo modGrupo = new ModeradorGrupo();
@@ -146,8 +146,8 @@ public class ConsoleViewGrupo02 {
 		
 		ConviteGrupo convtGrupo = new ConviteGrupo();
 		convtGrupo.setDescricao("Gostaria de participar do meu grupo: Corredores Incasáveis.");
-		convtGrupo.setCodGrupo(grupo);
-		convtGrupo.setCodPessoa(pessoa);
+		convtGrupo.setGrupo(grupo);
+		convtGrupo.setPessoa(pessoa);
 		convtGrupoDAO.insert(convtGrupo);
 	}
 

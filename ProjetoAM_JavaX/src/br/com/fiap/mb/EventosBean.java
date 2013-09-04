@@ -30,15 +30,6 @@ public class EventosBean implements Serializable {
 	private EventoDAO eventoDAO;
 	private Pessoa pessoa;
 	private String filtro;
-	private Locale locale;
-
-	public Locale getLocale() {
-		return locale;
-	}
-
-	public void setLocale(Locale locale) {
-		this.locale = locale;
-	}
 
 	@PostConstruct
 	public void onInit(){
@@ -51,9 +42,6 @@ public class EventosBean implements Serializable {
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
-		locale = sessao.getLocale();
-		UIViewRoot view = context.getViewRoot();
-		view.setLocale(locale);
 		meusEventos = eventoDAO.buscarEventosDaPessoa(pessoa);
 	}
 	

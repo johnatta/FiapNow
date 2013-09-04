@@ -33,17 +33,17 @@ public class ConviteGrupo implements Serializable {
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="convite_grupo_pessoa")
-	private Pessoa codPessoa;
+	private Pessoa pessoa;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="convite_grupo")
-	private Grupo codGrupo;
+	private Grupo grupo;
 	
 	public ConviteGrupo(String descricao, Pessoa codPessoa, Grupo codGrupo) {
 		super();
 		this.descricao = descricao;
-		this.codPessoa = codPessoa;
-		this.codGrupo = codGrupo;
+		this.pessoa = codPessoa;
+		this.grupo = codGrupo;
 	}
 
 	public ConviteGrupo() {
@@ -66,20 +66,20 @@ public class ConviteGrupo implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public Grupo getCodGrupo() {
-		return codGrupo;
+	public Grupo getGrupo() {
+		return grupo;
 	}
 
-	public void setCodGrupo(Grupo codGrupo) {
-		this.codGrupo = codGrupo;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 	
 }

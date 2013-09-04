@@ -130,8 +130,8 @@ public class ConsoleViewGrupo {
 		// PEDIDO GRUPO
 		PedidoGrupo pedidoGrupo = new PedidoGrupo();
 		pedidoGrupo.setDescricao("Eu desejo participar pois sou apaixonado por FA.");
-		pedidoGrupo.setCodGrupo(grupo);
-		pedidoGrupo.setCodPessoa(pessoa);
+		pedidoGrupo.setGrupo(grupo);
+		pedidoGrupo.setPessoa(pessoa);
 		// INSERINDO PEDIDO
 		pedGrupoDAO.insert(pedidoGrupo);
 		
@@ -163,8 +163,8 @@ public class ConsoleViewGrupo {
 		// CONVITE GRUPO
 		ConviteGrupo convtGrupo = new ConviteGrupo();
 		convtGrupo.setDescricao("Vi que você gosta de Futebol americano, gostaria de participar do meu grupo ?.");
-		convtGrupo.setCodGrupo(grupo);
-		convtGrupo.setCodPessoa(pessoa);
+		convtGrupo.setGrupo(grupo);
+		convtGrupo.setPessoa(pessoa);
 		//INSERINDO CONVITE GRUPO
 		convtGrupoDAO.insert(convtGrupo);
 	}

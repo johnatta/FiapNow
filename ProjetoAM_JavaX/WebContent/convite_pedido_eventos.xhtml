@@ -22,8 +22,8 @@
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{cnv.evento.imgEvento}" width="80" height="110"/>
 								<h:outputText value="#{cnv.descricao}"/>
-								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitar}" value="#{msgs.accept}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusar}" value="#{msgs.decline}" />
+								<p:commandButton value="#{msgs.accept}" ajax="false" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" />
+								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
@@ -40,9 +40,11 @@
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
 						<p:panel header="#{ped.evento.nome}" >
-							<h:panelGrid columns="2" style="width:100%">
+							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
 								<h:outputText value="#{ped.descricao}" />
+								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido}" value="#{msgs.accept}" />
+								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido}" value="#{msgs.decline}" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>

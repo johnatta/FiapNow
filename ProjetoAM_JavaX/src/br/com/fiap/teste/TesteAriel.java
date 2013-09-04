@@ -5,9 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.PedidoEventoDAO;
-import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
-import br.com.fiap.entity.PedidoEvento;
+import br.com.fiap.dao.PedidoGrupoDAO;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
+import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
@@ -240,7 +240,7 @@ public class TesteAriel {
 		
 		//TELA CONVITE PEDIDO EVENTO
 		//Teste do método buscarConviteEventoPorPessoa(pessoa)
-		PedidoEventoDAO pedidoEventoDAO = new PedidoEventoDAOImpl(em);
+		/*PedidoEventoDAO pedidoEventoDAO = new PedidoEventoDAOImpl(em);
 		Pessoa pessoa = new Pessoa();
 		pessoa.setCodPessoa(1);
 		List<PedidoEvento> pedidosEvento = pedidoEventoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
@@ -249,6 +249,36 @@ public class TesteAriel {
 			System.out.println("Desc.: " + pe.getDescricao());
 			System.out.println("Cód. Evento: " + pe.getEvento().getCodEvento());
 			System.out.println("Cód. Pessoa: " + pe.getPessoa().getCodPessoa());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA CONVITE PEDIDO GRUPO
+		//Teste do método buscarConviteGrupoPorPessoa(pessoa)
+		/*ConviteGrupoDAO conviteGrupoDAO = new ConviteGrupoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(2);
+		List<ConviteGrupo> convitesGrupo = conviteGrupoDAO.buscarConviteGrupoPorPessoa(pessoa);
+		for(ConviteGrupo cg : convitesGrupo){
+			System.out.println("Cód.: " + cg.getCodConvite());
+			System.out.println("Desc.: " + cg.getDescricao());
+			System.out.println("Grupo: " + cg.getGrupo().getNomeGrupo());
+			System.out.println("Pessoa: " + cg.getPessoa().getApelido());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA CONVITE PEDIDO GRUPO
+		//Teste do método buscarPedidoGrupoPraPessoa 
+		PedidoGrupoDAO pedidoGrupoDAO = new PedidoGrupoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(2);
+		List<PedidoGrupo> pedidosGrupo = pedidoGrupoDAO.buscarPedidoGrupoPraPessoa(pessoa);
+		for(PedidoGrupo pg : pedidosGrupo){
+			System.out.println("Cód.: " + pg.getCodPedidoGrupo());
+			System.out.println("Desc.: " + pg.getDescricao());
+			System.out.println("Pessoa: " + pg.getPessoa().getApelido());
+			System.out.println("Grupo: " + pg.getGrupo().getNomeGrupo());
 		}
 		
 	}
