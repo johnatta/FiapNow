@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h2>Criar Evento</h2>
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Nome:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.evento.nome}" required="true" maxlength="50" size="48" />
+				<h:outputText value="Data do Evento"></h:outputText>
+				<p:inputText value="#{criarEventoBean.evento.dtEvento}" required="true" />
+				<h:outputText value="Categoria:"></h:outputText>
+				<p:selectOneMenu effect="fade" 
+					value="#{criarEventoBean.esporte}">
+					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
+					<f:selectItems value="#{criarEventoBean.esps.nome}" ></f:selectItems>
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
