@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+<f:view>
+	<f:loadBundle var="msgs" basename="nls.mensagem" />
+	<h:head>
+		<title>Encontro Esportivo</title>
+		<h:outputStylesheet name="index.css" library="css"></h:outputStylesheet>
+		
+		<meta http-equiv="Pragma" content="no-cache" />
+	</h:head>
+	
+	<h:body>
+		<p:growl life="3000" />
+    
+		<div id="main_container">
+			<div id="header">
+				<div id="content_header">
+					<div id="header_menu">
+						<a href="#"><div id="header_itemMenu">
+							Encontro Esportivo
+						</div></a>
+					</div>
+					<div id="header_lang">
+						<h:form>
+							<h:commandLink action="#{loginBean.changePortuguese()}" styleClass="header_flag">
+								<h:graphicImage name="brazil.png" library="images" />
+							</h:commandLink>
+							<h:commandLink action="#{loginBean.changeEnglish()}" styleClass="header_flag">
+								<h:graphicImage name="usa_uk.png" library="images"/>
+							</h:commandLink>
+						</h:form>
+					</div>
+					<br style="clear:both;" />
+				</div>
+			</div>
+            
+			<div id="main_content">
+				<div id="login_box">
+					<h:form>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msgs.user_login}" />
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}">
+								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</h:inputText>
+							<h:outputText value="#{msgs.user_password}" />
+							<h:inputSecret styleClass="input_box" size="29" value="#{loginBean.senha}"/>
+						</h:panelGrid>
+						<h:commandButton value="#{msgs.login}" styleClass="input_button" action="#{loginBean.login}"/>
+					</h:form>
+				</div>
+				<br style="clear:both;" />
+				<div id="cadastra_box">
+					<div id="titulo_cadastro">
+						<h:outputText value="#{msgs.user_new}" />
+					</div>
+					<h:form>
+						<h:panelGrid columns="2">
+							<h:outputText value="#{msgs.name}" />
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.nome}"/>
+							<h:outputText value="#{msgs.email}" />
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}">
+								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+							</h:inputText>
+						</h:panelGrid>
+						<h:commandButton value="#{msgs.signup}" styleClass="input_button" action="#{loginBean.cadastrar}"/>
+					</h:form>
+				</div>
+			</div>
+
+			<div id="footer">
+                <ui:insert name="footer">
+				<div id="footer_content">
+					Javax Solutions
+				</div>
+                </ui:insert>
+			</div>
+		</div>
+        
+	</h:body>
+	
+</f:view>
+</html>
