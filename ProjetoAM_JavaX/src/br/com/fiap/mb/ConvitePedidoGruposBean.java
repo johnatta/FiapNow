@@ -13,8 +13,10 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.ConviteGrupo;
 import br.com.fiap.entity.PedidoEvento;
@@ -28,6 +30,7 @@ public class ConvitePedidoGruposBean implements Serializable {
 	private EntityManager em;
 	private ConviteGrupoDAO conviteDAO;
 	private PedidoGrupoDAO pedidoDAO;
+	private PessoaDAO pessoaDAO;
 	private List<ConviteGrupo> convites;
 	private List<PedidoGrupo> pedidos;
 	private Pessoa pessoa;
@@ -37,6 +40,7 @@ public class ConvitePedidoGruposBean implements Serializable {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		conviteDAO = new ConviteGrupoDAOImpl(em);
 		pedidoDAO = new PedidoGrupoDAOImpl(em);
+		pessoaDAO = new PessoaDAOImpl(em);
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -66,25 +70,27 @@ public class ConvitePedidoGruposBean implements Serializable {
 		this.pessoa = pessoa;
 	}
 	
-	public void aceitarConvite(ConviteEvento convite){
-		//Removo o convite e insiro um AM_PESSOA_EVENTO para aquela pessoa e aquele Evento
-		//conviteDAO.remove(conviteSelecionado);
+	public void aceitarConvite(ConviteGrupo convite){
+		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
+		pessoa.getGrupos().add(convite.getGrupo());
+		pessoaDAO.update(pessoa);
+		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
 	}
 	
-	public void recusarConvite(ConviteEvento convite){
+	public void recusarConvite(ConviteGrupo convite){
 		//Apenas removo o convite
-		//conviteDAO.remove(convite);
+		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
 	}
 	
-	public void aceitarPedido(PedidoEvento pedido){
+	public void aceitarPedido(PedidoGrupo pedido){
 		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
 		//pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);
 	}
 	
-	public void recusarPedido(PedidoEvento pedido){
+	public void recusarPedido(PedidoGrupo pedido){
 		//Apenas removo o pedido
 		//pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);

@@ -8,14 +8,17 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteEventoDAO;
+import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
+import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.Pessoa;
@@ -27,6 +30,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 	private EntityManager em;
 	private ConviteEventoDAO conviteDAO;
 	private PedidoEventoDAO pedidoDAO;
+	private PessoaDAO pessoaDAO;
 	private List<ConviteEvento> convites;
 	private List<PedidoEvento> pedidos;
 	private Pessoa pessoa;
@@ -36,6 +40,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		conviteDAO = new ConviteEventoDAOImpl(em);
 		pedidoDAO = new PedidoEventoDAOImpl(em);
+		pessoaDAO = new PessoaDAOImpl(em); //Utilizado no aceite de convites
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -66,14 +71,16 @@ public class ConvitePedidoEventosBean implements Serializable {
 	}
 	
 	public void aceitarConvite(ConviteEvento convite){
-		//Removo o convite e insiro um AM_PESSOA_EVENTO para aquela pessoa e aquele Evento
-		//conviteDAO.remove(conviteSelecionado);
+		//Adiciono o Evento aos eventos da Pessoa, updato a Pessoa e removo o convite
+		pessoa.getEventos().add(convite.getEvento());
+		pessoaDAO.update(pessoa);
+		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 	}
 	
 	public void recusarConvite(ConviteEvento convite){
 		//Apenas removo o convite
-		//conviteDAO.remove(convite);
+		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 	}
 	
