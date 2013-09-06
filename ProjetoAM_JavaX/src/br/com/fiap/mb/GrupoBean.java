@@ -1,6 +1,8 @@
 package br.com.fiap.mb;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,28 +14,26 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
+
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
-import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
@@ -55,7 +55,6 @@ public class GrupoBean implements Serializable {
 	private int codGrupo;
 	private Grupo grupo;
 	private Pessoa pessoa;
-	private GrupoDAO gDAO;
 	private Grupo pgGrupo;
 	private ComentarioGrupo cmtGrupo;
 	//private ModeradorGrupo moderador;
@@ -63,6 +62,7 @@ public class GrupoBean implements Serializable {
 	
 	@PostConstruct
 	public void init(){
+		codGrupo = 0;
 		grupo = new Grupo();
 		esporte = new Esporte();
 		espSelecionados = new ArrayList<Esporte>();
@@ -85,14 +85,14 @@ public class GrupoBean implements Serializable {
 		modsGp = new ArrayList<Pessoa>();
 		
 		//membro = new Pessoa();
-		gDAO = new GrupoDAOImpl(em);
+		GrupoDAO gruDAO = new GrupoDAOImpl(em);
 		pgGrupo = new Grupo();
 		
-		pgGrupo = gDAO.searchByID(codGrupo);
-		numMembros = gDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
-		modsGp = modGpDAO.buscarModeradoresDoGrupo(getCodGrupo());
+		pgGrupo = gruDAO.searchByID(codGrupo);
+		numMembros = gruDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
+		modsGp = modGpDAO.buscarModeradoresDoGrupo(pgGrupo.getCodGrupo());
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
-		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(getCodGrupo());
+		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(pgGrupo.getCodGrupo());
 		//cmtGrupo = new ComentarioGrupo();
 		//ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		//gDAO.
@@ -131,36 +131,25 @@ public class GrupoBean implements Serializable {
 	
 	public void realizarUpload(FileUploadEvent event) {
 		String arq = event.getFile().getFileName();
-		//System.out.println("Nome do arquivo:" + arq);
-		//System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
+		System.out.println("Nome do arquivo:" + arq);
+		System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
+		
 		
 		try {
+			File file = new File("c:\\tmp\\", arq);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(event.getFile().getContents());
+			fos.close();
+			
+			FacesContext fc = FacesContext.getCurrentInstance();
+			
+			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
+			
+			fc.addMessage("messages", fm);
 			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public Esporte getEsporte() {
-		return esporte;
-	}
-
-	public void setEsporte(Esporte esporte) {
-		this.esporte = esporte;
-	}
-
-	public Grupo getGrupo() {
-		return grupo;
-	}
-
-	public void setGrupo(Grupo grupo) {
-		this.grupo = grupo;
-	}
-	public List<Privacidade> getPrivs() {
-		return privs;
-	}
-	public void setPrivs(List<Privacidade> privs) {
-		this.privs = privs;
 	}
 	public StreamedContent getFoto() {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -177,8 +166,29 @@ public class GrupoBean implements Serializable {
 		}
 		return content;
 	}
-	public void setFoto(StreamedContent foto) {
-		this.foto = foto;
+
+	public DualListModel<Esporte> getListaPicker() {
+		return listaPicker;
+	}
+
+	public void setListaPicker(DualListModel<Esporte> listaPicker) {
+		this.listaPicker = listaPicker;
+	}
+
+	public Esporte getEsporte() {
+		return esporte;
+	}
+
+	public void setEsporte(Esporte esporte) {
+		this.esporte = esporte;
+	}
+
+	public List<Privacidade> getPrivs() {
+		return privs;
+	}
+
+	public void setPrivs(List<Privacidade> privs) {
+		this.privs = privs;
 	}
 
 	public List<Esporte> getEspSelecionados() {
@@ -189,62 +199,6 @@ public class GrupoBean implements Serializable {
 		this.espSelecionados = espSelecionados;
 	}
 
-	public DualListModel<Esporte> getListaPicker() {
-		return listaPicker;
-	}
-
-	public void setListaPicker(DualListModel<Esporte> listaPicker) {
-		this.listaPicker = listaPicker;
-	}
-
-	public Grupo getPgGrupo() {
-		return pgGrupo;
-	}
-
-	public void setPgGrupo(Grupo pgGrupo) {
-		this.pgGrupo = pgGrupo;
-	}
-
-	public BigDecimal getNumMembros() {
-		return numMembros;
-	}
-
-	public void setNumMembros(BigDecimal numMembros) {
-		this.numMembros = numMembros;
-	}
-
-	public ComentarioGrupo getCmtGrupo() {
-		return cmtGrupo;
-	}
-
-	public void setCmtGrupo(ComentarioGrupo cmtGrupo) {
-		this.cmtGrupo = cmtGrupo;
-	}
-
-	public int getCodGrupo() {
-		return codGrupo;
-	}
-
-	public void setCodGrupo(int codGrupo) {
-		this.codGrupo = codGrupo;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getMembros() {
-		return modsGp;
-	}
-
-	public void setMembros(List<Pessoa> membros) {
-		this.modsGp = membros;
-	}
-
 	public List<Pessoa> getModsGp() {
 		return modsGp;
 	}
@@ -252,7 +206,6 @@ public class GrupoBean implements Serializable {
 	public void setModsGp(List<Pessoa> modsGp) {
 		this.modsGp = modsGp;
 	}
-
 
 	public List<Pessoa> getMembrosGrp() {
 		return membrosGrp;
@@ -270,4 +223,40 @@ public class GrupoBean implements Serializable {
 		this.membrosGrpRow = membrosGrpRow;
 	}
 
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public Grupo getPgGrupo() {
+		return pgGrupo;
+	}
+
+	public void setPgGrupo(Grupo pgGrupo) {
+		this.pgGrupo = pgGrupo;
+	}
+
+	public void setFoto(StreamedContent foto) {
+		this.foto = foto;
+	}
+
+	public int getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(int codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+	
 }
