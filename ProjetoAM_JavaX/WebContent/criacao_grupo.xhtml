@@ -43,7 +43,7 @@
 				<h:outputText value="Esporte: " />
 
 				<p:pickList id="pojoPickList" value="#{grupoBean.listaPicker}"
-					var="esporte" effect="bounce" itemValue="#{esporte}"
+					var="esporte" effect="blind" itemValue="#{esporte}"
 					itemLabel="#{esporte.nome}" converter="esporteConverter"
 					showTargetControls="true" showCheckbox="true"
 					showSourceFilter="true" showTargetFilter="true"
@@ -52,10 +52,6 @@
 					<f:facet name="sourceCaption">Opções</f:facet>
 					<f:facet name="targetCaption">Selecionados</f:facet>
 				</p:pickList>
-				<!-- 
-				<h:outputText value="Numero admnistrador: "></h:outputText>
-				<p:inputText value="#{grupoBean.codAdm}"></p:inputText>
-				 -->
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
 					action="#{grupoBean.btnCriarGrupo}" style="margin:0">

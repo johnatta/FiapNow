@@ -7,9 +7,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -19,17 +22,18 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
-import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
@@ -38,18 +42,24 @@ import br.com.fiap.entity.Privacidade;
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
-	private Esporte esporte;
-	private Grupo grupo;
-	private List<Privacidade> privs;
-	private List<Esporte> espSelecionados; 
-	private StreamedContent foto;
 	private DualListModel<Esporte> listaPicker;
-	private int codAdm;
+	private StreamedContent foto;
+	private BigDecimal numMembros;
+	private Esporte esporte;
+	private List<Privacidade> privs;
+	private List<Esporte> espSelecionados;
+	private List<Pessoa> modsGp;
+	private List<Pessoa> membrosGrp;
+	private List<Pessoa> membrosGrpRow;
+	//Utilizado para o f:setPropertyActionListener passar o codigo do grupo criado por ele
+	private int codGrupo;
+	private Grupo grupo;
+	private Pessoa pessoa;
 	private GrupoDAO gDAO;
 	private Grupo pgGrupo;
-	private BigDecimal numMembros;
 	private ComentarioGrupo cmtGrupo;
-	private int codGrupo;
+	//private ModeradorGrupo moderador;
+	//private Pessoa membro;
 	
 	@PostConstruct
 	public void init(){
@@ -58,16 +68,31 @@ public class GrupoBean implements Serializable {
 		espSelecionados = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 		setListaPicker(new DualListModel<Esporte>(listaEsporte(), espSelecionados));
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		pessoa = sessao.getPessoa();
+		System.out.println("AUQI");
 	}
 	
 	@PostConstruct
 	public void meusGrupos(){
+		ModeradorGrupoDAO modGpDAO = new ModeradorGrupoDAOImpl(em);
+		//PessoaDAO pDAO = new PessoaDAOImpl(em);
+		membrosGrpRow = new ArrayList<Pessoa>(); 
+		//moderador = new ModeradorGrupo();
+		modsGp = new ArrayList<Pessoa>();
+		
+		//membro = new Pessoa();
 		gDAO = new GrupoDAOImpl(em);
 		pgGrupo = new Grupo();
-		System.out.println("antes " + codGrupo);
-		System.out.println("depois " + codGrupo);
+		
 		pgGrupo = gDAO.searchByID(codGrupo);
 		numMembros = gDAO.buscarNumeroMembros(pgGrupo.getCodGrupo());
+		modsGp = modGpDAO.buscarModeradoresDoGrupo(getCodGrupo());
+		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
+		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(getCodGrupo());
 		//cmtGrupo = new ComentarioGrupo();
 		//ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		//gDAO.
@@ -84,15 +109,15 @@ public class GrupoBean implements Serializable {
 	
 	public String btnCriarGrupo(){
 		String retorno = "";
-		GruposBean gpsMB = new GruposBean();
-		grupo.setAdm(gpsMB.getPessoa());
-		grupo.setEsportes(espSelecionados);		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		//FacesContext context = FacesContext.getCurrentInstance();
+		grupo.setAdm(pessoa);
+		grupo.setEsportes(espSelecionados);		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		
 		try{
-			gDAO.insert(getGrupo());
+			gDAO.insert(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
 			retorno = "grupo";
@@ -172,22 +197,6 @@ public class GrupoBean implements Serializable {
 		this.listaPicker = listaPicker;
 	}
 
-	public int getCodAdm() {
-		return codAdm;
-	}
-
-	public void setCodAdm(int codAdm) {
-		this.codAdm = codAdm;
-	}
-
-	public GrupoDAO getgDAO() {
-		return gDAO;
-	}
-
-	public void setgDAO(GrupoDAO gDAO) {
-		this.gDAO = gDAO;
-	}
-
 	public Grupo getPgGrupo() {
 		return pgGrupo;
 	}
@@ -219,7 +228,46 @@ public class GrupoBean implements Serializable {
 	public void setCodGrupo(int codGrupo) {
 		this.codGrupo = codGrupo;
 	}
-	
-	
-	
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getMembros() {
+		return modsGp;
+	}
+
+	public void setMembros(List<Pessoa> membros) {
+		this.modsGp = membros;
+	}
+
+	public List<Pessoa> getModsGp() {
+		return modsGp;
+	}
+
+	public void setModsGp(List<Pessoa> modsGp) {
+		this.modsGp = modsGp;
+	}
+
+
+	public List<Pessoa> getMembrosGrp() {
+		return membrosGrp;
+	}
+
+	public void setMembrosGrp(List<Pessoa> membrosGrp) {
+		this.membrosGrp = membrosGrp;
+	}
+
+	public List<Pessoa> getMembrosGrpRow() {
+		return membrosGrpRow;
+	}
+
+	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
+		this.membrosGrpRow = membrosGrpRow;
+	}
+
 }

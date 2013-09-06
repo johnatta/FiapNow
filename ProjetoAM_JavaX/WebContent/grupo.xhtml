@@ -11,33 +11,43 @@
 	<ui:define name="main_content">
 		<h2>Grupo</h2>
 
-		<h:panelGrid columns="2">
-			<h:form enctype="multipart/form-data">
-				<p:fileUpload fileUploadListener="#{grupoBean.realizarUpload}"
-					mode="advanced" update="messages" sizeLimit="100000"
-					allowTypes="/(\.|\/)(gif|jpe?g|png)$/" auto="false"
-					dragDropSupport="false" label="Select" />
-				<p:growl id="messages" showDetail="true" />
-			</h:form>
-		</h:panelGrid>
 		<h:form>
-			<h:panelGrid columns="2">
+			<div>
 				<h:outputLabel value="Nome: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.pgGrupo.nomeGrupo}"></h:outputText>
-				<h:outputLabel value="Descricao: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.pgGrupo.descricao}"></h:outputText>
-				<h:outputLabel value="Privacidade: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.pgGrupo.privacidade}"></h:outputText>
-				<h:outputLabel value="Quantidade: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
-				
-				<p:dataTable var="esporte" value="#{grupoBean.pgGrupo.esportes}" style="width:80px">
+				<h:outputText value="#{grupoBean.pgGrupo.Adm}"></h:outputText>
+				<h:outputLabel value="Categoria: "></h:outputLabel>
+				<p:dataTable var="esporte" value="#{grupoBean.pgGrupo.esportes}"
+					style="width:80px">
 					<p:column headerText="Esporte">
 						<h:outputText value="#{esporte.nome}" />
 					</p:column>
 				</p:dataTable>
+				<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
+				<h:outputText value="#{grupoBean.pgGrupo.privacidade}"></h:outputText>
 
-			</h:panelGrid>
+			</div>
+
+			<div>
+				<h:outputLabel value="Descricao: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.pgGrupo.descricao}"></h:outputText>
+			</div>
+
+			<div>
+				<p:dataTable var="memb" value="#{grupoBean.membrosGrpRow}"
+					style="width:80px">
+					<p:column headerText="Membros">
+						<h:graphicImage url="#{memb.imgPerfil}" width="80" height="110"/>
+						<h:outputText value="#{memb.nome}" />
+					</p:column>
+				</p:dataTable>
+				<p:dataTable var="mod" value="#{grupoBean.modsGp}"
+					style="width:80px">
+					<p:column headerText="Moderadores">
+						<h:graphicImage url="#{mod.imgPerfil}" width="80" height="110"/>
+						<h:outputText value="#{mod..nome}" />
+					</p:column>
+				</p:dataTable>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>

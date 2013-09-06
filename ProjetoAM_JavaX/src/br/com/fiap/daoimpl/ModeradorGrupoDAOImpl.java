@@ -22,5 +22,11 @@ public class ModeradorGrupoDAOImpl extends DAOImpl<ModeradorGrupo, Integer> impl
 			return p.getResultList();
 			
 		}
-
+		public List<Pessoa> buscarModeradoresDoGrupoRowNum(int codGrupo) {
+			@SuppressWarnings("unchecked")
+			TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery ("SELECT * FROM AM_PESSOA  WHERE cod_pessoa IN (SELECT cod_pessoa  FROM AM_MODERADOR_GRUPO WHERE cod_moderador_grupo =  :codGrupo and rownum <=6)", Pessoa.class);
+			p.setParameter("codGrupo", codGrupo);
+			return p.getResultList();
+			
+		}
 }
