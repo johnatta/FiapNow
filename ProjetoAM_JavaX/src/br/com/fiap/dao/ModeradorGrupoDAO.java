@@ -8,6 +8,6 @@ import br.com.fiap.entity.Pessoa;
 public interface ModeradorGrupoDAO extends DAO<ModeradorGrupo, Integer> {
 	
 	public	List <Pessoa> buscarModeradoresDoGrupo(int codGrupo);
-
+	public	List <Pessoa> buscarModeradoresDoGrupoRowNum(int codGrupo);
 
 }
