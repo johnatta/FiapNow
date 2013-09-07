@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h2>Grupo</h2>
+
+		<h:form>
+			<div>
+				<h:outputLabel value="Nome: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.pgGrupo.Adm}"></h:outputText>
+				<h:outputLabel value="Categoria: "></h:outputLabel>
+				<p:dataTable var="esporte" value="#{grupoBean.pgGrupo.esportes}"
+					style="width:80px">
+					<p:column headerText="Esporte">
+						<h:outputText value="#{esporte.nome}" />
+					</p:column>
+				</p:dataTable>
+				<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
+				<h:outputText value="#{grupoBean.pgGrupo.privacidade}"></h:outputText>
+
+			</div>
+
+			<div>
+				<h:outputLabel value="Descricao: "></h:outputLabel>
+				<h:outputText value="#{grupoBean.pgGrupo.descricao}"></h:outputText>
+			</div>
+			<div>
+				<p:dataTable var="memb" value="#{grupoBean.membrosGrpRow}"
+					style="width:80px">
+					<p:column headerText="Membros">
+						<h:graphicImage url="#{memb.imgPerfil}" width="80" height="110" />
+						<h:outputText value="#{memb.nome}" />
+					</p:column>
+				</p:dataTable>
+				<p:dataTable var="mod" value="#{grupoBean.modsGp}"
+					style="width:80px">
+					<p:column headerText="Moderadores">
+						<h:graphicImage url="#{mod.imgPerfil}" width="80" height="110" />
+						<h:outputText value="#{mod..nome}" />
+					</p:column>
+				</p:dataTable>
+			</div>
+						 -->
+			
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
