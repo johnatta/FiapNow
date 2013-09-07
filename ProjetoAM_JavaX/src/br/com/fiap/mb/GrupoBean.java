@@ -1,8 +1,6 @@
 package br.com.fiap.mb;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,9 +26,11 @@ import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
@@ -111,12 +111,16 @@ public class GrupoBean implements Serializable {
 		String retorno = "";
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		//FacesContext context = FacesContext.getCurrentInstance();
-		grupo.setAdm(pessoa);
+		
+		PessoaDAO pDAO = new PessoaDAOImpl(em);
+		
+		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		grupo.setEsportes(espSelecionados);		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		
 		try{
+			
 			gDAO.insert(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
@@ -130,22 +134,22 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public void realizarUpload(FileUploadEvent event) {
-		String arq = event.getFile().getFileName();
-		System.out.println("Nome do arquivo:" + arq);
-		System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
+//		String arq = event.getFile().getFileName();
+//		System.out.println("Nome do arquivo:" + arq);
+//		System.out.println("Tamanho do arquivo:" + event.getFile().getSize());
 		
 		
 		try {
-			File file = new File("c:\\tmp\\", arq);
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(event.getFile().getContents());
-			fos.close();
-			
-			FacesContext fc = FacesContext.getCurrentInstance();
-			
-			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
-			
-			fc.addMessage("messages", fm);
+//			File file = new File("c:\\tmp\\", arq);
+//			FileOutputStream fos = new FileOutputStream(file);
+//			fos.write(event.getFile().getContents());
+//			fos.close();
+//			
+//			FacesContext fc = FacesContext.getCurrentInstance();
+//			
+//			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
+//			
+//			fc.addMessage("messages", fm);
 			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
 		} catch (IOException e) {
 			e.printStackTrace();
