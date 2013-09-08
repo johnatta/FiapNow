@@ -14,42 +14,24 @@
 		<h:form>
 			<div>
 				<h:outputLabel value="Nome: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.pgGrupo.Adm}"></h:outputText>
+				<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 				<h:outputLabel value="Categoria: "></h:outputLabel>
-				<p:dataTable var="esporte" value="#{grupoBean.pgGrupo.esportes}"
+				<p:dataTable var="e" value="#{grupoBean.grupo.esportes}"
 					style="width:80px">
 					<p:column headerText="Esporte">
-						<h:outputText value="#{esporte.nome}" />
+						<h:outputText value="#{e.nome}" />
 					</p:column>
 				</p:dataTable>
 				<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
-				<h:outputText value="#{grupoBean.pgGrupo.privacidade}"></h:outputText>
+				<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
 			</div>
 
 			<div>
 				<h:outputLabel value="Descricao: "></h:outputLabel>
-				<h:outputText value="#{grupoBean.pgGrupo.descricao}"></h:outputText>
+				<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
 			</div>
 
-			<div>
-				<p:dataTable var="memb" value="#{grupoBean.membrosGrpRow}"
-					style="width:80px">
-					<p:column headerText="Membros">
-						<h:graphicImage url="#{memb.imgPerfil}" width="80" height="110"/>
-						<h:outputText value="#{memb.nome}" />
-					</p:column>
-				</p:dataTable>
-						<!-- 
-				<p:dataTable var="mod" value="#{grupoBean.modsGp}"
-					style="width:80px">
-					<p:column headerText="Moderadores">
-						<h:graphicImage url="#{mod.imgPerfil}" width="80" height="110"/>
-						<h:outputText value="#{mod..nome}" />
-					</p:column>
-				</p:dataTable>
-						 -->
-			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
