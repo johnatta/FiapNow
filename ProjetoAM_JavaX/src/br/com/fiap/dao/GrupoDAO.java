@@ -22,4 +22,6 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	List<Grupo> buscarGruposPorNome(String nome);
 
 	List<Grupo> buscarMeusGruposPorNome(Pessoa pessoa, String nome);
+	
+	Grupo buscarGrupoCadastrado(int codAdm);
 }
