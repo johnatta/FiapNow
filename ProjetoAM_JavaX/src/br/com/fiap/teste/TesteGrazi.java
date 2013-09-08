@@ -1,22 +1,24 @@
 package br.com.fiap.teste;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.PedidoGrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.PedidoGrupo;
+import br.com.fiap.entity.Pessoa;
 
 public class TesteGrazi {
 
@@ -43,6 +45,10 @@ public class TesteGrazi {
 		Esporte e = new Esporte();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		BigDecimal numMembros;
+		PessoaDAO pDAO = new PessoaDAOImpl(em);
+		Pessoa p = new Pessoa();
+		PedidoGrupoDAO pgDAO = new PedidoGrupoDAOImpl(em);
+		PedidoGrupo pg = new PedidoGrupo();
 		
 		/*
 		g = gDAO.buscaInfoBasicas(2);
@@ -84,6 +90,7 @@ public class TesteGrazi {
 		System.out.println("NOME : " + g.getNomeGrupo());
 		System.out.println("CODIGO : " + g.getCodGrupo());
 		 */
+		
 		
 		numMembros = gDAO.buscarNumeroMembros(56);
 		System.out.println(numMembros);
