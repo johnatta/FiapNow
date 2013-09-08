@@ -28,126 +28,23 @@ import br.com.fiap.entity.Pessoa;
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
-	private BigDecimal numMembros;
-	private List<Pessoa> modsGp;
-	private List<Pessoa> membrosGrp;
-	private List<Pessoa> membrosGrpRow;
-	//Utilizado para o f:setPropertyActionListener passar o codigo do grupo criado por ele
-	private int codGrupo;
-	private Pessoa pessoa;
 	private Grupo grupo;
-	private ComentarioGrupo cmtGrupo;
-	//private ModeradorGrupo moderador;
-	//private Pessoa membro;
-
+	private int codGrupo;
+	
+	
 	@PostConstruct
-	public void meusGrupos(){
-		GrupoDAO gruDAO = new GrupoDAOImpl(em);
+	public void obterIdGrupo() {
+		System.out.println();
 		grupo = new Grupo();
-		grupo = gruDAO.searchByID(2);
-		/*
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		CriacaoGrupoBean idGrupo = (CriacaoGrupoBean)map.get("criacaoGrupoBean"); 
-		grupo = gruDAO.searchByID(idGrupo.getGrupo().getCodGrupo());
-		System.out.println("CODIGO GRUPO :  " + grupo.getCodGrupo());
 		
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		LoginBean sessao = (LoginBean)map.get("loginBean");
-		pessoa = sessao.getPessoa();
-		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-		 */
-		//ModeradorGrupoDAO modGpDAO = new ModeradorGrupoDAOImpl(em);
-		//PessoaDAO pDAO = new PessoaDAOImpl(em);
-		//membrosGrpRow = new ArrayList<Pessoa>(); 
-		//modsGp = new ArrayList<Pessoa>();
-		//moderador = new ModeradorGrupo();
-
-		//membro = new Pessoa();
-		//numMembros = gruDAO.buscarNumeroMembros(grupo.getCodGrupo());
-		//modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
-		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
-		//membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
-		//cmtGrupo = new ComentarioGrupo();
-		//ComentarioGrupoDAO cmtGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		//gDAO.
-	}
-
-	/*	
-	public StreamedContent getFoto() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		DefaultStreamedContent content = new DefaultStreamedContent();
-		content.setContentType("image/jpg");
-		try{
-			if (context.getRenderResponse() || grupo.getImgGrupo() == null){
-				content.setStream(context.getExternalContext().getResourceAsStream("/resources/img/semFoto.jpg"));
-			}else{
-				content.setStream(new ByteArrayInputStream(grupo.getImgGrupo()));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return content;
-	}
-	 */
-
-
-	public List<Pessoa> getModsGp() {
-		return modsGp;
-	}
-
-	public void setModsGp(List<Pessoa> modsGp) {
-		this.modsGp = modsGp;
-	}
-
-	public List<Pessoa> getMembrosGrp() {
-		return membrosGrp;
-	}
-
-	public void setMembrosGrp(List<Pessoa> membrosGrp) {
-		this.membrosGrp = membrosGrp;
-	}
-
-	public List<Pessoa> getMembrosGrpRow() {
-		return membrosGrpRow;
-	}
-
-	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
-		this.membrosGrpRow = membrosGrpRow;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public Grupo getPgGrupo() {
-		return grupo;
-	}
-
-	public void setPgGrupo(Grupo pgGrupo) {
-		this.grupo = pgGrupo;
-	}
-
-	public int getCodGrupo() {
-		return codGrupo;
-	}
-
-	public void setCodGrupo(int codGrupo) {
-		this.codGrupo = codGrupo;
-	}
-
-	public BigDecimal getNumMembros() {
-		return numMembros;
-	}
-
-	public void setNumMembros(BigDecimal numMembros) {
-		this.numMembros = numMembros;
+		System.out.println("CODIGO   " + codGrupo);
+		/*
+		UIComponent link = evento.getComponent();
+		UIParameter param = (UIParameter) link.findComponent("obterIdGrupo");
+		grupo.setCodGrupo((Integer) param.getValue());
+		System.out.println("O CODIGO DO GRUPO E... : " + grupo.getCodGrupo());
+		System.out.println();
+		*/
 	}
 
 	public Grupo getGrupo() {
@@ -158,5 +55,14 @@ public class GrupoBean implements Serializable {
 		this.grupo = grupo;
 	}
 
+	public int getCodGrupo() {
+		return codGrupo;
+	}
 
+	public void setCodGrupo(int codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+	
+	
+	
 }
