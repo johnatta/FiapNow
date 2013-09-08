@@ -81,4 +81,7 @@ public class EventosBean implements Serializable {
 		this.filtro = filtro;
 	}
 	
+	public String visualizarEvento(){
+		return "evento.xhtml";
+	}
 }

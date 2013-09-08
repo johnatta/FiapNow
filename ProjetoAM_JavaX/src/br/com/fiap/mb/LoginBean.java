@@ -95,7 +95,7 @@ public class LoginBean implements Serializable {
 		if(user != null){
 			PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 			pessoa = pessoaDAO.buscarPorUsuario(user);
-			returnPage = "grupos";
+			returnPage = "home";
 		} else {
 			fc.addMessage("", fm);
 		}
@@ -119,7 +119,7 @@ public class LoginBean implements Serializable {
 		Usuario user = usuarioDAO.buscarPorEmail(email);
 		
 		if(user == null){
-			returnPage = "grupos";
+			returnPage = "home";
 		} else {
 			fc.addMessage("", fm);
 		}

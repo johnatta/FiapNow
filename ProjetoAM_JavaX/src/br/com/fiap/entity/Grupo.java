@@ -19,6 +19,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 @Entity
@@ -50,7 +51,7 @@ public class Grupo implements Serializable {
 	private BigDecimal quantidade;
 	
 	@Transient
-	private StreamedContent foto;
+	private DefaultStreamedContent foto;
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_GRUPO_ESPORTE",
@@ -140,11 +141,11 @@ public class Grupo implements Serializable {
 	public void setAdm(Pessoa adm) {
 		this.adm = adm;
 	}
-	public StreamedContent getFoto() {
+	public DefaultStreamedContent getFoto() {
 		return foto;
 	}
 	
-	public void setFoto(StreamedContent foto) {
+	public void setFoto(DefaultStreamedContent foto) {
 		this.foto = foto;
 	}
 }

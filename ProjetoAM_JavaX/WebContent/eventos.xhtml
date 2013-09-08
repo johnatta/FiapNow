@@ -31,8 +31,8 @@
 									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
 									<p:commandLink title="#{eve.nome}" >
 										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;"/>
-										<f:setPropertyActionListener value="#{evento}"
-											target="#{eventosBean.selectedEvent}" action="#{eventosBean.visualizarEvento}" ajax="false"/>
+										<f:setPropertyActionListener value="#{eve.codEvento}"
+											target="#{eventoBean.codEvento}" />
 									</p:commandLink>
 								</h:panelGrid>
 							</div>
@@ -57,8 +57,8 @@
 									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
 									<p:commandLink title="#{eve.nome}">
 										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;" />
-										<f:setPropertyActionListener value="#{evento}"
-											target="#{eventosBean.selectedEvento}" />
+										<f:setPropertyActionListener value="#{eve.codEvento}"
+											target="#{eventoBean.codEvento}" />
 									</p:commandLink>
 								</h:panelGrid>
 							</div>
