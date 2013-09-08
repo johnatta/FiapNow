@@ -77,7 +77,9 @@ public class TesteGrazi {
 			System.out.println(esporte.getCodEsporte());
 			System.out.println(esporte.getNome());
 		}
-
+		g = gDAO.buscarGrupoCadastrado(2);
+		System.out.println("NOME : " + g.getNomeGrupo());
+		System.out.println("CODIGO : " + g.getCodGrupo());
 	}
 
 }
