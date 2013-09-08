@@ -21,12 +21,15 @@ import org.primefaces.model.DualListModel;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
@@ -72,9 +75,11 @@ public class CriacaoGrupoBean implements Serializable {
 		grupo.setEsportes(espSelecionados);		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
-
+		List<Grupo> grupos = new ArrayList<Grupo>();
 		try{
 			gDAO.insert(grupo);
+			grupos = pessoa.getGrupos();
+			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
 			retorno = "grupo";
