@@ -52,7 +52,10 @@ public class GrupoBean implements Serializable {
 		System.out.print(codGrupo);
 		System.out.println();
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
-		//numMembros = gruDAO.buscarNumeroMembros(grupo.getCodGrupo());
+		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+		System.out.print("MEmbros>>>>>>>>>>>> : ");
+		System.out.print(numMembros);
+		System.out.println();
 		//modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
 		//membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
