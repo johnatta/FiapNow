@@ -44,12 +44,22 @@ public class CriacaoGrupoBean implements Serializable {
 	private List<Esporte> espSelecionados;
 	private Grupo grupo;
 	private Pessoa pessoa;
+	private List<Esporte> esps;
 
+	@PostConstruct
+	public List<Esporte> listaEsporte(){
+		List<Esporte> esportes = new ArrayList<Esporte>();
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		esportes = espDAO.buscarTodosEsportes();
+		return esportes;
+	}
+	
 	@PostConstruct
 	public void init(){
 		grupo = new Grupo();
 		esporte = new Esporte();
 		espSelecionados = new ArrayList<Esporte>();
+		esps = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 		setListaPicker(new DualListModel<Esporte>(listaEsporte(), espSelecionados));
 
@@ -59,25 +69,21 @@ public class CriacaoGrupoBean implements Serializable {
 		pessoa = sessao.getPessoa();
 	}
 
-	@PostConstruct
-	public List<Esporte> listaEsporte(){
-		List<Esporte> esportes = new ArrayList<Esporte>();
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		esportes = espDAO.buscarTodosEsportes();
-		return esportes;
-	}
 
 	public String btnCriarGrupo(){
 		String retorno;
-		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
+		
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-		grupo.setEsportes(espSelecionados);		
+		//grupo.setEsportes(listaPicker.getTarget());
+		grupo.setEsportes(espSelecionados);
+		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		try{
-			gDAO.insert(grupo);
+			gDAO.insert(getGrupo());
 			grupos = pessoa.getGrupos();
 			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
@@ -155,4 +161,12 @@ public class CriacaoGrupoBean implements Serializable {
 		this.pessoa = pessoa;
 	}
 
+	public List<Esporte> getEsps() {
+		return esps;
+	}
+
+	public void setEsps(List<Esporte> esps) {
+		this.esps = esps;
+	}
+	
 }

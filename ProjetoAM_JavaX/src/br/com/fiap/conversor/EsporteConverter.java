@@ -17,7 +17,9 @@ public class EsporteConverter implements Converter {
 	public Object getAsObject(FacesContext fc, UIComponent component, String value) {
 		CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean)fc.getViewRoot().getViewMap().get("criacaoGrupoBean");
 		return criacaoGrupoBean.getEsporte();
+
 	}
+
 	//Executado no momento em que a página é renderizada e a cada retorno de uma requisição.
 	public String getAsString(FacesContext fc, UIComponent component, Object value) {
 		if (((Esporte) value).getNome() == null || ((Esporte) value).getNome().equals("")) {
