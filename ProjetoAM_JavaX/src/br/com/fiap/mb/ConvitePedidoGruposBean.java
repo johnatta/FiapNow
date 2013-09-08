@@ -34,9 +34,11 @@ public class ConvitePedidoGruposBean implements Serializable {
 	private List<ConviteGrupo> convites;
 	private List<PedidoGrupo> pedidos;
 	private Pessoa pessoa;
+	private int activeTab;
 	
 	@PostConstruct
 	public void onInit() {
+		activeTab = 0;
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		conviteDAO = new ConviteGrupoDAOImpl(em);
 		pedidoDAO = new PedidoGrupoDAOImpl(em);
@@ -69,31 +71,42 @@ public class ConvitePedidoGruposBean implements Serializable {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+	public int getActiveTab() {
+		return activeTab;
+	}
+	public void setActiveTab(int activeTab) {
+		this.activeTab = activeTab;
+	}
+
 	public void aceitarConvite(ConviteGrupo convite){
 		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
 		pessoa.getGrupos().add(convite.getGrupo());
 		pessoaDAO.update(pessoa);
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
+		activeTab = 0;
 	}
 	
 	public void recusarConvite(ConviteGrupo convite){
 		//Apenas removo o convite
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
+		activeTab = 0;
 	}
 	
 	public void aceitarPedido(PedidoGrupo pedido){
 		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
-		//pedidoDAO.remove(pedido);
+		pedido.getPessoa().getGrupos().add(pedido.getGrupo());
+		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);
+		activeTab = 1;
 	}
 	
 	public void recusarPedido(PedidoGrupo pedido){
 		//Apenas removo o pedido
-		//pedidoDAO.remove(pedido);
+		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);
+		activeTab = 1;
 	}
 
 }

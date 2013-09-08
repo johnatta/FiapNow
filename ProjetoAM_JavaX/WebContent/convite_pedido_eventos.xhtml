@@ -10,7 +10,7 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<h2>Convite/Pedido de Eventos</h2>
-		<p:tabView id="tabMain">
+		<p:tabView id="tabMain" activeIndex="#{convitePedidoEventosBean.activeTab}">
 			<p:tab id="tabInvites" title="#{msgs.invites}">
 				<h:form id="formInvites">
 
@@ -22,8 +22,8 @@
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{cnv.evento.imgEvento}" width="80" height="110"/>
 								<h:outputText value="#{cnv.descricao}"/>
-								<p:commandButton value="#{msgs.accept}" ajax="false" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
+								<p:commandButton value="#{msgs.accept}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.decline}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" update=":tabMain" ajax="true"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
@@ -41,10 +41,14 @@
 						rowsPerPageTemplate="5,10,20">
 						<p:panel header="#{ped.evento.nome}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
+								<h:column>
+									<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
+									<br/>
+									<h:outputText value="#{ped.pessoa.apelido}"/>
+								</h:column>
 								<h:outputText value="#{ped.descricao}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido}" value="#{msgs.accept}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido}" value="#{msgs.decline}" />
+								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido(ped)}" value="#{msgs.accept}" update=":tabMain" ajax="true"/>
+								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido(ped)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>

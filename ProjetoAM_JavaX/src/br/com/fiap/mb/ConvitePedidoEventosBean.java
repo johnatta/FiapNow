@@ -30,17 +30,17 @@ public class ConvitePedidoEventosBean implements Serializable {
 	private EntityManager em;
 	private ConviteEventoDAO conviteDAO;
 	private PedidoEventoDAO pedidoDAO;
-	private PessoaDAO pessoaDAO;
 	private List<ConviteEvento> convites;
 	private List<PedidoEvento> pedidos;
 	private Pessoa pessoa;
+	private int activeTab;
 	
 	@PostConstruct
 	public void onInit() {
+		activeTab = 0;
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		conviteDAO = new ConviteEventoDAOImpl(em);
 		pedidoDAO = new PedidoEventoDAOImpl(em);
-		pessoaDAO = new PessoaDAOImpl(em); //Utilizado no aceite de convites
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -69,31 +69,41 @@ public class ConvitePedidoEventosBean implements Serializable {
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+	public int getActiveTab() {
+		return activeTab;
+	}
+	public void setActiveTab(int activeTab) {
+		this.activeTab = activeTab;
+	}
+
 	public void aceitarConvite(ConviteEvento convite){
 		//Adiciono o Evento aos eventos da Pessoa, updato a Pessoa e removo o convite
 		pessoa.getEventos().add(convite.getEvento());
-		pessoaDAO.update(pessoa);
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
+		activeTab = 0;
 	}
 	
 	public void recusarConvite(ConviteEvento convite){
 		//Apenas removo o convite
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
+		activeTab = 0;
 	}
 	
 	public void aceitarPedido(PedidoEvento pedido){
-		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
-		//pedidoDAO.remove(pedido);
+		//Adiciono um Evento para a pessoa que realizou o Pedido e removo o pedido
+		pedido.getPessoa().getEventos().add(pedido.getEvento());
+		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+		activeTab = 1;
 	}
 	
 	public void recusarPedido(PedidoEvento pedido){
 		//Apenas removo o pedido
-		//pedidoDAO.remove(pedido);
+		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+		activeTab = 1;
 	}
 
 }
