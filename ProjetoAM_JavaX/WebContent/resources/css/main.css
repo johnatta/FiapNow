@@ -116,6 +116,7 @@ h1{
 .user{
 	float:left;
 }
+h1{ text-align: center;}
 /* ----------- Fim da Estilização do TemplateEE ----------- */
 
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */

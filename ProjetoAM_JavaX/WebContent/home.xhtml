@@ -9,13 +9,14 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	    <h1>Bem vindo ao Encontro Esportivo!</h1>
+	    <h1>#{msgs.welcome}</h1>
 	    
-	    <p>Está precisando de motivação para praticar um esporte hoje? Então assista...</p>
+	    <p style="margin-left='10px;'">#{msgs.welcomeMessage}</p>
 	    
-	    <p:media value="https://youtube.googleapis.com/v/Lxn1-pKY-9I?showinfo=0;rel=0;" width="425"
-			height="344" player="flash"/>
-	    
+	    <div style="margin-left:auto; margin-right: auto; width: 640px;">
+	    	<p:media value="https://youtube.googleapis.com/v/Lxn1-pKY-9I?showinfo=0;rel=0;" width="640" 
+				height="360" player="flash"/>
+	    </div>
 	    
 	    
 	</ui:define>
