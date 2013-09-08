@@ -49,7 +49,7 @@ public class GruposBean implements Serializable {
 	}
 	
 	public String visualizarGrupo(){
-		return "aa";
+		return "grupo.xhtml";
 	}
 	
 	public List<Grupo> getGrupos() {

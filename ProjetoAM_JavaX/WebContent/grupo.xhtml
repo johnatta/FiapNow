@@ -10,9 +10,14 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<h2>Grupo</h2>
+		
+		<f:metadata>
+        	<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}"/>
+		</f:metadata>
 
 		<h:form>
 			<div>
+				<h:outputText value="#{grupoBean.codGrupo}"></h:outputText>
 				<h:outputLabel value="Nome: "></h:outputLabel>
 				<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 				<h:outputLabel value="Categoria: "></h:outputLabel>

@@ -29,10 +29,10 @@
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
 									<p:graphicImage value="#{gru.foto}" width="80" height="110" style="margin-left:15px;"/>
-									<p:commandLink title="#{gru.nomeGrupo}" >
+									<p:commandLink title="#{gru.nomeGrupo}" action="#{gruposBean.visualizarGrupo}">
 										<h:outputText value="#{gru.nomeGrupo} (#{gru.quantidade})" style="margin:0 auto;"/>
-										<f:setPropertyActionListener value="#{grupo}"
-											target="#{gruposBean.selectedGrupo}" action="#{gruposBean.visualizarGrupo}" ajax="false"/>
+										<f:setPropertyActionListener value="#{gru.codGrupo}"
+											target="#{grupoBean.codGrupo}" ajax="false"/>
 									</p:commandLink>
 								</h:panelGrid>
 							</div>
