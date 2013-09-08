@@ -37,7 +37,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", g.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			g.setQuantidade(qtd);
-			
+
 			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo())));
 		}
 		return grupos;
@@ -79,14 +79,14 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	@Override
 	public BigDecimal buscarNumeroMembros(int codGrupo) {
 		//FAZER RESULTSET
-		
+
 		Grupo grupo = new Grupo();
 		Query queryQtd = em.createNativeQuery("select count(*), pg.cod_pessoa  from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
 		queryQtd.setParameter("codGrupo", codGrupo);
 		BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 		return qtd;
 	}
-	
+
 	@Override
 	public List<Grupo> buscarGruposPorNome(String nome){
 		TypedQuery<Grupo> query = em.createQuery("from Grupo gru where upper(gru.nomeGrupo) like upper(:nome)",Grupo.class);
@@ -101,7 +101,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		}
 		return grupos;
 	}
-	
+
 	@Override
 	public List<Grupo> buscarMeusGruposPorNome(Pessoa pessoa, String nome){
 		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ?)" +
@@ -118,7 +118,12 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		}
 		return grupos;
 	}
-
+	@Override
+	public Grupo buscarGrupoCadastrado(int codAdm) { 
+		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("Select g.* from AM_Grupo g where g.cod_adm = ? and rownum = 1 order by g.cod_grupo desc");
+		query.setParameter(1, codAdm);
+		return query.getSingleResult();
+	}
 }
 
 
