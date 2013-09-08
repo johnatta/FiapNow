@@ -111,6 +111,7 @@ h1{
 }
 .frmLogout{
 	float:right;
+	margin: 0em;
 }
 .user{
 	float:left;
@@ -120,4 +121,3 @@ h1{
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
 .ui-datagrid-column { width: 100px; padding: 3px;}
 #painel {width:10px; height: 150px;}
-#profile {text-align: center;}
