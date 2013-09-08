@@ -1,5 +1,7 @@
 package br.com.fiap.teste;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +42,8 @@ public class TesteGrazi {
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		Esporte e = new Esporte();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		BigDecimal numMembros;
+		
 		/*
 		g = gDAO.buscaInfoBasicas(2);
 		System.out.println("Nome: " + g.getNomeGrupo() );
@@ -70,7 +74,6 @@ public class TesteGrazi {
 			System.out.println("Quantidade " + grupo.getQuantidade());
 			System.out.println();
 		}
-		 */
 		
 		esportes = espDAO.buscarTodosEsportes();
 		for (Esporte esporte : esportes) {
@@ -80,6 +83,10 @@ public class TesteGrazi {
 		g = gDAO.buscarGrupoCadastrado(2);
 		System.out.println("NOME : " + g.getNomeGrupo());
 		System.out.println("CODIGO : " + g.getCodGrupo());
+		 */
+		
+		numMembros = gDAO.buscarNumeroMembros(56);
+		System.out.println(numMembros);
 	}
 
 }
