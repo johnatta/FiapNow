@@ -19,8 +19,10 @@ import br.com.fiap.mb.CriacaoGrupoBean;
 public class EsporteConverter implements Converter {
 	//Executado no momento em que a página é submetida.
 	public Object getAsObject(FacesContext fc, UIComponent component, String value) {
-		CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean)fc.getViewRoot().getViewMap().get("criacaoGrupoBean");
-		return criacaoGrupoBean.getEsporte();
+		//CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean)fc.getViewRoot().getViewMap().get("criacaoGrupoBean");
+		EsporteDAO esporteDAO = new EsporteDAOImpl(EntityManagerFactorySingleton.getInstance().createEntityManager());
+		return esporteDAO.buscarPorNome(value);
+		//return criacaoGrupoBean.getEsporte();
 	}
 
 	//Executado no momento em que a página é renderizada e a cada retorno de uma requisição.
