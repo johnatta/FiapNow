@@ -89,7 +89,7 @@ public class CriacaoGrupoBean implements Serializable {
 			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "index";
+			retorno = "grupo";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
