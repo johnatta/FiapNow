@@ -91,11 +91,18 @@ a:hover #header_itemMenu {
 	height: 30px;
 	border-radius: 10px;
 }
+#msg{
+	margin-top: 30px;
+	margin-left: -30px;
+	width: 440px;
+	font-size: 20px;
+	font-family: Estrangelo Edessa /* Lucida Sans Unicode */;
+}
 #cadastra_box{
 	border-radius: 10px;
 	width:280px;
 	float:right;
-	margin-top:270px;
+	margin-top:110px;
 	margin-bottom:auto;
 	padding:7px 12px 7px 12px;
 	background-image: linear-gradient(bottom, rgb(204,204,204) 26%, rgb(240,240,240) 67%, rgb(235,235,235) 80%);
@@ -143,6 +150,14 @@ h1{
 .detach{
 	font: 16px  verdana, arial, helvetica;
 	color: #656565;
+}
+.msg_title{
+	font: 22px verdana, arial, helvetica ;
+	margin-left:10px;
+	font-weight: bold;
+}
+.msg_content {
+	margin-top:5px;
 }
 .links{
 	font: 14px  verdana, arial, helvetica;

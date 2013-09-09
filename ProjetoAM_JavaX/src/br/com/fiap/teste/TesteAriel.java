@@ -5,10 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.PedidoGrupoDAO;
-import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
-import br.com.fiap.entity.PedidoGrupo;
-import br.com.fiap.entity.Pessoa;
+import br.com.fiap.dao.EsporteDAO;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
+import br.com.fiap.pesquisa.ItemGrafico;
 
 public class TesteAriel {
 	
@@ -270,7 +269,7 @@ public class TesteAriel {
 		
 		//TELA CONVITE PEDIDO GRUPO
 		//Teste do método buscarPedidoGrupoPraPessoa 
-		PedidoGrupoDAO pedidoGrupoDAO = new PedidoGrupoDAOImpl(em);
+		/*PedidoGrupoDAO pedidoGrupoDAO = new PedidoGrupoDAOImpl(em);
 		Pessoa pessoa = new Pessoa();
 		pessoa.setCodPessoa(2);
 		List<PedidoGrupo> pedidosGrupo = pedidoGrupoDAO.buscarPedidoGrupoPraPessoa(pessoa);
@@ -279,7 +278,19 @@ public class TesteAriel {
 			System.out.println("Desc.: " + pg.getDescricao());
 			System.out.println("Pessoa: " + pg.getPessoa().getApelido());
 			System.out.println("Grupo: " + pg.getGrupo().getNomeGrupo());
-		}
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA HOME
+		//Teste do método buscarPopularidade()
+		/*EsporteDAO esporteDAO = new EsporteDAOImpl(em);
+		List<ItemGrafico> itens = esporteDAO.buscarPopularidade();
+		int cont = 0;
+		for(ItemGrafico ig : itens){
+			cont++;
+			System.out.println("Item número: " + cont + ". Esporte: " + ig.getNome() + ". Qtd: " + ig.getQtd());
+		}*/
 		
 	}
 	

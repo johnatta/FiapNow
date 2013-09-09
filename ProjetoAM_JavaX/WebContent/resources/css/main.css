@@ -2,7 +2,7 @@
 body {
     margin:0px;
     padding:0px;
-    background-color:#E9E9E9;
+    /* background-color:#E9E9E9; */
     font: 14px  verdana, arial, helvetica;
 }
 a {color: #233e42}
@@ -68,7 +68,7 @@ a:hover #header_itemMenu {
     width:auto;
 }
 #main_content{
-	border:1px solid;
+	/* border:1px solid; */
 	width:870px;
 	margin-right:auto;
 	margin-left:auto;
@@ -122,3 +122,5 @@ h1{ text-align: center;}
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
 .ui-datagrid-column { width: 100px; padding: 3px;}
 #painel {width:10px; height: 150px;}
+#coluna_direita {float: right; width: auto; margin-top: 30px; padding-left: 5px;}
+#coluna_esquerda {width: 650px; float: left;}
