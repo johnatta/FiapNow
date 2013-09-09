@@ -20,8 +20,20 @@
 				<p:selectOneMenu effect="fade" 
 					value="#{criarEventoBean.esporte}">
 					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
-					<f:selectItems value="#{criarEventoBean.esps.nome}" ></f:selectItems>
+					<f:selectItems value="#{criarEventoBean.esps}" ></f:selectItems>
 				</p:selectOneMenu>
+				<h:outputText value="Telefone"></h:outputText>
+				<p:inputText value="#{criarEventoBean.evento.telContato}" required="true" ></p:inputText>
+				<h:outputText value="Meu Grupo"></h:outputText>
+				<p:inputText value="#{criarEventoBean.btnGrupo}"></p:inputText><p:commandButton value="Selecionar Grupo" ></p:commandButton>
+				<h:outputText value="Grupo Contra" ></h:outputText> 
+				<p:inputText value="#{criarEventoBean.btnGrupoRival}" ></p:inputText><p:commandButton value="Selecionar Rival"></p:commandButton>
+				<h:outputText value="Local"></h:outputText>
+				<p:inputText value="#{criarEventoBean.procurarLocal}" required="true" ></p:inputText>
+				<h:outputText value="Custo por Pessoa"></h:outputText>
+				<p:inputText value="#{criarEventoBean.evento.custo}" required="true" ></p:inputText>
+				<h:outputText value="Descrição"></h:outputText>
+				<p:inputTextarea value="#{criarEventoBean.evento.descricao}" required="true" ></p:inputTextarea>
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
