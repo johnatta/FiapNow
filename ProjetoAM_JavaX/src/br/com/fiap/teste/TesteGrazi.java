@@ -92,8 +92,10 @@ public class TesteGrazi {
 		 */
 		
 		
-		numMembros = gDAO.buscarNumeroMembros(56);
-		System.out.println(numMembros);
+		//numMembros = gDAO.buscarNumeroMembros(56);
+		//System.out.println(numMembros);
+		e = espDAO.buscarPorNome("corrida");
+		System.out.println(e.getNome());
 	}
 
 }

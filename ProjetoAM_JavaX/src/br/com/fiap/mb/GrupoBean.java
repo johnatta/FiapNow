@@ -46,7 +46,6 @@ public class GrupoBean implements Serializable {
 	private ModeradorGrupoDAO modGpDAO;
 	//private ModeradorGrupo moderador;
 	//private Pessoa membro;
-
 	public void buscaGrupo(){
 		System.out.print("codigo>>>>>>>>>>>> : ");
 		System.out.print(codGrupo);
@@ -60,7 +59,6 @@ public class GrupoBean implements Serializable {
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
 		//membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
 	}
-
 	@PostConstruct
 	public void onInit(){
 		gruDAO = new GrupoDAOImpl(em);
@@ -157,5 +155,6 @@ public class GrupoBean implements Serializable {
 		}
 		return content;
 	}
+	
 	
 }

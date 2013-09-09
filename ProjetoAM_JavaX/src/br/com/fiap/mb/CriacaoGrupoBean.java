@@ -46,10 +46,11 @@ public class CriacaoGrupoBean implements Serializable {
 	private Grupo grupo;
 	private Pessoa pessoa;
 	private List<Esporte> esps;
-
+	private List<Esporte> esportes;
+	
 	@PostConstruct
 	public void init(){
-		List<Esporte> esportes = new ArrayList<Esporte>();
+		esportes = new ArrayList<Esporte>();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		esportes = espDAO.buscarTodosEsportes();
 		espSelecionados = new ArrayList<Esporte>();
@@ -60,6 +61,8 @@ public class CriacaoGrupoBean implements Serializable {
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 		setListaPicker(new DualListModel<Esporte>(esportes, espSelecionados));
 
+		//listaPicker = new DualListModel<Esporte>(esportes, espSelecionados);
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
@@ -72,8 +75,8 @@ public class CriacaoGrupoBean implements Serializable {
 		//for(Esporte e : listaPicker.getTarget()){
 		//	esps.add(e);
 		//}
-		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		//grupo.setEsportes(listaPicker.getTarget());
+		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		grupo.setEsportes(espSelecionados);
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		
@@ -86,7 +89,7 @@ public class CriacaoGrupoBean implements Serializable {
 			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "grupo";
+			retorno = "index";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
@@ -97,16 +100,20 @@ public class CriacaoGrupoBean implements Serializable {
 	}
     public void onTransfer(TransferEvent event) {  
         StringBuilder builder = new StringBuilder();  
+        //Esporte cd = new  Esporte();
         for(Object item : event.getItems()) {  
-            builder.append(((Esporte) item).getNome()).append("<br />");  
+			builder.append(((Esporte) item).getNome()).append("<br />");
+			//espSelecionados.add(esportes.get(((Esporte)item).getCodEsporte())); 
+        	//esportes.get(((Esporte)item).getCodEsporte());
+			//cd = esportes.get(((Esporte)item).getCodEsporte());
         }  
           
         FacesMessage msg = new FacesMessage();  
         msg.setSeverity(FacesMessage.SEVERITY_INFO);  
         msg.setSummary("Itens Transferidos");  
-        msg.setDetail(builder.toString());  
-          
-        FacesContext.getCurrentInstance().addMessage(null, msg);  
+        msg.setDetail(builder.toString());
+        //msg.setDetail(builder.toString() + cd.getNome());  
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }  
 
 	public void realizarUpload(FileUploadEvent event) {

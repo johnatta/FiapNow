@@ -8,4 +8,6 @@ public interface EsporteDAO extends DAO<Esporte, Integer> {
 	
 	List<Esporte> buscarTodosEsportes();
 	
+	Esporte buscarPorNome(String nome);
+	
 }

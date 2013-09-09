@@ -17,8 +17,6 @@ import br.com.fiap.mb.CriacaoGrupoBean;
 
 @FacesConverter(value="esporteConverter")
 public class EsporteConverter implements Converter {
-	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-
 	//Executado no momento em que a página é submetida.
 	public Object getAsObject(FacesContext fc, UIComponent component, String value) {
 		CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean)fc.getViewRoot().getViewMap().get("criacaoGrupoBean");
