@@ -16,6 +16,7 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
@@ -47,21 +48,17 @@ public class CriacaoGrupoBean implements Serializable {
 	private List<Esporte> esps;
 
 	@PostConstruct
-	public List<Esporte> listaEsporte(){
+	public void init(){
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		esportes = espDAO.buscarTodosEsportes();
-		return esportes;
-	}
-	
-	@PostConstruct
-	public void init(){
+		espSelecionados = new ArrayList<Esporte>();
+		
 		grupo = new Grupo();
 		esporte = new Esporte();
-		espSelecionados = new ArrayList<Esporte>();
 		esps = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
-		setListaPicker(new DualListModel<Esporte>(listaEsporte(), espSelecionados));
+		setListaPicker(new DualListModel<Esporte>(esportes, espSelecionados));
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -69,11 +66,12 @@ public class CriacaoGrupoBean implements Serializable {
 		pessoa = sessao.getPessoa();
 	}
 
-
 	public String btnCriarGrupo(){
 		String retorno;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		
+		//for(Esporte e : listaPicker.getTarget()){
+		//	esps.add(e);
+		//}
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		//grupo.setEsportes(listaPicker.getTarget());
 		grupo.setEsportes(espSelecionados);
@@ -97,6 +95,19 @@ public class CriacaoGrupoBean implements Serializable {
 		}
 		return retorno;
 	}
+    public void onTransfer(TransferEvent event) {  
+        StringBuilder builder = new StringBuilder();  
+        for(Object item : event.getItems()) {  
+            builder.append(((Esporte) item).getNome()).append("<br />");  
+        }  
+          
+        FacesMessage msg = new FacesMessage();  
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);  
+        msg.setSummary("Itens Transferidos");  
+        msg.setDetail(builder.toString());  
+          
+        FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }  
 
 	public void realizarUpload(FileUploadEvent event) {
 		try {
@@ -168,5 +179,5 @@ public class CriacaoGrupoBean implements Serializable {
 	public void setEsps(List<Esporte> esps) {
 		this.esps = esps;
 	}
-	
+
 }

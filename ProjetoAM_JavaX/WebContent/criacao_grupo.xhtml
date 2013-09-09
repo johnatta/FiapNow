@@ -21,6 +21,7 @@
 			</h:form>
 		</h:panelGrid>
 		<h:form>
+		 <p:growl id="msg" showDetail="true" escape="false" />  
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criacaoGrupoBean.grupo.nomeGrupo}"
@@ -52,6 +53,8 @@
 
 					<f:facet name="sourceCaption">Opções</f:facet>
 					<f:facet name="targetCaption">Selecionados</f:facet>
+					
+					<p:ajax event="transfer" listener="#{criacaoGrupoBean.onTransfer}" update="msg" /> 
 				</p:pickList>
 
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
