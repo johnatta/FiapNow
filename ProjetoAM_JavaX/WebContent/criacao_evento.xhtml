@@ -11,30 +11,37 @@
 	<ui:define name="main_content">
 		<h2>Criar Evento</h2>
 		<h:form>
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="3">
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.nome}" required="true" maxlength="50" size="48" />
+				<h:outputText></h:outputText>
 				<h:outputText value="Data do Evento"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.dtEvento}" required="true" />
+				<h:outputText></h:outputText>
 				<h:outputText value="Categoria:"></h:outputText>
 				<p:selectOneMenu effect="fade" 
 					value="#{criarEventoBean.esporte}">
 					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
-					<f:selectItems value="#{criarEventoBean.esps}" ></f:selectItems>
+					<f:selectItems value="#{criarEventoBean.esps}" var="esp" itemLabel="#{esp.nome}" itemValue="codEsporte"></f:selectItems>
 				</p:selectOneMenu>
+				<h:outputText></h:outputText>
 				<h:outputText value="Telefone"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.telContato}" required="true" ></p:inputText>
+				<h:outputText></h:outputText>
 				<h:outputText value="Meu Grupo"></h:outputText>
-				<p:inputText value="#{criarEventoBean.btnGrupo}"></p:inputText><p:commandButton value="Selecionar Grupo" ></p:commandButton>
-				<h:outputText value="Grupo Contra" ></h:outputText> 
-				<p:inputText value="#{criarEventoBean.btnGrupoRival}" ></p:inputText><p:commandButton value="Selecionar Rival"></p:commandButton>
+				<p:inputText value=""></p:inputText>
+				<p:commandButton value="Selecionar Grupo" ></p:commandButton>
 				<h:outputText value="Local"></h:outputText>
-				<p:inputText value="#{criarEventoBean.procurarLocal}" required="true" ></p:inputText>
+				<p:inputText value="" required="true" ></p:inputText>
+				<h:outputText></h:outputText>
 				<h:outputText value="Custo por Pessoa"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.custo}" required="true" ></p:inputText>
+				<h:outputText></h:outputText>
 				<h:outputText value="Descrição"></h:outputText>
 				<p:inputTextarea value="#{criarEventoBean.evento.descricao}" required="true" ></p:inputTextarea>
+				<h:outputText></h:outputText>
 			</h:panelGrid>
+			<p:commandButton value="Criar Evento" action="#{criarEventoBean.btnCriarEvento}" ></p:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>
