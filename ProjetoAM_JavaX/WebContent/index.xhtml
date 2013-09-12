@@ -47,9 +47,7 @@
 					<h:form>
 						<h:panelGrid columns="2">
 							<h:outputText value="#{msgs.user_login}" />
-							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}">
-								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-							</h:inputText>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.usuario}" validator="#{loginBean.validaEmail}" />
 							<h:outputText value="#{msgs.user_password}" />
 							<h:inputSecret styleClass="input_box" size="29" value="#{loginBean.senha}"/>
 						</h:panelGrid>
@@ -74,9 +72,7 @@
 							<h:outputText value="#{msgs.name}" />
 							<h:inputText styleClass="input_box" size="29" value="#{loginBean.nome}"/>
 							<h:outputText value="#{msgs.email}" />
-							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}">
-								<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-							</h:inputText>
+							<h:inputText styleClass="input_box" size="29" value="#{loginBean.email}" validator="#{loginBean.validaEmail}" />
 						</h:panelGrid>
 						<h:commandButton value="#{msgs.signup}" styleClass="input_button" action="#{loginBean.cadastrar}"/>
 					</h:form>

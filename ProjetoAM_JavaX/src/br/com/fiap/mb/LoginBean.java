@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -76,6 +78,20 @@ public class LoginBean implements Serializable {
 		this.locale = locale;
 	}
 
+	public void validaEmail(FacesContext context, UIComponent component, Object value) {
+		String valor = value.toString();
+		if (!valor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) { //* qualquer validação lógica
+			((UIInput)component).setValid(false);
+			
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_email",
+					null, context.getViewRoot().getLocale());
+			
+			FacesMessage fm = new FacesMessage(mensagem);
+			
+			context.addMessage(component.getClientId(context), fm);
+		}
+	}
 	
 	public String login(){
 		
