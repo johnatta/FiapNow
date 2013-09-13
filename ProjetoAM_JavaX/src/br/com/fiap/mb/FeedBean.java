@@ -23,6 +23,7 @@ public class FeedBean implements Serializable {
 	private EntityManager em;
 	private Pessoa pessoa;
 	private int styleCount;
+	private String styleSize;
 	
 	public List<String> getEsportes() {
 		return esportes;
@@ -43,10 +44,21 @@ public class FeedBean implements Serializable {
 		
 		esportes = new ArrayList<String>();
 		
-		styleCount = 0;
-		
 		for(Esporte esp : pessoa.getEsportes()){
 			esportes.add(esp.getNome());
+		}
+		
+		styleCount = 0;
+		switch (pessoa.getEsportes().size()) {
+		case 1:
+			styleSize = " fat";
+			break;
+		case 2:
+			styleSize = " medium";
+			break;
+		case 3:
+			styleSize = " thin";
+			break;
 		}
 		
 	}
@@ -66,7 +78,7 @@ public class FeedBean implements Serializable {
 		} else if(esporte.equals("Futebol")){
 			feedRetorno = "http://globoesporte.globo.com/Esportes/Rss/0,,AS0-9825,00.xml";
 		} else if(esporte.equals("Futebol Americano")){
-			feedRetorno = "http://esportes.terra.com.br/rss/Controller?channelid=7e57230cf9699310VgnVCM5000009ccceb0aRCRD&ctName=atomo-noticia&lg=pt-br";
+			feedRetorno = "http://nfldeboteco.com.br/feed/";
 		} else if(esporte.equals("Tênis")){
 			feedRetorno = "http://globoesporte.globo.com/Esportes/Rss/0,,AS0-15090,00.xml";
 		} else if(esporte.equals("Vôlei")){
@@ -81,9 +93,9 @@ public class FeedBean implements Serializable {
 		String estilo;
 		
 		if (styleCount % 2 == 0){
-			estilo = "blueFeed";
+			estilo = "blueFeed" + styleSize;
 		} else {
-			estilo = "orangeFeed"; 
+			estilo = "orangeFeed" + styleSize; 
 		}
 		
 		styleCount++;
