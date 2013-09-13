@@ -28,6 +28,9 @@ import br.com.fiap.entity.Usuario;
 public class LoginBean implements Serializable {
 	
 	private EntityManager em;
+	private String imgEventos;
+	private String imgGrupos;
+	private String imgAvisos;
 	private String usuario;
 	private String senha;
 	private String nome;
@@ -39,6 +42,16 @@ public class LoginBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		imgEventos = "eventos.png";
+		imgAvisos = "avisos.png";
+	}
+	
+	public void getNews(){
+		if(usuario.equals("barbara.alves@hotmail.com")){
+			imgGrupos = "grupos.png";
+		} else {
+			imgGrupos = "avisos.png";
+		}
 	}
 	
 	public String getUsuario() {
@@ -76,6 +89,24 @@ public class LoginBean implements Serializable {
 	}
 	public void setLocale(Locale locale) {
 		this.locale = locale;
+	}
+	public String getImgEventos() {
+		return imgEventos;
+	}
+	public void setImgEventos(String imgEventos) {
+		this.imgEventos = imgEventos;
+	}
+	public String getImgGrupos() {
+		return imgGrupos;
+	}
+	public void setImgGrupos(String imgGrupos) {
+		this.imgGrupos = imgGrupos;
+	}
+	public String getImgAvisos() {
+		return imgAvisos;
+	}
+	public void setImgAvisos(String imgAvisos) {
+		this.imgAvisos = imgAvisos;
 	}
 
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
@@ -167,5 +198,5 @@ public class LoginBean implements Serializable {
 		locale = new Locale("pt", "BR");
 		view.setLocale(locale);
 	}
-	
+
 }

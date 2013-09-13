@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -18,7 +19,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class GruposBean implements Serializable {
 	
 	private List<Grupo> grupos;
