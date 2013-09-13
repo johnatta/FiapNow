@@ -35,6 +35,7 @@
 				<br></br>
 				<h:outputText id="counter" />
 				<h:outputText value="Privacidade:"></h:outputText>
+
 				<p:selectOneMenu effect="fade"
 					value="#{criacaoGrupoBean.grupo.privacidade}">
 					<f:selectItem itemLabel="Selecione" itemValue=""
@@ -44,19 +45,14 @@
 				</p:selectOneMenu>
 				<h:outputText value="Esporte: " />
 
-				<p:pickList id="pojoPickList"
-					value="#{criacaoGrupoBean.listaPicker}" var="esporte"
-					effect="blind" itemValue="#{esporte}" itemLabel="#{esporte.nome}"
-					converter="esporteConverter" showTargetControls="true"
-					showCheckbox="true" showSourceFilter="true" showTargetFilter="true"
-					filterMatchMode="contains">
-
-					<f:facet name="sourceCaption">Opções</f:facet>
-					<f:facet name="targetCaption">Selecionados</f:facet>
-					<p:ajax event="transfer" listener="#{criacaoGrupoBean.onTransfer}"
-						update="msg" />
-				</p:pickList>
-
+  				<p:dataTable id="multiCars" var="e"
+					value="#{criacaoGrupoBean.edm}" paginator="true" rows="10"
+					selection="#{criacaoGrupoBean.espSelecionados}">
+					<f:facet name="header"> Selecao</f:facet>
+					<p:column selectionMode="multiple" style="width:2%" />
+					<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
+				</p:dataTable>
+				
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
 					action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
