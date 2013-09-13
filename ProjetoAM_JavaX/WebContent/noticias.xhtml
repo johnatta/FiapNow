@@ -11,12 +11,12 @@
 	<ui:define name="main_content">
 		<p:dataGrid columns="3" value="#{feedBean.esportes}" var="esporte" rows="3">
 			<p:panel>
-				<div id="#{feedBean.stylize()}">
+				<div class="#{feedBean.stylize()}">
 					<h2>#{esporte}</h2>
 					<p:feedReader value="#{feedBean.buscaFeed(esporte)}" var="feed"
 						size="5">
 						<h:outputText value="#{feed.title}"
-							style="font-weight: bold; font-size:14px;" />
+							style="font-weight: bold; font-size:14px;" escape="false" />
 						<br />
 						<h:outputText value="#{feed.description.value}" escape="false" />
 						<p:separator />

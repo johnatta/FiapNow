@@ -117,6 +117,35 @@ h1{
 	float:left;
 }
 h1{ text-align: center;}
+
+/* Notificações */
+.arrow_box {
+	font: 14px  verdana, arial, helvetica;
+	color: #233e42;
+
+	visibility: hidden;
+	position: absolute;
+	padding: 15px 5px 15px 5px;
+	border: 2px solid #233e42;
+	
+	border-radius: 5px;
+	
+	background: #ffffff; /* Old browsers */
+background: -moz-linear-gradient(top,  #ffffff 0%, #e5e5e5 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #ffffff 0%,#e5e5e5 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #ffffff 0%,#e5e5e5 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+	
+	
+
+}
+
+/* Fim das Notificações */
+
 /* ----------- Fim da Estilização do TemplateEE ----------- */
 
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
@@ -130,10 +159,23 @@ h1{ text-align: center;}
 /* ----------- Fim da Estilização da Home ----------- */
 
 /* ----------- Estilização da página Notícias ----------- */
-#blueFeed{
+.blueFeed {
 	color:#233e42;
 }
-#orangeFeed{
+.orangeFeed {
 	color:#ff9f0f;
+}
+.thin {
+	width:240px;
+}
+.medium {
+	width:360px;
+	position:;
+	float:;
+	display:;
+	overflow:;	
+}
+.fat {
+	width: 820px;
 }
 /* ----------- Fim da Estilização da Notícias ----------- */

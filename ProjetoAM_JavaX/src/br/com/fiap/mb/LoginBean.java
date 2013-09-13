@@ -16,8 +16,16 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.ConviteEventoDAO;
+import br.com.fiap.dao.ConviteGrupoDAO;
+import br.com.fiap.dao.PedidoEventoDAO;
+import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.dao.UsuarioDAO;
+import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
+import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
+import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.daoimpl.UsuarioDAOImpl;
 import br.com.fiap.entity.Pessoa;
@@ -36,22 +44,36 @@ public class LoginBean implements Serializable {
 	private String nome;
 	private String email;
 	private Pessoa pessoa;
+	private int eventsInvites;
+	private int eventsRequests;
+	private int groupsInvites;
+	private int groupsRequests;
 	private Locale locale;
+	private ConviteEventoDAO convEveDAO;
+	private PedidoEventoDAO pedEveDAO;
+	private ConviteGrupoDAO convGruDAO;
+	private PedidoGrupoDAO pedGruDAO;
 	
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
-		imgEventos = "eventos.png";
-		imgAvisos = "avisos.png";
+		convEveDAO = new ConviteEventoDAOImpl(em);
+		pedEveDAO = new PedidoEventoDAOImpl(em);
+		convGruDAO = new ConviteGrupoDAOImpl(em);
+		pedGruDAO = new PedidoGrupoDAOImpl(em);
 	}
 	
 	public void getNews(){
-		if(usuario.equals("barbara.alves@hotmail.com")){
-			imgGrupos = "grupos.png";
-		} else {
-			imgGrupos = "avisos.png";
-		}
+		eventsInvites = convEveDAO.buscarConviteEventoPorPessoa(pessoa).size();
+		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();
+		groupsInvites = convGruDAO.buscarConviteGrupoPorPessoa(pessoa).size();
+		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
+		
+		imgEventos = "eventos.png";
+		imgGrupos = "grupos.png";
+		imgAvisos = "avisos.png";
+		
 	}
 	
 	public String getUsuario() {
@@ -107,6 +129,30 @@ public class LoginBean implements Serializable {
 	}
 	public void setImgAvisos(String imgAvisos) {
 		this.imgAvisos = imgAvisos;
+	}
+	public int getEventsInvites() {
+		return eventsInvites;
+	}
+	public void setEventsInvites(int eventsInvites) {
+		this.eventsInvites = eventsInvites;
+	}
+	public int getEventsRequests() {
+		return eventsRequests;
+	}
+	public void setEventsRequests(int eventsRequests) {
+		this.eventsRequests = eventsRequests;
+	}
+	public int getGroupsInvites() {
+		return groupsInvites;
+	}
+	public void setGroupsInvites(int groupsInvites) {
+		this.groupsInvites = groupsInvites;
+	}
+	public int getGroupsRequests() {
+		return groupsRequests;
+	}
+	public void setGroupsRequests(int groupsRequests) {
+		this.groupsRequests = groupsRequests;
 	}
 
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
