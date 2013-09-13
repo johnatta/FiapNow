@@ -30,20 +30,17 @@ import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
+import br.com.fiap.datamodel.EsporteDataModel;
 
 @ManagedBean
 @ViewScoped
 public class CriacaoGrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
-	private DualListModel<Esporte> listaPicker;
-	private Esporte esporte;
 	private List<Privacidade> privs;
 	private Esporte[] espSelecionados;
 	private Grupo grupo;
-	private EsporteSelecionado ep;
 	private Pessoa pessoa;
-	private List<Esporte> esps;
 	private List<Esporte> esportes;
 	private EsporteDataModel edm;
 	
@@ -51,20 +48,10 @@ public class CriacaoGrupoBean implements Serializable {
 	@PostConstruct
 	public void init(){
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		//esportes = new ArrayList<Esporte>();
 		esportes = espDAO.buscarTodosEsportes();		
-		ep = new EsporteSelecionado();
-		
 		grupo = new Grupo();
-		esporte = new Esporte();
-		esps = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
-		
 		edm = new EsporteDataModel(esportes); 
-		//setListaPicker(new DualListModel<Esporte>(esportes, espSelecionados));
-
-		//listaPicker = new DualListModel<Esporte>(esportes, espSelecionados);
-		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
@@ -72,31 +59,15 @@ public class CriacaoGrupoBean implements Serializable {
 	}
 
 	public String btnCriarGrupo(){
-		
 		String retorno;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		//for(Esporte e : listaPicker.getTarget()){
-		//	esps.add(e);
-		//}
-		//grupo.setEsportes(listaPicker.getTarget());
-		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
-		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
-		
-//		for(Esporte esporte : getEspSelecionados()) {
-//			int codEsporte = esporte.getCodEsporte();
-//			String nome = esporte.getNome();
-//			System.out.println("Esporte{" +
-//					"codEsporte:[" + codEsporte + "]" +
-//					"nome:[" + nome + "]" +
-//					"}");
-//		}
-		
+		List<Grupo> grupos = new ArrayList<Grupo>();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
-		List<Grupo> grupos = new ArrayList<Grupo>();
+
+		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
+		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		try{
 			gDAO.insert(grupo);
 			grupos = pessoa.getGrupos();
@@ -128,22 +99,6 @@ public class CriacaoGrupoBean implements Serializable {
 		}
 	}
 
-	public DualListModel<Esporte> getListaPicker() {
-		return listaPicker;
-	}
-
-	public void setListaPicker(DualListModel<Esporte> listaPicker) {
-		this.listaPicker = listaPicker;
-	}
-
-	public Esporte getEsporte() {
-		return esporte;
-	}
-
-	public void setEsporte(Esporte esporte) {
-		this.esporte = esporte;
-	}
-
 	public List<Privacidade> getPrivs() {
 		return privs;
 	}
@@ -168,14 +123,6 @@ public class CriacaoGrupoBean implements Serializable {
 		this.pessoa = pessoa;
 	}
 
-	public List<Esporte> getEsps() {
-		return esps;
-	}
-
-	public void setEsps(List<Esporte> esps) {
-		this.esps = esps;
-	}
-
 	public List<Esporte> getEsportes() {
 		return esportes;
 	}
@@ -191,14 +138,6 @@ public class CriacaoGrupoBean implements Serializable {
 
 	public void setEdm(EsporteDataModel edm) {
 		this.edm = edm;
-	}
-
-	public EsporteSelecionado getEp() {
-		return ep;
-	}
-
-	public void setEp(EsporteSelecionado ep) {
-		this.ep = ep;
 	}
 
 	public Esporte[] getEspSelecionados() {
