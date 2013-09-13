@@ -46,17 +46,7 @@ public class CriarEventoBean implements Serializable {
 	}
 	
 	public String btnConvidar(){
-		
-		
-		return "";
-	}
-	
-	public String btnCriarEvento(){
-		String retorno = null;
-		pesDAO = new PessoaDAOImpl(em);
-		pessoa = pesDAO.buscarInformacoes(pessoa.getCodPessoa());
-		
-		return retorno;
+		return "convite_evento";
 	}
 	
 	public Evento getEvento() {
