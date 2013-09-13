@@ -178,4 +178,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .fat {
 	width: 820px;
 }
+.mainFeeder{
+	margin-bottom:30px;
+}
 /* ----------- Fim da Estilização da Notícias ----------- */
