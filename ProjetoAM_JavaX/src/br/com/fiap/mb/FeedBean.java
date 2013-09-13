@@ -22,6 +22,14 @@ public class FeedBean implements Serializable {
 	private List<String> esportes;
 	private EntityManager em;
 	private Pessoa pessoa;
+	private int styleCount;
+	
+	public List<String> getEsportes() {
+		return esportes;
+	}
+	public void setEsportes(List<String> esportes) {
+		this.esportes = esportes;
+	}
 	
 	@PostConstruct
 	public void onInit(){
@@ -34,6 +42,8 @@ public class FeedBean implements Serializable {
 		pessoa = sessao.getPessoa();
 		
 		esportes = new ArrayList<String>();
+		
+		styleCount = 0;
 		
 		for(Esporte esp : pessoa.getEsportes()){
 			esportes.add(esp.getNome());
@@ -66,11 +76,19 @@ public class FeedBean implements Serializable {
 		return feedRetorno; 
 	}
 
-	public List<String> getEsportes() {
-		return esportes;
-	}
-	public void setEsportes(List<String> esportes) {
-		this.esportes = esportes;
+	public String stylize(){
+		
+		String estilo;
+		
+		if (styleCount % 2 == 0){
+			estilo = "blueFeed";
+		} else {
+			estilo = "orangeFeed"; 
+		}
+		
+		styleCount++;
+		
+		return estilo;
 	}
 
 }

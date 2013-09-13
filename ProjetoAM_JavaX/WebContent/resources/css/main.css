@@ -122,5 +122,18 @@ h1{ text-align: center;}
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
 .ui-datagrid-column { width: 100px; padding: 3px;}
 #painel {width:10px; height: 150px;}
+/* ----------- Fim da Estilização do Eventos e Grupos  ----------- */
+
+/* ----------- Estilização da página Home ----------- */
 #coluna_direita {float: right; width: auto; margin-top: 30px; padding-left: 5px;}
 #coluna_esquerda {width: 650px; float: left;}
+/* ----------- Fim da Estilização da Home ----------- */
+
+/* ----------- Estilização da página Notícias ----------- */
+#blueFeed{
+	color:#233e42;
+}
+#orangeFeed{
+	color:#ff9f0f;
+}
+/* ----------- Fim da Estilização da Notícias ----------- */
