@@ -28,9 +28,12 @@
 				<h:outputText value="Telefone"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.telContato}" required="true" ></p:inputText>
 				<h:outputText></h:outputText>
-				<h:outputText value="Meu Grupo"></h:outputText>
-				<p:inputText value=""></p:inputText>
-				<p:commandButton value="Selecionar Grupo" ></p:commandButton>
+				<h:outputText value="Convide:"></h:outputText>
+				<p:selectOneButton id="radioSelecao" value="Selecione um item" >
+					<f:selectItem itemLabel="Pessoas" />
+					<f:selectItem itemLabel="Meus Grupos"></f:selectItem>
+				</p:selectOneButton>
+				<p:commandButton value="Convidar"  ></p:commandButton>
 				<h:outputText value="Local"></h:outputText>
 				<p:inputText value="" required="true" ></p:inputText>
 				<h:outputText></h:outputText>
