@@ -12,25 +12,22 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
@@ -42,24 +39,29 @@ public class CriacaoGrupoBean implements Serializable {
 	private DualListModel<Esporte> listaPicker;
 	private Esporte esporte;
 	private List<Privacidade> privs;
-	private List<Esporte> espSelecionados;
+	private Esporte[] espSelecionados;
 	private Grupo grupo;
+	private EsporteSelecionado ep;
 	private Pessoa pessoa;
 	private List<Esporte> esps;
 	private List<Esporte> esportes;
+	private EsporteDataModel edm;
+	
 	
 	@PostConstruct
 	public void init(){
-		esportes = new ArrayList<Esporte>();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		esportes = espDAO.buscarTodosEsportes();
-		espSelecionados = new ArrayList<Esporte>();
+		//esportes = new ArrayList<Esporte>();
+		esportes = espDAO.buscarTodosEsportes();		
+		ep = new EsporteSelecionado();
 		
 		grupo = new Grupo();
 		esporte = new Esporte();
 		esps = new ArrayList<Esporte>();
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
-		setListaPicker(new DualListModel<Esporte>(esportes, espSelecionados));
+		
+		edm = new EsporteDataModel(esportes); 
+		//setListaPicker(new DualListModel<Esporte>(esportes, espSelecionados));
 
 		//listaPicker = new DualListModel<Esporte>(esportes, espSelecionados);
 		
@@ -70,26 +72,38 @@ public class CriacaoGrupoBean implements Serializable {
 	}
 
 	public String btnCriarGrupo(){
+		
 		String retorno;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		//for(Esporte e : listaPicker.getTarget()){
 		//	esps.add(e);
 		//}
 		//grupo.setEsportes(listaPicker.getTarget());
+		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-		grupo.setEsportes(espSelecionados);
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		
+//		for(Esporte esporte : getEspSelecionados()) {
+//			int codEsporte = esporte.getCodEsporte();
+//			String nome = esporte.getNome();
+//			System.out.println("Esporte{" +
+//					"codEsporte:[" + codEsporte + "]" +
+//					"nome:[" + nome + "]" +
+//					"}");
+//		}
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		try{
-			gDAO.insert(getGrupo());
+			gDAO.insert(grupo);
 			grupos = pessoa.getGrupos();
 			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "grupo";
+			retorno = "index";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
@@ -98,23 +112,6 @@ public class CriacaoGrupoBean implements Serializable {
 		}
 		return retorno;
 	}
-    public void onTransfer(TransferEvent event) {  
-        StringBuilder builder = new StringBuilder();  
-        //Esporte cd = new  Esporte();
-        for(Object item : event.getItems()) {  
-			builder.append(((Esporte) item).getNome()).append("<br />");
-			//espSelecionados.add(esportes.get(((Esporte)item).getCodEsporte())); 
-        	//esportes.get(((Esporte)item).getCodEsporte());
-			//cd = esportes.get(((Esporte)item).getCodEsporte());
-        }  
-          
-        FacesMessage msg = new FacesMessage();  
-        msg.setSeverity(FacesMessage.SEVERITY_INFO);  
-        msg.setSummary("Itens Transferidos");  
-        msg.setDetail(builder.toString());
-        //msg.setDetail(builder.toString() + cd.getNome());  
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }  
 
 	public void realizarUpload(FileUploadEvent event) {
 		try {
@@ -155,14 +152,6 @@ public class CriacaoGrupoBean implements Serializable {
 		this.privs = privs;
 	}
 
-	public List<Esporte> getEspSelecionados() {
-		return espSelecionados;
-	}
-
-	public void setEspSelecionados(List<Esporte> espSelecionados) {
-		this.espSelecionados = espSelecionados;
-	}
-
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -185,6 +174,39 @@ public class CriacaoGrupoBean implements Serializable {
 
 	public void setEsps(List<Esporte> esps) {
 		this.esps = esps;
+	}
+
+	public List<Esporte> getEsportes() {
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
+	}
+
+
+	public EsporteDataModel getEdm() {
+		return edm;
+	}
+
+	public void setEdm(EsporteDataModel edm) {
+		this.edm = edm;
+	}
+
+	public EsporteSelecionado getEp() {
+		return ep;
+	}
+
+	public void setEp(EsporteSelecionado ep) {
+		this.ep = ep;
+	}
+
+	public Esporte[] getEspSelecionados() {
+		return espSelecionados;
+	}
+
+	public void setEspSelecionados(Esporte[] espSelecionados) {
+		this.espSelecionados = espSelecionados;
 	}
 
 }
