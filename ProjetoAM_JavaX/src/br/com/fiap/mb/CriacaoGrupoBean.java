@@ -45,7 +45,6 @@ public class CriacaoGrupoBean implements Serializable {
 	private List<Esporte> esportes;
 	private EsporteDataModel edm;
 	
-	
 	@PostConstruct
 	public void init(){
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
@@ -58,12 +57,7 @@ public class CriacaoGrupoBean implements Serializable {
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
 	}
-    public void check(SelectEvent event) {
-		if(espSelecionados.length > 3){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			fc.addMessage(null,  new FacesMessage("Escolha até 3 esportes."));		
-		}
-    }
+
 	public String btnCriarGrupo(){
 		String retorno;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
@@ -83,7 +77,7 @@ public class CriacaoGrupoBean implements Serializable {
 			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "grupo";
+			retorno = "index";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
