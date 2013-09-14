@@ -21,7 +21,7 @@
 		</h:panelGrid>
 		<h:form>
 			<h:messages></h:messages>
-			<p:growl id="messages" showDetail="true" escape="false" />
+			<p:growl id="msg" showDetail="true" escape="false" />
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criacaoGrupoBean.grupo.nomeGrupo}"
@@ -44,7 +44,7 @@
 				</p:selectOneMenu>
 				<h:outputText value="Esporte: " />
   				<p:dataTable id="multiCars" var="e"	value="#{criacaoGrupoBean.edm}" selection="#{criacaoGrupoBean.espSelecionados}">
-  				 	<p:ajax event="rowSelectCheckbox" listener="#{criacaoGrupoBean.check}" />
+  				 	
 					<f:facet name="header"> Selecione os esportes</f:facet>
 					<p:column selectionMode="multiple" style="width:2%" />
 					<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
