@@ -12,12 +12,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DualListModel;
+import org.primefaces.event.SelectEvent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
@@ -26,11 +25,11 @@ import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
-import br.com.fiap.datamodel.EsporteDataModel;
 
 @ManagedBean
 @ViewScoped
@@ -40,6 +39,7 @@ public class CriacaoGrupoBean implements Serializable {
 	private List<Privacidade> privs;
 	private Esporte[] espSelecionados;
 	private Grupo grupo;
+	private List<Grupo> grupos ;
 	private Pessoa pessoa;
 	private List<Esporte> esportes;
 	private EsporteDataModel edm;
@@ -57,24 +57,29 @@ public class CriacaoGrupoBean implements Serializable {
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
 	}
-
+    public void check(SelectEvent event) {
+		if(espSelecionados.length > 3){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage(null,  new FacesMessage("Escolha até 3 esportes."));		
+		}
+    }
 	public String btnCriarGrupo(){
 		String retorno;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
-		List<Grupo> grupos = new ArrayList<Grupo>();
+		grupos = new ArrayList<Grupo>();
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
-
+		
 		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		try{
-			gDAO.insert(grupo);
+			grupo = gDAO.insertEntity(grupo);
 			grupos = pessoa.getGrupos();
 			grupos.add(grupo);
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "index";
+			retorno = "grupo";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
@@ -146,6 +151,14 @@ public class CriacaoGrupoBean implements Serializable {
 
 	public void setEspSelecionados(Esporte[] espSelecionados) {
 		this.espSelecionados = espSelecionados;
+	}
+
+	public List<Grupo> getGrupos() {
+		return grupos;
+	}
+
+	public void setGrupos(List<Grupo> grupos) {
+		this.grupos = grupos;
 	}
 
 }
