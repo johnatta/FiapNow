@@ -52,8 +52,8 @@
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
 					action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
-					<f:setPropertyActionListener value="#{grupo.codGrupo}"
-						target="#{grupoBean.codGrupo}" />
+					<f:param id="codGrupo" name="cod" value="#{grupo.codGrupo}" />
+					
 				</p:commandButton>
 
 			</h:panelGrid>

@@ -15,7 +15,7 @@
 		</f:metadata>
 
 		<h:form id="formGrupo">
-			<div>
+			<div class="col_esquerda">
 				<h:outputText value="#{grupoBean.codGrupo}"></h:outputText>
 				
 				<h:outputLabel value="Nome: "></h:outputLabel>
@@ -23,7 +23,7 @@
 				
 				<h:outputLabel value="Categoria: "></h:outputLabel>
 				<p:dataTable var="e" value="#{grupoBean.grupo.esportes}"
-					style="width:80px">
+					style="width:120px">
 					<p:column headerText="Esporte">
 						<h:outputText value="#{e.nome}" />
 					</p:column>
@@ -37,6 +37,8 @@
 				<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 				
 			</div>
+			<div class="col_centro">	</div>
+			<div class="col_direita">	</div>			
 		</h:form>
 	</ui:define>
 </ui:composition>
