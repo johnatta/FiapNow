@@ -9,7 +9,6 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<h2>Cadastro Grupo</h2>
-
 		<h:panelGrid columns="2">
 			<h:form enctype="multipart/form-data">
 				<p:fileUpload
@@ -21,12 +20,12 @@
 			</h:form>
 		</h:panelGrid>
 		<h:form>
-			<p:growl id="msg" showDetail="true" escape="false" />
+			<h:messages></h:messages>
+			<p:growl id="messages" showDetail="true" escape="false" />
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criacaoGrupoBean.grupo.nomeGrupo}"
 					required="true" maxlength="50" size="48" />
-
 				<h:outputText value="Descrição:"></h:outputText>
 				<p:inputTextarea value="#{criacaoGrupoBean.grupo.descricao}"
 					required="true" rows="5" cols="48" counter="counter"
@@ -44,15 +43,12 @@
 						itemLabel="#{p}" itemValue="#{p}" required="true" />
 				</p:selectOneMenu>
 				<h:outputText value="Esporte: " />
-
-  				<p:dataTable id="multiCars" var="e"
-					value="#{criacaoGrupoBean.edm}" paginator="true" rows="10"
-					selection="#{criacaoGrupoBean.espSelecionados}">
-					<f:facet name="header"> Selecao</f:facet>
+  				<p:dataTable id="multiCars" var="e"	value="#{criacaoGrupoBean.edm}" selection="#{criacaoGrupoBean.espSelecionados}">
+  				 	<p:ajax event="rowSelectCheckbox" listener="#{criacaoGrupoBean.check}" />
+					<f:facet name="header"> Selecione os esportes</f:facet>
 					<p:column selectionMode="multiple" style="width:2%" />
 					<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
 				</p:dataTable>
-				
 				<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 					id="btnCadastrarCliente" icon="ui-icon-check"
 					action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
