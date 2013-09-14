@@ -10,4 +10,6 @@ public interface DAO<T, K> {
 	void update(T entity);
 
 	T searchByID(K id);
+	
+	T insertEntity(T entity);
 }

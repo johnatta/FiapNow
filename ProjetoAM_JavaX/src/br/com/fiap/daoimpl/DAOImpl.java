@@ -44,5 +44,13 @@ public class DAOImpl<T, K> implements DAO<T,K> {
 	public T searchByID(K id) {
 		return em.find(entityClass, id);
 	}
+	
+	@Override
+	public T insertEntity(T entity) {
+		em.getTransaction().begin();
+		em.persist(entity);
+		em.getTransaction().commit();
+		return entity;
+	}
 
 }
