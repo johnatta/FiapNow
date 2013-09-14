@@ -5,10 +5,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -47,13 +50,20 @@ public class GrupoBean implements Serializable {
 	//private ModeradorGrupo moderador;
 	//private Pessoa membro;
 	public void buscaGrupo(){
+		if(codGrupo == 0 ){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
+			codGrupo = Integer.parseInt(params.get("codGrupo"));
+		}
 		System.out.print("codigo>>>>>>>>>>>> : ");
 		System.out.print(codGrupo);
 		System.out.println();
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
-		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+
+
+		//numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		System.out.print("MEmbros>>>>>>>>>>>> : ");
-		System.out.print(numMembros);
+		//System.out.print(numMembros);
 		System.out.println();
 		//modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
@@ -67,7 +77,7 @@ public class GrupoBean implements Serializable {
 		membrosGrpRow = new ArrayList<Pessoa>(); 
 		modsGp = new ArrayList<Pessoa>();
 	}
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -155,6 +165,6 @@ public class GrupoBean implements Serializable {
 		}
 		return content;
 	}
-	
-	
+
+
 }

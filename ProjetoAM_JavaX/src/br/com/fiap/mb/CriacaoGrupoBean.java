@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -32,7 +33,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class CriacaoGrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -77,6 +78,9 @@ public class CriacaoGrupoBean implements Serializable {
 			grupo = gDAO.insertEntity(grupo);
 			grupos = pessoa.getGrupos();
 			grupos.add(grupo);
+			pessoa.setGrupos(grupos);
+			pDAO.update(pessoa);
+			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
 			retorno = "grupo";
