@@ -27,6 +27,9 @@ public class MensagemEvento implements Serializable{
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="seqMensagemEvento")
 	@Column(name="cod_mensagem_evento")
 	private int codMensagem;
+	
+	@Column(nullable = false, length = 30)
+	private String titulo;
 
 	@Column( nullable = false, length = 100)
 	private String descricao;
@@ -51,6 +54,7 @@ public class MensagemEvento implements Serializable{
 		this.evento = codEvento;
 	}
 
+
 	public MensagemEvento(){
 
 	}
@@ -61,6 +65,14 @@ public class MensagemEvento implements Serializable{
 
 	public void setCodMensagem(int codMensagem) {
 		this.codMensagem = codMensagem;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getDescricao() {
@@ -81,6 +93,10 @@ public class MensagemEvento implements Serializable{
 
 	public Pessoa getPessoa() {
 		return pessoa;
+	}
+	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	public void setCodPessoa(Pessoa pessoa) {

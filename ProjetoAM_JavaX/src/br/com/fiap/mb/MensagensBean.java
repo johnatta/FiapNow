@@ -31,9 +31,12 @@ public class MensagensBean implements Serializable {
 	private List<MensagemEvento> msgsEventoNaoLidas;
 	private List<MensagemGrupo> msgsGrupoLidas;
 	private List<MensagemGrupo> msgsGrupoNaoLidas;
+	private int activeTab;
 	
 	@PostConstruct
 	public void onInit(){
+		activeTab = 0;
+		
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		msgEventoDAO = new MensagemEventoDAOImpl(em);
 		msgGrupoDAO = new MensagemGrupoDAOImpl(em);
@@ -81,6 +84,14 @@ public class MensagensBean implements Serializable {
 
 	public void setMsgsGrupoNaoLidas(List<MensagemGrupo> msgsGrupoNaoLidas) {
 		this.msgsGrupoNaoLidas = msgsGrupoNaoLidas;
+	}
+
+	public int getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(int activeTab) {
+		this.activeTab = activeTab;
 	}
 	
 }

@@ -144,6 +144,7 @@ public class ConsoleViewEvento02 {
 		comentEventoDAO.insert(comentEvento);
 		
 		MensagemEvento msgEvento = new MensagemEvento();
+		msgEvento.setTitulo("Lembrete");
 		msgEvento.setDescricao("Favor lembre-se de levar protetores para a prática do long.");
 		msgEvento.setConfirmacao(Confirmacao.SIM);
 		msgEvento.setEvento(evento);

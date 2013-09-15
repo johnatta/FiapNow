@@ -137,6 +137,7 @@ public class ConsoleViewGrupo02 {
 		comentGrupoDAO.insert(comentGrupo);
 		
 		MensagemGrupo msgGrupo = new MensagemGrupo();
+		msgGrupo.setTitulo("Bem-vindo!");
 		msgGrupo.setDescricao("Seja bem-vindo ao nosso grupo!");
 		msgGrupo.setConfirmacao(Confirmacao.SIM);
 		msgGrupo.setGrupo(grupo);

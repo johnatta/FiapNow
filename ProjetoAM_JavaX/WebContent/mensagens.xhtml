@@ -10,21 +10,20 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 	    
-	    <h1>#{msgs.eventsReqInv}</h1>
-		<p:tabView id="tabMain" activeIndex="#{convitePedidoEventosBean.activeTab}">
-			<p:tab id="tabRead" title="#{msgs.invites}">
-				<h:form id="formInvites">
+	    <h1>#{msgs.messages}</h1>
+		<p:tabView id="tabMain" activeIndex="#{mensagensBean.activeTab}" >
+			<p:tab id="tabUnreadGroup" title="#{msgs.groups} - #{msgs.unreadMessages}">
+				<h:form id="formUnread">
 
-					<p:dataGrid var="cnv" value="#{convitePedidoEventosBean.convites}" columns="1"
+					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoNaoLidas}" columns="1"
 						rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{cnv.evento.nome}" >
-							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{cnv.evento.imgEvento}" width="80" height="110"/>
-								<h:outputText value="#{cnv.descricao}"/>
-								<p:commandButton value="#{msgs.accept}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.decline}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" update=":tabMain" ajax="true"/>
+						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}" >
+							<h:panelGrid columns="3" style="width:100%">
+								<h:graphicImage url="#{msg.descricao}" width="80" height="110"/>
+								<p:commandButton value="#{msgs.markAsRead}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.delete}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" update=":tabMain" ajax="true"/>
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>

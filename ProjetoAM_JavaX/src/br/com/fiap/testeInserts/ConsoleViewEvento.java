@@ -173,6 +173,7 @@ public class ConsoleViewEvento {
 		
 		// MENSAGEM EVENTO
 		MensagemEvento msgEvento = new MensagemEvento();
+		msgEvento.setTitulo("Nada de confusão");
 		msgEvento.setDescricao("Briga e baixaria nao sera permitido. Sujeito a sair no meio do evento");
 		msgEvento.setConfirmacao(Confirmacao.SIM);
 		msgEvento.setEvento(evento);
