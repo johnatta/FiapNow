@@ -33,7 +33,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class CriacaoGrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -56,6 +56,7 @@ public class CriacaoGrupoBean implements Serializable {
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
+		System.err.println(pessoa.getGrupos().size());
 	}
 
 	public String btnCriarGrupo(){
@@ -69,11 +70,13 @@ public class CriacaoGrupoBean implements Serializable {
 		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		try{
+			System.err.println(pessoa.getGrupos().size());		
 			grupo = gDAO.insertEntity(grupo);
-			grupos = pessoa.getGrupos();
-			grupos.add(grupo);
-			pessoa.setGrupos(grupos);
-			pDAO.update(pessoa);
+			pessoa.getGrupos().add(grupo);
+			System.err.println(pessoa.getGrupos().size());			
+			//grupos.add(grupo);
+			//pessoa.setGrupos(grupos);
+			pDAO.update(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
@@ -90,9 +93,9 @@ public class CriacaoGrupoBean implements Serializable {
 	public void realizarUpload(FileUploadEvent event) {
 		try {
 			FacesContext fc = FacesContext.getCurrentInstance();
+			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
 			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
 			fc.addMessage("messages", fm);
-			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
 		} catch (IOException e) {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Erro no Processo de Upload!");
