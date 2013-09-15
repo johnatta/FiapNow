@@ -12,13 +12,9 @@
 
 	<h:head>
 		<title>Encontros Esportivos</title>
-		<h:outputStylesheet name="main.css" library="css"></h:outputStylesheet>
+		<h:outputStylesheet name="main.css" library="css"/>
+		<h:outputScript library="js" name="main.js" />
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
-		<script>
-			function hidePendencia(whichMenu, whatState) {
-				document.getElementById(whichMenu).style.visibility = whatState;
-			}
-		</script>
 	</h:head>
 
 	<h:body>
@@ -55,12 +51,14 @@
 									</div>
 								</h:outputLink>
 							</div>
-							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaAvisos','hidden')" onmouseover="hidePendencia('pendenciaAvisos','visible')">
-								<h:outputLink value="#">
-									<p:graphicImage name="#{loginBean.imgAvisos}" library="images" height="21"
+							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaMensagens','hidden')" onmouseover="hidePendencia('pendenciaMensagens','visible')">
+								<h:outputLink value="mensagens.xhtml">
+									<p:graphicImage name="#{loginBean.imgMensagens}" library="images" height="21"
 										width="21" />
-									<div id="pendenciaAvisos" class="arrow_box">
-										#{msgs.you_have} #{msgs.invites_and} #{msgs.requests_pending}
+									<div id="pendenciaMensagens" class="arrow_box">
+										<b>#{msgs.messages}</b> <br />
+										<p:separator />
+										#{msgs.you_have} <b>#{loginBean.unreadMessages}</b> #{msgs.unread_messages}
 									</div>
 								</h:outputLink>
 							</div>

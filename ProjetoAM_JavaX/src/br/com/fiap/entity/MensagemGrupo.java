@@ -36,24 +36,32 @@ public class MensagemGrupo implements Serializable{
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_grupo_pessoa")
-	private Pessoa codPessoa;	
+	private Pessoa pessoa;	
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_grupo")
-	private Grupo codGrupo;
+	private Grupo grupo;
 	
 	public MensagemGrupo(String descricao, Confirmacao confirmacao,
-			br.com.fiap.entity.Pessoa codPessoa,
-			br.com.fiap.entity.Grupo codGrupo) {
+			br.com.fiap.entity.Pessoa pessoa,
+			br.com.fiap.entity.Grupo grupo) {
 		super();
 		this.descricao = descricao;
 		this.confirmacao = confirmacao;
-		this.codPessoa = codPessoa;
-		this.codGrupo = codGrupo;
+		this.pessoa = pessoa;
+		this.grupo = grupo;
 	}
 
 	public MensagemGrupo(){
 
+	}
+	
+	public int getCodMensagem() {
+		return codMensagem;
+	}
+
+	public void setCodMensagem(int codMensagem) {
+		this.codMensagem = codMensagem;
 	}
 
 	public String getDescricao() {
@@ -72,20 +80,20 @@ public class MensagemGrupo implements Serializable{
 		this.confirmacao = confirmacao;
 	}
 
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
-
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+	
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
-
-	public Grupo getCodGrupo() {
-		return codGrupo;
+	
+	public Grupo getGrupo() {
+		return grupo;
 	}
-
-	public void setCodGrupo(Grupo codGrupo) {
-		this.codGrupo = codGrupo;
+	
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 }
 	

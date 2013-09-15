@@ -1,15 +1,33 @@
 package br.com.fiap.daoimpl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import br.com.fiap.dao.MensagemGrupoDAO;
+import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.MensagemGrupo;
+import br.com.fiap.entity.Pessoa;
 
 public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implements MensagemGrupoDAO{
 
 	public MensagemGrupoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
-		// TODO Auto-generated constructor stub
+	}
+
+	public List<MensagemGrupo> buscarMensagensLidasDaPessoa(Pessoa pessoa){
+		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes and me.confirmacao = :conf", MensagemGrupo.class);
+		query.setParameter("pes", pessoa);
+		query.setParameter("conf", Confirmacao.SIM);
+		return query.getResultList();
+	}
+	
+	public List<MensagemGrupo> buscarMensagensNaoLidasDaPessoa(Pessoa pessoa){
+		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes and me.confirmacao = :conf", MensagemGrupo.class);
+		query.setParameter("pes", pessoa);
+		query.setParameter("conf", Confirmacao.NAO);
+		return query.getResultList();
 	}
 
 }

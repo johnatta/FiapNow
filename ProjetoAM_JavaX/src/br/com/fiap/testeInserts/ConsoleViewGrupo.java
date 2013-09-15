@@ -155,8 +155,8 @@ public class ConsoleViewGrupo {
 		MensagemGrupo msgGrupo = new MensagemGrupo();
 		msgGrupo.setDescricao("Seja bem-vindo ao nosso grupo Bandeirantes Raptors!");
 		msgGrupo.setConfirmacao(Confirmacao.SIM);
-		msgGrupo.setCodGrupo(grupo);
-		msgGrupo.setCodPessoa(pessoa);
+		msgGrupo.setGrupo(grupo);
+		msgGrupo.setPessoa(pessoa);
 		// INSERINDO MSG GRUPO
 		msgGrupoDAO.insert(msgGrupo);
 		

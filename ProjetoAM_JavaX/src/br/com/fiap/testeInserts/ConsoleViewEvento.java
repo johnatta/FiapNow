@@ -175,7 +175,7 @@ public class ConsoleViewEvento {
 		MensagemEvento msgEvento = new MensagemEvento();
 		msgEvento.setDescricao("Briga e baixaria nao sera permitido. Sujeito a sair no meio do evento");
 		msgEvento.setConfirmacao(Confirmacao.SIM);
-		msgEvento.setCodEvento(evento);
+		msgEvento.setEvento(evento);
 		msgEvento.setCodPessoa(pessoa);
 		msgEventoDAO.insert(msgEvento); 
 		

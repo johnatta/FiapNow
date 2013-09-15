@@ -36,23 +36,31 @@ public class MensagemEvento implements Serializable{
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_evento_pessoa")
-	private Pessoa codPessoa;	
+	private Pessoa pessoa;	
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_evento")
-	private Evento codEvento;	
+	private Evento evento;	
 
 	public MensagemEvento(String descricao, Confirmacao confirmacao,
 			Pessoa codPessoa, Evento codEvento) {
 		super();
 		this.descricao = descricao;
 		this.confirmacao = confirmacao;
-		this.codPessoa = codPessoa;
-		this.codEvento = codEvento;
+		this.pessoa = codPessoa;
+		this.evento = codEvento;
 	}
 
 	public MensagemEvento(){
 
+	}
+	
+	public int getCodMensagem() {
+		return codMensagem;
+	}
+
+	public void setCodMensagem(int codMensagem) {
+		this.codMensagem = codMensagem;
 	}
 
 	public String getDescricao() {
@@ -71,19 +79,19 @@ public class MensagemEvento implements Serializable{
 		this.confirmacao = confirmacao;
 	}
 
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+	public void setCodPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public Evento getCodEvento() {
-		return codEvento;
+	public Evento getEvento() {
+		return evento;
 	}
 
-	public void setCodEvento(Evento codEvento) {
-		this.codEvento = codEvento;
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 }

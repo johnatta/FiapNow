@@ -5,9 +5,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.EsporteDAO;
-import br.com.fiap.daoimpl.EsporteDAOImpl;
-import br.com.fiap.pesquisa.ItemGrafico;
+import br.com.fiap.dao.MensagemGrupoDAO;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
+import br.com.fiap.entity.MensagemEvento;
+import br.com.fiap.entity.MensagemGrupo;
+import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
 	
@@ -292,6 +294,72 @@ public class TesteAriel {
 			System.out.println("Item número: " + cont + ". Esporte: " + ig.getNome() + ". Qtd: " + ig.getQtd());
 		}*/
 		
+		/*---------------------------------------------------*/
+		
+		//TELA MENSAGENS
+		//Teste do método buscarMensagensLidasDaPessoa(pessoa)
+		/*Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(3);
+		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
+		List<MensagemEvento> msgsEvento = msgEventoDAO.buscarMensagensLidasDaPessoa(pessoa);
+		for(MensagemEvento me : msgsEvento){
+			System.out.println("Cód: " + me.getCodMensagem());
+			System.out.println("Desc.: " + me.getDescricao());
+			System.out.println("Cód. Pessoa: " + me.getPessoa().getCodPessoa());
+			System.out.println("Cód. Evento: " + me.getEvento().getCodEvento());
+			System.out.println("Confirmacao: " + me.getConfirmacao());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA MENSAGENS
+		//Teste do método buscarMensagensNaoLidasDaPessoa(pessoa)
+		/*Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(3);
+		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
+		List<MensagemEvento> msgsEvento = msgEventoDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		for(MensagemEvento me : msgsEvento){
+			System.out.println("Cód: " + me.getCodMensagem());
+			System.out.println("Desc.: " + me.getDescricao());
+			System.out.println("Cód. Pessoa: " + me.getPessoa().getCodPessoa());
+			System.out.println("Cód. Evento: " + me.getEvento().getCodEvento());
+			System.out.println("Confirmacao: " + me.getConfirmacao());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA MENSAGENS
+		//Teste do método buscarMensagensLidasDaPessoa(pessoa)
+		/*Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(2);
+		MensagemGrupoDAO msgGrupoDAO = new MensagemGrupoDAOImpl(em);
+		List<MensagemGrupo> msgsGrupo= msgGrupoDAO.buscarMensagensLidasDaPessoa(pessoa);
+		for(MensagemGrupo mg : msgsGrupo){
+			System.out.println("Cód: " + mg.getCodMensagem());
+			System.out.println("Desc.: " + mg.getDescricao());
+			System.out.println("Cód. Pessoa: " + mg.getPessoa().getCodPessoa());
+			System.out.println("Cód. Grupo: " + mg.getGrupo().getCodGrupo());
+			System.out.println("Confirmacao: " + mg.getConfirmacao());
+		}*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA MENSAGENS
+		//Teste do método buscarMensagensNaoLidasDaPessoa(pessoa)
+		/*Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(2);
+		MensagemGrupoDAO msgGrupoDAO = new MensagemGrupoDAOImpl(em);
+		List<MensagemGrupo> msgsGrupo= msgGrupoDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		for(MensagemGrupo mg : msgsGrupo){
+			System.out.println("Cód: " + mg.getCodMensagem());
+			System.out.println("Desc.: " + mg.getDescricao());
+			System.out.println("Cód. Pessoa: " + mg.getPessoa().getCodPessoa());
+			System.out.println("Cód. Grupo: " + mg.getGrupo().getCodGrupo());
+			System.out.println("Confirmacao: " + mg.getConfirmacao());
+		}*/
+		
+		/*---------------------------------------------------*/
+				
 	}
 	
 }

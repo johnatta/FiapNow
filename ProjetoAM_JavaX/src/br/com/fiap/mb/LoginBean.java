@@ -18,12 +18,16 @@ import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
+import br.com.fiap.dao.MensagemEventoDAO;
+import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.dao.UsuarioDAO;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
+import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
@@ -38,7 +42,7 @@ public class LoginBean implements Serializable {
 	private EntityManager em;
 	private String imgEventos;
 	private String imgGrupos;
-	private String imgAvisos;
+	private String imgMensagens;
 	private String usuario;
 	private String senha;
 	private String nome;
@@ -48,11 +52,14 @@ public class LoginBean implements Serializable {
 	private int eventsRequests;
 	private int groupsInvites;
 	private int groupsRequests;
+	private int unreadMessages;
 	private Locale locale;
 	private ConviteEventoDAO convEveDAO;
 	private PedidoEventoDAO pedEveDAO;
 	private ConviteGrupoDAO convGruDAO;
 	private PedidoGrupoDAO pedGruDAO;
+	private MensagemEventoDAO msgEveDAO;
+	private MensagemGrupoDAO msgGruDAO;
 	
 	@PostConstruct
 	public void onInit(){
@@ -62,6 +69,8 @@ public class LoginBean implements Serializable {
 		pedEveDAO = new PedidoEventoDAOImpl(em);
 		convGruDAO = new ConviteGrupoDAOImpl(em);
 		pedGruDAO = new PedidoGrupoDAOImpl(em);
+		msgEveDAO = new MensagemEventoDAOImpl(em);
+		msgGruDAO = new MensagemGrupoDAOImpl(em);
 	}
 	
 	public void getNews(){
@@ -69,12 +78,14 @@ public class LoginBean implements Serializable {
 		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();
 		groupsInvites = convGruDAO.buscarConviteGrupoPorPessoa(pessoa).size();
 		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
+		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
+							msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();
 		
 		imgEventos = (eventsInvites > 0 || eventsRequests > 0 ? "eventosBranco.png" : "eventos.png");
 		
 		imgGrupos = (groupsInvites > 0 || groupsRequests > 0 ? "gruposBranco.png" : "grupos.png");
 		
-		imgAvisos = "avisos.png";
+		imgMensagens = (unreadMessages > 0 ? "mensagensBranco.png" : "mensagens.png");
 		
 	}
 	
@@ -126,11 +137,11 @@ public class LoginBean implements Serializable {
 	public void setImgGrupos(String imgGrupos) {
 		this.imgGrupos = imgGrupos;
 	}
-	public String getImgAvisos() {
-		return imgAvisos;
+	public String getImgMensagens() {
+		return imgMensagens;
 	}
-	public void setImgAvisos(String imgAvisos) {
-		this.imgAvisos = imgAvisos;
+	public void setImgMensagens(String imgMensagens) {
+		this.imgMensagens = imgMensagens;
 	}
 	public int getEventsInvites() {
 		return eventsInvites;
@@ -155,6 +166,12 @@ public class LoginBean implements Serializable {
 	}
 	public void setGroupsRequests(int groupsRequests) {
 		this.groupsRequests = groupsRequests;
+	}
+	public int getUnreadMessages() {
+		return unreadMessages;
+	}
+	public void setUnreadMessages(int unreadMessages) {
+		this.unreadMessages = unreadMessages;
 	}
 
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {

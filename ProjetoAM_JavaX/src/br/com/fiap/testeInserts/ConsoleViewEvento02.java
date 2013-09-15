@@ -146,7 +146,7 @@ public class ConsoleViewEvento02 {
 		MensagemEvento msgEvento = new MensagemEvento();
 		msgEvento.setDescricao("Favor lembre-se de levar protetores para a prática do long.");
 		msgEvento.setConfirmacao(Confirmacao.SIM);
-		msgEvento.setCodEvento(evento);
+		msgEvento.setEvento(evento);
 		msgEvento.setCodPessoa(pes);
 		msgEventoDAO.insert(msgEvento); 
 		
