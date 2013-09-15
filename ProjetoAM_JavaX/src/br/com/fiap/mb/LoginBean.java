@@ -70,8 +70,10 @@ public class LoginBean implements Serializable {
 		groupsInvites = convGruDAO.buscarConviteGrupoPorPessoa(pessoa).size();
 		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
 		
-		imgEventos = "eventos.png";
-		imgGrupos = "grupos.png";
+		imgEventos = (eventsInvites > 0 || eventsRequests > 0 ? "eventosBranco.png" : "eventos.png");
+		
+		imgGrupos = (groupsInvites > 0 || groupsRequests > 0 ? "gruposBranco.png" : "grupos.png");
+		
 		imgAvisos = "avisos.png";
 		
 	}
