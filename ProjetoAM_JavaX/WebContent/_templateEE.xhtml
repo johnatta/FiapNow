@@ -35,8 +35,8 @@
 							</f:metadata>
 							<div id="header_itemMenu" onmouseout="window.setTimeout(hidePendencia('pendenciaEventos','hidden'),20000000)" onmouseover="hidePendencia('pendenciaEventos','visible')">
 								<h:outputLink value="convite_pedido_eventos.xhtml">
-									<h:graphicImage name="#{loginBean.imgEventos}" library="images"
-										height="21" width="21"></h:graphicImage>
+									<p:graphicImage name="#{loginBean.imgEventos}" library="images"
+										height="21" width="21"></p:graphicImage>
 									<div id="pendenciaEventos" class="arrow_box">
 										#{msgs.you_have} #{loginBean.eventsInvites} #{msgs.invites_and} #{loginBean.eventsRequests} #{msgs.requests_pending}
 									</div>
@@ -44,8 +44,8 @@
 							</div>
 							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaGrupos','hidden')" onmouseover="hidePendencia('pendenciaGrupos','visible')">
 								<h:outputLink value="convite_pedido_grupos.xhtml">
-									<h:graphicImage name="{loginBean.imgGrupos}" library="images" height="21"
-										width="21"></h:graphicImage>
+									<p:graphicImage name="#{loginBean.imgGrupos}" library="images" height="21"
+										width="21"></p:graphicImage>
 									<div id="pendenciaGrupos" class="arrow_box">
 										#{msgs.you_have} #{loginBean.groupsInvites} #{msgs.invites_and} #{loginBean.groupsRequests} #{msgs.requests_pending}
 									</div>
@@ -53,8 +53,8 @@
 							</div>
 							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaAvisos','hidden')" onmouseover="hidePendencia('pendenciaAvisos','visible')">
 								<h:outputLink value="#">
-									<h:graphicImage name="{loginBean.imgAvisos}" library="images" height="21"
-										width="21"></h:graphicImage>
+									<p:graphicImage name="#{loginBean.imgAvisos}" library="images" height="21"
+										width="21"></p:graphicImage>
 									<div id="pendenciaAvisos" class="arrow_box">
 										#{msgs.you_have} #{msgs.invites_and} #{msgs.requests_pending}
 									</div>
