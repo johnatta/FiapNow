@@ -33,28 +33,32 @@
 							<f:metadata>
 								<f:event type="preRenderView" listener="#{loginBean.getNews}" />
 							</f:metadata>
-							<div id="header_itemMenu" onmouseout="window.setTimeout(hidePendencia('pendenciaEventos','hidden'),20000000)" onmouseover="hidePendencia('pendenciaEventos','visible')">
+							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaEventos','hidden')" onmouseover="hidePendencia('pendenciaEventos','visible')">
 								<h:outputLink value="convite_pedido_eventos.xhtml">
 									<p:graphicImage name="#{loginBean.imgEventos}" library="images"
-										height="21" width="21"></p:graphicImage>
+										height="21" width="21" />
 									<div id="pendenciaEventos" class="arrow_box">
-										#{msgs.you_have} #{loginBean.eventsInvites} #{msgs.invites_and} #{loginBean.eventsRequests} #{msgs.requests_pending}
+										<b>#{msgs.eventsReqInv}</b> <br />
+										<p:separator />
+										#{msgs.you_have} <b>#{loginBean.eventsInvites}</b> #{msgs.invites_and} <b>#{loginBean.eventsRequests}</b> #{msgs.requests_pending}
 									</div>
 								</h:outputLink>
 							</div>
 							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaGrupos','hidden')" onmouseover="hidePendencia('pendenciaGrupos','visible')">
 								<h:outputLink value="convite_pedido_grupos.xhtml">
 									<p:graphicImage name="#{loginBean.imgGrupos}" library="images" height="21"
-										width="21"></p:graphicImage>
+										width="21" />
 									<div id="pendenciaGrupos" class="arrow_box">
-										#{msgs.you_have} #{loginBean.groupsInvites} #{msgs.invites_and} #{loginBean.groupsRequests} #{msgs.requests_pending}
+										<b>#{msgs.groupsReqInv}</b> <br />
+										<p:separator />
+										#{msgs.you_have} <b>#{loginBean.groupsInvites}</b> #{msgs.invites_and} <b>#{loginBean.groupsRequests}</b> #{msgs.requests_pending}
 									</div>
 								</h:outputLink>
 							</div>
 							<div id="header_itemMenu" onmouseout="hidePendencia('pendenciaAvisos','hidden')" onmouseover="hidePendencia('pendenciaAvisos','visible')">
 								<h:outputLink value="#">
 									<p:graphicImage name="#{loginBean.imgAvisos}" library="images" height="21"
-										width="21"></p:graphicImage>
+										width="21" />
 									<div id="pendenciaAvisos" class="arrow_box">
 										#{msgs.you_have} #{msgs.invites_and} #{msgs.requests_pending}
 									</div>

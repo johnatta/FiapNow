@@ -9,8 +9,11 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<p:dataGrid columns="3" value="#{feedBean.esportes}" var="esporte" rows="3" styleClass="mainFeeder">
-			<p:panel>
+	
+		<h1>#{msgs.notices}</h1>
+
+		<p:dataGrid columns="3" value="#{feedBean.esportes}" var="esporte" rows="3" id="mainFeeder">
+			<p:panel styleClass="painelNoticias">
 				<div class="#{feedBean.stylize()}">
 					<h2>#{esporte}</h2>
 					<p:feedReader value="#{feedBean.buscaFeed(esporte)}" var="feed"

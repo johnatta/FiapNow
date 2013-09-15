@@ -56,7 +56,7 @@ public class FeedBean implements Serializable {
 		case 2:
 			styleSize = " medium";
 			break;
-		case 3:
+		default :
 			styleSize = " thin";
 			break;
 		}
