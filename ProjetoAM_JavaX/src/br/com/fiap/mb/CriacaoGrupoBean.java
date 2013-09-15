@@ -76,6 +76,7 @@ public class CriacaoGrupoBean implements Serializable {
 			System.err.println(pessoa.getGrupos().size());			
 			//grupos.add(grupo);
 			//pessoa.setGrupos(grupos);
+			
 			pDAO.update(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 			
 			fm.setSummary("Cadastro Realizado com Sucesso");
