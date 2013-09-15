@@ -81,8 +81,8 @@ public class ConsoleViewGrupo02 {
 		pessoa.setEsportes(esportes);
 		
 		Usuario usuario = new Usuario();
-		usuario.setEmail("camila.andrade@gmail.com");
-		usuario.setSenha("milla91");
+		usuario.setEmail("ca@gmail.com");
+		usuario.setSenha("123");
 		pessoa.setUsuario(usuario);
 		
 		Endereco enderecoP = new Endereco();
@@ -107,7 +107,7 @@ public class ConsoleViewGrupo02 {
 		grupo.setPrivacidade(Privacidade.Aberto);
 		grupo.setImgGrupo(new byte [4]);
 		Pessoa pesADM = new Pessoa();
-		pesADM = pessoaDAO.searchByID(6);
+		pesADM = pessoaDAO.searchByID(3);
 		grupo.setAdm(pesADM);
 		//Esporte esporteA = new Esporte();
 		//esporteA.setNome("Corrida");

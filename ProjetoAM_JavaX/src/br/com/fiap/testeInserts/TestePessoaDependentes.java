@@ -73,10 +73,10 @@ public class TestePessoaDependentes {
 		esportes.add(esporteH);
 		
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Barbara");
+		pessoa.setNome("Ana");
 		pessoa.setSobrenome("Alves");
 		pessoa.setDtNasc(dtNascimento);
-		pessoa.setApelido("BaAlves");
+		pessoa.setApelido("Aninha");
 		pessoa.setTelRes("01150789001");
 		pessoa.setCel("011990822241");
 		pessoa.setImgPerfil(new byte[3]);
@@ -84,8 +84,8 @@ public class TestePessoaDependentes {
 		pessoa.setEsportes(esportes);
 		
 		Usuario usuario = new Usuario();
-		usuario.setEmail("barbara.alves@hotmail.com");
-		usuario.setSenha("barbaraII");
+		usuario.setEmail("ana@teste.com");
+		usuario.setSenha("123");
 		pessoa.setUsuario(usuario);
 		
 		Endereco endereco = new Endereco();

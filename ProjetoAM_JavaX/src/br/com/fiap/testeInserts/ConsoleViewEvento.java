@@ -41,7 +41,7 @@ public class ConsoleViewEvento {
 	
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(13, 10, 22);
+		dtNascimento.set(88, 10, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
 		dtNascimentoA.set(13, 11, 12);
 		
@@ -89,8 +89,8 @@ public class ConsoleViewEvento {
 		grupos.add(grupoB);
 		
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Joao");
-		pessoa.setSobrenome("Mendes");
+		pessoa.setNome("José");
+		pessoa.setSobrenome("Moura");
 		pessoa.setDtNasc(dtNascimento);
 		pessoa.setApelido("JM");
 		pessoa.setTelRes("01120345323");
@@ -101,8 +101,8 @@ public class ConsoleViewEvento {
 		pessoa.setGrupos(grupos);
 		
 		Usuario usuario = new Usuario();
-		usuario.setEmail("joaomendes.jm@gmail.com");
-		usuario.setSenha("joaoJM30");
+		usuario.setEmail("jm@gmail.com");
+		usuario.setSenha("123");
 		pessoa.setUsuario(usuario);
 		
 		Endereco enderecoP = new Endereco();
@@ -161,7 +161,7 @@ public class ConsoleViewEvento {
 		ModeradorEvento modEvento = new ModeradorEvento();
 		modEvento.setCodEvento(evento);
 		modEvento.setCodPessoa(pessoa);
-		//modEventoDAO.insert(modEvento);  
+		modEventoDAO.insert(modEvento);  
 		
 		// COMENTARIO EVENTO
 		ComentarioEvento comentEvento = new ComentarioEvento();
@@ -169,7 +169,7 @@ public class ConsoleViewEvento {
 		comentEvento.setDtHora(Calendar.getInstance());
 		comentEvento.setCodEvento(evento);
 		comentEvento.setCodPessoa(pessoa);
-		//comentEventoDAO.insert(comentEvento);
+		comentEventoDAO.insert(comentEvento);
 		
 		// MENSAGEM EVENTO
 		MensagemEvento msgEvento = new MensagemEvento();
@@ -177,14 +177,14 @@ public class ConsoleViewEvento {
 		msgEvento.setConfirmacao(Confirmacao.SIM);
 		msgEvento.setCodEvento(evento);
 		msgEvento.setCodPessoa(pessoa);
-		//msgEventoDAO.insert(msgEvento); 
+		msgEventoDAO.insert(msgEvento); 
 		
 		// CONVITE EVENT0
 		ConviteEvento convtEvento = new ConviteEvento();
 		convtEvento.setDescricao("Espero você para um futebol digno.");
 		convtEvento.setEvento(evento);
 		convtEvento.setPessoa(pessoa);
-		//convtEventoDAO.insert(convtEvento); 
+		convtEventoDAO.insert(convtEvento); 
 		
 		/*
 		//Buscando por ID

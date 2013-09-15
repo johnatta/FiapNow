@@ -68,10 +68,10 @@ public class ConsoleViewGrupo {
 		
 		// PESSOA
 		Pessoa pessoa = new Pessoa();
-		pessoa.setNome("Álvaro Michel");
-		pessoa.setSobrenome("Schmidt");
+		pessoa.setNome("João");
+		pessoa.setSobrenome("Miguel");
 		pessoa.setDtNasc(dtNascimento);
-		pessoa.setApelido("AMSheep");
+		pessoa.setApelido("Jão");
 		pessoa.setTelRes("01150099041");
 		pessoa.setCel("011967893241");
 		pessoa.setImgPerfil(new byte[3]);
@@ -80,8 +80,8 @@ public class ConsoleViewGrupo {
 		
 		// USUARIO PARA PESSOA
 		Usuario usuario = new Usuario();
-		usuario.setEmail("alvaro.schmidt@gmail.com");
-		usuario.setSenha("alvaro8790");
+		usuario.setEmail("joao@gmail.com");
+		usuario.setSenha("123");
 		pessoa.setUsuario(usuario);
 		
 		// ENDERECO PARA PESSOA

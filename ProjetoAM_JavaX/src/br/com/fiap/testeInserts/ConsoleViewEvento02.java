@@ -123,7 +123,7 @@ public class ConsoleViewEvento02 {
 
 		//Buscando por ID - PESSOA
 		Pessoa pes = new Pessoa();
-		pes = pessoaDAO.searchByID(3);
+		pes = pessoaDAO.searchByID(4);
 		
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");
