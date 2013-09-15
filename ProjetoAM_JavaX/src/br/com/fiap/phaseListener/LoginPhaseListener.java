@@ -27,8 +27,6 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 		//Obtém o nome da Página Requisitada
 		String paginaOrigem = context.getViewRoot().getViewId();
 
-		System.out.println("Página de Origem: " + paginaOrigem);
-
 		//Obter a Pessoa da sessão
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
