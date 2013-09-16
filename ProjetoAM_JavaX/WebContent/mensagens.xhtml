@@ -9,55 +9,167 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	    
-	    <h1>#{msgs.messages}</h1>
-		<p:tabView id="tabMain" activeIndex="#{mensagensBean.activeTab}" >
-			<p:tab id="tabUnreadGroup" title="#{msgs.groups} - #{msgs.unreadMessages}">
-				<h:form id="formUnread">
 
-					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoNaoLidas}" columns="1"
-						rows="5" paginator="true"
+		<h1>#{msgs.messages}</h1>
+		<p:tabView id="tabMain" activeIndex="#{mensagensBean.activeTab}"
+			orientation="left">
+			<p:tab id="tabUnreadGroup"
+				title="#{msgs.groups} - #{msgs.unreadMessages}">
+				<h:form id="formGroupUnread">
+
+					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoNaoLidas}"
+						columns="1" rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}" >
+						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}">
 							<h:panelGrid columns="3" style="width:100%">
-								<h:graphicImage url="#{msg.descricao}" width="80" height="110"/>
-								<p:commandButton value="#{msgs.markAsRead}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.delete}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" update=":tabMain" ajax="true"/>
+								<h:outputText value="#{msg.descricao}" />
+								<p:commandButton value="#{msgs.markAsRead}"
+									actionListener="#{mensagensBean.marcarMsgGrupoLida(msg)}"
+									update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.delete}"
+									actionListener="#{mensagensBean.excluirMsgGrupo(msg)}"
+									update=":tabMain" ajax="true" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
 
 				</h:form>
 			</p:tab>
-			
-			
-			<p:tab id="tabUnread" title="#{msgs.requests}">
-				<h:form id="formRequests">
 
-					<p:dataGrid var="ped" value="#{convitePedidoEventosBean.pedidos}" columns="1"
-						rows="5" paginator="true"
+			<p:tab id="tabReadGroup"
+				title="#{msgs.groups} - #{msgs.readMessages}">
+				<h:form id="formGroupRead">
+
+					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoLidas}"
+						columns="1" rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{ped.evento.nome}" >
-							<h:panelGrid columns="4" style="width:100%">
-								<h:column>
-									<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
-									<br/>
-									<h:outputText value="#{ped.pessoa.apelido}"/>
-								</h:column>
-								<h:outputText value="#{ped.descricao}" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido(ped)}" value="#{msgs.accept}" update=":tabMain" ajax="true"/>
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido(ped)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
+						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}">
+							<h:panelGrid columns="3" style="width:100%">
+								<h:outputText value="#{msg.descricao}" />
+								<p:commandButton value="#{msgs.markAsRead}"
+									actionListener="#{mensagensBean.marcarMsgGrupoNaoLida(msg)}"
+									update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.delete}"
+									actionListener="#{mensagensBean.excluirMsgGrupo(msg)}"
+									update=":tabMain" ajax="true" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
 
 				</h:form>
 			</p:tab>
-			
+
+
+
+			<p:tab id="tabUnreadEvent"
+				title="#{msgs.events} - #{msgs.unreadMessages}">
+				<h:form id="formEventUnread">
+
+					<p:dataGrid var="msg" value="#{mensagensBean.msgsEventoNaoLidas}"
+						columns="1" rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,20">
+						<p:panel header="#{msg.evento.nome} - #{msg.titulo}">
+							<h:panelGrid columns="3" style="width:100%">
+								<h:outputText value="#{msg.descricao}" />
+								<p:commandButton value="#{msgs.markAsRead}"
+									actionListener="#{mensagensBean.marcarMsgEventoLida(msg)}"
+									update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.delete}"
+									actionListener="#{mensagensBean.excluirMsgEvento(msg)}"
+									update=":tabMain" ajax="true" />
+							</h:panelGrid>
+						</p:panel>
+					</p:dataGrid>
+
+				</h:form>
+			</p:tab>
+
+			<p:tab id="tabReadEvent"
+				title="#{msgs.events} - #{msgs.readMessages}">
+				<h:form id="formEventRead">
+
+					<p:dataGrid var="msg" value="#{mensagensBean.msgsEventoLidas}"
+						columns="1" rows="5" paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,20">
+						<p:panel header="#{msg.evento.nome} - #{msg.titulo}">
+							<h:panelGrid columns="3" style="width:100%">
+								<h:outputText value="#{msg.descricao}" />
+								<p:commandButton value="#{msgs.markAsRead}"
+									actionListener="#{mensagensBean.marcarMsgEventoNaoLida(msg)}"
+									update=":tabMain" ajax="true" />
+								<p:commandButton value="#{msgs.delete}"
+									actionListener="#{mensagensBean.excluirMsgEvento(msg)}"
+									update=":tabMain" ajax="true" />
+							</h:panelGrid>
+						</p:panel>
+					</p:dataGrid>
+
+				</h:form>
+			</p:tab>
+
+
+
+
+
+
+
+
+			<p:tab>
+
+				<p:dataTable id="mensagensLidas" var="msg"
+					value="#{tableBean.mediumCarsModel}" paginator="true" rows="10"
+					selection="#{tableBean.selectedCars}">
+
+					<f:facet name="header">  
+            			Checkbox Based Selection  
+        			</f:facet>
+
+					<p:column selectionMode="multiple" style="width:2%" />
+
+					<p:column headerText="Model" style="width:25%">  
+            			#{car.model}  
+        			</p:column>
+
+					<p:column headerText="Year" style="width:25%">  
+            			#{car.year}  
+        			</p:column>
+
+					<p:column headerText="Manufacturer" style="width:24%">  
+            			#{car.manufacturer}  
+        			</p:column>
+
+					<p:column headerText="Color" style="width:24%">  
+        			    #{car.color}  
+        			</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton id="multiViewButton" value="View"
+							icon="ui-icon-search" update=":form:displayMulti"
+							oncomplete="PF('multiCarDialog').show()" />
+					</f:facet>
+				</p:dataTable>
+
+				<p:dialog id="multiDialog" header="Car Detail"
+					widgetVar="multiCarDialog" height="300" showEffect="fade"
+					hideEffect="explode">
+
+					<p:dataList id="displayMulti" value="#{tableBean.selectedCars}"
+						var="selectedCar">  
+            			Model: #{selectedCar.model}, Year: #{selectedCar.year}  
+        			</p:dataList>
+
+				</p:dialog>
+
+
+
+			</p:tab>
+
 		</p:tabView>
-	    
+
 	</ui:define>
 </ui:composition>
 
