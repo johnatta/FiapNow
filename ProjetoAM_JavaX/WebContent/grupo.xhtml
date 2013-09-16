@@ -13,9 +13,8 @@
 		<f:metadata>
 			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}" />
 		</f:metadata>
-
 		<h:form id="formGrupo">
-			<div class="col_esquerda">
+			<div>
 				<p:panelGrid columns="2">
 					<f:facet name="header">
 						<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
@@ -23,8 +22,7 @@
 					<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 					<h:outputText value="#{grupoBean.codGrupo}"></h:outputText>
 					<h:outputLabel value="Categoria: "></h:outputLabel>
-					<p:dataList var="e" value="#{grupoBean.grupo.esportes}"
-						styleClass="datalist ui-datalist-data">  
+					<p:dataList var="e" value="#{grupoBean.grupo.esportes}">  
     					#{e.nome}  
 					</p:dataList>
 					<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
@@ -35,29 +33,18 @@
 					</f:facet>
 				</p:panelGrid>
 			</div>
-			<div class="col_centro">
+			<div>
 				<h:outputLabel value="Descricao: "></h:outputLabel>
 				<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
+				<p:dataList var="m" value="#{grupoBean.membrosGrpRow}">  
+    					#{m.nome}  
+				</p:dataList>
+				<p:dataList var="mod" value="#{grupoBean.modsGp}">  
+    					#{mod.nome}  
+				</p:dataList>
 			</div>
-			<div class="col_direita">
-				<p:dataGrid var="m" value="#{grupoBean.membrosGrpRow}" columns="3">
-					<p:panel>
-						<div id="painel">
-							<h:panelGrid columns="1" style="width:100%">
-								<p:graphicImage value="#{m.imgPerfil}" width="80" height="110"
-									style="margin-left:15px;" />
-								<p:outputText value="#{m.nome}"></p:outputText>
-								<p:commandLink title="#{visualizar todos membros}"
-									action="#{gruposBean.visualizarTodosMembros}">
-									<h:outputText value="Visualizar todos)"
-										style="margin:0 auto;" />
-								</p:commandLink>
-							</h:panelGrid>
-						</div>
-					</p:panel>
-				</p:dataGrid>
 
-			</div>
+
 		</h:form>
 	</ui:define>
 </ui:composition>
