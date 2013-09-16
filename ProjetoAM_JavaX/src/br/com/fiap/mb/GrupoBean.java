@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
@@ -30,7 +31,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -61,13 +62,13 @@ public class GrupoBean implements Serializable {
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
 
 
-		//numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		System.out.print("MEmbros>>>>>>>>>>>> : ");
 		//System.out.print(numMembros);
 		System.out.println();
-		modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+		modsGp = modGpDAO.buscarModeradoresDoGrupo(codGrupo);
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
-		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
+		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
 	}
 	@PostConstruct
 	public void onInit(){
