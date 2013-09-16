@@ -34,7 +34,7 @@ public class GruposBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		grupoDAO = new GrupoDAOImpl(em);
-		grupos = grupoDAO.buscarGrupos();
+		grupos = grupoDAO.buscarGruposAbertos();
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -45,7 +45,7 @@ public class GruposBean implements Serializable {
 	}
 	
 	public void filtrar(ActionEvent ae){
-		grupos = grupoDAO.buscarGruposPorNome(filtro);
+		grupos = grupoDAO.buscarGruposAbertosPorNome(filtro);
 		meusGrupos = grupoDAO.buscarMeusGruposPorNome(pessoa, filtro);
 	}
 	

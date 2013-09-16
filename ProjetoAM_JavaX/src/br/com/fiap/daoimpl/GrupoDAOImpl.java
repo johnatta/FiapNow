@@ -14,6 +14,7 @@ import org.primefaces.model.DefaultStreamedContent;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Privacidade;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
@@ -25,7 +26,15 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	public List<Grupo> buscaGruposDaPessoa(Pessoa pessoa) {
 		TypedQuery<Grupo> q = (TypedQuery<Grupo>) em.createNativeQuery("select * from am_grupo gru where gru.cod_grupo in (select pg.cod_grupo from am_pessoa_grupo pg where pg.cod_pessoa = ?)", Grupo.class);
 		q.setParameter(1, pessoa.getCodPessoa());
-		return q.getResultList();
+		List<Grupo> grupos = q.getResultList();
+
+		for (Grupo grupo : grupos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			grupo.setQuantidade(qtd);
+		}
+		return grupos;
 	}
 
 	@Override
@@ -86,9 +95,10 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	}
 
 	@Override
-	public List<Grupo> buscarGruposPorNome(String nome){
-		TypedQuery<Grupo> query = em.createQuery("from Grupo gru where upper(gru.nomeGrupo) like upper(:nome)",Grupo.class);
+	public List<Grupo> buscarGruposAbertosPorNome(String nome){
+		TypedQuery<Grupo> query = em.createQuery("from Grupo gru where upper(gru.nomeGrupo) like upper(:nome) and privacidade = :priv",Grupo.class);
 		query.setParameter("nome", "%"+nome+"%");
+		query.setParameter("priv", Privacidade.Aberto);
 		List<Grupo> grupos = query.getResultList();
 
 		for (Grupo grupo : grupos) {
@@ -122,6 +132,25 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		query.setParameter(1, codAdm);
 		return query.getSingleResult();
 	}
+
+	@Override
+	public List<Grupo> buscarGruposAbertos() {
+		TypedQuery<Grupo> query = em.createQuery("from Grupo where privacidade = :priv",Grupo.class);
+		query.setParameter("priv", Privacidade.Aberto);
+		List<Grupo> grupos = query.getResultList();
+		
+		for (Grupo g: grupos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			queryQtd.setParameter("codGrupo", g.getCodGrupo());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			g.setQuantidade(qtd);
+
+			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
+		}
+		
+		return grupos;
+	}
+
 }
 
 

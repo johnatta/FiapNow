@@ -13,6 +13,7 @@ import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Privacidade;
 import br.com.fiap.rc.ComentarioEventoRC;
 
 public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO{
@@ -117,13 +118,23 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	public List<Evento> buscarEventosDaPessoa(Pessoa pessoa) {
 		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Evento.class);
 		q.setParameter(1, pessoa.getCodPessoa());
-		return q.getResultList();
+		List<Evento> eventos = q.getResultList();
+		
+		for (Evento eve: eventos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_evento pe where pe.cod_evento = :codEvento");
+			queryQtd.setParameter("codEvento", eve.getCodEvento());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			eve.setQuantidade(qtd);
+		}
+		
+		return eventos;
 	}
 
 	@Override
-	public List<Evento> buscarEventosPorNome(String nome) {
-		TypedQuery<Evento> query = em.createQuery("from Evento eve where upper(eve.nome) like upper(:nome)",Evento.class);
+	public List<Evento> buscarEventosAbertosPorNome(String nome) {
+		TypedQuery<Evento> query = em.createQuery("from Evento eve where upper(eve.nome) like upper(:nome) and privacidade = :priv",Evento.class);
 		query.setParameter("nome", "%"+nome+"%");
+		query.setParameter("priv", Privacidade.Aberto);
 		List<Evento> eventos = query.getResultList();
 		
 		for (Evento eve: eventos) {
@@ -153,6 +164,21 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 		
 		return eventos;
 	}
-	
-	
+
+	@Override
+	public List<Evento> buscarEventosAbertos() {
+		TypedQuery<Evento> query = em.createQuery("from Evento eve where privacidade = :priv",Evento.class);
+		query.setParameter("priv", Privacidade.Aberto);
+		List<Evento> eventos = query.getResultList();
+		
+		for (Evento eve: eventos) {
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_evento pe where pe.cod_evento = :codEvento");
+			queryQtd.setParameter("codEvento", eve.getCodEvento());
+			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
+			eve.setQuantidade(qtd);
+		}
+		
+		return eventos;
+	}
+
 }

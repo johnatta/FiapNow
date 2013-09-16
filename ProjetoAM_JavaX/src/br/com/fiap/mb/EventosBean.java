@@ -35,7 +35,7 @@ public class EventosBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		eventoDAO = new EventoDAOImpl(em);
-		eventos = eventoDAO.buscarEventos();
+		eventos = eventoDAO.buscarEventosAbertos();
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -46,7 +46,7 @@ public class EventosBean implements Serializable {
 	}
 	
 	public void filtrar(ActionEvent ae){
-		eventos = eventoDAO.buscarEventosPorNome(filtro);
+		eventos = eventoDAO.buscarEventosAbertosPorNome(filtro);
 		meusEventos = eventoDAO.buscarMeusEventosPorNome(pessoa, filtro);
 	}
 	
