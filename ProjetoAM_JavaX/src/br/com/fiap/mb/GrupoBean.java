@@ -65,9 +65,9 @@ public class GrupoBean implements Serializable {
 		System.out.print("MEmbros>>>>>>>>>>>> : ");
 		//System.out.print(numMembros);
 		System.out.println();
-		//modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+		modsGp = modGpDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
-		//membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
+		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(grupo.getCodGrupo());
 	}
 	@PostConstruct
 	public void onInit(){
@@ -78,6 +78,11 @@ public class GrupoBean implements Serializable {
 		modsGp = new ArrayList<Pessoa>();
 	}
 
+	public String visualizarTodosMembros(){
+		String retorno = "todos_membros_grupo";
+		return retorno;
+	}
+	
 	public Grupo getGrupo() {
 		return grupo;
 	}
