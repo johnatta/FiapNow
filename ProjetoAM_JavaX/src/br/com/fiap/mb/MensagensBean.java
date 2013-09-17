@@ -119,6 +119,8 @@ public class MensagensBean implements Serializable {
 	
 	public void excluirMsgsGrupo(){
 		
+		activeTab = 0;
+		
 		for(MensagemGrupo msg : selectedMsgsGrupo){
 			msgGrupoDAO.remove(msg);
 		}
@@ -132,6 +134,8 @@ public class MensagensBean implements Serializable {
 	
 	
 	public void excluirMsgsEvento(){
+		
+		activeTab = 1;
 		
 		for(MensagemEvento msg : selectedMsgsEvento){
 			msgEventoDAO.remove(msg);

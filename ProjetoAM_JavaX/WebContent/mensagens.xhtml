@@ -18,7 +18,7 @@
 		
 				<h:form id="msgGrupo">
 
-					<p:dataTable id="mensagensLidas" var="msg"
+					<p:dataTable id="mensagensGrupo" var="msg"
 						value="#{mensagensBean.msgGrupoModel}" paginator="true" rows="10"
 						selection="#{mensagensBean.selectedMsgsGrupo}" widgetVar="selectionList">
 
@@ -44,7 +44,7 @@
 
 						<f:facet name="footer">
 							<p:commandButton id="multiViewButton" value="#{msgs.delete}"
-								icon="ui-icon-trash" actionListener="#{mensagensBean.excluirMsgsGrupo}" update=":tabMain" 
+								icon="ui-icon-trash" actionListener="#{mensagensBean.excluirMsgsGrupo}" update=":tabMain :tabMain:msgGrupo" 
 								ajax="true" onsuccess="selectionList.clearSelection()" />
 						</f:facet>
 
@@ -68,10 +68,59 @@
 			</p:tab>
 
 
+			<p:tab id="tabEvent" title="#{msgs.events} - #{msgs.messages}">
 
+				<h:form id="msgEvento">
 
+					<p:dataTable id="mensagensEvento" var="msg"
+						value="#{mensagensBean.msgEventoModel}" paginator="true" rows="10"
+						selection="#{mensagensBean.selectedMsgsEvento}" widgetVar="selectionListEvento">
 
+						<f:facet name="header">  
+	            			#{msgs.events} - #{msgs.readMessages}  
+    	    			</f:facet>
 
+						<p:column selectionMode="multiple" style="width:2%"/>
+
+						<p:column headerText="De:" style="width:25%">  
+            				#{msg.evento.nome}  
+        				</p:column>
+
+						<p:column headerText="Titulo:" style="width:49%">  
+            				#{msg.titulo}  
+        				</p:column>
+
+						<p:column headerText="Ler Mensagem:" style="width:24%">
+							<p:commandButton id="viewButton" value="Visualizar"
+								icon="ui-icon-search" update=":tabMain:msgEvento:visualizarMensagemEvento :tabMain:msgEvento:dialogMsgEvento"
+								action="#{mensagensBean.visualizarMensagemEvento(msg)}" />
+						</p:column>
+						
+						<f:facet name="footer">
+							<p:commandButton id="multiViewButton" value="#{msgs.delete}"
+								icon="ui-icon-trash" actionListener="#{mensagensBean.excluirMsgsEvento}" update=":tabMain :tabMain:msgEvento" 
+								ajax="true" onsuccess="selectionListEvento.clearSelection()" />
+						</f:facet>
+
+					</p:dataTable>
+
+					<p:dialog id="dialogMsgEvento"
+						header="#{mensagensBean.selectedMsgEvento.evento.nome} - 
+													#{mensagensBean.selectedMsgEvento.titulo}"
+						widgetVar="mensagemDialogEvento" resizable="false" showEffect="fade"
+						hideEffect="fade">
+
+						<h:panelGrid id="visualizarMensagemEvento" columns="2" cellpadding="4">
+
+							<h:outputText value="#{mensagensBean.selectedMsgEvento.descricao}" />
+
+						</h:panelGrid>
+						
+					</p:dialog>
+
+				</h:form>
+				
+			</p:tab>
 
 		</p:tabView>
 
