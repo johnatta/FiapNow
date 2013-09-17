@@ -13,124 +13,20 @@
 		<h1>#{msgs.messages}</h1>
 		<p:tabView id="tabMain" activeIndex="#{mensagensBean.activeTab}"
 			orientation="left">
-			<p:tab id="tabUnreadGroup"
-				title="#{msgs.groups} - #{msgs.unreadMessages}">
-				<h:form id="formGroupUnread">
 
-					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoNaoLidas}"
-						columns="1" rows="5" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}">
-							<h:panelGrid columns="3" style="width:100%">
-								<h:outputText value="#{msg.descricao}" />
-								<p:commandButton value="#{msgs.markAsRead}"
-									actionListener="#{mensagensBean.marcarMsgGrupoLida(msg)}"
-									update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.delete}"
-									actionListener="#{mensagensBean.excluirMsgGrupo(msg)}"
-									update=":tabMain" ajax="true" />
-							</h:panelGrid>
-						</p:panel>
-					</p:dataGrid>
-
-				</h:form>
-			</p:tab>
-
-			<p:tab id="tabReadGroup"
-				title="#{msgs.groups} - #{msgs.readMessages}">
-				<h:form id="formGroupRead">
-
-					<p:dataGrid var="msg" value="#{mensagensBean.msgsGrupoLidas}"
-						columns="1" rows="5" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.grupo.nomeGrupo} - #{msg.titulo}">
-							<h:panelGrid columns="3" style="width:100%">
-								<h:outputText value="#{msg.descricao}" />
-								<p:commandButton value="#{msgs.markAsRead}"
-									actionListener="#{mensagensBean.marcarMsgGrupoNaoLida(msg)}"
-									update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.delete}"
-									actionListener="#{mensagensBean.excluirMsgGrupo(msg)}"
-									update=":tabMain" ajax="true" />
-							</h:panelGrid>
-						</p:panel>
-					</p:dataGrid>
-
-				</h:form>
-			</p:tab>
-
-
-
-			<p:tab id="tabUnreadEvent"
-				title="#{msgs.events} - #{msgs.unreadMessages}">
-				<h:form id="formEventUnread">
-
-					<p:dataGrid var="msg" value="#{mensagensBean.msgsEventoNaoLidas}"
-						columns="1" rows="5" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.evento.nome} - #{msg.titulo}">
-							<h:panelGrid columns="3" style="width:100%">
-								<h:outputText value="#{msg.descricao}" />
-								<p:commandButton value="#{msgs.markAsRead}"
-									actionListener="#{mensagensBean.marcarMsgEventoLida(msg)}"
-									update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.delete}"
-									actionListener="#{mensagensBean.excluirMsgEvento(msg)}"
-									update=":tabMain" ajax="true" />
-							</h:panelGrid>
-						</p:panel>
-					</p:dataGrid>
-
-				</h:form>
-			</p:tab>
-
-			<p:tab id="tabReadEvent"
-				title="#{msgs.events} - #{msgs.readMessages}">
-				<h:form id="formEventRead">
-
-					<p:dataGrid var="msg" value="#{mensagensBean.msgsEventoLidas}"
-						columns="1" rows="5" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.evento.nome} - #{msg.titulo}">
-							<h:panelGrid columns="3" style="width:100%">
-								<h:outputText value="#{msg.descricao}" />
-								<p:commandButton value="#{msgs.markAsRead}"
-									actionListener="#{mensagensBean.marcarMsgEventoNaoLida(msg)}"
-									update=":tabMain" ajax="true" />
-								<p:commandButton value="#{msgs.delete}"
-									actionListener="#{mensagensBean.excluirMsgEvento(msg)}"
-									update=":tabMain" ajax="true" />
-							</h:panelGrid>
-						</p:panel>
-					</p:dataGrid>
-
-				</h:form>
-			</p:tab>
-
-
-
-
-
-
-
-
-			<p:tab title="#{msgs.groups} - #{msgs.messages}">
+			<p:tab id="tabGroup" title="#{msgs.groups} - #{msgs.messages}">
 		
 				<h:form id="msgGrupo">
 
 					<p:dataTable id="mensagensLidas" var="msg"
 						value="#{mensagensBean.msgGrupoModel}" paginator="true" rows="10"
-						selection="#{mensagensBean.selectedMsgGrupo}">
+						selection="#{mensagensBean.selectedMsgsGrupo}" widgetVar="selectionList">
 
 						<f:facet name="header">  
 	            			#{msgs.groups} - #{msgs.readMessages}  
     	    			</f:facet>
 
-						<p:column selectionMode="multiple" style="width:2%" />
+						<p:column selectionMode="multiple" style="width:2%"/>
 
 						<p:column headerText="De:" style="width:25%">  
             				#{msg.grupo.nomeGrupo}  
@@ -142,24 +38,25 @@
 
 						<p:column headerText="Ler Mensagem:" style="width:24%">
 							<p:commandButton id="viewButton" value="Visualizar"
-								icon="ui-icon-search" update=":tabMain:msgGrupo:visualizarMensagem"
-								onclick="PF('mensagemDialog').show()" />
+								icon="ui-icon-search" update=":tabMain:msgGrupo:visualizarMensagemGrupo :tabMain:msgGrupo:dialogMsgGrupo"
+								action="#{mensagensBean.visualizarMensagemGrupo(msg)}" />
 						</p:column>
 
 						<f:facet name="footer">
 							<p:commandButton id="multiViewButton" value="#{msgs.delete}"
-								icon="ui-icon-trash" />
+								icon="ui-icon-trash" actionListener="#{mensagensBean.excluirMsgsGrupo}" update=":tabMain" 
+								ajax="true" onsuccess="selectionList.clearSelection()" />
 						</f:facet>
 
 					</p:dataTable>
 
-					<p:dialog id="dialog"
+					<p:dialog id="dialogMsgGrupo"
 						header="#{mensagensBean.selectedMsgGrupo.grupo.nomeGrupo} - 
 													#{mensagensBean.selectedMsgGrupo.titulo}"
-						widgetVar="mensagemDialog" resizable="false" showEffect="fade"
-						hideEffect="explode">
+						widgetVar="mensagemDialogGrupo" resizable="false" showEffect="fade"
+						hideEffect="fade">
 
-						<h:panelGrid id="visualizarMensagem" columns="2" cellpadding="4">
+						<h:panelGrid id="visualizarMensagemGrupo" columns="2" cellpadding="4">
 
 							<h:outputText value="#{mensagensBean.selectedMsgGrupo.descricao}" />
 
@@ -169,6 +66,12 @@
 				</h:form>
 
 			</p:tab>
+
+
+
+
+
+
 
 		</p:tabView>
 
