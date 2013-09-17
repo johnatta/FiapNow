@@ -15,11 +15,11 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 	public PessoaDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}
-
+	
 	@Override
-	public Pessoa buscarInformacoes(Pessoa pessoa) {
+	public Pessoa buscarInformacoes(int codPessoa) {
 		Query query = em.createQuery("from Pessoa pes where pes.codPessoa = :codPessoa");
-		query.setParameter("codPessoa", pessoa);
+		query.setParameter("codPessoa", codPessoa);
 		return (Pessoa) query.getSingleResult();
 	}
 
@@ -37,5 +37,6 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		TypedQuery<Pessoa> query = em.createQuery("from Pessoa pes where pes.usuario = :codUsuario",Pessoa.class);
 		query.setParameter("codUsuario", usuario);
 		return query.getSingleResult();
+		
 	}
 }
