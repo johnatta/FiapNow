@@ -7,7 +7,7 @@ import br.com.fiap.entity.Usuario;
 
 public interface PessoaDAO extends DAO<Pessoa, Integer>{
 	
-	Pessoa buscarInformacoes(Pessoa pessoa);
+	Pessoa buscarInformacoes(int codPessoa);
 	List<Pessoa> buscarMembrosDoGrupo(int codGrupo);
 	Pessoa buscarPorUsuario(Usuario usuario);
 	
