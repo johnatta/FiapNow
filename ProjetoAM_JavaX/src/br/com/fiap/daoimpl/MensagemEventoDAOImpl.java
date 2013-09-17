@@ -16,10 +16,9 @@ public class MensagemEventoDAOImpl extends DAOImpl<MensagemEvento, Integer> impl
 		super(entityManager);
 	}
 	
-	public List<MensagemEvento> buscarMensagensLidasDaPessoa(Pessoa pessoa){
-		TypedQuery<MensagemEvento> query = em.createQuery(" from MensagemEvento me where me.pessoa = :pes and me.confirmacao = :conf", MensagemEvento.class);
+	public List<MensagemEvento> buscarMensagensDaPessoa(Pessoa pessoa){
+		TypedQuery<MensagemEvento> query = em.createQuery(" from MensagemEvento me where me.pessoa = :pes", MensagemEvento.class);
 		query.setParameter("pes", pessoa);
-		query.setParameter("conf", Confirmacao.SIM);
 		return query.getResultList();
 	}
 	

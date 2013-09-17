@@ -16,10 +16,9 @@ public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implem
 		super(entityManager);
 	}
 
-	public List<MensagemGrupo> buscarMensagensLidasDaPessoa(Pessoa pessoa){
-		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes and me.confirmacao = :conf", MensagemGrupo.class);
+	public List<MensagemGrupo> buscarMensagensDaPessoa(Pessoa pessoa){
+		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes order by me.codMensagem desc", MensagemGrupo.class);
 		query.setParameter("pes", pessoa);
-		query.setParameter("conf", Confirmacao.SIM);
 		return query.getResultList();
 	}
 	

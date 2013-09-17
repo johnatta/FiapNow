@@ -7,7 +7,7 @@ import br.com.fiap.entity.Pessoa;
 
 public interface MensagemEventoDAO extends DAO<MensagemEvento, Integer> {
 	
-	public List<MensagemEvento> buscarMensagensLidasDaPessoa(Pessoa pessoa);
+	public List<MensagemEvento> buscarMensagensDaPessoa(Pessoa pessoa);
 	
 	public List<MensagemEvento> buscarMensagensNaoLidasDaPessoa(Pessoa pessoa);
 
