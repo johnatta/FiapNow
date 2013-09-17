@@ -12,7 +12,7 @@
 	
 		<h1>#{msgs.notices}</h1>
 
-		<p:dataGrid columns="3" value="#{feedBean.esportes}" var="esporte" rows="3" id="mainFeeder">
+		<p:dataGrid columns="#{feedBean.esportes.size()}" value="#{feedBean.esportes}" var="esporte" rows="3" id="mainFeeder">
 			<p:panel styleClass="painelNoticias">
 				<div class="#{feedBean.stylize()}">
 					<h2>#{esporte}</h2>

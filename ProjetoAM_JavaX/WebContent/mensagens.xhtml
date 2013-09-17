@@ -45,7 +45,7 @@
 						columns="1" rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="5,10,20">
-						<p:panel header="#{msg.grupo.nome} - #{msg.titulo}">
+						<p:panel header="#{msg.grupo.nomeGrupo} - #{msg.titulo}">
 							<h:panelGrid columns="3" style="width:100%">
 								<h:outputText value="#{msg.descricao}" />
 								<p:commandButton value="#{msgs.markAsRead}"
@@ -118,53 +118,55 @@
 
 
 
-			<p:tab>
+			<p:tab title="#{msgs.groups} - #{msgs.messages}">
+		
+				<h:form id="msgGrupo">
 
-				<p:dataTable id="mensagensLidas" var="msg"
-					value="#{tableBean.mediumCarsModel}" paginator="true" rows="10"
-					selection="#{tableBean.selectedCars}">
+					<p:dataTable id="mensagensLidas" var="msg"
+						value="#{mensagensBean.msgGrupoModel}" paginator="true" rows="10"
+						selection="#{mensagensBean.selectedMsgGrupo}">
 
-					<f:facet name="header">  
-            			Checkbox Based Selection  
-        			</f:facet>
+						<f:facet name="header">  
+	            			#{msgs.groups} - #{msgs.readMessages}  
+    	    			</f:facet>
 
-					<p:column selectionMode="multiple" style="width:2%" />
+						<p:column selectionMode="multiple" style="width:2%" />
 
-					<p:column headerText="Model" style="width:25%">  
-            			#{car.model}  
-        			</p:column>
+						<p:column headerText="De:" style="width:25%">  
+            				#{msg.grupo.nomeGrupo}  
+        				</p:column>
 
-					<p:column headerText="Year" style="width:25%">  
-            			#{car.year}  
-        			</p:column>
+						<p:column headerText="Titulo:" style="width:49%">  
+            				#{msg.titulo}  
+        				</p:column>
 
-					<p:column headerText="Manufacturer" style="width:24%">  
-            			#{car.manufacturer}  
-        			</p:column>
+						<p:column headerText="Ler Mensagem:" style="width:24%">
+							<p:commandButton id="viewButton" value="Visualizar"
+								icon="ui-icon-search" update=":tabMain:msgGrupo:visualizarMensagem"
+								onclick="PF('mensagemDialog').show()" />
+						</p:column>
 
-					<p:column headerText="Color" style="width:24%">  
-        			    #{car.color}  
-        			</p:column>
+						<f:facet name="footer">
+							<p:commandButton id="multiViewButton" value="#{msgs.delete}"
+								icon="ui-icon-trash" />
+						</f:facet>
 
-					<f:facet name="footer">
-						<p:commandButton id="multiViewButton" value="View"
-							icon="ui-icon-search" update=":form:displayMulti"
-							oncomplete="PF('multiCarDialog').show()" />
-					</f:facet>
-				</p:dataTable>
+					</p:dataTable>
 
-				<p:dialog id="multiDialog" header="Car Detail"
-					widgetVar="multiCarDialog" height="300" showEffect="fade"
-					hideEffect="explode">
+					<p:dialog id="dialog"
+						header="#{mensagensBean.selectedMsgGrupo.grupo.nomeGrupo} - 
+													#{mensagensBean.selectedMsgGrupo.titulo}"
+						widgetVar="mensagemDialog" resizable="false" showEffect="fade"
+						hideEffect="explode">
 
-					<p:dataList id="displayMulti" value="#{tableBean.selectedCars}"
-						var="selectedCar">  
-            			Model: #{selectedCar.model}, Year: #{selectedCar.year}  
-        			</p:dataList>
+						<h:panelGrid id="visualizarMensagem" columns="2" cellpadding="4">
 
-				</p:dialog>
+							<h:outputText value="#{mensagensBean.selectedMsgGrupo.descricao}" />
 
+						</h:panelGrid>
+					</p:dialog>
 
+				</h:form>
 
 			</p:tab>
 

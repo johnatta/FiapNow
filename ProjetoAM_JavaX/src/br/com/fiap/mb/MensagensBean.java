@@ -18,6 +18,7 @@ import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.entity.MensagemEvento;
 import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.models.MensagemGrupoModel;
 
 @ManagedBean
 @ViewScoped
@@ -31,6 +32,8 @@ public class MensagensBean implements Serializable {
 	private List<MensagemEvento> msgsEventoNaoLidas;
 	private List<MensagemGrupo> msgsGrupoLidas;
 	private List<MensagemGrupo> msgsGrupoNaoLidas;
+	private MensagemGrupoModel msgGrupoModel;
+	private MensagemGrupo selectedMsgGrupo;
 	private int activeTab;
 	
 	@PostConstruct
@@ -51,6 +54,8 @@ public class MensagensBean implements Serializable {
 		msgsEventoNaoLidas = msgEventoDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
 		
 		msgsGrupoLidas = msgGrupoDAO.buscarMensagensLidasDaPessoa(pessoa);
+		msgGrupoModel = new MensagemGrupoModel(msgsGrupoLidas);
+		
 		msgsGrupoNaoLidas = msgGrupoDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
 	}
 
@@ -93,5 +98,21 @@ public class MensagensBean implements Serializable {
 	public void setActiveTab(int activeTab) {
 		this.activeTab = activeTab;
 	}
-	
+
+	public MensagemGrupoModel getMsgGrupoModel() {
+		return msgGrupoModel;
+	}
+
+	public void setMsgGrupoModel(MensagemGrupoModel msgGrupoModel) {
+		this.msgGrupoModel = msgGrupoModel;
+	}
+
+	public MensagemGrupo getSelectedMsgGrupo() {
+		return selectedMsgGrupo;
+	}
+
+	public void setSelectedMsgGrupo(MensagemGrupo selectedMsgGrupo) {
+		this.selectedMsgGrupo = selectedMsgGrupo;
+	}
+
 }
