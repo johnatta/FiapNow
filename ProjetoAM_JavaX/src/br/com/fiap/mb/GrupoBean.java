@@ -31,7 +31,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -41,33 +41,22 @@ public class GrupoBean implements Serializable {
 	private List<Pessoa> membrosGrpRow;
 	//Utilizado para o f:setPropertyActionListener passar o codigo do grupo criado por ele
 	private int codGrupo;
-	private Pessoa pessoa;
 	private Grupo grupo;
-	private Grupo pgGrupo;
 	private ComentarioGrupo cmtGrupo;
 	private GrupoDAO gruDAO;
 	private PessoaDAO pDAO;
 	private ModeradorGrupoDAO modGpDAO;
-	//private ModeradorGrupo moderador;
-	//private Pessoa membro;
+	
 	public void buscaGrupo(){
 		if(codGrupo == 0 ){
 			FacesContext fc = FacesContext.getCurrentInstance();
 			Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 			codGrupo = Integer.parseInt(params.get("codGrupo"));
 		}
-		System.out.print("codigo>>>>>>>>>>>> : ");
-		System.out.print(codGrupo);
-		System.out.println();
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
-
-
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-		System.out.print("MEmbros>>>>>>>>>>>> : ");
-		//System.out.print(numMembros);
-		System.out.println();
-		modsGp = modGpDAO.buscarModeradoresDoGrupo(codGrupo);
-		//membrosGrp = pDAO.buscarMembrosDoGrupo(getCodGrupo());
+		//modsGp = modGpDAO.buscarModeradoresDoGrupo(codGrupo);
+		membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
 		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
 	}
 	@PostConstruct
@@ -130,22 +119,6 @@ public class GrupoBean implements Serializable {
 
 	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
 		this.membrosGrpRow = membrosGrpRow;
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-	public Grupo getPgGrupo() {
-		return pgGrupo;
-	}
-
-	public void setPgGrupo(Grupo pgGrupo) {
-		this.pgGrupo = pgGrupo;
 	}
 
 	public ComentarioGrupo getCmtGrupo() {
