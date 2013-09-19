@@ -36,11 +36,12 @@
 			<div>
 				<h:outputLabel value="Descricao: "></h:outputLabel>
 				<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
-				<p:dataList var="m" value="#{grupoBean.membrosGrpRow}">  
-    					#{m.nome}  
+				<p:dataList var="mem" value="#{grupoBean.membrosGrp}">  
+    					#{mem.nome}  
 				</p:dataList>
-				<p:dataList var="mod" value="#{grupoBean.modsGp}">  
-    					#{mod.nome}  
+				
+				<p:dataList var="md" value="#{grupoBean.membrosGrpRow}">  
+    					#{md.nome}  
 				</p:dataList>
 			</div>
 
