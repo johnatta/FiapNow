@@ -9,6 +9,7 @@ public interface PessoaDAO extends DAO<Pessoa, Integer>{
 	
 	Pessoa buscarInformacoes(int codPessoa);
 	List<Pessoa> buscarMembrosDoGrupo(int codGrupo);
+	List<Pessoa> buscarMembrosDoGrupoRow(int codGrupo);
 	Pessoa buscarPorUsuario(Usuario usuario);
 	
 }
