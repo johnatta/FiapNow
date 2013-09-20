@@ -137,8 +137,8 @@ public class ConsoleViewGrupo {
 		
 		//MODERADOR GRUPO
 		ModeradorGrupo modGrupo = new ModeradorGrupo();
-		modGrupo.setCodGrupo(grupo);
-		modGrupo.setCodPessoa(pessoa);
+		modGrupo.setGrupo(grupo);
+		modGrupo.setPessoa(pessoa);
 		// INSERINDO MODERADOR
 		modGrupoDAO.insert(modGrupo);
 		

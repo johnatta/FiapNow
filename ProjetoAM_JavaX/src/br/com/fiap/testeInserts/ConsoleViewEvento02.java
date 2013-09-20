@@ -132,8 +132,8 @@ public class ConsoleViewEvento02 {
 		pedEventoDAO.insert(pedidoEvento);  
 
 		ModeradorEvento modEvento = new ModeradorEvento();
-		modEvento.setCodEvento(evento);
-		modEvento.setCodPessoa(pes);
+		modEvento.setEvento(evento);
+		modEvento.setPessoa(pes);
 		modEventoDAO.insert(modEvento);  
 		
 		ComentarioEvento comentEvento = new ComentarioEvento();

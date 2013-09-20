@@ -159,8 +159,8 @@ public class ConsoleViewEvento {
 
 		// MODERADOR EVENTO
 		ModeradorEvento modEvento = new ModeradorEvento();
-		modEvento.setCodEvento(evento);
-		modEvento.setCodPessoa(pessoa);
+		modEvento.setEvento(evento);
+		modEvento.setPessoa(pessoa);
 		modEventoDAO.insert(modEvento);  
 		
 		// COMENTARIO EVENTO

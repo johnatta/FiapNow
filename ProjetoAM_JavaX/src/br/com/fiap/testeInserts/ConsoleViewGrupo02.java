@@ -125,8 +125,8 @@ public class ConsoleViewGrupo02 {
 		pedGrupoDAO.insert(pedidoGrupo);
 
 		ModeradorGrupo modGrupo = new ModeradorGrupo();
-		modGrupo.setCodGrupo(grupo);
-		modGrupo.setCodPessoa(pessoa);
+		modGrupo.setGrupo(grupo);
+		modGrupo.setPessoa(pessoa);
 		modGrupoDAO.insert(modGrupo);
 		
 		ComentarioGrupo comentGrupo = new ComentarioGrupo();

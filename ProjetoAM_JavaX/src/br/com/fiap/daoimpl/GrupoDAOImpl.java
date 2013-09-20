@@ -150,6 +150,15 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		
 		return grupos;
 	}
+	
+	@Override
+	public List<Pessoa> buscarMembrosDoGrupo(int codGrupo) {
+		@SuppressWarnings("unchecked")
+		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE cod_pessoa IN (SELECT cod_pessoa  FROM AM_PESSOA_GRUPO  WHERE cod_grupo = :codGrupo)", Pessoa.class);
+		p.setParameter("codGrupo", codGrupo);
+		return p.getResultList();
+
+	}
 
 }
 
