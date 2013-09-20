@@ -52,6 +52,7 @@ public class GrupoBean implements Serializable {
 			FacesContext fc = FacesContext.getCurrentInstance();
 			Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
 			codGrupo = Integer.parseInt(params.get("codGrupo"));
+			
 		}
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
