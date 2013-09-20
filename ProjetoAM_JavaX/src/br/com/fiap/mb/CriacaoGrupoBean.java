@@ -45,9 +45,11 @@ public class CriacaoGrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private List<Esporte> esportes;
 	private EsporteDataModel edm;
+	private List<Esporte> listEsporte;
 	
 	@PostConstruct
 	public void init(){
+		listEsporte = new ArrayList<Esporte>();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		esportes = espDAO.buscarTodosEsportes();		
 		grupo = new Grupo();
@@ -57,7 +59,6 @@ public class CriacaoGrupoBean implements Serializable {
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
-		System.err.println(pessoa.getGrupos().size());
 	}
 
 	public String btnCriarGrupo(){
@@ -68,28 +69,21 @@ public class CriacaoGrupoBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		List<Esporte> esportesP = new ArrayList<Esporte>();
-		Esporte esporteD = new Esporte();
-		esporteD = espDAO.searchByID(6);
-		esportesP.add(esporteD);
-
-		grupo.setEsportes(esportesP);
-		//grupo.setEsportes(Arrays.asList(getEspSelecionados()));
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+		//Arrays.asList(getEspSelecionados())
+		for (Esporte esporte : getEspSelecionados()) {
+			listEsporte.add(esporte);
+		}
+		grupo.setEsportes(listEsporte);
 		try{
-			System.err.println(pessoa.getGrupos().size());		
 			grupo = gDAO.insertEntity(grupo);
 			pessoa.getGrupos().add(grupo);
-			System.err.println(pessoa.getGrupos().size());			
 			//grupos.add(grupo);
 			//pessoa.setGrupos(grupos);
-			
 			pDAO.update(pessoa);
-			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			retorno = "index";
+			retorno = "grupo";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
@@ -169,6 +163,14 @@ public class CriacaoGrupoBean implements Serializable {
 
 	public void setGrupos(List<Grupo> grupos) {
 		this.grupos = grupos;
+	}
+
+	public List<Esporte> getListEsporte() {
+		return listEsporte;
+	}
+
+	public void setListEsporte(List<Esporte> listEsporte) {
+		this.listEsporte = listEsporte;
 	}
 
 }
