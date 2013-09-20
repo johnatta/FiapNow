@@ -10,9 +10,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIParameter;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -48,11 +45,10 @@ public class GrupoBean implements Serializable {
 	private ModeradorGrupoDAO modGpDAO;
 	
 	public void buscaGrupo(){
+		
 		if(codGrupo == 0 ){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Map<String,String> params = fc.getExternalContext().getRequestParameterMap();
-			codGrupo = Integer.parseInt(params.get("codGrupo"));
-			
+			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
+			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 		}
 		grupo = gruDAO.buscarInfoGrupo(codGrupo);
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
