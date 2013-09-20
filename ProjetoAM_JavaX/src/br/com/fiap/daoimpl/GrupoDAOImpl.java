@@ -33,6 +33,8 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
+			
+			grupo.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(grupo.getImgGrupo()), "image/jpg"));
 		}
 		return grupos;
 	}
