@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -33,7 +34,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class CriacaoGrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -67,7 +68,14 @@ public class CriacaoGrupoBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		
-		grupo.setEsportes(Arrays.asList(getEspSelecionados()));
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		List<Esporte> esportesP = new ArrayList<Esporte>();
+		Esporte esporteD = new Esporte();
+		esporteD = espDAO.searchByID(6);
+		esportesP.add(esporteD);
+
+		grupo.setEsportes(esportesP);
+		//grupo.setEsportes(Arrays.asList(getEspSelecionados()));
 		grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		try{
 			System.err.println(pessoa.getGrupos().size());		
@@ -77,7 +85,7 @@ public class CriacaoGrupoBean implements Serializable {
 			//grupos.add(grupo);
 			//pessoa.setGrupos(grupos);
 			
-			pDAO.update(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+			pDAO.update(pessoa);
 			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
