@@ -1,6 +1,8 @@
 package br.com.fiap.mb;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +12,14 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
+import org.primefaces.component.calendar.Calendar;
+
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
@@ -28,15 +33,23 @@ public class CriarEventoBean implements Serializable {
 	private Evento evento;
 	private Grupo grupo;
 	private Esporte esporte;
-	private List<Esporte> esps;
+	private List<Esporte> esportes;
+	private Esporte[] espSelecionados;
 	private EsporteDAO espDAO;
 	private Pessoa pessoa;
 	private PessoaDAO pesDAO;
-	
+	private EsporteDataModel edm;
+	private Calendar cal;
 	@PostConstruct
 	public void onInit(){
+		
 		espDAO = new EsporteDAOImpl(em);
-		esps= espDAO.buscarTodosEsportes();
+		esportes = espDAO.buscarTodosEsportes();
+		setEdm(new EsporteDataModel(esportes));
+		evento = new Evento();
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		formato.format(evento.getDtEvento().getTime().getTime());
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -45,8 +58,17 @@ public class CriarEventoBean implements Serializable {
 		
 	}
 	
+	
 	public String btnConvidar(){
 		return "convite_evento";
+	}
+	
+	public List<Esporte> getEsportes() {
+		return esportes;
+	}
+	
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
 	}
 	
 	public Evento getEvento() {
@@ -69,12 +91,23 @@ public class CriarEventoBean implements Serializable {
 	public void setEsporte(Esporte esporte) {
 		this.esporte = esporte;
 	}
-
-	public List<Esporte> getEsps() {
-		return esps;
+	
+	public Esporte[] getEspSelecionados() {
+		return espSelecionados;
 	}
 
-	public void setEsps(List<Esporte> esps) {
-		this.esps = esps;
+	public void setEspSelecionados(Esporte[] espSelecionados) {
+		this.espSelecionados = espSelecionados;
 	}
+
+
+	public EsporteDataModel getEdm() {
+		return edm;
+	}
+
+
+	public void setEdm(EsporteDataModel edm) {
+		this.edm = edm;
+	}
+	
 }

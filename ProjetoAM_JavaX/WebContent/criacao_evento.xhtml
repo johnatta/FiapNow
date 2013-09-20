@@ -13,15 +13,16 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.evento.nome}"  maxlength="50" size="48" />
+				<p:inputText value="#{criarEventoBean.evento.nome}" required="true" maxlength="25" size="30" />
 				<h:outputText value="Data do Evento"></h:outputText>
-				<p:inputText value="#{criarEventoBean.evento.dtEvento}" />
+				<p:calendar value="#{criarEventoBean.evento.dtEvento}" pattern="dd/MM/yyy" />
 				<h:outputText value="Categoria:"></h:outputText>
-				<p:selectOneMenu effect="fade" 
-					value="#{criarEventoBean.esporte}">
-					<f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true"></f:selectItem>
-					<f:selectItems value="#{criarEventoBean.esps}" var="esp" itemLabel="#{esp.nome}" itemValue="codEsporte"></f:selectItems>
-				</p:selectOneMenu>
+				<p:dataTable id="oneEsporte" var="e"	value="#{criarEventoBean.edm}" selection="#{criacaoGrupoBean.espSelecionados}">
+  				 	
+					<f:facet name="header"> Selecione os esportes</f:facet>
+					<p:column selectionMode="single" style="width:2%" />
+					<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
+				</p:dataTable>
 				<h:outputText value="Telefone"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.telContato}" ></p:inputText>
 				<h:outputText value="Local"></h:outputText>
