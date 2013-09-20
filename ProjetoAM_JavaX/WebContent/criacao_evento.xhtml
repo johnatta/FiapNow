@@ -15,7 +15,7 @@
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.nome}" required="true" maxlength="25" size="30" />
 				<h:outputText value="Data do Evento"></h:outputText>
-				<p:calendar value="#{criarEventoBean.evento.dtEvento}" pattern="dd/MM/yyy" />
+				<p:calendar value="#{criarEventoBean.cal}" pattern="dd/MM/yyyy" />
 				<h:outputText value="Categoria:"></h:outputText>
 				<p:dataTable id="oneEsporte" var="e"	value="#{criarEventoBean.edm}" selection="#{criacaoGrupoBean.espSelecionados}">
   				 	

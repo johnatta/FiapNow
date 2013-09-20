@@ -1,8 +1,8 @@
 package br.com.fiap.mb;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -12,13 +12,10 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
-import org.primefaces.component.calendar.Calendar;
-
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
@@ -39,7 +36,19 @@ public class CriarEventoBean implements Serializable {
 	private Pessoa pessoa;
 	private PessoaDAO pesDAO;
 	private EsporteDataModel edm;
-	private Calendar cal;
+	private Date cal;
+	
+	
+	public Date getCal() {
+		return cal;
+	}
+
+
+	public void setCal(Date cal) {
+		this.cal = cal;
+	}
+
+
 	@PostConstruct
 	public void onInit(){
 		
@@ -48,8 +57,12 @@ public class CriarEventoBean implements Serializable {
 		setEdm(new EsporteDataModel(esportes));
 		evento = new Evento();
 		
-		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		formato.format(evento.getDtEvento().getTime().getTime());
+		evento.setDtEvento(Calendar.getInstance());
+		
+		cal = new Date(evento.getDtEvento().getTimeInMillis());
+		
+//		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+//		formato.format(evento.getDtEvento().getTime().getTime());
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
