@@ -20,7 +20,7 @@
 
 					<p:dataTable id="mensagensGrupo" var="msg"
 						value="#{mensagensBean.msgGrupoModel}" paginator="true" rows="10"
-						selection="#{mensagensBean.selectedMsgsGrupo}" widgetVar="selectionList">
+						selection="#{mensagensBean.selectedMsgsGrupo}" widgetVar="selectionList" emptyMessage="#{msgs.no_records}">
 
 						<f:facet name="header">  
 	            			#{msgs.groups} - #{msgs.readMessages}  

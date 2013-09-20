@@ -17,7 +17,7 @@
 					<p:dataGrid var="cnv" value="#{convitePedidoGruposBean.convites}" columns="1"
 						rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
+						rowsPerPageTemplate="5,10,20" emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{cnv.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{cnv.grupo.imgGrupo}" width="80" height="110"/>
@@ -38,7 +38,7 @@
 					<p:dataGrid var="ped" value="#{convitePedidoGruposBean.pedidos}" columns="1"
 						rows="5" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,20">
+						rowsPerPageTemplate="5,10,20" emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{ped.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>

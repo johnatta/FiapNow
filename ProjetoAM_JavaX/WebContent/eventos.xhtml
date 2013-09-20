@@ -24,7 +24,7 @@
 					<p:dataGrid var="eve" value="#{eventosBean.eventos}" columns="5"
 						rows="10" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,20,30">
+						rowsPerPageTemplate="10,20,30" emptyMessage="#{msgs.no_records}">
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
@@ -50,7 +50,7 @@
 					<p:dataGrid var="eve" value="#{eventosBean.meusEventos}" columns="5"
 						rows="10" paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="10,20,30">
+						rowsPerPageTemplate="10,20,30" emptyMessage="#{msgs.no_records}">
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
