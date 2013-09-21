@@ -9,16 +9,11 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<h2>Cadastro Grupo</h2>
-		<h:panelGrid columns="2">
-			<h:form enctype="multipart/form-data">
-			</h:form>
-		</h:panelGrid>
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
 			<p:wizard flowListener="#{criacaoGrupoBean.onFlowProcess}">
-
 				<p:tab id="grupo" title="Informação Grupo">
-					<p:panel header="Informação Grupo">
+					<p:panel header="InformaçãoGrupo">
 						<h:messages errorClass="error" />
 						<h:panelGrid columns="2" columnClasses="label, value"
 							styleClass="grid">
@@ -53,7 +48,7 @@
 
 							<h:outputText value="Esporte: " />
 							<p:dataTable id="multiCars" var="e"
-								value="#{criacaoGrupoBean.edm}"
+								value="#{criacaoGrupoBean.edm}" 
 								selection="#{criacaoGrupoBean.espSelecionados}">
 
 								<f:facet name="header"> Selecione os esportes</f:facet>
@@ -62,27 +57,31 @@
 							</p:dataTable>
 
 						</h:panelGrid>
+					</p:panel>
+				</p:tab>
+				
+				<p:tab id="pessoa" title="Adicionar Pessoa">
+					<p:panel header="AdicionarPessoa">
+						<h:messages errorClass="error" />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Pessoa: " />
+							<p:dataTable id="multiMembs" var="p"
+								value="#{criacaoGrupoBean.pdm}" paginator="true" rows="10"
+								selection="#{criacaoGrupoBean.pesSelecionados}">
+								<f:facet name="header"> Selecione as pessoas</f:facet>
+								<p:column selectionMode="multiple" style="width:2%" />
+								<p:column headerText="Nome" style="width:25%">  #{p.nome} </p:column>
+							</p:dataTable>
+							<h:outputText value="Pular para o final: " />
+							<h:selectBooleanCheckbox value="#{criacaoGrupoBean.skip}" />
 						<p:commandButton ajax="false" type="submit" value="Criar Grupo"
 							id="btnCadastrarCliente" icon="ui-icon-check"
 							action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
 						</p:commandButton>
-					</p:panel>
-				</p:tab>
-				<p:tab id="pessoa" title="Adicionar Pessoa">
-					<p:panel header="Adicionar Pessoa">
-						<h:messages errorClass="error" />
-						<h:panelGrid columns="2" columnClasses="label, value">
-							<h:outputText value="Pessoa: " />
-							<p:dataTable id="multiCars" var="e"	value="#{criacaoGrupoBean.edm}"	selection="#{criacaoGrupoBean.espSelecionados}">
-								<f:facet name="header"> Selecione as pessoas</f:facet>
-								<p:column selectionMode="multiple" style="width:2%" />
-								<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
-							</p:dataTable>
-							<h:outputText value="Pular para o final: " />
-							<h:selectBooleanCheckbox value="#{criacaoGrupoBean.skip}" />
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
+				
 			</p:wizard>
 		</h:form>
 	</ui:define>
