@@ -176,7 +176,7 @@ public class LoginBean implements Serializable {
 
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
 		String valor = value.toString();
-		if (!valor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) { //* qualquer validação lógica
+		if (!valor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
 			((UIInput)component).setValid(false);
 			
 			String mensagem =
@@ -246,7 +246,7 @@ public class LoginBean implements Serializable {
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		map.remove("loginBean");
 		
-		return "index";
+		return "index.xhtml?faces-redirect=true";
 		
 	}
 	

@@ -33,6 +33,7 @@ public class EnvioMensagemBean implements Serializable {
 	private EntityManager em;
 	private String titulo;
 	private String descricao;
+	private Pessoa usuarioLogado;
 	
 	private boolean enviaMsgGrupo;
 	private Grupo grupo;
@@ -53,6 +54,8 @@ public class EnvioMensagemBean implements Serializable {
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean loginBean = (LoginBean)map.get("loginBean");
+		usuarioLogado = loginBean.getPessoa();
 		
 		if(enviaMsgGrupo){
 			GrupoBean grupoBean = (GrupoBean)map.get("grupoBean");
@@ -125,8 +128,12 @@ public class EnvioMensagemBean implements Serializable {
 			msgGrupo.setTitulo(titulo);
 			msgGrupo.setDescricao(descricao);
 			
-			for(Pessoa pessoa : grupoDAO.buscarMembrosDoGrupo(grupo.getCodGrupo())){
-				msgGrupo.setPessoa(pessoa);
+			for(Pessoa pes : grupoDAO.buscarMembrosDoGrupo(grupo.getCodGrupo())){
+				//Se for o usuário logado, não envia a mensagem
+				if (pes == usuarioLogado){
+					continue;
+				}
+				msgGrupo.setPessoa(pes);
 				msgGrupoDAO.insert(msgGrupo);
 			}
 			
@@ -136,8 +143,12 @@ public class EnvioMensagemBean implements Serializable {
 			msgEvento.setTitulo(titulo);
 			msgEvento.setDescricao(descricao);
 			
-			for(Pessoa pessoa : eventoDAO.buscarMembrosPorEvento(evento.getCodEvento())){
-				msgEvento.setPessoa(pessoa);
+			for(Pessoa pes : eventoDAO.buscarMembrosPorEvento(evento.getCodEvento())){
+				//Se for o usuário logado, não envia a mensagem
+				if (pes == usuarioLogado){
+					continue;
+				}
+				msgEvento.setPessoa(pes);
 				msgEventoDAO.insert(msgEvento);
 			}
 			

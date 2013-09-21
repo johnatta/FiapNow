@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.MensagemEventoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
@@ -130,6 +132,16 @@ public class MensagensBean implements Serializable {
 		msgsGrupo = msgGrupoDAO.buscarMensagensDaPessoa(pessoa);
 		msgGrupoModel = new MensagemGrupoDataModel(msgsGrupo);
 		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		String mensagem =
+				UtilsNLS.getMessageResourceString("nls.mensagem", "message_deleted",
+				null, fc.getViewRoot().getLocale());
+		
+		FacesMessage fm = new FacesMessage(mensagem);
+		
+		fc.addMessage("", fm);
+		
 	}
 	
 	
@@ -145,6 +157,16 @@ public class MensagensBean implements Serializable {
 		
 		msgsEvento = msgEventoDAO.buscarMensagensDaPessoa(pessoa);
 		msgEventoModel = new MensagemEventoDataModel(msgsEvento);
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		String mensagem =
+				UtilsNLS.getMessageResourceString("nls.mensagem", "message_deleted",
+				null, fc.getViewRoot().getLocale());
+		
+		FacesMessage fm = new FacesMessage(mensagem);
+		
+		fc.addMessage("", fm);
 		
 	}
 	
