@@ -86,11 +86,15 @@ public class CriacaoGrupoBean implements Serializable {
 			listEsporte.add(esporte);
 		}
 		
-		grupo.setEsportes(listEsporte);
 		
+		grupo.setEsportes(listEsporte);
 		try{
 			grupo = gDAO.insertEntity(grupo);
-			pessoa.getGruposParticipantes().add(grupo);
+			for (Pessoa p : getPesSelecionados()){
+				p.getGruposParticipantes().add(grupo);
+			}
+			//pessoa.getGruposParticipantes().add(grupo);
+			
 			//pessoa.getGruposModerado().add(grupo);
 			//grupos.add(grupo);
 			//pessoa.setGrupos(grupos);
@@ -123,12 +127,12 @@ public class CriacaoGrupoBean implements Serializable {
 	}
 
 	 public String onFlowProcess(FlowEvent event) {  
-	        logger.info("Current wizard step:" + event.getOldStep());  
-	        logger.info("Next step:" + event.getNewStep());  
+		 //	String currentStepId = event.getOldStep();
+		 	String stepToGo = event.getNewStep();
 	          
 	        if(skip) {  
 	            skip = false;   //reset in case user goes back  
-	            return "confirm";  
+	            return "moderador";  
 	        }  
 	        else {  
 	            return event.getNewStep();  
@@ -230,6 +234,6 @@ public class CriacaoGrupoBean implements Serializable {
 	public void setPdm(PessoaDataModel pdm) {
 		this.pdm = pdm;
 	}
-	 
+
 
 }
