@@ -86,12 +86,6 @@ public class Pessoa implements Serializable {
 	private List<Grupo> gruposParticipantes;
 
 	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="AM_MODERADOR_GRUPO",
-	joinColumns={@JoinColumn(name="COD_PESSOA")},
-	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
-	private List<Grupo> gruposModerado;
-	
-	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_EVENTO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_EVENTO")})
@@ -231,14 +225,5 @@ public class Pessoa implements Serializable {
 	public void setGruposParticipantes(List<Grupo> gruposParticipantes) {
 		this.gruposParticipantes = gruposParticipantes;
 	}
-
-	public List<Grupo> getGruposModerado() {
-		return gruposModerado;
-	}
-
-	public void setGruposModerado(List<Grupo> gruposModerado) {
-		this.gruposModerado = gruposModerado;
-	}
-	
 	
 }

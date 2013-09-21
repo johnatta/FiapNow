@@ -91,7 +91,7 @@ public class CriacaoGrupoBean implements Serializable {
 		try{
 			grupo = gDAO.insertEntity(grupo);
 			pessoa.getGruposParticipantes().add(grupo);
-			pessoa.getGruposModerado().add(grupo);
+			//pessoa.getGruposModerado().add(grupo);
 			//grupos.add(grupo);
 			//pessoa.setGrupos(grupos);
 			pDAO.update(pessoa);

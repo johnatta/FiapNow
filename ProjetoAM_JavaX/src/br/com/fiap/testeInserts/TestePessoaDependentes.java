@@ -102,6 +102,7 @@ public class TestePessoaDependentes {
 		pessoa.setCodEndereco(endereco);
 		
 		//pessoaDAO.insert(pessoa);
+		/*
 		
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
@@ -114,7 +115,6 @@ public class TestePessoaDependentes {
 		
 		pes.setGruposParticipantes(grupos);
 		pessoaDAO.update(pes);
-		/*
 		
 		//Buscando por ID - EVENTO
 		Evento evento = new Evento();

@@ -104,7 +104,7 @@ public class TestePessoaDependentes02 {
 		//Buscando por ID - PESSOA
 		Pessoa pesC = new Pessoa();
 		pesC = pessoaDAO.searchByID(4);
-		pesC.setGrupos(grupos);
+		pesC.setGruposParticipantes(grupos);
 		pessoaDAO.update(pesC);
 		
 		//Buscando por ID - EVENTO

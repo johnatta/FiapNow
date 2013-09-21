@@ -116,14 +116,11 @@ public class ConsoleViewGrupo {
 		// ESPORTES PARA GRUPO
 		//Esporte esporteA = new Esporte();
 		//
-		
 		//Esporte esporteB = new Esporte();
 		//
-		
 		esportes.add(esporteD);
 		//esportes.add(esporteB);
 		grupo.setEsportes(esportes);
-		
 		// INSERINDO GRUPO
 		grupoDAO.insert(grupo);
 		
