@@ -80,7 +80,7 @@ public class ConvitePedidoGruposBean implements Serializable {
 
 	public void aceitarConvite(ConviteGrupo convite){
 		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
-		pessoa.getGrupos().add(convite.getGrupo());
+		pessoa.getGruposParticipantes().add(convite.getGrupo());
 		pessoaDAO.update(pessoa);
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
@@ -96,7 +96,7 @@ public class ConvitePedidoGruposBean implements Serializable {
 	
 	public void aceitarPedido(PedidoGrupo pedido){
 		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
-		pedido.getPessoa().getGrupos().add(pedido.getGrupo());
+		pedido.getPessoa().getGruposParticipantes().add(pedido.getGrupo());
 		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);
 		activeTab = 1;
