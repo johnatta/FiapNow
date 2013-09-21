@@ -38,4 +38,10 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 	}
+
+	@Override
+	public List<Pessoa> buscarTodas() {
+		TypedQuery<Pessoa> pessoa = (TypedQuery<Pessoa>) em.createQuery("from Pessoa",Pessoa.class);
+		return pessoa.getResultList();
+	}
 }
