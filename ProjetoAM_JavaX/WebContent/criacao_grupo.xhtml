@@ -11,13 +11,13 @@
 		<h2>Cadastro Grupo</h2>
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
-			<p:wizard flowListener="#{criacaoGrupoBean.onFlowProcess}">
+			<p:wizard flowListener="#{criacaoGrupoBean.onFlowProcess}"> 
 				<p:tab id="grupo" title="Informação Grupo">
 					<p:panel header="InformaçãoGrupo">
 						<h:messages errorClass="error" />
 						<h:panelGrid columns="2" columnClasses="label, value"
 							styleClass="grid">
-							<h:outputText value="criacaoGrupoBean.grupo.foto" />
+							<h:outputText value="#{criacaoGrupoBean.grupo.foto}" />
 							<p:fileUpload
 								fileUploadListener="#{criacaoGrupoBean.realizarUpload}"
 								mode="advanced" update="messages" sizeLimit="100000"
@@ -48,7 +48,7 @@
 
 							<h:outputText value="Esporte: " />
 							<p:dataTable id="multiCars" var="e"
-								value="#{criacaoGrupoBean.edm}" 
+								value="#{criacaoGrupoBean.edm}"
 								selection="#{criacaoGrupoBean.espSelecionados}">
 
 								<f:facet name="header"> Selecione os esportes</f:facet>
@@ -59,8 +59,8 @@
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
-				
-				<p:tab id="pessoa" title="Adicionar Pessoa">
+
+				<p:tab id="pessoaAdicionada" title="Adicionar Pessoa">
 					<p:panel header="AdicionarPessoa">
 						<h:messages errorClass="error" />
 						<h:panelGrid columns="2" columnClasses="label, value">
@@ -74,14 +74,22 @@
 							</p:dataTable>
 							<h:outputText value="Pular para o final: " />
 							<h:selectBooleanCheckbox value="#{criacaoGrupoBean.skip}" />
-						<p:commandButton ajax="false" type="submit" value="Criar Grupo"
-							id="btnCadastrarCliente" icon="ui-icon-check"
-							action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
-						</p:commandButton>
 						</h:panelGrid>
 					</p:panel>
 				</p:tab>
-				
+				<p:tab id="moderador" title="Adicionar moderador">
+					<p:panel header="AdicionarModerador">
+						<h:messages errorClass="error" />
+						<h:panelGrid columns="2" columnClasses="label, value">
+							<h:outputText value="Pular para o final: " />
+							<h:selectBooleanCheckbox value="#{criacaoGrupoBean.skip}" />
+							<p:commandButton ajax="false" type="submit" value="Criar Grupo"
+								id="btnCadastrarCliente" icon="ui-icon-check"
+								action="#{criacaoGrupoBean.btnCriarGrupo}" style="margin:0">
+							</p:commandButton>
+						</h:panelGrid>
+					</p:panel>
+				</p:tab>
 			</p:wizard>
 		</h:form>
 	</ui:define>
