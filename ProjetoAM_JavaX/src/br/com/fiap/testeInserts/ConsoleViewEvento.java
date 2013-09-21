@@ -98,7 +98,7 @@ public class ConsoleViewEvento {
 		pessoa.setImgPerfil(new byte[3]);
 		pessoa.setImgBackGround(new byte[5]);
 		pessoa.setEsportes(esportes);
-		pessoa.setGrupos(grupos);
+		pessoa.setGruposParticipantes(grupos);
 		
 		Usuario usuario = new Usuario();
 		usuario.setEmail("jm@gmail.com");

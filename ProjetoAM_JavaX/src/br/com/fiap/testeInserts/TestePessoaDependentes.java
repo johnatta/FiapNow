@@ -112,7 +112,7 @@ public class TestePessoaDependentes {
 		Pessoa pes = new Pessoa();
 		pes = pessoaDAO.searchByID(1);
 		
-		pes.setGrupos(grupos);
+		pes.setGruposParticipantes(grupos);
 		pessoaDAO.update(pes);
 		/*
 		

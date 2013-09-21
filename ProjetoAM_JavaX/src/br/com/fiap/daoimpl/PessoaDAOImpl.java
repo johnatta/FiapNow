@@ -40,7 +40,7 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 	}
 
 	@Override
-	public List<Pessoa> buscarTodas() {
+	public List<Pessoa> buscarTodasPessoas() {
 		TypedQuery<Pessoa> pessoa = (TypedQuery<Pessoa>) em.createQuery("from Pessoa",Pessoa.class);
 		return pessoa.getResultList();
 	}

@@ -83,8 +83,14 @@ public class Pessoa implements Serializable {
 	@JoinTable(name="AM_PESSOA_GRUPO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
-	private List<Grupo> grupos;
+	private List<Grupo> gruposParticipantes;
 
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="AM_MODERADOR_GRUPO",
+	joinColumns={@JoinColumn(name="COD_PESSOA")},
+	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
+	private List<Grupo> gruposModerado;
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="AM_PESSOA_EVENTO",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
@@ -107,7 +113,7 @@ public class Pessoa implements Serializable {
 		this.usuario = codUsuario;
 		this.codEndereco = codEndereco;
 		this.esportes = esportes;
-		this.grupos = grupos;
+		this.gruposParticipantes = grupos;
 		this.eventos = eventos;
 	}
 
@@ -210,14 +216,6 @@ public class Pessoa implements Serializable {
 		this.esportes = esportes;
 	}
 
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
 	public List<Evento> getEventos() {
 		return eventos;
 	}
@@ -225,4 +223,22 @@ public class Pessoa implements Serializable {
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
 	}
+
+	public List<Grupo> getGruposParticipantes() {
+		return gruposParticipantes;
+	}
+
+	public void setGruposParticipantes(List<Grupo> gruposParticipantes) {
+		this.gruposParticipantes = gruposParticipantes;
+	}
+
+	public List<Grupo> getGruposModerado() {
+		return gruposModerado;
+	}
+
+	public void setGruposModerado(List<Grupo> gruposModerado) {
+		this.gruposModerado = gruposModerado;
+	}
+	
+	
 }
