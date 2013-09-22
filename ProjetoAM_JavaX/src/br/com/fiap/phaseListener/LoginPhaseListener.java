@@ -35,7 +35,9 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 		NavigationHandler handler = 
 				context.getApplication().getNavigationHandler();
 
-		if( !paginaOrigem.contains("index") && (sessao == null || sessao.getPessoa() == null) ){
+		if( !paginaOrigem.equals("index.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
+			handler.handleNavigation(context, null, "index");
+		} else if(paginaOrigem.equals("criacao_perfil.xhtml") && (sessao != null || sessao.getPessoa() != null)){
 			handler.handleNavigation(context, null, "index");
 		} else {
 			handler.handleNavigation(context, null, paginaOrigem);
