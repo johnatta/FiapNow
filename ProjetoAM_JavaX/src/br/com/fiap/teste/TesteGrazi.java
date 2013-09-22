@@ -2,26 +2,31 @@ package br.com.fiap.teste;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.rc.ComentarioGrupoRC;
 
 public class TesteGrazi {
 
@@ -43,7 +48,6 @@ public class TesteGrazi {
 		*/
 		List<Grupo> grupos = new ArrayList<Grupo>();
 		Grupo g = new Grupo();
-		GrupoDAO gDAO = new GrupoDAOImpl(em); 
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		Esporte e = new Esporte();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
@@ -57,9 +61,18 @@ public class TesteGrazi {
 		List<Pessoa> moderadores = modDAO.buscarModeradoresDoGrupoRowNum(6);
 		
 		for (Pessoa mod : moderadores) {
-			System.err.println(mod.getNome());
+			//System.err.println(mod.getNome());
 		}
 		
+		GrupoDAO gDAO = new GrupoDAOImpl(em); 
+		List<ComentarioGrupoRC> comentarios = gDAO.buscarComentariosPeloGrupo(4);
+		System.out.println(comentarios);
+		
+		for(ComentarioGrupoRC comentarioGrupo : comentarios){
+			System.err.println("APELIDO: " + comentarioGrupo.getApelido());
+			System.err.println("COMENTARIO: " + comentarioGrupo.getComentario());
+			System.err.println("HORA: " + comentarioGrupo.getDataHora());
+		}
 		
 		/*
 		g = gDAO.buscaInfoBasicas(2);
