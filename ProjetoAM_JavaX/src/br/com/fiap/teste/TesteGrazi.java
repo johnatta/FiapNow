@@ -9,14 +9,17 @@ import javax.persistence.EntityManager;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 
@@ -49,6 +52,14 @@ public class TesteGrazi {
 		Pessoa p = new Pessoa();
 		PedidoGrupoDAO pgDAO = new PedidoGrupoDAOImpl(em);
 		PedidoGrupo pg = new PedidoGrupo();
+		ModeradorGrupo modGrupo = new ModeradorGrupo();
+		ModeradorGrupoDAO modDAO = new ModeradorGrupoDAOImpl(em);
+		List<Pessoa> moderadores = modDAO.buscarModeradoresDoGrupoRowNum(6);
+		
+		for (Pessoa mod : moderadores) {
+			System.err.println(mod.getNome());
+		}
+		
 		
 		/*
 		g = gDAO.buscaInfoBasicas(2);
@@ -94,8 +105,8 @@ public class TesteGrazi {
 		
 		//numMembros = gDAO.buscarNumeroMembros(56);
 		//System.out.println(numMembros);
-		e = espDAO.buscarPorNome("corrida");
-		System.out.println(e.getNome());
+		//e = espDAO.buscarPorNome("corrida");
+		//System.out.println(e.getNome());
 	}
 
 }
