@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -116,8 +118,9 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Evento> buscarEventosDaPessoa(Pessoa pessoa) {
-		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?)", Evento.class);
+		TypedQuery<Evento> q = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?) and eve.data_evento >= ?", Evento.class);
 		q.setParameter(1, pessoa.getCodPessoa());
+		q.setParameter(2, Calendar.getInstance());
 		List<Evento> eventos = q.getResultList();
 		
 		for (Evento eve: eventos) {
@@ -132,9 +135,10 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Evento> buscarEventosAbertosPorNome(String nome) {
-		TypedQuery<Evento> query = em.createQuery("from Evento eve where upper(eve.nome) like upper(:nome) and privacidade = :priv",Evento.class);
+		TypedQuery<Evento> query = em.createQuery("from Evento eve where upper(eve.nome) like upper(:nome) and privacidade = :priv and eve.dtEvento >= :today",Evento.class);
 		query.setParameter("nome", "%"+nome+"%");
 		query.setParameter("priv", Privacidade.Aberto);
+		query.setParameter("today", Calendar.getInstance());
 		List<Evento> eventos = query.getResultList();
 		
 		for (Evento eve: eventos) {
@@ -149,10 +153,12 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Evento> buscarMeusEventosPorNome(Pessoa pessoa, String nome) {
-		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?) " +
+		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?) and  and eve.data_evento >= ?" +
 				" and upper(eve.nome) like upper(?)", Evento.class);
 		query.setParameter(1, pessoa.getCodPessoa());
 		query.setParameter(2, "%"+nome+"%");
+		query.setParameter(3, Calendar.getInstance());
+		
 		List<Evento> eventos = query.getResultList();
 		
 		for (Evento eve: eventos) {
@@ -167,8 +173,9 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Evento> buscarEventosAbertos() {
-		TypedQuery<Evento> query = em.createQuery("from Evento eve where privacidade = :priv",Evento.class);
+		TypedQuery<Evento> query = em.createQuery("from Evento eve where eve.privacidade = :priv and eve.dtEvento >= :today",Evento.class);
 		query.setParameter("priv", Privacidade.Aberto);
+		query.setParameter("today", Calendar.getInstance());
 		List<Evento> eventos = query.getResultList();
 		
 		for (Evento eve: eventos) {
