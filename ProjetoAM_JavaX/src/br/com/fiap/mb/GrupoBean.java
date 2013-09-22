@@ -10,6 +10,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -35,7 +36,7 @@ public class GrupoBean implements Serializable {
 	private BigDecimal numMembros;
 	private List<Pessoa> modsGp;
 	private List<Pessoa> membrosGrp;
-	private List<Pessoa> membrosGrpRow;
+	private List<Pessoa> moderadorGrp;
 	//Utilizado para o f:setPropertyActionListener passar o codigo do grupo criado por ele
 	private int codGrupo;
 	private Grupo grupo;
@@ -43,28 +44,24 @@ public class GrupoBean implements Serializable {
 	private GrupoDAO gruDAO;
 	private PessoaDAO pDAO;
 	private ModeradorGrupoDAO modGpDAO;
+	private ModeradorGrupoDAO moderadorGpDAO;
 	
 	public void buscaGrupo(){
-		
 		if(codGrupo == 0 ){
 			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 		}
-		grupo = gruDAO.buscarInfoGrupo(codGrupo);
-		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-		//modsGp = modGpDAO.buscarModeradoresDoGrupo(codGrupo);
-		membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
-		membrosGrpRow = modGpDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-	}
-	@PostConstruct
-	public void onInit(){
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		modGpDAO = new ModeradorGrupoDAOImpl(em);
-		membrosGrpRow = new ArrayList<Pessoa>(); 
-		modsGp = new ArrayList<Pessoa>();
+		moderadorGpDAO = new ModeradorGrupoDAOImpl(em);
+		
+		modsGp = moderadorGpDAO.buscarModeradoresDoGrupo(codGrupo);
+		grupo = gruDAO.buscarInfoGrupo(codGrupo);
+		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+		moderadorGrp = modGpDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
+		membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
 	}
-
 	public String visualizarTodosMembros(){
 		String retorno = "todos_membros_grupo";
 		return retorno;
@@ -110,14 +107,13 @@ public class GrupoBean implements Serializable {
 		this.membrosGrp = membrosGrp;
 	}
 
-	public List<Pessoa> getMembrosGrpRow() {
-		return membrosGrpRow;
+	
+	public List<Pessoa> getModeradorGrp() {
+		return moderadorGrp;
 	}
-
-	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
-		this.membrosGrpRow = membrosGrpRow;
+	public void setModeradorGrp(List<Pessoa> moderadorGrp) {
+		this.moderadorGrp = moderadorGrp;
 	}
-
 	public ComentarioGrupo getCmtGrupo() {
 		return cmtGrupo;
 	}
@@ -141,6 +137,6 @@ public class GrupoBean implements Serializable {
 		}
 		return content;
 	}
-
+	
 
 }
