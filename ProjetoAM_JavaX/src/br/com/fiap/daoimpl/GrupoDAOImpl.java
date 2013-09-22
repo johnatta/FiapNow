@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.OrderBy;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -16,6 +17,7 @@ import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
+import br.com.fiap.rc.ComentarioEventoRC;
 import br.com.fiap.rc.ComentarioGrupoRC;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
@@ -166,13 +168,15 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 
 	@Override
+	@OrderBy("c.dataHora desc")
 	public List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo) {
-		String queryRC = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora)" +
-				" FROM AM_PESSOA PES, AM_COMENTARIO_GRUPO COM WHERE COM.cod_comentario_grupo IN " + 
-				" (SELECT cod_comentario_grupo FROM AM_COMENTARIO_GRUPO WHERE cod_comentario_grupo = ? and ROWNUM <= 10 )" +
-				" AND PES.cod_pessoa = COM.COMENT_GRUPO_PESSOA ORDER BY COM.data_hora DESC";
-		TypedQuery<ComentarioGrupoRC> query = (TypedQuery<ComentarioGrupoRC>) em.createNativeQuery(queryRC, ComentarioGrupoRC.class);
-		query.setParameter(1, codGrupo);
+		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
+			      "FROM ComentarioGrupo c JOIN c.codPessoa p " +
+			      "WHERE c.codGrupo.codGrupo = :cod and rownum <= 10";
+		
+		TypedQuery<ComentarioGrupoRC> query = em.createQuery(queryStr, ComentarioGrupoRC.class);
+		query.setParameter("cod", codGrupo);
+		
 		return query.getResultList();
 	}
 

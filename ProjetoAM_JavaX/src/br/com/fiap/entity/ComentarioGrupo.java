@@ -98,4 +98,5 @@ public class ComentarioGrupo implements Serializable {
 	public void setCodGrupo(Grupo codGrupo) {
 		this.codGrupo = codGrupo;
 	}
+	
 }
