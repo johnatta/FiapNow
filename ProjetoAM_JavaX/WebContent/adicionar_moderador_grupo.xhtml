@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h2>Cadastro Grupo</h2>
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:panel header="AdicionarModerador">
+				<h:messages errorClass="error" />
+				<h:panelGrid columns="2" columnClasses="label, value">
+					<h:outputText value="Pessoa: " />
+					<p:dataTable id="multiMembs" var="m"
+						value="#{criacaoGrupoBean.mdm}" paginator="true" rows="10"
+						selection="#{criacaoGrupoBean.moderadorSelecionados}">
+						<f:facet name="header"> Selecionar Moderador</f:facet>
+						
+						<p:column selectionMode="multiple" style="width:2%" />
+						
+						<p:column headerText="Nome" style="width:33%">
+							<h:graphicImage url="#{m.imgPerfil}" width="80" height="110"
+								style="margin-left:15px;" />
+						</p:column>
+						
+						<p:column headerText="Apelido" style="width:32%">  #{m.apelido} </p:column>
+						
+						<p:column headerText="Nome" style="width:33%">  #{m.nome} </p:column>
+						
+						<f:facet name="footer">
+							<p:commandButton ajax="false" type="submit"
+								value="Adicionar moderadores" id="addModerador"
+								icon="ui-icon-check"
+								action="#{criacaoGrupoBean.relacionarModerador}"
+								style="margin:0">
+							</p:commandButton>
+						</f:facet>
+					
+					</p:dataTable>
+					<p:commandButton ajax="false" type="submit" value="Concluído"
+						id="criarGrupoPgModerador" icon="ui-icon-check"
+						action="#{criacaoGrupoBean.concluirCriacaoGrupo}" style="margin:0">
+					</p:commandButton>
+
+				</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
