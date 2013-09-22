@@ -23,8 +23,9 @@
 			<div id="header">
 				<div id="content_header">
 					<div id="header_menu">
-						<a href="home.xhtml"><div id="header_itemMenu">Encontro Esportivo
-							</div></a>
+						<a href="home.xhtml">
+							<div id="header_itemMenu">Encontro Esportivo</div>
+						</a>
 						<ui:insert name="header_menu">
 							<f:metadata>
 								<f:event type="preRenderView" listener="#{loginBean.getNews}" />
@@ -123,7 +124,18 @@
 
 			<div id="footer">
 				<ui:insert name="footer">
-					<div id="footer_content">Javax Solutions</div>
+					<div id="footer_content">
+						<div id="footer_javax">
+							 | Javax Solutions
+						</div>
+						
+						<a href="mapa.xhtml">
+							<div id="footer_link">
+								Mapa do Site
+							</div>
+						</a>
+						
+					</div>
 				</ui:insert>
 			</div>
 		</div>

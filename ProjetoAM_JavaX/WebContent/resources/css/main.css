@@ -100,6 +100,7 @@ h1{
 	font-weight:bold;
 	color: #656565;
 	margin-top:5px;
+	text-align: center;
 }
 .detach{
 	font: 16px  verdana, arial, helvetica;
@@ -116,7 +117,29 @@ h1{
 .user{
 	float:left;
 }
-h1{ text-align: center;}
+h3{
+	font: 18px  verdana, arial, helvetica;
+	font-weight:bold;
+	color: #656565;
+	text-align:center;
+}
+
+#footer_javax{
+	float:right;
+}
+
+#footer_link{
+	float:right;
+	color: #FFF;
+	margin-right:5px;
+	padding-left:3px;
+}
+
+a:hover #footer_link {
+	background:#feb342;	
+}
+
+/* ----------- Fim da Estilização do TemplateEE ----------- */
 
 /* Notificações */
 .arrow_box {
@@ -139,8 +162,6 @@ h1{ text-align: center;}
 }
 
 /* Fim das Notificações */
-
-/* ----------- Fim da Estilização do TemplateEE ----------- */
 
 /* ----------- Estilização dos Datagrid's para Eventos e Grupos ----------- */
 .ui-datagrid-column { width: 100px; padding: 3px;}

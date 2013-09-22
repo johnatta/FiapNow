@@ -74,7 +74,7 @@
 
 					<p:dataTable id="mensagensEvento" var="msg"
 						value="#{mensagensBean.msgEventoModel}" paginator="true" rows="10"
-						selection="#{mensagensBean.selectedMsgsEvento}" widgetVar="selectionListEvento">
+						selection="#{mensagensBean.selectedMsgsEvento}" widgetVar="selectionListEvento" emptyMessage="#{msgs.no_records}">
 
 						<f:facet name="header">  
 	            			#{msgs.events} - #{msgs.readMessages}  
