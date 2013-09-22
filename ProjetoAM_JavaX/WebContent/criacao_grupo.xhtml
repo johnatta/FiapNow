@@ -12,7 +12,7 @@
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
 			<p:panel header="InformaçãoGrupo">
-				<h:messages errorClass="error" />
+				<h:messages ></h:messages>
 				<h:panelGrid columns="2" columnClasses="label, value"
 					styleClass="grid">
 					<h:outputText value="#{criacaoGrupoBean.grupo.foto}" />
@@ -47,7 +47,7 @@
 					<p:dataTable id="multiCars" var="e" value="#{criacaoGrupoBean.edm}"
 						selection="#{criacaoGrupoBean.espSelecionados}">
 						<f:facet name="header"> Selecione os esportes</f:facet>
-						<p:column selectionMode="multiple" style="width:2%" />
+						<p:column selectionMode="multiple" style="width:1%" />
 						<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
 					</p:dataTable>
 				</h:panelGrid>
