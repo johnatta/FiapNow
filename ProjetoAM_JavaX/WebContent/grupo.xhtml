@@ -45,13 +45,35 @@
 					</p:panelGrid>
 				</p:panel>
 			</div>
+			
 			<div>
-				<p:panel>
+    <p:panel id="coment" header="Comentario" toggleable="true" closable="true" toggleSpeed="500" closeSpeed="500" widgetVar="panel">  
+  
+        <p:ajax event="close" listener="#{panelBean.handleClose}" update="growl" />  
+        <p:ajax event="toggle" listener="#{panelBean.handleToggle}" update="growl" />  
+  
+  		<h:inputText value="" />
+  
+          
+        <f:facet name="options">  
+            <p:menu>  
+                <p:submenu label="Settings">  
+                    <p:menuitem value="Toggle" url="#" icon="ui-icon-newwin" onclick="panel.toggle()"/>  
+                    <p:menuitem value="Remove" url="#" icon="ui-icon-close" onclick="panel.close()"/>  
+                </p:submenu>  
+            </p:menu>  
+        </f:facet>  
+    </p:panel> 			
+			
+			
+				<p:panel header="Descrição" >
 					<h:panelGrid columns="1">
 						<f:facet name="header">
 							<h:outputLabel value="Descricao: "></h:outputLabel>
 						</f:facet>
-						<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
+						
+						<h:outputText value="#{grupoBean.grupo.descricao}" />
+						
 						<f:facet name="footer">
 							<p:commandButton type="button" value="Editar"
 								icon="ui-icon-check" style="margin:0" />
@@ -59,6 +81,7 @@
 					</h:panelGrid>
 				</p:panel>
 			</div>
+			
 			<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="3"
 				rows="6" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -69,14 +92,14 @@
 					</h:panelGrid>
 				</p:panel>
 			</p:dataGrid>
-			
-			<p:dataGrid var="mod" value="#{grupoBean.moderadorGrp}"
+
+			<p:dataGrid var="moderador" value="#{grupoBean.moderadores}"
 				columns="3" rows="6" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="9,12,15">
+				rowsPerPageTemplate="3,6,9">
 				<p:panel>
 					<h:panelGrid columns="1" style="width:50%">
-						<h:outputText value="#{mod.nome} (#{mod.apelido})"></h:outputText>
+						<h:outputText value="#{moderador.nome} (#{moderador.apelido})"></h:outputText>
 					</h:panelGrid>
 				</p:panel>
 			</p:dataGrid>
