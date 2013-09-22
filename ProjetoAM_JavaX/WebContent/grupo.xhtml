@@ -15,13 +15,15 @@
 		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
 		<h:form id="formGrupo">
 			<div>
-				<p:panel header="Grupo">
+				<p:panel>
 					<p:panelGrid columns="2">
 						<f:facet name="header">
 							<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
 						</f:facet>
+						<p:outputLabel value="Membro: "></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
-						<h:outputLabel value="Categoria: "></h:outputLabel>
+
+						<p:outputLabel value="Categoria: "></p:outputLabel>
 
 						<h:outputText value="#{grupoBean.grupo.esportes[0].nome}"
 							rendered="#{!empty grupoBean.grupo.esportes[0].nome}" />
@@ -30,8 +32,10 @@
 						<h:outputText value="#{grupoBean.grupo.esportes[2].nome}"
 							rendered="#{!empty grupoBean.grupo.esportes[2].nome}" />
 
+						<p:outputLabel value="Número de Membros: "></p:outputLabel>
 						<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
 
+						<p:outputLabel value="Privacidade:"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
 						<f:facet name="footer">
@@ -43,39 +47,36 @@
 			</div>
 			<div>
 				<p:panel>
-					<h:panelGrid columns="1" columnClasses="label, value">
-						<h:outputLabel value="Descricao: "></h:outputLabel>
+					<h:panelGrid columns="1">
+						<f:facet name="header">
+							<h:outputLabel value="Descricao: "></h:outputLabel>
+						</f:facet>
 						<h:outputText value="#{grupoBean.grupo.descricao}"></h:outputText>
+						<f:facet name="footer">
+							<p:commandButton type="button" value="Editar"
+								icon="ui-icon-check" style="margin:0" />
+						</f:facet>
 					</h:panelGrid>
 				</p:panel>
 			</div>
-
-			<div>
-				<h:panelGrid columns="1" columnClasses="label, value">
-					<p:dataList var="md" value="#{grupoBean.membrosGrpRow}">  
-		    					#{md.nome}  
-							</p:dataList>
-				</h:panelGrid>
-			</div>
-			<div>
-				<p:panel>
-					<h:panelGrid columns="1" columnClasses="label, value">
-						<p:dataList var="m" value="#{grupoBean.membrosGrp}">  
-    					#{m.nome}  
-						</p:dataList>
-					</h:panelGrid>
-				</p:panel>
-			</div>
-
 			<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="3"
 				rows="6" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="9,12,15">
-				<p:panel >
-					<h:panelGrid columns="1" style="width:100%">
-						<p:graphicImage value="#{mem.imgPerfil}" width="80" height="110"
-							style="margin-left:15px;" />
+				<p:panel>
+					<h:panelGrid columns="1" style="width:50%">
 						<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+			
+			<p:dataGrid var="mod" value="#{grupoBean.moderadorGrp}"
+				columns="3" rows="6" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="9,12,15">
+				<p:panel>
+					<h:panelGrid columns="1" style="width:50%">
+						<h:outputText value="#{mod.nome} (#{mod.apelido})"></h:outputText>
 					</h:panelGrid>
 				</p:panel>
 			</p:dataGrid>
