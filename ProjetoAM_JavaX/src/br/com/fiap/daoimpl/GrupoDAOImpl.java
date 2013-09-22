@@ -12,9 +12,11 @@ import javax.persistence.TypedQuery;
 import org.primefaces.model.DefaultStreamedContent;
 
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
+import br.com.fiap.rc.ComentarioGrupoRC;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
@@ -33,7 +35,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
-			
+
 			grupo.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(grupo.getImgGrupo()), "image/jpg"));
 		}
 		return grupos;
@@ -140,7 +142,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		TypedQuery<Grupo> query = em.createQuery("from Grupo where privacidade = :priv",Grupo.class);
 		query.setParameter("priv", Privacidade.Aberto);
 		List<Grupo> grupos = query.getResultList();
-		
+
 		for (Grupo g: grupos) {
 			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
 			queryQtd.setParameter("codGrupo", g.getCodGrupo());
@@ -149,10 +151,10 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
 		}
-		
+
 		return grupos;
 	}
-	
+
 	@Override
 	public List<Pessoa> buscarMembrosDoGrupo(int codGrupo) {
 		@SuppressWarnings("unchecked")
@@ -160,6 +162,18 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 
+	}
+
+
+	@Override
+	public List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo) {
+		String queryRC = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora)" +
+				" FROM AM_PESSOA PES, AM_COMENTARIO_GRUPO COM WHERE COM.cod_comentario_grupo IN " + 
+				" (SELECT cod_comentario_grupo FROM AM_COMENTARIO_GRUPO WHERE cod_comentario_grupo = ? and ROWNUM <= 10 )" +
+				" AND PES.cod_pessoa = COM.COMENT_GRUPO_PESSOA ORDER BY COM.data_hora DESC";
+		TypedQuery<ComentarioGrupoRC> query = (TypedQuery<ComentarioGrupoRC>) em.createNativeQuery(queryRC, ComentarioGrupoRC.class);
+		query.setParameter(1, codGrupo);
+		return query.getResultList();
 	}
 
 }
