@@ -96,12 +96,12 @@ public class CriacaoGrupoBean implements Serializable {
 		}else{
 			FacesMessage fm = new FacesMessage("Campo obrigatório não preenchido. Favor preencher.");
 			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("messages", fm);
+			fc.addMessage("", fm);
 			return "";
 		}
 	}
 
-	public void relacionarMembros(ActionEvent event) {
+	public void relacionarMembros() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if(getMembrosSelecionados().length != 0){
 			FacesMessage fm = new FacesMessage();
@@ -114,7 +114,7 @@ public class CriacaoGrupoBean implements Serializable {
 		return "adicionar_moderador_grupo";  
 	}
 
-	public void relacionarModerador(ActionEvent event) {  
+	public void relacionarModerador() {  
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if(getMembrosSelecionados().length != 0){
 			FacesMessage fm = new FacesMessage();
