@@ -14,29 +14,32 @@
 			<p:panel header="AdicionarPessoa">
 				<h:messages errorClass="error" />
 				<h:panelGrid columns="2" columnClasses="label, value">
-					
+
 					<h:outputText value="Pessoa: " />
-					
+
 					<p:dataTable id="multiMembs" var="p"
 						value="#{criacaoGrupoBean.pdm}" paginator="true" rows="10"
 						selection="#{criacaoGrupoBean.membrosSelecionados}">
-					
+
 						<f:facet name="header"> Selecionar membros</f:facet>
 						<p:column selectionMode="multiple" style="width:2%" />
-					
+
 						<p:column headerText="Nome" style="width:33%">
 							<h:graphicImage url="#{p.imgPerfil}" width="80" height="110"
 								style="margin-left:15px;" />
 						</p:column>
-					
+
 						<p:column headerText="Apelido" style="width:32%">  #{p.apelido} </p:column>
-					
+
 						<p:column headerText="Nome" style="width:33%">  #{p.nome} </p:column>
-					
-						<p:commandButton ajax="false" type="submit" value="Adicionar Membros"
-							id="addMembro" icon="ui-icon-check"
-							action="#{criacaoGrupoBean.relacionarMembros}" style="margin:0">
-						</p:commandButton>
+
+
+						<f:facet name="footer">
+							<p:commandButton ajax="false" type="submit"
+								value="Adicionar Membros" id="addMembro" icon="ui-icon-check"
+								action="#{criacaoGrupoBean.relacionarMembros}" style="margin:0">
+							</p:commandButton>
+						</f:facet>
 					</p:dataTable>
 
 					<p:commandButton ajax="false" type="submit" value="Próximo passo"
@@ -44,7 +47,7 @@
 						action="#{criacaoGrupoBean.passarParaAddModerador}"
 						style="margin:0">
 					</p:commandButton>
-
+					
 					<p:commandButton ajax="false" type="submit" value="Concluído"
 						id="criarGrupoPgMembro" icon="ui-icon-check"
 						action="#{criacaoGrupoBean.concluirCriacaoGrupo}" style="margin:0">
