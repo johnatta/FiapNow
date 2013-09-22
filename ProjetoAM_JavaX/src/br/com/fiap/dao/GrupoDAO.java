@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.rc.ComentarioGrupoRC;
 
 public interface GrupoDAO extends DAO<Grupo, Integer> {
 	List<Grupo> consultaMeusGrupos(int codPessoa);
@@ -29,4 +30,5 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	
 	List<Pessoa> buscarMembrosDoGrupo(int codGrupo);
 	
+	List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo);
 }
