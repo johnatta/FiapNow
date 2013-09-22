@@ -22,9 +22,10 @@
 					<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 					<h:outputText value="#{grupoBean.codGrupo}"></h:outputText>
 					<h:outputLabel value="Categoria: "></h:outputLabel>
-					<p:dataList var="e" value="#{grupoBean.grupo.esportes}">  
+					<p:dataList var="e" value="#{grupoBean.grupo.esportes[1]}">  
     					#{e.nome}  
 					</p:dataList>
+					<h:outputText value="#{grupoBean.esporte1}" rendered="#{ !empty grupoBean.esporte1 }" />
 					<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
 					<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 					<f:facet name="footer">

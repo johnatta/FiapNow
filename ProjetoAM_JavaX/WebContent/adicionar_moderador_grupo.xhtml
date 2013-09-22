@@ -15,6 +15,7 @@
 				<h:messages errorClass="error" />
 				<h:panelGrid columns="2" columnClasses="label, value">
 					<h:outputText value="Pessoa: " />
+					
 					<p:dataTable id="multiMembs" var="m"
 						value="#{criacaoGrupoBean.mdm}" paginator="true" rows="10"
 						selection="#{criacaoGrupoBean.moderadorSelecionados}">
@@ -41,6 +42,7 @@
 						</f:facet>
 					
 					</p:dataTable>
+					
 					<p:commandButton ajax="false" type="submit" value="Concluído"
 						id="criarGrupoPgModerador" icon="ui-icon-check"
 						action="#{criacaoGrupoBean.concluirCriacaoGrupo}" style="margin:0">
