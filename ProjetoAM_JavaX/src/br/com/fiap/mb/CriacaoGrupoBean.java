@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,7 +17,6 @@ import javax.persistence.EntityManager;
 
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.FlowEvent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
@@ -78,7 +76,7 @@ public class CriacaoGrupoBean implements Serializable {
 		pessoa = sessao.getPessoa();
 	}
 
-	public void informacaoBasicaGrupo(ActionEvent event) {  
+	public String passarParaAddPessoa(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
@@ -94,15 +92,13 @@ public class CriacaoGrupoBean implements Serializable {
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Informações grupo salvas, faça o próximo passo");
 			fc.addMessage("", fm);
+			return "adicionar_membro_grupo";  
 		}else{
 			FacesMessage fm = new FacesMessage("Campo obrigatório não preenchido. Favor preencher.");
 			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
 			fc.addMessage("messages", fm);
+			return "";
 		}
-	}
-
-	public String passarParaAddPessoa(){
-		return "adicionar_membro_grupo";  
 	}
 
 	public void relacionarMembros(ActionEvent event) {
