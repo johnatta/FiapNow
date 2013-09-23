@@ -3,6 +3,8 @@ package br.com.fiap.daoimpl;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,11 +15,9 @@ import javax.persistence.TypedQuery;
 import org.primefaces.model.DefaultStreamedContent;
 
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
-import br.com.fiap.rc.ComentarioEventoRC;
 import br.com.fiap.rc.ComentarioGrupoRC;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
@@ -40,6 +40,14 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 			grupo.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(grupo.getImgGrupo()), "image/jpg"));
 		}
+		
+		Collections.sort(grupos, new Comparator<Grupo>() {
+			public int compare(Grupo object1, Grupo object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
+		
 		return grupos;
 	}
 
@@ -113,6 +121,14 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
 		}
+		
+		Collections.sort(grupos, new Comparator<Grupo>() {
+			public int compare(Grupo object1, Grupo object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
+		
 		return grupos;
 	}
 
@@ -130,6 +146,14 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
 		}
+		
+		Collections.sort(grupos, new Comparator<Grupo>() {
+			public int compare(Grupo object1, Grupo object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
+		
 		return grupos;
 	}
 	@Override
@@ -153,6 +177,13 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
 		}
+		
+		Collections.sort(grupos, new Comparator<Grupo>() {
+			public int compare(Grupo object1, Grupo object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
 
 		return grupos;
 	}
