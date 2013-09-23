@@ -73,10 +73,7 @@
 			</div>
 			<div>
 				<p:dataGrid id="comentarios" var="posts"
-					value="#{grupoBean.listaComentarios}" columns="3" rows="6"
-					paginator="true"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="9,12,15">
+					value="#{grupoBean.listaComentarios}" columns="1" rows="10" >
 					<p:panel header="Posts">
 						<h:panelGrid columns="1">
 							<f:facet name="header">
@@ -84,7 +81,7 @@
 							</f:facet>
 							<h:outputText value="#{posts.comentario}" />
 							<f:facet name="footer">
-								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}" pattern="dd/MM/yyyy"> 
+								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}" pattern="dd/MM/yyyy" > 
 									<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 								</h:outputText>
 							</f:facet>
