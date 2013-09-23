@@ -4,12 +4,15 @@ import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -18,18 +21,21 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.rc.ComentarioGrupoRC;
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
@@ -42,24 +48,64 @@ public class GrupoBean implements Serializable {
 	private GrupoDAO gruDAO;
 	private PessoaDAO pDAO;
 	private ModeradorGrupoDAO modDAO ;
-	
+	private ComentarioGrupo comentarioGrupo;
+	private ComentarioGrupoDAO comentarioGrupoDAO;
+	private ComentarioGrupo comentarioPostado;
+	private Pessoa pessoa;
+	private boolean primeiraVez;
+	private List<ComentarioGrupoRC> listaComentarios;
+
 	public void buscaGrupo(){
-		if(codGrupo == 0 ){
-			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
-			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
-		}
+		if (primeiraVez){
+			primeiraVez = false;
 		
-		grupo = gruDAO.buscarInfoGrupo(codGrupo);
-		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-		moderadores = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-		membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
+			if(codGrupo == 0 ){
+				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
+				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
+			}
+			
+			
+			grupo = gruDAO.buscarInfoGrupo(codGrupo);
+			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+			moderadores = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
+			membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
+			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+		}
 	}
 	
 	@PostConstruct
 	public void onInit(){
+		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		modDAO = new ModeradorGrupoDAOImpl(em);
+		comentarioGrupo = new ComentarioGrupo();
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		pessoa = sessao.getPessoa();
+		primeiraVez = true;
+	}
+	
+	public String teste(){
+		return "index.xhtml"; 
+	}
+	
+	public void btnEnviarComentario(){
+		PessoaDAO pDAO = new PessoaDAOImpl(em);
+		comentarioPostado = new ComentarioGrupo();
+
+		comentarioGrupo.setCodGrupo(grupo);
+		comentarioGrupo.setCodPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+		comentarioGrupo.setDataHora(Calendar.getInstance());
+		comentarioPostado = comentarioGrupoDAO.insertEntity(comentarioGrupo);
+		
+		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		FacesMessage fm = new FacesMessage();
+		fm.setSummary("Comentario cadastrado");
+		fc.addMessage("", fm);
 	}
 	
 	public String visualizarTodosMembros(){
@@ -128,6 +174,37 @@ public class GrupoBean implements Serializable {
 	public void setModeradores(List<Pessoa> moderadores) {
 		this.moderadores = moderadores;
 	}
-	
 
+	public ComentarioGrupo getComentarioGrupo() {
+		return comentarioGrupo;
+	}
+
+	public void setComentarioGrupo(ComentarioGrupo comentarioGrupo) {
+		this.comentarioGrupo = comentarioGrupo;
+	}
+
+	public ComentarioGrupo getComentarioPostado() {
+		return comentarioPostado;
+	}
+
+	public void setComentarioPostado(ComentarioGrupo comentarioPostado) {
+		this.comentarioPostado = comentarioPostado;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<ComentarioGrupoRC> getListaComentarios() {
+		return listaComentarios;
+	}
+
+	public void setListaComentarios(List<ComentarioGrupoRC> listaComentarios) {
+		this.listaComentarios = listaComentarios;
+	}
+	
 }
