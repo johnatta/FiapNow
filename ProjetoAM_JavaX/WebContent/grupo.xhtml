@@ -46,6 +46,55 @@
 					</p:panelGrid>
 				</p:panel>
 			</div>
+			<br></br>
+			<div>
+				<p:panel header="Descrição">
+					<h:panelGrid columns="1">
+						<f:facet name="header">
+							<h:outputLabel value="Descricao: "></h:outputLabel>
+						</f:facet>
+						<h:outputText value="#{grupoBean.grupo.descricao}" />
+						<f:facet name="footer">
+							<p:commandButton type="button" value="Editar"
+								icon="ui-icon-check" style="margin:0" />
+						</f:facet>
+					</h:panelGrid>
+				</p:panel>
+			</div>
+			<br></br>
+			<div>
+				<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
+					var="membro" itemStyleClass="membroItem">
+					<f:facet name="header">  
+            	Membros  
+    			</f:facet>
+					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+						<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
+					</h:panelGrid>
+					<f:facet name="footer">
+						<h:commandLink action="#{grupoBean.visualizarTodosMembros}" >
+							<h:outputText value="Todos osIntegrantes (#{grupoBean.numMembros})"></h:outputText>
+						</h:commandLink>
+					</f:facet>
+				</p:carousel>
+			</div>
+			<br></br>
+			<div>
+				<p:carousel id="moderadoresCarousel"
+					value="#{grupoBean.moderadores}" var="moderador"
+					itemStyleClass="moderadorItem">
+					<f:facet name="header">  
+            		Moderadores  
+    			</f:facet>
+					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+						<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
+					</h:panelGrid>
+					<f:facet name="footer">
+						<h:outputText value="Moderadores"></h:outputText>
+					</f:facet>
+				</p:carousel>
+			</div>
+			<br></br>
 			<div>
 				<p:toolbar>
 					<p:toolbarGroup align="left">
@@ -71,6 +120,7 @@
 					<h:outputText id="counter" />
 				</p:panel>
 			</div>
+			<br></br>
 			<div>
 				<p:dataGrid id="comentarios" var="posts"
 					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
@@ -89,63 +139,7 @@
 						</h:panelGrid>
 					</p:panel>
 				</p:dataGrid>
-
 			</div>
-			<br></br>
-			<div>
-
-				<p:panel header="Descrição">
-					<h:panelGrid columns="1">
-						<f:facet name="header">
-							<h:outputLabel value="Descricao: "></h:outputLabel>
-						</f:facet>
-
-						<h:outputText value="#{grupoBean.grupo.descricao}" />
-
-						<f:facet name="footer">
-							<p:commandButton type="button" value="Editar"
-								icon="ui-icon-check" style="margin:0" />
-						</f:facet>
-					</h:panelGrid>
-				</p:panel>
-			</div>
-
-			<h:commandLink action="#{grupoBean.teste}">
-				<h:outputText value="teste"></h:outputText>
-			</h:commandLink>
-
-			<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="3"
-				rows="6" paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="9,12,15">
-				<p:panel>
-					<h:panelGrid columns="1" style="width:50%">
-						<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
-					</h:panelGrid>
-				</p:panel>
-			</p:dataGrid>
-			<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
-				var="membro" itemStyleClass="membroItem">
-				<f:facet name="header">  
-            Membros  
-    </f:facet>
-				<h:panelGrid columns="1" style="width:100%" cellpadding="5">
-					<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
-				</h:panelGrid>
-				<f:facet name="footer">  
-            Membros do grupo  
-    </f:facet>
-			</p:carousel>
-			<p:dataGrid var="moderador" value="#{grupoBean.moderadores}"
-				columns="3" rows="6" paginator="true"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="3,6,9">
-				<p:panel>
-					<h:panelGrid columns="1" style="width:50%">
-						<h:outputText value="#{moderador.nome} (#{moderador.apelido})"></h:outputText>
-					</h:panelGrid>
-				</p:panel>
-			</p:dataGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

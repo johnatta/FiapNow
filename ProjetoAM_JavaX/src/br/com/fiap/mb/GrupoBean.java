@@ -119,8 +119,7 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public String visualizarTodosMembros(){
-		String retorno = "todos_membros_grupo";
-		return retorno;
+		return "todos_membros_grupo.xhtml";
 	}
 	
 	public Grupo getGrupo() {
