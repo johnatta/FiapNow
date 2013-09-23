@@ -50,7 +50,8 @@
 				<p:toolbar>
 					<p:toolbarGroup align="left">
 						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
-							action="#{grupoBean.btnEnviarComentario}" update=":formGrupo:comentarios" />
+							action="#{grupoBean.btnEnviarComentario}"
+							update=":formGrupo:comentarios" />
 						<p:commandButton type="submit" title="Delete" icon="ui-icon-trash"
 							action="#{grupoBean.teste}" />
 						<p:commandButton type="button" value="Open"
@@ -71,21 +72,21 @@
 				</p:panel>
 			</div>
 			<div>
-				<p:dataGrid id="comentarios" var="mem" value="#{grupoBean.membrosGrp}" columns="3"
-					rows="6" paginator="true"
+				<p:dataGrid id="comentarios" var="posts"
+					value="#{grupoBean.listaComentarios}" columns="3" rows="6"
+					paginator="true"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 					rowsPerPageTemplate="9,12,15">
 					<p:panel header="Posts">
 						<h:panelGrid columns="1">
 							<f:facet name="header">
-								<h:outputLabel value="Comentários: "></h:outputLabel>
+								<h:outputLabel value="#{posts.apelido}"></h:outputLabel>
 							</f:facet>
-
-							<h:outputText value="#{grupoBean.comentarioGrupo.comentario}" />
-
+							<h:outputText value="#{posts.comentario}" />
 							<f:facet name="footer">
-								<p:commandButton type="button" value="Editar"
-									icon="ui-icon-check" style="margin:0" />
+								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}" pattern="dd/MM/yyyy"> 
+									<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+								</h:outputText>
 							</f:facet>
 						</h:panelGrid>
 					</p:panel>

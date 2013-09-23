@@ -1,26 +1,26 @@
 package br.com.fiap.teste;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
-import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
-import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
@@ -72,7 +72,36 @@ public class TesteGrazi {
 			System.err.println("APELIDO: " + comentarioGrupo.getApelido());
 			System.err.println("COMENTARIO: " + comentarioGrupo.getComentario());
 			System.err.println("HORA: " + comentarioGrupo.getDataHora());
+		
+			//Calendar dataC = comentarioGrupo.getDataHora().getInstance();
+			//Date data = dataC.getTime();
+			//Date data = comentarioGrupo.getDataHora().getInstance().getTime();
+			//System.out.println(data.getTime());
+			
+			Date data = comentarioGrupo.getDataHora().getTime();
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
+			System.out.println(sdf.format(data));
+			//String dataFormatada = sdf.format(data);
+			//System.out.println(dataFormatada);
+			/*
+			 * Calendar c = Calendar.getInstance(); Date data = c.getTime(); DateFormat f = DateFormat.getDateInstance(); Date data2 = f.parse("12/01/1995"); System.out.println(data2); SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); System.out.println("Data formatada: "+sdf.format(data)); //Converte Objetos System.out.println(“Data convertida: ”+sdf.parse("02/08/1970")); }
+
+Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Java http://www.devmedia.com.br/trabalhando-com-as-classes-date-calendar-e-simpledateformat-em-java/27401#ixzz2fgvoEtov
+			 * 
+			 * 
+			 * 
+		Calendar c = Calendar.getInstance();
+		Date data = c.getTime(); 
+		DateFormat f = DateFormat.getDateInstance(); 
+		Date data2 = f.parse("12/01/1995"); 
+		System.out.println(data2); 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		System.out.println("Data formatada: "+sdf.format(data));
+		//Converte Objetos System.out.println(“Data convertida: ”+sdf.parse("02/08/1970")); }
+*/
 		}
+		
+		
 		
 		/*
 		g = gDAO.buscaInfoBasicas(2);
@@ -120,6 +149,8 @@ public class TesteGrazi {
 		//System.out.println(numMembros);
 		//e = espDAO.buscarPorNome("corrida");
 		//System.out.println(e.getNome());
+		
+		
 	}
 
 }

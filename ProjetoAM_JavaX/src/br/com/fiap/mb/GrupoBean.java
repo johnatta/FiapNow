@@ -3,8 +3,10 @@ package br.com.fiap.mb;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +56,8 @@ public class GrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private boolean primeiraVez;
 	private List<ComentarioGrupoRC> listaComentarios;
+	private Date cal;
+
 
 	public void buscaGrupo(){
 		if (primeiraVez){
@@ -63,7 +67,6 @@ public class GrupoBean implements Serializable {
 				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 			}
-			
 			
 			grupo = gruDAO.buscarInfoGrupo(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
@@ -87,8 +90,15 @@ public class GrupoBean implements Serializable {
 		primeiraVez = true;
 	}
 	
-	public String teste(){
-		return "index.xhtml"; 
+	public String dataFormatada(Calendar dataComentario){
+		//Calendar dataC = comentarioGrupo.getDataHora().getInstance();
+		//Date data = dataC.getTime();
+		//Date data = dataComentario.getInstance().getTime();
+		//System.out.println(data.getTime());
+		Date data = dataComentario.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
+		String dataFormatada = sdf.format(data);
+		return dataFormatada; 
 	}
 	
 	public void btnEnviarComentario(){
