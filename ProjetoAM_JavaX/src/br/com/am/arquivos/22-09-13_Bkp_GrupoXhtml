@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}" />
+		</f:metadata>
+		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
+		<h:form id="formGrupo">
+			<p:growl id="messages" showDetail="true" />
+			<div>
+				<p:panel>
+					<p:panelGrid columns="2">
+						<f:facet name="header">
+							<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
+						</f:facet>
+						<p:outputLabel value="Membro: "></p:outputLabel>
+						<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
+
+						<p:outputLabel value="Categoria: "></p:outputLabel>
+
+						<h:outputText value="#{grupoBean.grupo.esportes[0].nome}"
+							rendered="#{!empty grupoBean.grupo.esportes[0].nome}" />
+						<h:outputText value="#{grupoBean.grupo.esportes[1].nome}"
+							rendered="#{!empty grupoBean.grupo.esportes[1].nome}" />
+						<h:outputText value="#{grupoBean.grupo.esportes[2].nome}"
+							rendered="#{!empty grupoBean.grupo.esportes[2].nome}" />
+
+						<p:outputLabel value="Número de Membros: "></p:outputLabel>
+						<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
+
+						<p:outputLabel value="Privacidade:"></p:outputLabel>
+						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
+
+						<f:facet name="footer">
+							<p:commandButton type="button" value="Editar"
+								icon="ui-icon-check" style="margin:0" />
+						</f:facet>
+					</p:panelGrid>
+				</p:panel>
+			</div>
+			<div>
+				<p:toolbar>
+					<p:toolbarGroup align="left">
+						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
+							action="#{grupoBean.btnEnviarComentario}"
+							update=":formGrupo:comentarios" />
+						<p:commandButton type="submit" title="Delete" icon="ui-icon-trash"
+							action="#{grupoBean.teste}" />
+						<p:commandButton type="button" value="Open"
+							icon="ui-icon-folder-open" />
+						<p:separator />
+						<p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+						<p:commandButton type="button" title="Print" icon="ui-icon-print" />
+					</p:toolbarGroup>
+				</p:toolbar>
+
+				<p:panel id="coment" header="Comentario">
+					<p:inputTextarea value="#{grupoBean.comentarioGrupo.comentario}"
+						required="true" rows="5" cols="48" counter="counter"
+						maxlength="300" counterTemplate="Máximo de 300 caracteres.">
+					</p:inputTextarea>
+					<br></br>
+					<h:outputText id="counter" />
+				</p:panel>
+			</div>
+			<div>
+				<p:dataGrid id="comentarios" var="posts"
+					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
+					<p:panel header="Posts">
+						<h:panelGrid columns="1">
+							<f:facet name="header">
+								<h:outputLabel value="#{posts.apelido}"></h:outputLabel>
+							</f:facet>
+							<h:outputText value="#{posts.comentario}" />
+							<f:facet name="footer">
+								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}"
+									pattern="dd/MM/yyyy">
+									<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+								</h:outputText>
+							</f:facet>
+						</h:panelGrid>
+					</p:panel>
+				</p:dataGrid>
+
+			</div>
+			<br></br>
+			<div>
+
+				<p:panel header="Descrição">
+					<h:panelGrid columns="1">
+						<f:facet name="header">
+							<h:outputLabel value="Descricao: "></h:outputLabel>
+						</f:facet>
+
+						<h:outputText value="#{grupoBean.grupo.descricao}" />
+
+						<f:facet name="footer">
+							<p:commandButton type="button" value="Editar"
+								icon="ui-icon-check" style="margin:0" />
+						</f:facet>
+					</h:panelGrid>
+				</p:panel>
+			</div>
+
+			<h:commandLink action="#{grupoBean.teste}">
+				<h:outputText value="teste"></h:outputText>
+			</h:commandLink>
+
+			<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="3"
+				rows="6" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="9,12,15">
+				<p:panel>
+					<h:panelGrid columns="1" style="width:50%">
+						<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+			<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
+				var="membro" itemStyleClass="membroItem">
+				<f:facet name="header">  
+            	Membros  
+    			</f:facet>
+				<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+					<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
+				</h:panelGrid>
+				<f:facet name="footer">  
+						<h:outputText value="Integrantes (#{grupoBean.numMembros})"></h:outputText>
+   				 </f:facet>
+			</p:carousel>
+			<p:carousel id="moderadoresCarousel" value="#{grupoBean.moderadores}"
+				var="moderador" itemStyleClass="moderadorItem">
+				<f:facet name="header">  
+            		Membros  
+    			</f:facet>
+				<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+					<h:outputText value="#{moderador.nome} (#{moderador.apelido})"/>
+				</h:panelGrid>
+				<f:facet name="footer">  
+						<h:outputText value="Moderadores"></h:outputText>
+   				 </f:facet>
+			</p:carousel>
+			
+			<p:dataGrid var="moderador" value="#{grupoBean.moderadores}"
+				columns="3" rows="6" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="3,6,9">
+				<p:panel>
+					<h:panelGrid columns="1" style="width:50%">
+						<h:outputText value="#{moderador.nome} (#{moderador.apelido})"></h:outputText>
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+
+</html>
