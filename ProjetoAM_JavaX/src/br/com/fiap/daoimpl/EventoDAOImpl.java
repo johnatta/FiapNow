@@ -2,6 +2,8 @@ package br.com.fiap.daoimpl;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.component.UIViewRoot;
@@ -130,6 +132,13 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 			eve.setQuantidade(qtd);
 		}
 		
+		Collections.sort(eventos, new Comparator<Evento>() {
+			public int compare(Evento object1, Evento object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
+		
 		return eventos;
 	}
 
@@ -147,6 +156,13 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			eve.setQuantidade(qtd);
 		}
+		
+		Collections.sort(eventos, new Comparator<Evento>() {
+			public int compare(Evento object1, Evento object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
 		
 		return eventos;
 	}
@@ -168,6 +184,13 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 			eve.setQuantidade(qtd);
 		}
 		
+		Collections.sort(eventos, new Comparator<Evento>() {
+			public int compare(Evento object1, Evento object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
+		
 		return eventos;
 	}
 
@@ -184,6 +207,13 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			eve.setQuantidade(qtd);
 		}
+		
+		Collections.sort(eventos, new Comparator<Evento>() {
+			public int compare(Evento object1, Evento object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
 		
 		return eventos;
 	}
