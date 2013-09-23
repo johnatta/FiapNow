@@ -15,7 +15,11 @@
 			<h:outputText value="#{msgs.type_filter}" />
 			<p:inputText value="#{gruposBean.filtro}" />
 			<p:commandButton value="#{msgs.filter}" actionListener="#{gruposBean.filtrar}" icon="ui-icon-search" update=":tabMain" />
+			
+			<p:commandButton value="#{msgs.create_group}" action="criacao_grupo.xhtml?faces-redirect=true" icon="ui-icon-check" style="float:right;"/>
 		</h:form>
+		
+		<br/>
 	
 		<p:tabView id="tabMain">
 			<p:tab id="tabGroups" title="#{msgs.groups}">

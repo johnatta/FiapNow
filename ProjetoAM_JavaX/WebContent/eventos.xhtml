@@ -15,7 +15,11 @@
 			<h:outputText value="#{msgs.type_filter}" />
 			<p:inputText value="#{eventosBean.filtro}" />
 			<p:commandButton value="#{msgs.filter}" actionListener="#{eventosBean.filtrar}" icon="ui-icon-search" update=":tabMain" />
+			
+			<p:commandButton value="#{msgs.create_event}" action="criacao_evento.xhtml?faces-redirect=true" icon="ui-icon-check" style="float:right;"/>
 		</h:form>
+		
+		<br />
 	
 		<p:tabView id="tabMain">
 			<p:tab id="tabEvents" title="#{msgs.events}">
