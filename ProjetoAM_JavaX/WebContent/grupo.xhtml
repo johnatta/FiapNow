@@ -73,7 +73,7 @@
 			</div>
 			<div>
 				<p:dataGrid id="comentarios" var="posts"
-					value="#{grupoBean.listaComentarios}" columns="1" rows="10" >
+					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
 					<p:panel header="Posts">
 						<h:panelGrid columns="1">
 							<f:facet name="header">
@@ -81,7 +81,8 @@
 							</f:facet>
 							<h:outputText value="#{posts.comentario}" />
 							<f:facet name="footer">
-								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}" pattern="dd/MM/yyyy" > 
+								<h:outputText value="#{grupoBean.dataFormatada(posts.dataHora)}"
+									pattern="dd/MM/yyyy">
 									<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
 								</h:outputText>
 							</f:facet>
@@ -123,7 +124,18 @@
 					</h:panelGrid>
 				</p:panel>
 			</p:dataGrid>
-
+			<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
+				var="membro" itemStyleClass="membroItem">
+				<f:facet name="header">  
+            Membros  
+    </f:facet>
+				<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+					<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
+				</h:panelGrid>
+				<f:facet name="footer">  
+            Membros do grupo  
+    </f:facet>
+			</p:carousel>
 			<p:dataGrid var="moderador" value="#{grupoBean.moderadores}"
 				columns="3" rows="6" paginator="true"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
