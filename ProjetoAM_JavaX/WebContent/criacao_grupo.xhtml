@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<h2>Cadastro Grupo</h2>
+		<h1>#{msgs.create_group}</h1>
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
 			<p:panel header="#{msgs.group_information}">
@@ -42,7 +42,7 @@
 						<f:selectItems value="#{criacaoGrupoBean.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
-
+					<br></br>
 					<p:dataTable id="multiCars" var="e" value="#{criacaoGrupoBean.edm}"
 						selection="#{criacaoGrupoBean.espSelecionados}">
 						<f:facet name="header">#{msgs.select_sports}</f:facet>
