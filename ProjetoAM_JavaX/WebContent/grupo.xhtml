@@ -21,10 +21,10 @@
 						<f:facet name="header">
 							<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
 						</f:facet>
-						<p:outputLabel value="Membro: "></p:outputLabel>
+						<p:outputLabel value="#{msgs.member}"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 
-						<p:outputLabel value="Categoria: "></p:outputLabel>
+						<p:outputLabel value="#{msgs.category}"></p:outputLabel>
 
 						<h:outputText value="#{grupoBean.grupo.esportes[0].nome}"
 							rendered="#{!empty grupoBean.grupo.esportes[0].nome}" />
@@ -33,14 +33,14 @@
 						<h:outputText value="#{grupoBean.grupo.esportes[2].nome}"
 							rendered="#{!empty grupoBean.grupo.esportes[2].nome}" />
 
-						<p:outputLabel value="Número de Membros: "></p:outputLabel>
+						<p:outputLabel value="#{msgs.number_of_members}"></p:outputLabel>
 						<h:outputText value="#{grupoBean.numMembros}"></h:outputText>
 
-						<p:outputLabel value="Privacidade:"></p:outputLabel>
+						<p:outputLabel value="#{msgs.privacy}"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
 						<f:facet name="footer">
-							<p:commandButton type="button" value="Editar"
+							<p:commandButton type="button" value="#{msgs.edit}"
 								icon="ui-icon-check" style="margin:0" />
 						</f:facet>
 					</p:panelGrid>
@@ -48,14 +48,14 @@
 			</div>
 			<br></br>
 			<div>
-				<p:panel header="Descrição">
+				<p:panel header="#{msgs.description}">
 					<h:panelGrid columns="1">
 						<f:facet name="header">
-							<h:outputLabel value="Descricao: "></h:outputLabel>
+							<h:outputLabel value="#{msgs.description}"></h:outputLabel>
 						</f:facet>
 						<h:outputText value="#{grupoBean.grupo.descricao}" />
 						<f:facet name="footer">
-							<p:commandButton type="button" value="Editar"
+							<p:commandButton type="button" value="#{msgs.edit}"
 								icon="ui-icon-check" style="margin:0" />
 						</f:facet>
 					</h:panelGrid>
@@ -65,32 +65,27 @@
 			<div>
 				<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
 					var="membro" itemStyleClass="membroItem">
-					<f:facet name="header">  
-            	Membros  
-    			</f:facet>
+					<f:facet name="header">#{msgs.members}</f:facet>
 					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 						<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
 					</h:panelGrid>
 					<f:facet name="footer">
 						<h:commandLink action="#{grupoBean.visualizarTodosMembros}" >
-							<h:outputText value="Todos osIntegrantes (#{grupoBean.numMembros})"></h:outputText>
+							<h:outputText value="#{msgs.all_members} (#{grupoBean.numMembros})"></h:outputText>
 						</h:commandLink>
 					</f:facet>
 				</p:carousel>
 			</div>
 			<br></br>
 			<div>
-				<p:carousel id="moderadoresCarousel"
-					value="#{grupoBean.moderadores}" var="moderador"
-					itemStyleClass="moderadorItem">
-					<f:facet name="header">  
-            		Moderadores  
-    			</f:facet>
+				<p:carousel id="moderadoresCarousel" value="#{grupoBean.moderadores}" var="moderador"
+					itemStyleClass="moderadorItem" >
+					<f:facet name="header">#{msgs.moderator}</f:facet>
 					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 						<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
 					</h:panelGrid>
 					<f:facet name="footer">
-						<h:outputText value="Moderadores"></h:outputText>
+						<h:outputText value="#{msgs.moderators}"></h:outputText>
 					</f:facet>
 				</p:carousel>
 			</div>
@@ -101,7 +96,7 @@
 						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
 							action="#{grupoBean.btnEnviarComentario}"
 							update=":formGrupo:comentarios" />
-						<p:commandButton type="submit" title="Delete" icon="ui-icon-trash"
+						<p:commandButton type="submit" title="#{msgs.delete}" icon="ui-icon-trash"
 							action="#{grupoBean.teste}" />
 						<p:commandButton type="button" value="Open"
 							icon="ui-icon-folder-open" />
@@ -111,10 +106,10 @@
 					</p:toolbarGroup>
 				</p:toolbar>
 
-				<p:panel id="coment" header="Comentario">
+				<p:panel id="comment" header="#{msgs.comment}">
 					<p:inputTextarea value="#{grupoBean.comentarioGrupo.comentario}"
 						required="true" rows="5" cols="48" counter="counter"
-						maxlength="300" counterTemplate="Máximo de 300 caracteres.">
+						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
 					<br></br>
 					<h:outputText id="counter" />
@@ -124,7 +119,7 @@
 			<div>
 				<p:dataGrid id="comentarios" var="posts"
 					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
-					<p:panel header="Posts">
+					<p:panel header="#{msgs.comment}">
 						<h:panelGrid columns="1">
 							<f:facet name="header">
 								<h:outputLabel value="#{posts.apelido}"></h:outputLabel>

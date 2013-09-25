@@ -11,53 +11,53 @@
 		<h2>Cadastro Grupo</h2>
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
-			<p:panel header="InformaçãoGrupo">
+			<p:panel header="#{msgs.group_information}">
 				<h:messages ></h:messages>
 				<h:panelGrid columns="2" columnClasses="label, value"
 					styleClass="grid">
-					<h:outputText value="#{criacaoGrupoBean.grupo.foto}" />
+					<h:outputText value="#{msgs.image}" />
 					<p:fileUpload
 						fileUploadListener="#{criacaoGrupoBean.realizarUpload}"
 						required="true" mode="advanced" update="messages"
 						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 						auto="false" dragDropSupport="false" label="Select" />
 
-					<h:outputText value="Nome:"></h:outputText>
+					<h:outputText value="#{msgs.name}"></h:outputText>
 					<p:inputText value="#{criacaoGrupoBean.grupo.nomeGrupo}"
 						required="true" maxlength="50" size="48" />
 
-					<h:outputText value="Descrição:"></h:outputText>
+					<h:outputText value="#{msgs.description}"></h:outputText>
 					<p:inputTextarea value="#{criacaoGrupoBean.grupo.descricao}"
 						required="true" rows="5" cols="48" counter="counter"
-						maxlength="300" counterTemplate="Máximo de 300 caracteres.">
+						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
 					<br></br>
 					<h:outputText id="counter" />
 
-					<h:outputText value="Privacidade:"></h:outputText>
+					<h:outputText value="#{msgs.privacy}"></h:outputText>
 					<p:selectOneMenu effect="fade"
 						value="#{criacaoGrupoBean.grupo.privacidade}" required="true">
-						<f:selectItem itemLabel="Selecione" itemValue=""
+						<f:selectItem itemLabel="#{msgs.select}" itemValue=""
 							noSelectionOption="true"></f:selectItem>
 						<f:selectItems value="#{criacaoGrupoBean.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
 
-					<h:outputText value="Esporte: " />
+					<h:outputText value="#{msgs.sports} " />
 					<p:dataTable id="multiCars" var="e" value="#{criacaoGrupoBean.edm}"
 						selection="#{criacaoGrupoBean.espSelecionados}">
-						<f:facet name="header"> Selecione os esportes</f:facet>
+						<f:facet name="header">#{msgs.select_sports}</f:facet>
 						<p:column selectionMode="multiple" style="width:1%" />
 						<p:column headerText="Nome" style="width:25%">  #{e.nome} </p:column>
 					</p:dataTable>
 				</h:panelGrid>
 
-				<p:commandButton ajax="false" type="submit" value="Próximo passo"
+				<p:commandButton ajax="false" type="submit" value="#{msgs.next_step}"
 					id="proximoPassoParaAddPessoa" icon="ui-icon-check"
 					action="#{criacaoGrupoBean.passarParaAddPessoa}" style="margin:0">
 				</p:commandButton>
 
-				<p:commandButton ajax="false" type="submit" value="Concluir"
+				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
 					id="criarGrupoPgInfoGrupo" icon="ui-icon-check"
 					action="#{criacaoGrupoBean.concluirCriacaoGrupo}" style="margin:0">
 				</p:commandButton>
