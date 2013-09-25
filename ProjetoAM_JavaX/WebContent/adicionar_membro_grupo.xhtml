@@ -20,10 +20,12 @@
 						selection="#{criacaoGrupoBean.membrosSelecionados}">
 
 						<f:facet name="header">#{msgs.select_members}</f:facet>
+						
 						<p:column selectionMode="multiple" style="width:2%" />
-
-						<p:column headerText="#{msgs.photo}" style="width:33%" >
-							<h:graphicImage url="#{p.imgPerfil}" width="80" height="110" style="margin-left:15px;" />
+						
+						<p:column headerText="#{msgs.photo}" style="width:33%">
+							<h:graphicImage url="#{p.imgPerfil}" width="80" height="110"
+								style="margin-left:15px;" />
 						</p:column>
 
 						<p:column headerText="#{msgs.nickname}" style="width:32%">  #{p.apelido} </p:column>
