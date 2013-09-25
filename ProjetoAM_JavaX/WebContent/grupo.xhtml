@@ -63,31 +63,32 @@
 			</div>
 			<br></br>
 			<div>
-				<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
-					var="membro" itemStyleClass="membroItem">
-					<f:facet name="header">#{msgs.members}</f:facet>
-					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
-						<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
-					</h:panelGrid>
-					<f:facet name="footer">
-						<h:commandLink action="#{grupoBean.visualizarTodosMembros}" >
-							<h:outputText value="#{msgs.all_members} (#{grupoBean.numMembros})"></h:outputText>
-						</h:commandLink>
-					</f:facet>
-				</p:carousel>
-			</div>
-			<br></br>
-			<div>
-				<p:carousel id="moderadoresCarousel" value="#{grupoBean.moderadores}" var="moderador"
-					itemStyleClass="moderadorItem" >
-					<f:facet name="header">#{msgs.moderator}</f:facet>
-					<h:panelGrid columns="1" style="width:100%" cellpadding="5">
-						<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
-					</h:panelGrid>
-					<f:facet name="footer">
-						<h:outputText value="#{msgs.moderators}"></h:outputText>
-					</f:facet>
-				</p:carousel>
+				<p:panelGrid columns="1">
+					<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
+						var="membro" itemStyleClass="membroItem" >
+						<f:facet name="header">#{msgs.members}</f:facet>
+						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+							<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
+						</h:panelGrid>
+						<f:facet name="footer">
+							<h:commandLink action="#{grupoBean.visualizarTodosMembros}">
+								<h:outputText
+									value="#{msgs.all_members} (#{grupoBean.numMembros})"></h:outputText>
+							</h:commandLink>
+						</f:facet>
+					</p:carousel>
+					<p:carousel id="moderadoresCarousel" 
+						value="#{grupoBean.moderadores}" var="moderador"
+						itemStyleClass="moderadorItem">
+						<f:facet name="header">#{msgs.moderator}</f:facet>
+						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+							<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
+						</h:panelGrid>
+						<f:facet name="footer">
+							<h:outputText value="#{msgs.moderators}"></h:outputText>
+						</f:facet>
+					</p:carousel>
+				</p:panelGrid>
 			</div>
 			<br></br>
 			<div>
@@ -96,8 +97,8 @@
 						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
 							action="#{grupoBean.btnEnviarComentario}"
 							update=":formGrupo:comentarios" />
-						<p:commandButton type="submit" title="#{msgs.delete}" icon="ui-icon-trash"
-							action="#{grupoBean.teste}" />
+						<p:commandButton type="submit" title="#{msgs.delete}"
+							icon="ui-icon-trash" action="#{grupoBean.teste}" />
 						<p:commandButton type="button" value="Open"
 							icon="ui-icon-folder-open" />
 						<p:separator />
@@ -109,7 +110,8 @@
 				<p:panel id="comment" header="#{msgs.comment}">
 					<p:inputTextarea value="#{grupoBean.comentarioGrupo.comentario}"
 						required="true" rows="5" cols="48" counter="counter"
-						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
+						maxlength="300"
+						counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
 					<br></br>
 					<h:outputText id="counter" />
