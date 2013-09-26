@@ -11,7 +11,7 @@
 	<f:loadBundle var="msgs" basename="nls.mensagem" />
 
 	<h:head>
-		<title>Encontros Esportivos</title>
+		<title>Encontro Esportivo</title>
 		<h:outputStylesheet name="main.css" library="css"/>
 		<h:outputScript library="js" name="main.js" />
 		<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8" />
@@ -125,6 +125,12 @@
 			<div id="footer">
 				<ui:insert name="footer">
 					<div id="footer_content">
+						<a href="aboutUs.xhtml">
+							<div id="footer_link" style="float:left;">
+								#{msgs.aboutUs}
+							</div>
+						</a>
+					
 						<div id="footer_javax">
 							 | Javax Solutions
 						</div>

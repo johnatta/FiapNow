@@ -74,7 +74,7 @@ a:hover #header_itemMenu {
 	width:870px;
 	margin-right:auto;
 	margin-left:auto;
-	margin-bottom:10px;
+	margin-bottom:30px;
 	margin-top:10px;
 	padding: 5px 15px 5px 15px;
 }
@@ -95,6 +95,21 @@ a:hover #header_itemMenu {
 #footer_content a{
 	color: #1f373b;
     text-decoration:none;
+}
+#footer_javax{
+	float:right;
+	padding:2px;
+}
+
+#footer_link{
+	float:right;
+	color: #FFF;
+	margin-right:5px;
+	padding:2px;
+}
+
+a:hover #footer_link {
+	background:#feb342;
 }
 h1{
 	margin-left:30px;
@@ -124,21 +139,6 @@ h3{
 	font-weight:bold;
 	color: #656565;
 	text-align:center;
-}
-
-#footer_javax{
-	float:right;
-}
-
-#footer_link{
-	float:right;
-	color: #FFF;
-	margin-right:5px;
-	padding-left:3px;
-}
-
-a:hover #footer_link {
-	background:#feb342;	
 }
 
 /* ----------- Fim da Estilização do TemplateEE ----------- */
@@ -187,16 +187,11 @@ a:hover #footer_link {
 }
 .medium {
 	width:360px;
-	position:;
-	float:;
-	display:;
-	overflow:;	
 }
 .fat {
 	width: 820px;
 }
 #mainFeeder_content{
-	margin-bottom:30px;
 	border: 0px hidden;
 }
 .painelNoticias {

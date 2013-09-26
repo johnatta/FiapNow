@@ -102,5 +102,14 @@ public class FeedBean implements Serializable {
 		
 		return estilo;
 	}
+	
+	public String removeImagens(String conteudo){
+		if (conteudo.contains("<img")){
+			int beginImg = conteudo.indexOf("<img");
+			int endImg = conteudo.indexOf("/>") + 2;
+			conteudo = conteudo.substring(0, beginImg) + conteudo.substring(endImg, conteudo.length());
+		}
+		return conteudo;
+	}
 
 }

@@ -21,7 +21,7 @@
 						<h:outputText value="#{feed.title}"
 							style="font-weight: bold; font-size:14px;" escape="false" />
 						<br />
-						<h:outputText value="#{feed.description.value}" escape="false" />
+						<h:outputText value="#{feedBean.removeImagens(feed.description.value)}" escape="false" />
 						<p:separator />
 					</p:feedReader>
 				</div>

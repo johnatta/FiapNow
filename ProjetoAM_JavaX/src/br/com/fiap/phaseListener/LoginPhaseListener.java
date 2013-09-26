@@ -38,11 +38,14 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 		//Caso tente entrar em outra página e não exista sessão, vai pra index
 		if( !paginaOrigem.equals("/index.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
 			handler.handleNavigation(context, null, "index");
-		//Caso tente ir pra index e a sessão esteja ativa
-		} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null) ){
+		//Caso esteja na index e selecionar a internacionalização
+		} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() == null) ) {
+			handler.handleNavigation(context, null, "index");
+		//Caso tente ir pra index e a pessoa da sessão esteja ativa
+		} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() != null) ){
 			handler.handleNavigation(context, null, "home");
 		//Caso esteja criando um perfil e esteja em sessão
-		} else if(paginaOrigem.equals("/criacao_perfil.xhtml") && (sessao != null)){
+		} else if(paginaOrigem.equals("/criacao_perfil.xhtml") && (sessao != null && sessao.getPessoa() != null)){
 			handler.handleNavigation(context, null, "home");
 		} else {
 			handler.handleNavigation(context, null, paginaOrigem);
