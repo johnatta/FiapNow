@@ -199,8 +199,9 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 
 	@Override
-	@OrderBy("c.dataHora desc")
+	@OrderBy("dataHora desc")
 	public List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo) {
+		List<ComentarioGrupoRC> commentsGrupos = new ArrayList<ComentarioGrupoRC>();
 		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
 			      "FROM ComentarioGrupo c JOIN c.codPessoa p " +
 			      "WHERE c.codGrupo.codGrupo = :cod and rownum <= 10";
@@ -208,7 +209,16 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		TypedQuery<ComentarioGrupoRC> query = em.createQuery(queryStr, ComentarioGrupoRC.class);
 		query.setParameter("cod", codGrupo);
 		
-		return query.getResultList();
+		commentsGrupos = query.getResultList();
+		
+//		Collections.sort(commentsGrupos, new Comparator<Grupo>() {
+//			public int compare(Grupo object1, Grupo object2) {
+//				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+//			}
+//		}
+//				);
+		
+		return commentsGrupos;
 	}
 
 }
