@@ -4,6 +4,12 @@ body {
     background: url("images/bike.png");
     font: 14px  verdana, arial, helvetica;
     color:#233e42;
+     
+  	background: url(images/bike.png) no-repeat center center fixed; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 #main_container{
 	
