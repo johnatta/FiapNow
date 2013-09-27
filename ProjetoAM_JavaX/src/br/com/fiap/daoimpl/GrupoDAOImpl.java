@@ -3,6 +3,7 @@ package br.com.fiap.daoimpl;
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -211,12 +212,12 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		
 		commentsGrupos = query.getResultList();
 		
-//		Collections.sort(commentsGrupos, new Comparator<Grupo>() {
-//			public int compare(Grupo object1, Grupo object2) {
-//				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
-//			}
-//		}
-//				);
+		Collections.sort(commentsGrupos, new Comparator<ComentarioGrupoRC>() {
+			public int compare(ComentarioGrupoRC object1, ComentarioGrupoRC object2) {
+				return object2.getDataHora().compareTo(object1.getDataHora());
+			}
+		}
+				);
 		
 		return commentsGrupos;
 	}
