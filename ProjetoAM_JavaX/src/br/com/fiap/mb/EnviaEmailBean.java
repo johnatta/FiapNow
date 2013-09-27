@@ -79,7 +79,8 @@ public class EnviaEmailBean implements Serializable {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+		
 	}
 	
 }

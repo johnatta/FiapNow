@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+	    
+	    <h1>#{msgs.send_mail}</h1>
+	    
+		<h:form id="mensagem">
+	    	<h:panelGrid columns="2" style="margin-left:auto; margin-right:auto;">
+		    	<p:outputLabel value="#{msgs.title}: " />
+		    	<p:inputText value="#{envioMensagemBean.titulo}" size="30" />
+			   	<p:outputLabel value="#{msgs.description}: " />
+		    	<p:inputTextarea label="#{msgs.messages}" value="#{envioMensagemBean.descricao}" rows="17" cols="80" />
+	    	<p:commandButton action="#{envioMensagemBean.enviaMsg}" value="#{msgs.send}" style="float:right; margin:10px 50px 30px 0px ;" /> 
+	    	</h:panelGrid>
+	    </h:form>
+	    
+	</ui:define>
+</ui:composition>
+
+</html>
