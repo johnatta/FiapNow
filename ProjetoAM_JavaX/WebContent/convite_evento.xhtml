@@ -4,11 +4,46 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	   Convida as Pessoas ae!
+		<p:panel header="#{msgs.add_members}">
+	   		<h:panelGrid columns="2">
+	   		
+	   			<p:dataTable value="#{criarEventoBean.pdm}" var="p" paginator="true" rows="10" 
+	   			selection="#{criarEventoBean.membrosSelecionados}">
+	   			
+	   				<f:facet name="header">#{msgs.slect_members}</f:facet>
+	   				
+	   				<p:column selectionMode="multiple" style="width:2%" />
+	   				
+	   				<p:column headerText="#{msgs.photo}" style="width:32%" >
+	   					<h:graphicImage url="#{p.imgPerfil}" width="80" height="110"
+	   					style="margin-left:15px;" />
+	   				</p:column>
+	   				
+	   				<p:column headerText="#{msgs.nickname}" style="width:32%">  #{p.apelido} </p:column>
+
+					<p:column headerText="#{msgs.name}" style="width:33%">  #{p.nome} </p:column>
+	   				
+	   				<f:facet name="footer">
+	   					<p:commandButton ajax="false" type="submit"
+	   					value="#{msgs.add_members}" id="addMembros" icon="ui-icon-check"
+	   					action="" style="margin:0" >
+	   					</p:commandButton>
+	   				</f:facet>
+	   				
+	   			</p:dataTable>
+	   			<br />
+	   			<p:commandButton ajax="false" type="submit" value="#{msgs.next_step}"
+	   				id="proxPassoAddModerador" icon="ui-icon-check"
+	   				action="" style="margin:0" >
+	   			</p:commandButton>
+	   		
+	   		</h:panelGrid>
+	   	</p:panel>
 	</ui:define>
 </ui:composition>
 

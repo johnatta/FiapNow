@@ -17,7 +17,7 @@
 				<h:outputText value="Data do Evento"></h:outputText>
 				<p:calendar value="#{criarEventoBean.cal}" pattern="dd/MM/yyyy" />
 				<h:outputText value="Categoria:"></h:outputText>
-				<p:dataTable id="oneEsporte" var="e"	value="#{criarEventoBean.edm}" selection="#{criacaoGrupoBean.espSelecionados}">
+				<p:dataTable id="oneEsporte" var="e"	value="#{criarEventoBean.edm}" selection="#{criarEventoBean.esporteSelecionado}">
   				 	
 					<f:facet name="header"> Selecione os esportes</f:facet>
 					<p:column selectionMode="single" style="width:2%" />
@@ -25,14 +25,20 @@
 				</p:dataTable>
 				<h:outputText value="Telefone"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.telContato}" ></p:inputText>
-				<h:outputText value="Local"></h:outputText>
-				<p:inputText value="" required="true" ></p:inputText>
+				<h:outputText value="Pais:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.endereco.pais}" required="true" ></p:inputText>
+				<h:outputText value="Estado:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.endereco.estado}" required="true" ></p:inputText>
+				<h:outputText value="Cidade:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.endereco.cidade}" required="true" ></p:inputText>
+				<h:outputText value="Bairro:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.endereco.bairro}" required="true" ></p:inputText>
 				<h:outputText value="Custo por Pessoa"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.custo}" ></p:inputText>
 				<h:outputText value="Descrição"></h:outputText>
 				<p:inputTextarea value="#{criarEventoBean.evento.descricao}" ></p:inputTextarea>
 			</h:panelGrid>
-			<p:commandButton ajax="false" value="Convidar Pessoas" actionListener="#{criarEventoBean.btnConvidar}" ></p:commandButton>
+			<p:commandButton ajax="false" value="Convidar Pessoas" action="#{criarEventoBean.btnConvidar}" ></p:commandButton>
 		</h:form>
 	</ui:define>
 </ui:composition>
