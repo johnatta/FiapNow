@@ -200,7 +200,6 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 
 	@Override
-	@OrderBy("dataHora desc")
 	public List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo) {
 		List<ComentarioGrupoRC> commentsGrupos = new ArrayList<ComentarioGrupoRC>();
 		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
