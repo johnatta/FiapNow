@@ -7,19 +7,32 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	    
-	    <h1>#{msgs.send_mail}</h1>
+
+		<p:growl id="messages" />
+	
+	    <h1>#{msgs.send} #{msgs.invite}</h1>
 	    
 		<h:form id="mensagem">
+		
 	    	<h:panelGrid columns="2" style="margin-left:auto; margin-right:auto;">
+	    		<p:outputLabel value="#{msgs.to}: " />
+		    	<p:inputText value="#{enviaEmailBean.para}" size="50" validator="#{enviaEmailBean.validaEmail}" />
+		    	
+		    	<div /><p:outputLabel value="*#{msgs.addOneEmail}" style="font-weight:bold;" />
+		    	
 		    	<p:outputLabel value="#{msgs.title}: " />
-		    	<p:inputText value="#{envioMensagemBean.titulo}" size="30" />
-			   	<p:outputLabel value="#{msgs.description}: " />
-		    	<p:inputTextarea label="#{msgs.messages}" value="#{envioMensagemBean.descricao}" rows="17" cols="80" />
-	    	<p:commandButton action="#{envioMensagemBean.enviaMsg}" value="#{msgs.send}" style="float:right; margin:10px 50px 30px 0px ;" /> 
-	    	</h:panelGrid>
+		    	<p:inputText value="#{enviaEmailBean.titulo}" size="30" readonly="true" style="color:#828686;" />
+		    	
+			   	<p:outputLabel value="#{msgs.description} " />
+		    	<p:inputTextarea value="#{enviaEmailBean.corpo}" rows="11" cols="80" readonly="true" style="color:#828686;" />
+	    	
+			</h:panelGrid>
+			
+    		<p:commandButton type="submit" ajax="false" action="#{enviaEmailBean.enviaEmail}" value="#{msgs.send} #{msgs.invite}" style="float:right; margin:10px 50px 30px 0px ;" /> 
+			
 	    </h:form>
 	    
 	</ui:define>

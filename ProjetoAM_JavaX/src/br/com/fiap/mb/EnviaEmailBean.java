@@ -4,34 +4,43 @@ import java.io.Serializable;
 import java.net.URL;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.HtmlEmail;
 
+import br.com.fiap.I18N.UtilsNLS;
+
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class EnviaEmailBean implements Serializable {
 	
+	private String para;
+	private String titulo;
 	private String corpo;
 	
 	@PostConstruct
 	public void onInit(){
+		
 		corpo = "Olá," +
-				"<br /><br />" +
+				"\n\n" +
 				"Encontrei um jeito de não perdermos mais os nossos encontros para " +
 				"praticarmos esportes! Faça sua incrição no site Encontro Esportivo agora " +
 				"mesmo, basta clicar no link abaixo:" +
-				"<br />" +
-				"<br />" +
-				"<a href='http://localhost:8080/ProjetoAM_JavaX/faces/criacao_perfil.xhtml' style='color:blue;'>" +
+				"\n\n" +
 				"Encontro Esportivo - O Maior site para encontros esportivos!" +
-				"</a>" +
-				"<br /><br />" +
+				"\n\n" +
 				"Abraços," +
-				"<br /><br />" +
+				"\n\n" +
 				"Encontro Esportivo";
+		
+		titulo = "Venha pro Encontro Esportivo!";
+		
 	}
 	
 	public String getCorpo() {
@@ -40,9 +49,40 @@ public class EnviaEmailBean implements Serializable {
 	public void setCorpo(String corpo) {
 		this.corpo = corpo;
 	}
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	public String getPara() {
+		return para;
+	}
+	public void setPara(String para) {
+		this.para = para;
+	}
+
 	
-	
-	public void enviaEmail(){
+	public void validaEmail(FacesContext context, UIComponent component, Object value) {
+		
+		String valor = value.toString();
+		if (!valor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
+			((UIInput)component).setValid(false);
+			
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_email",
+					null, context.getViewRoot().getLocale());
+			
+			FacesMessage fm = new FacesMessage(mensagem);
+			
+			context.addMessage(component.getClientId(context), fm);
+		}
+		
+	}
+
+	public String enviaEmail(){
+		
+		String retorno;
 		
 		HtmlEmail email = new HtmlEmail(); 
 		email.setHostName("smtp.gmail.com");
@@ -50,11 +90,10 @@ public class EnviaEmailBean implements Serializable {
 		email.setAuthenticator(new DefaultAuthenticator("javaxsolutions@gmail.com", "solutions147"));
 		email.setSSLOnConnect(true);
 		
-		
 		try {
-			email.addTo("arl_sk8@hotmail.com", "Ariel Molina");
+			email.addTo(para);
 			email.setFrom("javaxsolutions@gmail.com","Encontro Esportivo");
-			email.setSubject("Venha pro Encontro Esportivo!");  
+			email.setSubject(titulo);  
 
 			// adiciona uma imagem ao corpo da mensagem e retorna seu id 
 			URL url = new URL("http://localhost:8080/ProjetoAM_JavaX/faces/resources/images/logoEE.png"); 
@@ -70,16 +109,44 @@ public class EnviaEmailBean implements Serializable {
 			
 			String footer = "</div>	</html>";
 			
-			email.setHtmlMsg(header + corpo + footer);
+			String corpoHtml = "Olá," +
+							"<br /><br />" +
+							"Encontrei um jeito de não perdermos mais os nossos encontros para " +
+							"praticarmos esportes! Faça sua incrição no site Encontro Esportivo agora " +
+							"mesmo, basta clicar no link abaixo:" +
+							"<br />" +
+							"<br />" +
+							"<a href='http://localhost:8080/ProjetoAM_JavaX/faces/criacao_perfil.xhtml' style='color:blue;'>" +
+							"Encontro Esportivo - O Maior site para encontros esportivos!" +
+							"</a>" +
+							"<br /><br />" +
+							"Abraços," +
+							"<br /><br />" +
+							"Encontro Esportivo";
+			
+			email.setHtmlMsg(header + corpoHtml + footer);
 
-			// configure uma mensagem alternativa caso o servidor não suporte HTML 
-			//email.setTextMsg("Seu servidor de e-mail não suporta mensagem HTML");   
 			//envia o e-mail 
 			email.send();
+			
+			retorno = "email_enviado.xhtml";
+			
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			retorno = "";
+			
+			FacesContext fc = FacesContext.getCurrentInstance();
+			
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "email_fail",
+					null, fc.getViewRoot().getLocale());
+			
+			FacesMessage fm = new FacesMessage(mensagem);
+			fc.addMessage("", fm);
+			
 			e.printStackTrace();
 		}
+		
+		return retorno;
 		
 	}
 	

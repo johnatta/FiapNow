@@ -11,7 +11,6 @@
 	<ui:define name="main_content">
 	    <h1>#{msgs.welcome}</h1>
 	    
-	    
 	    <div id="coluna_esquerda">
 	    	<p style="margin-left='10px;'">#{msgs.welcomeMessage}</p>
 	    	<p:media value="https://youtube.googleapis.com/v/Lxn1-pKY-9I?showinfo=0;rel=0;" width="640" 
@@ -19,9 +18,12 @@
 	    </div>
 
 		<div id="coluna_direita">
-			Convide seus amigos agora mesmo! Basta <a href="conviteEE.xhtml">clicar aqui!</a>
-			<a href="criacao_grupo.xhtml">Crie aqui seu Grupo</a><br />
-			<a href="criacao_evento.xhtml">Crie agora mesmo um Evento</a><br /><br />
+			Convide seus amigos agora mesmo! Basta <a href="envio_email.xhtml">clicar aqui!</a>
+			<p:separator />
+			<a href="criacao_grupo.xhtml">Crie aqui seu Grupo</a>
+			<p:separator />
+			<a href="criacao_evento.xhtml">Crie agora mesmo um Evento</a>
+			<p:separator />	
 			<p:pieChart id="sample" value="#{homeBean.estatisticaEsportes}"
 				legendPosition="s" sliceMargin="3" fill="true" showDataLabels="true"
 				diameter="150"
