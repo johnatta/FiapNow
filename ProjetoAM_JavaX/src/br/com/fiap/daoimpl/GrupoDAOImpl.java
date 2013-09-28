@@ -64,18 +64,25 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
 			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
 		}
+		
+		Collections.sort(grupos, new Comparator<Grupo>() {
+			public int compare(Grupo object1, Grupo object2) {
+				return Integer.compare(object2.getQuantidade().intValue(), object1.getQuantidade().intValue());
+			}
+		}
+				);
 		return grupos;
 	}
 
 	@Override
 	public List<Grupo> consultaMeusGrupos(int codPessoa) {
 		ArrayList<Integer> codigos  = new ArrayList<Integer>(); 
-		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ?)",Grupo.class);
+		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("select gru.* from am_grupo gru where gru.cod_grupo in (select cod_grupo from am_pessoa_grupo where cod_pessoa = ? and rownum <= 3)",Grupo.class);
 		query.setParameter(1, codPessoa);
 		List<Grupo> grupos = query.getResultList();
 
 		for (Grupo grupo : grupos) {
-			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo");
+			Query queryQtd = em.createNativeQuery("select count(*) from am_pessoa_grupo pg where pg.cod_grupo = :codGrupo ");
 			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
