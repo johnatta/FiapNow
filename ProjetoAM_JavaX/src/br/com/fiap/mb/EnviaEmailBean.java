@@ -23,6 +23,7 @@ public class EnviaEmailBean implements Serializable {
 	private String para;
 	private String titulo;
 	private String corpo;
+	private boolean enviado;
 	
 	@PostConstruct
 	public void onInit(){
@@ -40,6 +41,8 @@ public class EnviaEmailBean implements Serializable {
 				"Encontro Esportivo";
 		
 		titulo = "Venha pro Encontro Esportivo!";
+		
+		enviado = false;
 		
 	}
 	
@@ -61,8 +64,14 @@ public class EnviaEmailBean implements Serializable {
 	public void setPara(String para) {
 		this.para = para;
 	}
+	public boolean isEnviado() {
+		return enviado;
+	}
 
-	
+	public void setEnviado(boolean enviado) {
+		this.enviado = enviado;
+	}
+
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
 		
 		String valor = value.toString();
@@ -80,9 +89,7 @@ public class EnviaEmailBean implements Serializable {
 		
 	}
 
-	public String enviaEmail(){
-		
-		String retorno;
+	public void enviaEmail(){
 		
 		HtmlEmail email = new HtmlEmail(); 
 		email.setHostName("smtp.gmail.com");
@@ -129,11 +136,9 @@ public class EnviaEmailBean implements Serializable {
 			//envia o e-mail 
 			email.send();
 			
-			retorno = "email_enviado.xhtml";
+			enviado = true;
 			
 		} catch (Exception e) {
-			retorno = "";
-			
 			FacesContext fc = FacesContext.getCurrentInstance();
 			
 			String mensagem =
@@ -145,8 +150,6 @@ public class EnviaEmailBean implements Serializable {
 			
 			e.printStackTrace();
 		}
-		
-		return retorno;
 		
 	}
 	
