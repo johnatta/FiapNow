@@ -56,8 +56,6 @@ public class GrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private boolean primeiraVez;
 	private List<ComentarioGrupoRC> listaComentarios;
-	private Date cal;
-
 
 	public void buscaGrupo(){
 		if (primeiraVez){
@@ -91,10 +89,6 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public String dataFormatada(Calendar dataComentario){
-		//Calendar dataC = comentarioGrupo.getDataHora().getInstance();
-		//Date data = dataC.getTime();
-		//Date data = dataComentario.getInstance().getTime();
-		//System.out.println(data.getTime());
 		Date data = dataComentario.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
 		String dataFormatada = sdf.format(data);
