@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
@@ -43,7 +44,10 @@ public class MensagemEvento implements Serializable{
 
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_evento")
-	private Evento evento;	
+	private Evento evento;
+	
+	@Transient
+	private String icon;
 
 	public MensagemEvento(String descricao, Confirmacao confirmacao,
 			Pessoa codPessoa, Evento codEvento) {
@@ -109,5 +113,13 @@ public class MensagemEvento implements Serializable{
 
 	public void setEvento(Evento evento) {
 		this.evento = evento;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+	
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }

@@ -19,7 +19,17 @@ public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implem
 	public List<MensagemGrupo> buscarMensagensDaPessoa(Pessoa pessoa){
 		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes order by me.codMensagem desc", MensagemGrupo.class);
 		query.setParameter("pes", pessoa);
-		return query.getResultList();
+		List<MensagemGrupo> mensagens = query.getResultList();
+		
+		for(MensagemGrupo msg : mensagens){
+			if(msg.getConfirmacao() == Confirmacao.SIM){
+				msg.setIcon("ui-icon-mail-open");
+			} else {
+				msg.setIcon("ui-icon-mail-closed");
+			}
+		}
+		
+		return mensagens;
 	}
 	
 	public List<MensagemGrupo> buscarMensagensNaoLidasDaPessoa(Pessoa pessoa){

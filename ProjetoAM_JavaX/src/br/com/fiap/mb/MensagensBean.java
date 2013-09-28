@@ -21,6 +21,7 @@ import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.datamodel.MensagemEventoDataModel;
 import br.com.fiap.datamodel.MensagemGrupoDataModel;
+import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.MensagemEvento;
 import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.Pessoa;
@@ -57,11 +58,11 @@ public class MensagensBean implements Serializable {
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
 		
-		msgsEvento = msgEventoDAO.buscarMensagensDaPessoa(pessoa);
-		msgEventoModel = new MensagemEventoDataModel(msgsEvento);
-		
 		msgsGrupo = msgGrupoDAO.buscarMensagensDaPessoa(pessoa);
 		msgGrupoModel = new MensagemGrupoDataModel(msgsGrupo);
+		
+		msgsEvento = msgEventoDAO.buscarMensagensDaPessoa(pessoa);
+		msgEventoModel = new MensagemEventoDataModel(msgsEvento);
 		
 	}
 
@@ -110,11 +111,30 @@ public class MensagensBean implements Serializable {
 	
 
 	public void visualizarMensagemGrupo(MensagemGrupo msgGrupo){
+		
+		if(msgGrupo.getConfirmacao() == Confirmacao.NAO){
+			msgGrupo.setConfirmacao(Confirmacao.SIM);
+			msgGrupoDAO.update(msgGrupo);
+		}
+		
+		msgsGrupo = msgGrupoDAO.buscarMensagensDaPessoa(pessoa);
+		msgGrupoModel = new MensagemGrupoDataModel(msgsGrupo);
+		
 		selectedMsgGrupo = msgGrupo;
 		RequestContext.getCurrentInstance().execute("mensagemDialogGrupo.show()");
+		
 	}
 	
 	public void visualizarMensagemEvento(MensagemEvento msgEvento){
+		
+		if(msgEvento.getConfirmacao() == Confirmacao.NAO){
+			msgEvento.setConfirmacao(Confirmacao.SIM);
+			msgEventoDAO.update(msgEvento);
+		}
+		
+		msgsEvento = msgEventoDAO.buscarMensagensDaPessoa(pessoa);
+		msgEventoModel = new MensagemEventoDataModel(msgsEvento);
+		
 		selectedMsgEvento = msgEvento;
 		RequestContext.getCurrentInstance().execute("mensagemDialogEvento.show()");
 	}

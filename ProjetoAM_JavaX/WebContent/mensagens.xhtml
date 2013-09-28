@@ -27,18 +27,18 @@
     	    			</f:facet>
 
 						<p:column selectionMode="multiple" style="width:2%"/>
-
-						<p:column headerText="De:" style="width:25%">  
+						
+						<p:column headerText="#{msgs.from}:" style="width:25%">  
             				#{msg.grupo.nomeGrupo}  
         				</p:column>
 
-						<p:column headerText="Titulo:" style="width:49%">  
+						<p:column headerText="#{msgs.title}" style="width:60%">  
             				#{msg.titulo}  
         				</p:column>
 
-						<p:column headerText="Ler Mensagem:" style="width:24%">
-							<p:commandButton id="viewButton" value="Visualizar"
-								icon="ui-icon-search" update=":tabMain:msgGrupo:visualizarMensagemGrupo :tabMain:msgGrupo:dialogMsgGrupo"
+						<p:column style="width:13%">
+							<p:commandButton id="viewButton" value="#{msgs.read}"
+								icon="#{msg.icon}" update=":tabMain :tabMain:msgGrupo:visualizarMensagemGrupo :tabMain:msgGrupo:dialogMsgGrupo"
 								action="#{mensagensBean.visualizarMensagemGrupo(msg)}" />
 						</p:column>
 
@@ -82,16 +82,16 @@
 
 						<p:column selectionMode="multiple" style="width:2%"/>
 
-						<p:column headerText="De:" style="width:25%">  
+						<p:column headerText="#{msgs.from}:" style="width:25%">  
             				#{msg.evento.nome}  
         				</p:column>
 
-						<p:column headerText="Titulo:" style="width:49%">  
+						<p:column headerText="#{msgs.title}:" style="width:60%">  
             				#{msg.titulo}  
         				</p:column>
 
-						<p:column headerText="Ler Mensagem:" style="width:24%">
-							<p:commandButton id="viewButton" value="Visualizar"
+						<p:column style="width:13%">
+							<p:commandButton id="viewButton" value="#{msgs.read}"
 								icon="ui-icon-search" update=":tabMain:msgEvento:visualizarMensagemEvento :tabMain:msgEvento:dialogMsgEvento"
 								action="#{mensagensBean.visualizarMensagemEvento(msg)}" />
 						</p:column>

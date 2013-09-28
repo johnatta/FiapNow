@@ -12,9 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.Pessoa;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="AM_MENSAGEM_GRUPO")
@@ -44,6 +42,9 @@ public class MensagemGrupo implements Serializable{
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="msg_grupo")
 	private Grupo grupo;
+	
+	@Transient
+	private String icon;
 	
 	public MensagemGrupo(String descricao, Confirmacao confirmacao,
 			br.com.fiap.entity.Pessoa pessoa,
@@ -105,6 +106,14 @@ public class MensagemGrupo implements Serializable{
 	
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 }
 	
