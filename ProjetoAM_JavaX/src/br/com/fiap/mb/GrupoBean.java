@@ -44,6 +44,8 @@ public class GrupoBean implements Serializable {
 	private BigDecimal numMembros;
 	private List<Pessoa> membrosGrp;
 	private List<Pessoa> moderadores;
+	private List<Pessoa> membrosGrpRow;
+	private List<Pessoa> moderadoresRow;
 	private int codGrupo;
 	private Grupo grupo;
 	private ComentarioGrupo cmtGrupo;
@@ -56,6 +58,7 @@ public class GrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private boolean primeiraVez;
 	private List<ComentarioGrupoRC> listaComentarios;
+	
 
 	public void buscaGrupo(){
 		if (primeiraVez){
@@ -68,8 +71,10 @@ public class GrupoBean implements Serializable {
 			
 			grupo = gruDAO.buscarInfoGrupo(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-			moderadores = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-			membrosGrp = pDAO.buscarMembrosDoGrupoRow(codGrupo);
+			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
+			membrosGrpRow = pDAO.buscarMembrosDoGrupoRow(codGrupo);
+			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 		}
 	}
@@ -115,6 +120,10 @@ public class GrupoBean implements Serializable {
 	public String visualizarTodosMembros(){
 		return "todos_membros_grupo.xhtml";
 	}
+	
+	public String visualizarTodosModeradores(){
+		return "todos_moderadores_grupo.xhtml";
+	}	
 	
 	public Grupo getGrupo() {
 		return grupo;
@@ -209,5 +218,20 @@ public class GrupoBean implements Serializable {
 	public void setListaComentarios(List<ComentarioGrupoRC> listaComentarios) {
 		this.listaComentarios = listaComentarios;
 	}
-	
+
+	public List<Pessoa> getMembrosGrpRow() {
+		return membrosGrpRow;
+	}
+
+	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
+		this.membrosGrpRow = membrosGrpRow;
+	}
+
+	public List<Pessoa> getModeradoresRow() {
+		return moderadoresRow;
+	}
+
+	public void setModeradoresRow(List<Pessoa> moderadoresRow) {
+		this.moderadoresRow = moderadoresRow;
+	}
 }

@@ -64,7 +64,7 @@
 			<br></br>
 			<div>
 				<p:panelGrid columns="1">
-					<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrp}"
+					<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrpRow}"
 						var="membro" itemStyleClass="membroItem">
 						<f:facet name="header">#{msgs.members}</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
@@ -77,15 +77,17 @@
 							</h:commandLink>
 						</f:facet>
 					</p:carousel>
-					<p:carousel id="moderadoresCarousel"
-						value="#{grupoBean.moderadores}" var="moderador"
+					<p:carousel id="moderadoresRowCarousel"
+						value="#{grupoBean.moderadoresRow}" var="moderador"
 						itemStyleClass="moderadorItem">
 						<f:facet name="header">#{msgs.moderator}</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 							<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:outputText value="#{msgs.moderators}"></h:outputText>
+							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}">
+								<h:outputText value="#{msgs.moderators}" />
+							</h:commandLink>
 						</f:facet>
 					</p:carousel>
 				</p:panelGrid>
