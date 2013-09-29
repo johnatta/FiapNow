@@ -207,7 +207,7 @@ public class LoginBean implements Serializable {
 		if(user != null){
 			PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 			pessoa = pessoaDAO.buscarPorUsuario(user);
-			returnPage = "home";
+			returnPage = "home.xhtml?faces-redirect=true";
 		} else {
 			fc.addMessage("", fm);
 		}
