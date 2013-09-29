@@ -10,21 +10,7 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<h1>Exclusão Grupo</h1>
-		<h:form>
-			<p:panel>
-				<h:panelGrid columns="1" style="width:50%">
-					<h:outputText
-						value="#{msgs.confirmation_delete_group} grupoBean.grupo.nome ?" />
-				</h:panelGrid>
 
-				<h:panelGrid columns="2" style="width:50%">
-					<p:commandButton icon="ui-icon-cancel" type="button" value="#{msgs.no}" action="grupoBean.paginaGrupo"/>
-					<p:commandButton icon="ui-icon-check" type="button" value="#{msgs.yes} " action="grupoBean.excluirGrupo"/>
-				</h:panelGrid>
-				
-				<p:commandButton icon="ui-icon-cancel" type="button" value="#{msgs.cancel}" action="grupoBean.paginaGrupo"/>
-			</p:panel>
-		</h:form>
 	</ui:define>
 </ui:composition>
 
