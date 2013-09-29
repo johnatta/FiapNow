@@ -42,13 +42,29 @@
 						<f:facet name="footer">
 							<p:commandButton type="button" value="#{msgs.edit}"
 								icon="ui-icon-check" style="margin:0" />
-							<p:commandButton type="button" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo" 
+							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo" 
 								icon="ui-icon-trash" style="margin:0" />
+							<h:commandButton type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
+							</h:commandButton>								
+							<h:commandButton type="button" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
+							</h:commandButton>								
+							
 						</f:facet>
 					</p:panelGrid>
 				</p:panel>
 			</div>
 			<br></br>
+			
+							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo" 
+								icon="ui-icon-trash" style="margin:0" />
+							<h:commandButton type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
+							</h:commandButton>								
+							<h:commandButton type="button" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
+							</h:commandButton>	
+							<h:commandLink action="grupoBean.redirecionarExclusaoGrupo">
+								<h:outputText value="#{msgs.remove_group}"></h:outputText>
+							</h:commandLink>							
+			
 			<div>
 				<p:panel header="#{msgs.description}">
 					<h:panelGrid columns="1">
