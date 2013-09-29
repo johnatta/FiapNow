@@ -118,12 +118,32 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public String visualizarTodosMembros(){
+		primeiraVez = true;
 		return "todos_membros_grupo.xhtml";
 	}
 	
 	public String visualizarTodosModeradores(){
+		primeiraVez = true;
 		return "todos_moderadores_grupo.xhtml";
 	}	
+
+	public String btnExclusao(){
+		primeiraVez = true;
+		return "exclusao_grupo.xhtml";
+	}
+	
+	public String excluirGrupo(){
+		gruDAO.removeById(grupo.getCodGrupo());
+		FacesContext fc = FacesContext.getCurrentInstance();
+		FacesMessage fm = new FacesMessage();
+		fm.setSummary("Grupo excluído com sucesso.");
+		fc.addMessage("", fm);
+		return "grupos.xhtml";
+	}
+	
+	public String paginaGrupo(){
+		return "grupo.xhtml";
+	}
 	
 	public Grupo getGrupo() {
 		return grupo;

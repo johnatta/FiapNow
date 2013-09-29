@@ -39,32 +39,16 @@
 						<p:outputLabel value="#{msgs.privacy}"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
-						<f:facet name="footer">
+						<f:facet name="footer"> 
 							<p:commandButton type="button" value="#{msgs.edit}"
 								icon="ui-icon-check" style="margin:0" />
-							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo" 
-								icon="ui-icon-trash" style="margin:0" />
-							<h:commandButton type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
-							</h:commandButton>								
-							<h:commandButton type="button" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
-							</h:commandButton>								
-							
+							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}"
+								icon="ui-icon-trash" style="margin:0" action="#{grupoBean.btnExclusao}" />
 						</f:facet>
 					</p:panelGrid>
 				</p:panel>
 			</div>
-			<br></br>
-			
-							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo" 
-								icon="ui-icon-trash" style="margin:0" />
-							<h:commandButton type="submit" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
-							</h:commandButton>								
-							<h:commandButton type="button" value="#{msgs.remove_group}" action="grupoBean.redirecionarExclusaoGrupo"> 
-							</h:commandButton>	
-							<h:commandLink action="grupoBean.redirecionarExclusaoGrupo">
-								<h:outputText value="#{msgs.remove_group}"></h:outputText>
-							</h:commandLink>							
-			
+			<br></br>						
 			<div>
 				<p:panel header="#{msgs.description}">
 					<h:panelGrid columns="1">
@@ -89,9 +73,8 @@
 							<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:commandLink action="#{grupoBean.visualizarTodosMembros}">
-								<h:outputText
-									value="#{msgs.all_members} (#{grupoBean.numMembros})"></h:outputText>
+							<h:commandLink action="#{grupoBean.todos_membros_grupo}">
+								<h:outputText value="#{msgs.all_members}"></h:outputText>
 							</h:commandLink>
 						</f:facet>
 					</p:carousel>
