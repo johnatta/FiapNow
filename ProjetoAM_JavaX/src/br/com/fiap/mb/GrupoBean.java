@@ -19,6 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -33,6 +34,7 @@ import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.rc.ComentarioGrupoRC;
 
@@ -58,17 +60,17 @@ public class GrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private boolean primeiraVez;
 	private List<ComentarioGrupoRC> listaComentarios;
-	
+
 
 	public void buscaGrupo(){
 		if (primeiraVez){
 			primeiraVez = false;
-		
+
 			if(codGrupo == 0 ){
 				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 			}
-			
+
 			grupo = gruDAO.buscarInfoGrupo(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
@@ -76,9 +78,28 @@ public class GrupoBean implements Serializable {
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+
+			int codPessoa = pessoa.getCodPessoa(); 
+			int flagAdm; //0
+			int flagModerador; //1
+			int flagMembro; //2
+			int flagUser; //3
+			int flag = 0;
+			for(Pessoa moderadorGrupo : moderadores){
+				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
+					flagModerador = 1;
+				}	
+
+			}
+
+			if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
+
+			}
+			
+			//if()
 		}
 	}
-	
+
 	@PostConstruct
 	public void onInit(){
 		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
@@ -86,20 +107,22 @@ public class GrupoBean implements Serializable {
 		pDAO = new PessoaDAOImpl(em);
 		modDAO = new ModeradorGrupoDAOImpl(em);
 		comentarioGrupo = new ComentarioGrupo();
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
+
 		primeiraVez = true;
 	}
-	
+
 	public String dataFormatada(Calendar dataComentario){
 		Date data = dataComentario.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
 		String dataFormatada = sdf.format(data);
 		return dataFormatada; 
 	}
-	
+
 	public void btnEnviarComentario(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		comentarioPostado = new ComentarioGrupo();
@@ -108,20 +131,20 @@ public class GrupoBean implements Serializable {
 		comentarioGrupo.setCodPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		comentarioGrupo.setDataHora(Calendar.getInstance());
 		comentarioPostado = comentarioGrupoDAO.insertEntity(comentarioGrupo);
-		
+
 		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
-		
+
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
 		fm.setSummary("Comentario cadastrado");
 		fc.addMessage("", fm);
 	}
-	
+
 	public String visualizarTodosMembros(){
 		primeiraVez = true;
 		return "todos_membros_grupo.xhtml";
 	}
-	
+
 	public String visualizarTodosModeradores(){
 		primeiraVez = true;
 		return "todos_moderadores_grupo.xhtml";
@@ -131,7 +154,7 @@ public class GrupoBean implements Serializable {
 		primeiraVez = true;
 		return "exclusao_grupo.xhtml";
 	}
-	
+
 	public String excluirGrupo(){
 		gruDAO.removeById(grupo.getCodGrupo());
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -140,11 +163,11 @@ public class GrupoBean implements Serializable {
 		fc.addMessage("", fm);
 		return "grupos.xhtml";
 	}
-	
+
 	public String paginaGrupo(){
 		return "grupo.xhtml";
 	}
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
