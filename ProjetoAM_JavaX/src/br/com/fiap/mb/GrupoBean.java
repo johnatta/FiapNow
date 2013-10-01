@@ -79,24 +79,29 @@ public class GrupoBean implements Serializable {
 			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 
-			int codPessoa = pessoa.getCodPessoa(); 
-			int flagAdm; //0
-			int flagModerador; //1
-			int flagMembro; //2
-			int flagUser; //3
-			int flag = 0;
+			boolean flagAdm = false; 
+			boolean flagModerador = false; 
+			boolean flagMembro = false; 
+			boolean flagUser = false; 
+			
 			for(Pessoa moderadorGrupo : moderadores){
 				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
-					flagModerador = 1;
+					flagModerador = true;
 				}	
 
 			}
 
 			if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
-
+				flagAdm = true;
 			}
 			
-			//if()
+			for(Grupo g : pessoa.getGruposParticipantes()){				
+				if(g.getCodGrupo() == codGrupo){
+					flagMembro = true;
+				}else{
+					flagUser = true;
+				}
+			}
 		}
 	}
 
