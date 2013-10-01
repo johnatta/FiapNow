@@ -128,6 +128,15 @@ public class GrupoBean implements Serializable {
 		return dataFormatada; 
 	}
 
+	public String sairGrupo(){
+		for(Grupo grupo : pessoa.getGruposParticipantes()){
+			if(grupo.getCodGrupo() == codGrupo){
+				pessoa.getGruposParticipantes().remove(getCodGrupo());
+			}
+		}
+		return "grupo.xhtml";
+	}
+	
 	public void btnEnviarComentario(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		comentarioPostado = new ComentarioGrupo();
@@ -145,6 +154,10 @@ public class GrupoBean implements Serializable {
 		fc.addMessage("", fm);
 	}
 
+	public void excluirComentario(){
+		//gruDAO.
+	}
+	
 	public String visualizarTodosMembros(){
 		primeiraVez = true;
 		return "todos_membros_grupo.xhtml";

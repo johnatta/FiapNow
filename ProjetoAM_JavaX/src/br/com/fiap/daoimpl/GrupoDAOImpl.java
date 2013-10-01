@@ -227,6 +227,28 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		
 		return commentsGrupos;
 	}
+	
+	@Override
+	public List<ComentarioGrupoRC> buscarComentariosPorPessoa(int codPessoa) {
+		List<ComentarioGrupoRC> commentsGrupos = new ArrayList<ComentarioGrupoRC>();
+		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
+			      "FROM ComentarioGrupo c JOIN c.codPessoa p " +
+			      "WHERE c.codPessoa.codPessoa = :cod";
+		
+		TypedQuery<ComentarioGrupoRC> query = em.createQuery(queryStr, ComentarioGrupoRC.class);
+		query.setParameter("cod", codPessoa);
+		
+		commentsGrupos = query.getResultList();
+		
+		Collections.sort(commentsGrupos, new Comparator<ComentarioGrupoRC>() {
+			public int compare(ComentarioGrupoRC object1, ComentarioGrupoRC object2) {
+				return object2.getDataHora().compareTo(object1.getDataHora());
+			}
+		}
+				);
+		
+		return commentsGrupos;
+	}
 
 }
 

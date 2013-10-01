@@ -60,13 +60,14 @@ public class TesteGrazi {
 		ModeradorGrupoDAO modDAO = new ModeradorGrupoDAOImpl(em);
 		List<Pessoa> moderadores = modDAO.buscarModeradoresDoGrupoRowNum(6);
 		GrupoDAO gDAO = new GrupoDAOImpl(em); 
+		List<ComentarioGrupoRC> comentarios = new ArrayList<ComentarioGrupoRC>();
 
 		/*
 		for (Pessoa mod : moderadores) {
 			//System.err.println(mod.getNome());
 		}
 
-		List<ComentarioGrupoRC> comentarios = gDAO.buscarComentariosPeloGrupo(4);
+		comentarios = gDAO.buscarComentariosPeloGrupo(4);
 		System.out.println(comentarios);
 
 		for(ComentarioGrupoRC comentarioGrupo : comentarios){
@@ -166,6 +167,14 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 
 		for (Grupo grupoA : grupos) {
 			System.out.println(grupoA.getDescricao());
+		}
+		
+		
+		comentarios = gDAO.buscarComentariosPorPessoa(3);
+		
+		for(ComentarioGrupoRC cg : comentarios){
+			System.out.println(cg.getComentario());
+			System.err.println("----------------------------");
 		}
 		 */
 	}

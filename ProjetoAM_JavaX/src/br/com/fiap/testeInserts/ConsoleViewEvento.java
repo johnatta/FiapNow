@@ -41,9 +41,9 @@ public class ConsoleViewEvento {
 	
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(88, 10, 22);
+		dtNascimento.set(14, 10, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(13, 11, 12);
+		dtNascimentoA.set(14, 11, 12);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
