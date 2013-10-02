@@ -39,18 +39,20 @@
 						<p:outputLabel value="#{msgs.privacy}"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
-						<f:facet name="footer"> 
+						<f:facet name="footer">
 							<p:commandButton type="button" value="#{msgs.edit}"
 								icon="ui-icon-check" style="margin:0" />
-							<p:commandButton ajax="false" type="submit" value="#{msgs.remove_group}"
-								icon="ui-icon-trash" style="margin:0" action="#{grupoBean.btnExclusao}" />
-							<p:commandButton ajax="false" type="submit" value="#{msgs.leave_group}"
-								icon="ui-icon-closethick" style="margin:0" action="#{grupoBean.sairGrupo}" />								
+							<p:commandButton ajax="false" type="submit"
+								value="#{msgs.remove_group}" icon="ui-icon-trash"
+								style="margin:0" action="#{grupoBean.btnExclusao}" />
+							<p:commandButton ajax="false" type="submit"
+								value="#{msgs.leave_group}" icon="ui-icon-closethick"
+								style="margin:0" action="#{grupoBean.sairGrupo}" />
 						</f:facet>
 					</p:panelGrid>
 				</p:panel>
 			</div>
-			<br></br>						
+			<br></br>
 			<div>
 				<p:panel header="#{msgs.description}">
 					<h:panelGrid columns="1">
@@ -103,6 +105,7 @@
 						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
 							action="#{grupoBean.btnEnviarComentario}"
 							update=":formComentario:comentarios" />
+
 						<p:commandButton type="submit" title="#{msgs.delete}"
 							icon="ui-icon-trash" action="#{grupoBean.teste}" />
 						<p:commandButton type="button" value="Open"
@@ -129,6 +132,13 @@
 					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
 					<p:panel header="#{msgs.comment}">
 						<h:panelGrid columns="1">
+							<p:commandButton type="submit" value="Excluir" ajax="false"
+								icon="ui-icon-trash" action="#{grupoBean.excluirComentario}"
+								update=":formComentario:comentarios">
+								<f:setPropertyActionListener
+									target="#{grupoBean.comentarioGrupoExcluido}"
+									value="#{posts.codComentario}"/>
+							</p:commandButton>
 							<f:facet name="header">
 								<h:outputLabel value="#{posts.apelido}"></h:outputLabel>
 							</f:facet>
