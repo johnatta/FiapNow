@@ -81,7 +81,7 @@ public class TesteJohnatta {
 		*/	
 			//Historico de evento do grupo:
 				
-					EventoDAO eventoDAO = new EventoDAOImpl(em);
+					/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 	
 					List<Evento> evento1 = eventoDAO.historicoDeEventos(2);
 								
@@ -89,7 +89,7 @@ public class TesteJohnatta {
 						for(Evento resultado1 : evento1){
 							
 							System.out.println("Historico de eventos antigo: " + sdf.format(resultado1.getDtEvento().getTime()));
-						}
+						}*/
 			
 		}
 

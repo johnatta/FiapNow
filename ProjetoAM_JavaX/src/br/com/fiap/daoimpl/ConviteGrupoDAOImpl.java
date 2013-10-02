@@ -15,6 +15,13 @@ public class ConviteGrupoDAOImpl extends DAOImpl<ConviteGrupo, Integer> implemen
 		super(entityManager);
 	}
 
+	/**
+	* Busca os ConviteGrupo da Pessoa
+	*
+	* @param pessoa Pessoa que será utilizada para a busca
+	* @return Convites da pessoa
+	* @author Ariel Molina 
+	*/
 	@Override
 	public List<ConviteGrupo> buscarConviteGrupoPorPessoa(Pessoa pessoa) {
 		TypedQuery<ConviteGrupo> query = em.createQuery("from ConviteGrupo where pessoa = :pes",ConviteGrupo.class);

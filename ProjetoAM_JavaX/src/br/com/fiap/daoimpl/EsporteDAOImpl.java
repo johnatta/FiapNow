@@ -17,12 +17,25 @@ public class EsporteDAOImpl extends DAOImpl<Esporte, Integer> implements Esporte
 		super(em);
 	}
 
+	/**
+	* Busca todos os Esportes
+	*
+	* @return Esportes cadastrados no banco
+	* @author Graziele Vasconcelos 
+	*/
 	@Override
 	public List<Esporte> buscarTodosEsportes() {
 		TypedQuery<Esporte> query = em.createQuery("from Esporte", Esporte.class);
 		return query.getResultList();
 	}
 
+	/**
+	* Busca um Esporte pelo nome
+	*
+	* @param nome Nome do esporte a ser buscado
+	* @return Esportes encontrados pelo nome
+	* @author Ariel Molina 
+	*/
 	@Override
 	public Esporte buscarPorNome(String nome) {
 		TypedQuery<Esporte> query = em.createQuery("from Esporte e where upper(e.nome) like upper(:nome)",Esporte.class);
@@ -30,6 +43,12 @@ public class EsporteDAOImpl extends DAOImpl<Esporte, Integer> implements Esporte
 		return query.getSingleResult();
 	}
 
+	/**
+	* Busca a popularida dos Esportes pela quantidade em Eventos, Grupos e Pessoas
+	* 
+	* @return lista de ItemGrafico para cada Esporte
+	* @author Ariel Molina 
+	*/
 	@Override
 	public List<ItemGrafico> buscarPopularidade() {
 		TypedQuery<Esporte> query = em.createQuery("from Esporte", Esporte.class);
