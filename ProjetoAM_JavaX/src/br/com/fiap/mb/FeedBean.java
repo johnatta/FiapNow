@@ -63,6 +63,12 @@ public class FeedBean implements Serializable {
 		
 	}
 	
+	/**
+	* Retornar o site de feed de acordo com o esporte.
+	*
+	* @param esporte para o feed
+	* @author Ariel Molina 
+	*/
 	public String buscaFeed(String esporte){
 		
 		String feedRetorno = "";
@@ -88,6 +94,12 @@ public class FeedBean implements Serializable {
 		return feedRetorno; 
 	}
 
+	/**
+	* Retorna o nome da class para o componente
+	*
+	* @return retorna o nome da class
+	* @author Ariel Molina 
+	*/
 	public String stylize(){
 		
 		String estilo;
@@ -103,6 +115,13 @@ public class FeedBean implements Serializable {
 		return estilo;
 	}
 	
+	/**
+	* Remove as imagens dos feeds
+	*
+	* @param conteudo Conteúdo do feed
+	* @return retorna o conteúdo do feed sem as imagens
+	* @author Ariel Molina 
+	*/
 	public String removeImagens(String conteudo){
 		if (conteudo.contains("<img")){
 			int beginImg = conteudo.indexOf("<img");

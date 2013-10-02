@@ -76,6 +76,12 @@ public class ConvitePedidoEventosBean implements Serializable {
 		this.activeTab = activeTab;
 	}
 
+	/**
+	* Aceita o convite de um Evento.
+	*
+	* @param convite Convite que será aceito
+	* @author Ariel Molina 
+	*/
 	public void aceitarConvite(ConviteEvento convite){
 		//Adiciono o Evento aos eventos da Pessoa, updato a Pessoa e removo o convite
 		pessoa.getEventos().add(convite.getEvento());
@@ -84,6 +90,12 @@ public class ConvitePedidoEventosBean implements Serializable {
 		activeTab = 0;
 	}
 	
+	/**
+	* Recusa o convite de um Evento.
+	*
+	* @param convite Convite que será recusado
+	* @author Ariel Molina 
+	*/
 	public void recusarConvite(ConviteEvento convite){
 		//Apenas removo o convite
 		conviteDAO.remove(convite);
@@ -91,6 +103,12 @@ public class ConvitePedidoEventosBean implements Serializable {
 		activeTab = 0;
 	}
 	
+	/**
+	* Aceita o pedido para entrar em um Evento.
+	*
+	* @param pedido Pedido que será aceito
+	* @author Ariel Molina 
+	*/
 	public void aceitarPedido(PedidoEvento pedido){
 		//Adiciono um Evento para a pessoa que realizou o Pedido e removo o pedido
 		pedido.getPessoa().getEventos().add(pedido.getEvento());
@@ -99,6 +117,12 @@ public class ConvitePedidoEventosBean implements Serializable {
 		activeTab = 1;
 	}
 	
+	/**
+	* Recusa o pedido para entrar em um Evento.
+	*
+	* @param pedido Pedido que será recusado
+	* @author Ariel Molina 
+	*/
 	public void recusarPedido(PedidoEvento pedido){
 		//Apenas removo o pedido
 		pedidoDAO.remove(pedido);

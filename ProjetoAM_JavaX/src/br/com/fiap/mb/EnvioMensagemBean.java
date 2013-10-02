@@ -120,7 +120,11 @@ public class EnvioMensagemBean implements Serializable {
 		this.evento = evento;
 	}
 
-	
+	/**
+	* Envia a mensagem aos membros do Grupo/Evento.
+	* 
+	* @author Ariel Molina 
+	*/
 	public void enviaMsg(){
 		if(enviaMsgGrupo){
 			

@@ -109,7 +109,11 @@ public class MensagensBean implements Serializable {
 		this.selectedMsgsEvento = selectedMsgsEvento;
 	}
 	
-
+	/**
+	* Exibe na tela a MensagemGrupo selecionada e a marca como Lida
+	*
+	* @author Ariel Molina 
+	*/
 	public void visualizarMensagemGrupo(MensagemGrupo msgGrupo){
 		
 		if(msgGrupo.getConfirmacao() == Confirmacao.NAO){
@@ -125,6 +129,11 @@ public class MensagensBean implements Serializable {
 		
 	}
 	
+	/**
+	* Exibe na tela a MensagemEvento selecionada e a marca como Lida
+	*
+	* @author Ariel Molina 
+	*/
 	public void visualizarMensagemEvento(MensagemEvento msgEvento){
 		
 		if(msgEvento.getConfirmacao() == Confirmacao.NAO){
@@ -139,6 +148,11 @@ public class MensagensBean implements Serializable {
 		RequestContext.getCurrentInstance().execute("mensagemDialogEvento.show()");
 	}
 	
+	/**
+	* Exclui as MensagemGrupo selecionadas
+	*
+	* @author Ariel Molina 
+	*/
 	public void excluirMsgsGrupo(){
 		
 		activeTab = 0;
@@ -164,7 +178,11 @@ public class MensagensBean implements Serializable {
 		
 	}
 	
-	
+	/**
+	* Exclui as MensagemEvento selecionadas.
+	*
+	* @author Ariel Molina 
+	*/
 	public void excluirMsgsEvento(){
 		
 		activeTab = 1;

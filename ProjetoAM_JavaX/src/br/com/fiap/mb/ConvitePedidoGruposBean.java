@@ -78,6 +78,12 @@ public class ConvitePedidoGruposBean implements Serializable {
 		this.activeTab = activeTab;
 	}
 
+	/**
+	* Aceita o convite de um Grupo.
+	*
+	* @param convite Convite que será aceito
+	* @author Ariel Molina 
+	*/
 	public void aceitarConvite(ConviteGrupo convite){
 		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
 		pessoa.getGruposParticipantes().add(convite.getGrupo());
@@ -87,6 +93,12 @@ public class ConvitePedidoGruposBean implements Serializable {
 		activeTab = 0;
 	}
 	
+	/**
+	* Recusa o convite de um Grupo.
+	*
+	* @param convite Convite que será recusado
+	* @author Ariel Molina 
+	*/
 	public void recusarConvite(ConviteGrupo convite){
 		//Apenas removo o convite
 		conviteDAO.remove(convite);
@@ -94,6 +106,12 @@ public class ConvitePedidoGruposBean implements Serializable {
 		activeTab = 0;
 	}
 	
+	/**
+	* Aceita o pedido para entrar em um Grupo.
+	*
+	* @param pedido Pedido que será aceito
+	* @author Ariel Molina 
+	*/
 	public void aceitarPedido(PedidoGrupo pedido){
 		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
 		pedido.getPessoa().getGruposParticipantes().add(pedido.getGrupo());
@@ -102,6 +120,12 @@ public class ConvitePedidoGruposBean implements Serializable {
 		activeTab = 1;
 	}
 	
+	/**
+	* Recusa o pedido para entrar em um Grupo.
+	*
+	* @param pedido Pedido que será recusado
+	* @author Ariel Molina 
+	*/
 	public void recusarPedido(PedidoGrupo pedido){
 		//Apenas removo o pedido
 		pedidoDAO.remove(pedido);

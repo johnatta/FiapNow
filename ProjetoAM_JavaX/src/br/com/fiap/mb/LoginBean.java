@@ -73,6 +73,11 @@ public class LoginBean implements Serializable {
 		msgGruDAO = new MensagemGrupoDAOImpl(em);
 	}
 	
+	/**
+	 * Procura pelas notificações do usuário
+	 *
+	 * @author Ariel Molina 
+	 */
 	public void getNews(){
 		eventsInvites = convEveDAO.buscarConviteEventoPorPessoa(pessoa).size();
 		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();
@@ -174,6 +179,14 @@ public class LoginBean implements Serializable {
 		this.unreadMessages = unreadMessages;
 	}
 
+	/**
+	* Realiza a validação do campo que está chamando, verificando se possui o formato de email.
+	*
+	* @param context Contexto da página
+	* @param component Componente que chama o método
+	* @param value Valor do componente
+	* @author Ariel Molina 
+	*/
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
 		String valor = value.toString();
 		if (!valor.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")) {
@@ -189,6 +202,12 @@ public class LoginBean implements Serializable {
 		}
 	}
 	
+	/**
+	* Realizar o login no sistema
+	*
+	* @return retorna vazio caso login seja inválido, e para a home caso seja válido
+	* @author Ariel Molina 
+	*/
 	public String login(){
 		
 		String returnPage = "";
@@ -215,6 +234,12 @@ public class LoginBean implements Serializable {
 		return returnPage;
 	}
 	
+	/**
+	* Verifica se o email já está cadastrado e retorna para a página correspondente
+	*
+	* @return retorna vazio caso o email já esteja cadastrado, e para o cadastro de perfil caso não esteja
+	* @author Ariel Molina 
+	*/
 	public String cadastrar(){
 		
 		String returnPage = "";
@@ -240,6 +265,12 @@ public class LoginBean implements Serializable {
 		
 	}
 	
+	/**
+	* Realiza o logout do site e finaliza a sessão
+	* 
+	* @return retorna para a página index
+	* @author Ariel Molina 
+	*/
 	public String logout(){
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -250,6 +281,11 @@ public class LoginBean implements Serializable {
 		
 	}
 	
+	/**
+	* Muda a linguagem da sessão para inglês
+	*
+	* @author Ariel Molina 
+	*/
 	public void changeEnglish() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		UIViewRoot view = context.getViewRoot();
@@ -257,6 +293,11 @@ public class LoginBean implements Serializable {
 		view.setLocale(locale);
 	}
 
+	/**
+	* Muda a linguagem da sessão para português brasileiro
+	*
+	* @author Ariel Molina 
+	*/
 	public void changePortuguese() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		UIViewRoot view = context.getViewRoot();

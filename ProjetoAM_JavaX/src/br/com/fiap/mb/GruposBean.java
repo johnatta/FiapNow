@@ -43,14 +43,6 @@ public class GruposBean implements Serializable {
 		meusGrupos = grupoDAO.buscaGruposDaPessoa(pessoa);
 	}
 	
-	public void filtrar(ActionEvent ae){
-		grupos = grupoDAO.buscarGruposAbertosPorNome(filtro);
-		meusGrupos = grupoDAO.buscarMeusGruposPorNome(pessoa, filtro);
-	}
-	
-	public String visualizarGrupo(){
-		return "grupo.xhtml";
-	}
 	
 	public List<Grupo> getGrupos() {
 		return grupos;
@@ -83,5 +75,25 @@ public class GruposBean implements Serializable {
 		this.pessoa = pessoa;
 	}
 
+	/**
+	 * Filtra os Grupos pelo nome.
+	 *
+	 * @param ae ActionEvent
+	 * @author Ariel Molina 
+	 */
+	public void filtrar(ActionEvent ae){
+		grupos = grupoDAO.buscarGruposAbertosPorNome(filtro);
+		meusGrupos = grupoDAO.buscarMeusGruposPorNome(pessoa, filtro);
+	}
+	
+	/**
+	 * Retorna a página de visualização grupo.
+	 *
+	 * @return página de visualização do grupo clicado
+	 * @author Ariel Molina 
+	 */
+	public String visualizarGrupo(){
+		return "grupo.xhtml";
+	}
+	
 }
-

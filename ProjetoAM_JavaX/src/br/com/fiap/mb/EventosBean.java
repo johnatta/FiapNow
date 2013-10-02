@@ -45,10 +45,6 @@ public class EventosBean implements Serializable {
 		meusEventos = eventoDAO.buscarEventosDaPessoa(pessoa);
 	}
 	
-	public void filtrar(ActionEvent ae){
-		eventos = eventoDAO.buscarEventosAbertosPorNome(filtro);
-		meusEventos = eventoDAO.buscarMeusEventosPorNome(pessoa, filtro);
-	}
 	
 	public List<Evento> getEventos() {
 		return eventos;
@@ -81,7 +77,25 @@ public class EventosBean implements Serializable {
 		this.filtro = filtro;
 	}
 	
+	/**
+	 * Filtra os Eventos pelo nome.
+	 *
+	 * @param ae ActionEvent
+	 * @author Ariel Molina 
+	 */
+	public void filtrar(ActionEvent ae){
+		eventos = eventoDAO.buscarEventosAbertosPorNome(filtro);
+		meusEventos = eventoDAO.buscarMeusEventosPorNome(pessoa, filtro);
+	}
+	
+	/**
+	* Retorna a página de visualização evento.
+	*
+	* @return página de visualização do evento clicado
+	* @author Ariel Molina 
+	*/
 	public String visualizarEvento(){
 		return "evento.xhtml";
 	}
+	
 }

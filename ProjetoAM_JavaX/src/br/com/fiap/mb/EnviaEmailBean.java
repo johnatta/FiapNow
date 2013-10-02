@@ -67,11 +67,19 @@ public class EnviaEmailBean implements Serializable {
 	public boolean isEnviado() {
 		return enviado;
 	}
-
 	public void setEnviado(boolean enviado) {
 		this.enviado = enviado;
 	}
-
+	
+	
+	/**
+	* Realiza a validação do campo que está chamando, verificando se possui o formato de email.
+	*
+	* @param context Contexto da página
+	* @param component Componente que chama o método
+	* @param value Valor do componente
+	* @author Ariel Molina 
+	*/
 	public void validaEmail(FacesContext context, UIComponent component, Object value) {
 		
 		String valor = value.toString();
@@ -89,6 +97,12 @@ public class EnviaEmailBean implements Serializable {
 		
 	}
 
+	/**
+	* Envia o email de convite.
+	*
+	* @exception Exception caso haja algum erro no envio do email
+	* @author Ariel Molina 
+	*/
 	public void enviaEmail(){
 		
 		HtmlEmail email = new HtmlEmail(); 
