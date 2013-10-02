@@ -60,15 +60,15 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 
 	@Override
 	public List<Esporte> buscarCategoria() {
-		TypedQuery<Esporte> query = em.createQuery("from AM_ESPORTE", Esporte.class);
+		TypedQuery<Esporte> query = em.createQuery("from Esporte", Esporte.class);
 		return query.getResultList();
 	}
 
 	@Override
-	public Evento adcionarPessoaEvento(int codEvento) {
-		TypedQuery<Evento> query = em.createQuery("select PES.cod_pessoa, PES.apelido, PES.imagem_perfil " +
-				"from AM_PESSOA PES where pes.cod_pessoa not in" +
-				"( select cod_pessoa from am_pessoa_evento where cod_evento= :cod);",Evento.class);
+	public Pessoa adcionarPessoaEvento(int codEvento) {
+		TypedQuery<Pessoa> query = em.createQuery("select PES.codPessoa, PES.apelido, PES.imgPerfil " +
+				"from Pessoa PES where PES.codPessoa not in" +
+				"( select codPessoa from Pessoa p inner join p.eventos e where e.codEvento= :cod)",Pessoa.class);
 		query.setParameter("cod", codEvento);
 		return query.getSingleResult();
 	}
