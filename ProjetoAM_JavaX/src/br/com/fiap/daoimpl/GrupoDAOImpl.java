@@ -16,6 +16,7 @@ import javax.persistence.TypedQuery;
 import org.primefaces.model.DefaultStreamedContent;
 
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
@@ -248,6 +249,31 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 				);
 		
 		return commentsGrupos;
+	}
+
+	@Override
+	public List<Evento> buscarProximosEventos(int codGrupo) {
+		List<Evento> eventos = new ArrayList<Evento>();
+		String queryStr = "SELECT eve.* FROM AM_EVENTO eve WHERE eve.cod_evento IN " + 
+				"(SELECT eg.cod_evento FROM AM_EVENTO_GRUPO eg WHERE eg.cod_grupo = ? ) AND eve.data_evento >= ?";
+		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery(queryStr, Evento.class);
+		query.setParameter(1, codGrupo);
+		query.setParameter(2, Calendar.getInstance());
+		
+		eventos = query.getResultList();
+		Collections.sort(eventos, new Comparator<Evento>() {
+			public int compare(Evento object1, Evento object2) {
+				return object1.getDtEvento().compareTo(object2.getDtEvento());
+			}
+		}
+				);
+		return eventos;
+	}
+
+	@Override
+	public List<Evento> buscarHistoricoEvento(int codGrupo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -1,11 +1,7 @@
 package br.com.fiap.teste;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -22,6 +18,7 @@ import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Esporte;
+import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.PedidoGrupo;
@@ -61,6 +58,7 @@ public class TesteGrazi {
 		List<Pessoa> moderadores = modDAO.buscarModeradoresDoGrupoRowNum(6);
 		GrupoDAO gDAO = new GrupoDAOImpl(em); 
 		List<ComentarioGrupoRC> comentarios = new ArrayList<ComentarioGrupoRC>();
+		List<Evento> eventos ;
 
 		/*
 		for (Pessoa mod : moderadores) {
@@ -176,7 +174,27 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 			System.out.println(cg.getComentario());
 			System.err.println("----------------------------");
 		}
+		
+		
+		List<Pessoa> pessoas = gDAO.buscarMembrosDoGrupo(1);
+		
+		for(Pessoa pesAB : pessoas){
+			System.out.println("NOME" + pesAB.getNome());
+		}
+		
+		grupos = gDAO.consultaMeusGrupos(1);
+
+		for (Grupo grupoA : grupos) {
+			System.out.println(grupoA.getDescricao());
+		}
 		 */
+		eventos = gDAO.buscarProximosEventos(68);
+		
+		for(Evento eve : eventos){
+			System.out.println("DESCRICAO" + eve.getDescricao());
+			System.err.println("---------------------------");
+			
+		}
 	}
 
 }
