@@ -33,6 +33,7 @@ import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
+import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
@@ -60,8 +61,14 @@ public class GrupoBean implements Serializable {
 	private Pessoa pessoa;
 	private boolean primeiraVez;
 	private List<ComentarioGrupoRC> listaComentarios;
-
-
+	private List<Evento> proximosEventos;
+	private List<Evento> historicoEventos;
+	boolean flagAdm = false; 
+	boolean flagModerador = false; 
+	boolean flagMembro = false; 
+	boolean flagUser = false; 
+	private int comentarioGrupoExcluido;
+	
 	public void buscaGrupo(){
 		if (primeiraVez){
 			primeiraVez = false;
@@ -78,11 +85,9 @@ public class GrupoBean implements Serializable {
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+			proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
+			historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
 
-			boolean flagAdm = false; 
-			boolean flagModerador = false; 
-			boolean flagMembro = false; 
-			boolean flagUser = false; 
 			
 			for(Pessoa moderadorGrupo : moderadores){
 				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
@@ -155,7 +160,8 @@ public class GrupoBean implements Serializable {
 	}
 
 	public void excluirComentario(){
-		//gruDAO.
+		System.out.println();
+		listaComentarios.remove(comentarioGrupoExcluido);
 	}
 	
 	public String visualizarTodosMembros(){
@@ -295,4 +301,56 @@ public class GrupoBean implements Serializable {
 	public void setModeradoresRow(List<Pessoa> moderadoresRow) {
 		this.moderadoresRow = moderadoresRow;
 	}
+
+	public List<Evento> getProximosEventos() {
+		return proximosEventos;
+	}
+
+	public void setProximosEventos(List<Evento> proximosEventos) {
+		this.proximosEventos = proximosEventos;
+	}
+
+	public List<Evento> getHistoricoEventos() {
+		return historicoEventos;
+	}
+
+	public void setHistoricoEventos(List<Evento> historicoEventos) {
+		this.historicoEventos = historicoEventos;
+	}
+
+	public boolean isFlagAdm() {
+		return flagAdm;
+	}
+
+	public void setFlagAdm(boolean flagAdm) {
+		this.flagAdm = flagAdm;
+	}
+
+	public boolean isFlagModerador() {
+		return flagModerador;
+	}
+
+	public void setFlagModerador(boolean flagModerador) {
+		this.flagModerador = flagModerador;
+	}
+
+	public boolean isFlagMembro() {
+		return flagMembro;
+	}
+
+	public void setFlagMembro(boolean flagMembro) {
+		this.flagMembro = flagMembro;
+	}
+
+	public boolean isFlagUser() {
+		return flagUser;
+	}
+
+	public void setFlagUser(boolean flagUser) {
+		this.flagUser = flagUser;
+	}
+
+
+	
+	
 }
