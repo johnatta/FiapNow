@@ -210,7 +210,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	@Override
 	public List<ComentarioGrupoRC> buscarComentariosPeloGrupo(int codGrupo) {
 		List<ComentarioGrupoRC> commentsGrupos = new ArrayList<ComentarioGrupoRC>();
-		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
+		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (c.codComentario,p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
 			      "FROM ComentarioGrupo c JOIN c.codPessoa p " +
 			      "WHERE c.codGrupo.codGrupo = :cod and rownum <= 10";
 		
@@ -232,7 +232,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	@Override
 	public List<ComentarioGrupoRC> buscarComentariosPorPessoa(int codPessoa) {
 		List<ComentarioGrupoRC> commentsGrupos = new ArrayList<ComentarioGrupoRC>();
-		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
+		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioGrupoRC (c.codComentario, p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dataHora) " +
 			      "FROM ComentarioGrupo c JOIN c.codPessoa p " +
 			      "WHERE c.codPessoa.codPessoa = :cod";
 		

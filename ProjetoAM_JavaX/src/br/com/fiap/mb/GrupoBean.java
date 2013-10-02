@@ -134,11 +134,7 @@ public class GrupoBean implements Serializable {
 	}
 
 	public String sairGrupo(){
-		for(Grupo grupo : pessoa.getGruposParticipantes()){
-			if(grupo.getCodGrupo() == codGrupo){
-				pessoa.getGruposParticipantes().remove(getCodGrupo());
-			}
-		}
+		gruDAO.removeById(getCodGrupo());
 		return "grupo.xhtml";
 	}
 	
@@ -161,7 +157,8 @@ public class GrupoBean implements Serializable {
 
 	public void excluirComentario(){
 		System.out.println();
-		listaComentarios.remove(comentarioGrupoExcluido);
+		comentarioGrupoDAO.removeById(comentarioGrupoExcluido);
+		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 	}
 	
 	public String visualizarTodosMembros(){
@@ -348,6 +345,14 @@ public class GrupoBean implements Serializable {
 
 	public void setFlagUser(boolean flagUser) {
 		this.flagUser = flagUser;
+	}
+
+	public int getComentarioGrupoExcluido() {
+		return comentarioGrupoExcluido;
+	}
+
+	public void setComentarioGrupoExcluido(int comentarioGrupoExcluido) {
+		this.comentarioGrupoExcluido = comentarioGrupoExcluido;
 	}
 
 
