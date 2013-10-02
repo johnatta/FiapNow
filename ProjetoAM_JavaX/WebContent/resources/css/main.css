@@ -11,7 +11,7 @@ a {color: #233e42}
 }
 #header{
 	color: #FFF;
-	padding:3px;
+	padding:3px 0px 3px 0px;
 	background-color:#ff9f0f;
 	width:100%;
 }
