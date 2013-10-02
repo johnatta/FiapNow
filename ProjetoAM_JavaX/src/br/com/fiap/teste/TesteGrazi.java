@@ -187,8 +187,16 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		for (Grupo grupoA : grupos) {
 			System.out.println(grupoA.getDescricao());
 		}
-		 */
 		eventos = gDAO.buscarProximosEventos(68);
+		
+		for(Evento eve : eventos){
+			System.out.println("DESCRICAO" + eve.getDescricao());
+			System.err.println("---------------------------");
+			
+		}
+		 */
+		
+		eventos = gDAO.buscarHistoricoEvento(2);
 		
 		for(Evento eve : eventos){
 			System.out.println("DESCRICAO" + eve.getDescricao());
