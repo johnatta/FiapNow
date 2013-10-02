@@ -7,16 +7,19 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
@@ -59,6 +62,8 @@ public class TesteGrazi {
 		GrupoDAO gDAO = new GrupoDAOImpl(em); 
 		List<ComentarioGrupoRC> comentarios = new ArrayList<ComentarioGrupoRC>();
 		List<Evento> eventos ;
+		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
+		ComentarioGrupoDAO comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 
 		/*
 		for (Pessoa mod : moderadores) {
@@ -194,7 +199,6 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 			System.err.println("---------------------------");
 			
 		}
-		 */
 		
 		eventos = gDAO.buscarHistoricoEvento(2);
 		
@@ -203,6 +207,10 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 			System.err.println("---------------------------");
 			
 		}
+		comentarioGrupo = comentarioGrupoDAO.searchByID(28);
+		comentarioGrupoDAO.remove(comentarioGrupo);		
+		 */
+
 	}
 
 }
