@@ -1,10 +1,12 @@
 package br.com.fiap.mb;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,24 +21,31 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
+import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
+import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
+import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.entity.Privacidade;
 import br.com.fiap.rc.ComentarioGrupoRC;
 
 @ManagedBean
@@ -68,6 +77,12 @@ public class GrupoBean implements Serializable {
 	boolean flagMembro = false; 
 	boolean flagUser = false; 
 	private int comentarioGrupoExcluido;
+	private Grupo edicaoGrupo; 
+	private List<Privacidade> privs;
+	private EsporteDataModel edm;
+	private Esporte[] espSelecionados;
+	private List<Esporte> esportes;
+	private List<Esporte> listEsporte;
 	
 	public void buscaGrupo(){
 		if (primeiraVez){
@@ -112,11 +127,18 @@ public class GrupoBean implements Serializable {
 
 	@PostConstruct
 	public void onInit(){
+		edicaoGrupo = new Grupo();
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		modDAO = new ModeradorGrupoDAOImpl(em);
 		comentarioGrupo = new ComentarioGrupo();
+		listEsporte = new ArrayList<Esporte>();
+		esportes = espDAO.buscarTodosEsportes();		
+		
+		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
+		edm = new EsporteDataModel(esportes); 
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -134,8 +156,13 @@ public class GrupoBean implements Serializable {
 	}
 
 	public String sairGrupo(){
-		gruDAO.removeById(getCodGrupo());
-		return "grupo.xhtml";
+		for (int i = 0; i < pessoa.getGruposParticipantes().size() ; i++) {
+			if(pessoa.getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
+				pessoa.getGruposParticipantes().remove(i);
+			}
+		}
+		pDAO.update(pessoa);
+		return "grupos.xhtml";
 	}
 	
 	public void btnEnviarComentario(){
@@ -157,8 +184,9 @@ public class GrupoBean implements Serializable {
 
 	public void excluirComentario(){
 		System.out.println();
-		comentarioGrupoDAO.removeById(comentarioGrupoExcluido);
-		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+		//comentarioGrupo = comentarioGrupoDAO.searchByID(comentarioGrupoExcluido);
+		//comentarioGrupoDAO.remove(comentarioGrupo);
+		//listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 	}
 	
 	public String visualizarTodosMembros(){
@@ -188,7 +216,58 @@ public class GrupoBean implements Serializable {
 	public String paginaGrupo(){
 		return "grupo.xhtml";
 	}
-
+	
+	public String edicaoGrupo(){
+		primeiraVez = true;
+		edicaoGrupo = gruDAO.searchByID(grupo.getCodGrupo());
+		return "edicao_grupo.xhtml";
+	}
+	
+	public String salvarEdicao(){
+		for (Esporte esporte : getEspSelecionados()) {
+			listEsporte.add(esporte);
+		}
+		if (getEspSelecionados().length != 0){
+			edicaoGrupo.setEsportes(listEsporte);
+		}
+		return "grupos.xhtml";
+	}
+	
+	public void excluirMembro(int codPessoa){
+		for (int i = 0; i < pDAO.searchByID(codPessoa).getGruposParticipantes().size() ; i++) {
+			if(pDAO.searchByID(codPessoa).getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
+				pDAO.searchByID(codPessoa).getGruposParticipantes().remove(i);
+			}
+		}
+		pDAO.update(pessoa);
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
+	}
+	
+	public void excluirModerador(int codPessoa){
+		for (int i = 0; i < pDAO.searchByID(codPessoa).getGruposParticipantes().size() ; i++) {
+			if(pDAO.searchByID(codPessoa).getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
+				pDAO.searchByID(codPessoa).getGruposParticipantes().remove(i);
+			}
+		}
+		pDAO.update(pessoa);
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
+	}
+	
+	public void realizarUpload(FileUploadEvent event) {
+		try {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			edicaoGrupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
+			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
+			fc.addMessage("messages", fm);
+		} catch (IOException e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("Erro no Processo de Upload!");
+			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage("messages", fm);
+			e.printStackTrace();
+		}
+	}
+	
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -355,7 +434,53 @@ public class GrupoBean implements Serializable {
 		this.comentarioGrupoExcluido = comentarioGrupoExcluido;
 	}
 
+	public Grupo getEdicaoGrupo() {
+		return edicaoGrupo;
+	}
 
-	
-	
+	public void setEdicaoGrupo(Grupo edicaoGrupo) {
+		this.edicaoGrupo = edicaoGrupo;
+	}
+
+	public List<Privacidade> getPrivs() {
+		return privs;
+	}
+
+	public void setPrivs(List<Privacidade> privs) {
+		this.privs = privs;
+	}
+
+	public EsporteDataModel getEdm() {
+		return edm;
+	}
+
+	public void setEdm(EsporteDataModel edm) {
+		this.edm = edm;
+	}
+
+	public Esporte[] getEspSelecionados() {
+		return espSelecionados;
+	}
+
+	public void setEspSelecionados(Esporte[] espSelecionados) {
+		this.espSelecionados = espSelecionados;
+	}
+
+	public List<Esporte> getEsportes() {
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
+	}
+
+	public List<Esporte> getListEsporte() {
+		return listEsporte;
+	}
+
+	public void setListEsporte(List<Esporte> listEsporte) {
+		this.listEsporte = listEsporte;
+	}
+
+ 	
 }

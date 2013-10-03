@@ -9,6 +9,7 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+	<h:form id="todosMembros">
 		<h1>Todos membros Grupo</h1>
 		<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="5"
 			rows="8" paginator="true"
@@ -17,9 +18,14 @@
 			<p:panel>
 				<h:panelGrid columns="1" style="width:50%">
 					<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
+					<p:commandButton type="submit" value="Excluir" ajax="false"
+						icon="ui-icon-trash" action="#{grupoBean.excluirMembro(mem.codPessoa)}"
+						update=":todosMembros:membrosGrp">
+					</p:commandButton>
 				</h:panelGrid>
 			</p:panel>
 		</p:dataGrid>
+		</h:form>
 	</ui:define>
 </ui:composition>
 
