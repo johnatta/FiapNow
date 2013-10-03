@@ -25,11 +25,11 @@ public class ModeradorEvento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorEvento")
-	@Column(name="cod_moderador_evento")
+	@Column(name="cod_moderador_evento", nullable = false)
 	private int codModeradorEvento;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="cod_moderador_evento")
+	@JoinColumn(name="cod_evento")
 	private Evento evento;		
 
 	@ManyToOne(cascade=CascadeType.ALL)
