@@ -9,17 +9,24 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+	<h:form id="todosModeradores">
 		<h1>Todos moderadores Grupo</h1>
-		<p:dataGrid var="moderadores" value="#{grupoBean.moderadores}" columns="5"
-			rows="8" paginator="true"
+		<p:dataGrid var="moderadores" value="#{grupoBean.moderadores}"
+			columns="5" rows="8" paginator="true"
 			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			rowsPerPageTemplate="9,12,15">
 			<p:panel>
 				<h:panelGrid columns="1" style="width:50%">
 					<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
+					<p:commandButton type="submit" value="Excluir" ajax="false"
+						icon="ui-icon-trash"
+						action="#{grupoBean.excluirModerador(moderador.codPessoa)}"
+						update=":todosModeradores:moderadores">
+					</p:commandButton>
 				</h:panelGrid>
 			</p:panel>
 		</p:dataGrid>
+		</h:form>
 	</ui:define>
 </ui:composition>
 
