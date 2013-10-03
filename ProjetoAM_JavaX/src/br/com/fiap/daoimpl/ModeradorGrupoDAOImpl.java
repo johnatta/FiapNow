@@ -51,7 +51,7 @@ public class ModeradorGrupoDAOImpl extends DAOImpl<ModeradorGrupo, Integer> impl
 	 */
 	@Override
 	public ModeradorGrupo buscarModeradorGrupo(int codGrupo, int codPessoa) {
-		TypedQuery<ModeradorGrupo> query = (TypedQuery<ModeradorGrupo>) em.createNativeQuery("from ModeradorGrupo mg where mg.grupo.codGrupo = :codGrupo and mg.pessoa.codPessoa = :codPessoa", ModeradorGrupo.class);
+		TypedQuery<ModeradorGrupo> query = (TypedQuery<ModeradorGrupo>) em.createQuery("from ModeradorGrupo mg where mg.grupo.codGrupo = :codGrupo and mg.pessoa.codPessoa = :codPessoa", ModeradorGrupo.class);
 		query.setParameter("codGrupo", codGrupo);
 		query.setParameter("codPessoa", codPessoa);
 		return query.getSingleResult();
