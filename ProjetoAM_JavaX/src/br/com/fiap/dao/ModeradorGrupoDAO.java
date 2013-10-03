@@ -9,5 +9,5 @@ public interface ModeradorGrupoDAO extends DAO<ModeradorGrupo, Integer> {
 	
 	public	List <Pessoa> buscarModeradoresDoGrupo(int codGrupo);
 	public	List <Pessoa> buscarModeradoresDoGrupoRowNum(int codGrupo);
-
+	public ModeradorGrupo buscarModeradorGrupo(int codGrupo, int codPessoa);
 }
