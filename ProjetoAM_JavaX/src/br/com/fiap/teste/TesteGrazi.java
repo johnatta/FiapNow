@@ -209,8 +209,12 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		}
 		comentarioGrupo = comentarioGrupoDAO.searchByID(28);
 		comentarioGrupoDAO.remove(comentarioGrupo);		
-		 */
 
+		modGrupo = modDAO.buscarModeradorGrupo(1, 3);
+		
+		System.out.println("NOME GRUPO: " + modGrupo.getGrupo().getNomeGrupo());
+		System.out.println("NOME PESSOA: " + modGrupo.getPessoa().getNome());
+		 */
 	}
 
 }
