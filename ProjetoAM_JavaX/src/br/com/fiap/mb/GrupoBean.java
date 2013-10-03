@@ -96,7 +96,7 @@ public class GrupoBean implements Serializable {
 			grupo = gruDAO.buscarInfoGrupo(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-			membrosGrpRow = pDAO.buscarMembrosDoGrupoRow(codGrupo);
+			membrosGrpRow = gruDAO.buscarMembrosDoGrupoRow(codGrupo);
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);

@@ -34,4 +34,6 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	List<Evento> buscarProximosEventos(int codGrupo);
 	
 	List<Evento> buscarHistoricoEvento(int codGrupo);
+	
+	List<Pessoa> buscarMembrosDoGrupoRow(int codGrupo);
 } 

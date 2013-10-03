@@ -46,21 +46,6 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 	}
 
 	/**
-	 * Busca seis membros do Grupo
-	 *
-	 * @param codGrupo Código do Grupo ser procurada
-	 * @return Membros encontrados
-	 * @author Johnatta Santos
-	 */
-	@Override
-	public List<Pessoa> buscarMembrosDoGrupoRow(int codGrupo) {
-		@SuppressWarnings("unchecked")
-		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE cod_pessoa IN (SELECT cod_pessoa  FROM AM_PESSOA_GRUPO  WHERE cod_grupo = :codGrupo and rownum <=6)", Pessoa.class);
-		p.setParameter("codGrupo", codGrupo);
-		return p.getResultList();
-	}
-
-	/**
 	 * Busca todas as Pessoas cadastradas
 	 *
 	 * @return Pessoas encontradas
