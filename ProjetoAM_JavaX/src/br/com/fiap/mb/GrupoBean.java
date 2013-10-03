@@ -15,14 +15,11 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -122,6 +119,15 @@ public class GrupoBean implements Serializable {
 					flagUser = true;
 				}
 			}
+			
+			GrupoBean grupoBean = new GrupoBean();
+			grupoBean.btnRenderDeleteComent();
+			grupoBean.btnRenderEditGroup();
+			grupoBean.btnRenderFormComents();
+			grupoBean.btnRenderFormVisuComents();
+			grupoBean.btnRenderRemoveGroup();
+			grupoBean.btnRenderSairGroup();
+			grupoBean.btnRenderTodosModes();
 		}
 	}
 
@@ -154,6 +160,13 @@ public class GrupoBean implements Serializable {
 		String dataFormatada = sdf.format(data);
 		return dataFormatada; 
 	}
+	
+	public String dataFormatadaDDMMYYYY(Calendar dataComentario){
+		Date data = dataComentario.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+		String dataFormatada = sdf.format(data);
+		return dataFormatada; 
+	}
 
 	public String sairGrupo(){
 		for (int i = 0; i < pessoa.getGruposParticipantes().size() ; i++) {
@@ -181,7 +194,7 @@ public class GrupoBean implements Serializable {
 		fm.setSummary("Comentario cadastrado");
 		fc.addMessage("", fm);
 	}
-
+	
 	public void excluirComentario(){
 		System.out.println();
 		//comentarioGrupo = comentarioGrupoDAO.searchByID(comentarioGrupoExcluido);
@@ -247,6 +260,32 @@ public class GrupoBean implements Serializable {
 		ModeradorGrupo moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
 		modDAO.remove(moderadorGrupo);
 		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+	}
+	
+	public boolean btnRenderEditGroup(){
+		return false;
+	}
+	
+	public boolean btnRenderRemoveGroup(){
+		return false;
+	}
+	public boolean btnRenderSairGroup(){
+		return false;
+	}
+	public boolean btnRenderTodosModes(){
+		return false;
+	}
+	
+	public boolean btnRenderFormComents(){
+		return false;
+	}
+	
+	public boolean btnRenderFormVisuComents(){
+		return false;
+	}
+	
+	public boolean btnRenderDeleteComent(){
+		return false;
 	}
 	
 	public void realizarUpload(FileUploadEvent event) {
