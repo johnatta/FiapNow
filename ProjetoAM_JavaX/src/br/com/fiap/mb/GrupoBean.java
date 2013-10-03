@@ -244,13 +244,16 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public void excluirModerador(int codPessoa){
+		
+		modDAO.removeById(codPessoa);
+		
 		for (int i = 0; i < pDAO.searchByID(codPessoa).getGruposParticipantes().size() ; i++) {
 			if(pDAO.searchByID(codPessoa).getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
 				pDAO.searchByID(codPessoa).getGruposParticipantes().remove(i);
 			}
 		}
 		pDAO.update(pessoa);
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
+		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 	}
 	
 	public void realizarUpload(FileUploadEvent event) {
