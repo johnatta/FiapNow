@@ -256,7 +256,6 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		eventoA.setAdm(p);
 		eventoA.setGrupos(grupos);
 		//eDAO.insert(eventoA);
-		 */
 		g = gDAO.searchByID(6);
 		p = pDAO.searchByID(1);
 
@@ -275,7 +274,7 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		mgA.setDescricao("Ministério do Esporte encaminha o recibo à Receita Federal, que abate o valor repassado do Imposto");
 		mgA.setGrupo(g);
 		mgA.setPessoa(p);
-		mDAO.insert(mgA);
+		//mDAO.insert(mgA);
 		
 		MensagemGrupo mgB = new MensagemGrupo();
 		mgB.setConfirmacao(Confirmacao.NAO);
@@ -283,7 +282,8 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		mgB.setDescricao("Promover a inclusão social e desportiva e despertar o interesse pelo ideal paraolímpico são os");
 		mgB.setGrupo(g);
 		mgB.setPessoa(p);
-		mDAO.insert(mgB);
+		//mDAO.insert(mgB);
+		 */
 		
 		
 		
