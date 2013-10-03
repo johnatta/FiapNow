@@ -16,7 +16,7 @@ public class ConviteEventoDAOImpl extends DAOImpl<ConviteEvento, Integer> implem
 	}
 
 	/**
-	* Busca os ConviteEvento da Pessoa
+	* Busca os Convites de Evento da Pessoa
 	*
 	* @param pessoa Pessoa que será utilizada para a busca
 	* @return Convites da pessoa

@@ -51,7 +51,7 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	public List<ComentarioEventoRC> buscarComentariosPeloEvento(int codEvento) {
 		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioEventoRC(p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora) " +
 			      "FROM ComentarioEvento c JOIN c.codPessoa p " +
-			      "WHERE c.codEvento.codEvento = :cod";
+			      "WHERE c.codEvento.codEvento = :cod and rownum <= 10";
 		TypedQuery<ComentarioEventoRC> query = em.createQuery(queryStr, ComentarioEventoRC.class);
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
