@@ -72,7 +72,8 @@ public class GrupoBean implements Serializable {
 	boolean flagAdm = false; 
 	boolean flagModerador = false; 
 	boolean flagMembro = false; 
-	boolean flagUser = false; 
+	boolean flagUser = false;
+	boolean flagUserFechado = false; 
 	private int comentarioGrupoExcluido;
 	private Grupo edicaoGrupo; 
 	private List<Privacidade> privs;
@@ -82,15 +83,12 @@ public class GrupoBean implements Serializable {
 	private List<Esporte> listEsporte;
 	
 	public void buscaGrupo(){
-		if (primeiraVez){
-			primeiraVez = false;
-
 			if(codGrupo == 0 ){
 				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 			}
-
-			grupo = gruDAO.buscarInfoGrupo(codGrupo);
+			
+			grupo = gruDAO.searchByID(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
 			membrosGrpRow = gruDAO.buscarMembrosDoGrupoRow(codGrupo);
@@ -100,34 +98,26 @@ public class GrupoBean implements Serializable {
 			proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 			historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
 
+			for(Grupo g : pessoa.getGruposParticipantes()){				
+				if(g.getCodGrupo() == codGrupo){
+					flagMembro = true;
+				}else{
+					if(grupo.getPrivacidade() == Privacidade.Fechado){
+						flagUserFechado = true;
+					}else{
+						flagUser = true;
+					}
+				}
+			}		
 			
 			for(Pessoa moderadorGrupo : moderadores){
 				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
 					flagModerador = true;
 				}	
-
 			}
-
+			
 			if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
 				flagAdm = true;
-			}
-			
-			for(Grupo g : pessoa.getGruposParticipantes()){				
-				if(g.getCodGrupo() == codGrupo){
-					flagMembro = true;
-				}else{
-					flagUser = true;
-				}
-			}
-			
-			GrupoBean grupoBean = new GrupoBean();
-			grupoBean.btnRenderDeleteComent();
-			grupoBean.btnRenderEditGroup();
-			grupoBean.btnRenderFormComents();
-			grupoBean.btnRenderFormVisuComents();
-			grupoBean.btnRenderRemoveGroup();
-			grupoBean.btnRenderSairGroup();
-			grupoBean.btnRenderTodosModes();
 		}
 	}
 
@@ -263,31 +253,63 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public boolean btnRenderEditGroup(){
-		return false;
+		if(flagAdm)
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean btnRenderRemoveGroup(){
-		return false;
-	}
+		if(flagAdm)
+			return true;
+		else
+			return false;
+		}
 	public boolean btnRenderSairGroup(){
-		return false;
+		if(flagMembro || flagModerador)
+			return true;
+		else
+			return false;
 	}
 	public boolean btnRenderTodosModes(){
-		return false;
+		if(!flagUserFechado)
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean btnRenderFormComents(){
-		return false;
+		if(flagMembro || flagModerador || flagAdm)
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean btnRenderFormVisuComents(){
-		return false;
+		if(!flagUserFechado) 
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean btnRenderDeleteComent(){
-		return false;
-	}
-	
+		if(flagAdm || flagModerador)
+			return true;
+		else
+			return false;
+	}	
+	public boolean btnRenderTodosMembs(){
+		if(!flagUserFechado)
+			return true;
+		else
+			return false;
+	}	
+	public boolean btnRenderEditDesc(){
+		if(flagAdm)
+			return true;
+		else
+			return false;
+	}		
 	public void realizarUpload(FileUploadEvent event) {
 		try {
 			FacesContext fc = FacesContext.getCurrentInstance();
@@ -515,6 +537,14 @@ public class GrupoBean implements Serializable {
 
 	public void setListEsporte(List<Esporte> listEsporte) {
 		this.listEsporte = listEsporte;
+	}
+
+	public boolean isFlagUserFechado() {
+		return flagUserFechado;
+	}
+
+	public void setFlagUserFechado(boolean flagUserFechado) {
+		this.flagUserFechado = flagUserFechado;
 	}
 
  	
