@@ -12,6 +12,7 @@ import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
@@ -19,13 +20,16 @@ import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
+import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
@@ -253,6 +257,36 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		eventoA.setGrupos(grupos);
 		//eDAO.insert(eventoA);
 		 */
+		g = gDAO.searchByID(6);
+		p = pDAO.searchByID(1);
+
+		MensagemGrupoDAO mDAO = new MensagemGrupoDAOImpl(em);
+		MensagemGrupo mg = new MensagemGrupo();
+		mg.setConfirmacao(Confirmacao.NAO);
+		mg.setTitulo("Evento novo");
+		mg.setDescricao("Em breve notícias do próximo evento que o grupo vai participar");
+		mg.setGrupo(g);
+		mg.setPessoa(p);
+		//mDAO.insert(mg);
+		
+		MensagemGrupo mgA = new MensagemGrupo();
+		mgA.setConfirmacao(Confirmacao.NAO);
+		mgA.setTitulo("Patrocinadores");
+		mgA.setDescricao("Ministério do Esporte encaminha o recibo à Receita Federal, que abate o valor repassado do Imposto");
+		mgA.setGrupo(g);
+		mgA.setPessoa(p);
+		mDAO.insert(mgA);
+		
+		MensagemGrupo mgB = new MensagemGrupo();
+		mgB.setConfirmacao(Confirmacao.NAO);
+		mgB.setTitulo("Lei do Incentivo");
+		mgB.setDescricao("Promover a inclusão social e desportiva e despertar o interesse pelo ideal paraolímpico são os");
+		mgB.setGrupo(g);
+		mgB.setPessoa(p);
+		mDAO.insert(mgB);
+		
+		
+		
 	}
 
 }
