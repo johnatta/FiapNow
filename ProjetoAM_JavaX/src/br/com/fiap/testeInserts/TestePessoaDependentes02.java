@@ -91,6 +91,7 @@ public class TestePessoaDependentes02 {
 
 		//pessoaDAO.insert(pessoa);
 
+		/*
 		//Buscando por ID - PESSOA  ATUALIZANDO
 		Pessoa pes = new Pessoa();
 		Pessoa pesB = new Pessoa();
@@ -116,7 +117,6 @@ public class TestePessoaDependentes02 {
 		pessoaE = pessoaDAO.searchByID(1);
 		pessoaE.setEventos(eventos);
 		pessoaDAO.update(pessoaE);
-		/*
 		 */
 		
 	}
