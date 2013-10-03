@@ -25,6 +25,9 @@ public class ModeradorEvento implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorEvento")
+	@Column(name="cod_moderador_evento")
+	private int codModeradorEvento;
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_moderador_evento")
 	private Evento evento;		
@@ -33,8 +36,9 @@ public class ModeradorEvento implements Serializable {
 	@JoinColumn(name="moderador_evento_pessoa")
 	private Pessoa pessoa;
 
-	public ModeradorEvento(Evento evento, Pessoa pessoa) {
+	public ModeradorEvento(int codModeradorEvento, Evento evento, Pessoa pessoa) {
 		super();
+		this.codModeradorEvento = codModeradorEvento;
 		this.evento = evento;
 		this.pessoa = pessoa;
 	}
@@ -59,4 +63,13 @@ public class ModeradorEvento implements Serializable {
 		this.pessoa = pessoa;
 	}
 
+	public int getCodModeradorEvento() {
+		return codModeradorEvento;
+	}
+
+	public void setCodModeradorEvento(int codModeradorEvento) {
+		this.codModeradorEvento = codModeradorEvento;
+	}
+
+	
 }

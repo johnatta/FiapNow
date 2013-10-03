@@ -24,6 +24,9 @@ public class ModeradorGrupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqModeradorGrupo")	
+	@Column(name="cod_moderador_grupo")
+	private int codModeradorGrupo;
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_moderador_grupo")
 	private Grupo grupo;	
@@ -32,8 +35,9 @@ public class ModeradorGrupo implements Serializable {
 	@JoinColumn(name="cod_moderador_pessoa")
 	private Pessoa pessoa;
 
-	public ModeradorGrupo(Grupo grupo, Pessoa pessoa) {
+	public ModeradorGrupo(int codModeradorGrupo, Grupo grupo, Pessoa pessoa) {
 		super();
+		this.codModeradorGrupo = codModeradorGrupo;
 		this.grupo = grupo;
 		this.pessoa = pessoa;
 	}
@@ -52,6 +56,12 @@ public class ModeradorGrupo implements Serializable {
 	}
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	public int getCodModeradorGrupo() {
+		return codModeradorGrupo;
+	}
+	public void setCodModeradorGrupo(int codModeradorGrupo) {
+		this.codModeradorGrupo = codModeradorGrupo;
 	}
 	
 }
