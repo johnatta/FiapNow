@@ -16,6 +16,13 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		super(entityManager);
 	}
 	
+	/**
+	 * Busca as informações da Pessoa
+	 *
+	 * @param codPessoa Código da pessoa a ser procurada
+	 * @return Pessoa encontrada
+	 * @author Graziele Vasconcelos
+	 */
 	@Override
 	public Pessoa buscarInformacoes(int codPessoa) {
 		Query query = em.createQuery("from Pessoa pes where pes.codPessoa = :codPessoa");
@@ -23,6 +30,13 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		return (Pessoa) query.getSingleResult();
 	}
 
+	/**
+	 * Busca a Pessoa pelo Usuario
+	 *
+	 * @param codPessoa Código da pessoa a ser procurada
+	 * @return Pessoa encontrada
+	 * @author Graziele Vasconcelos
+	 */
 	@Override
 	public Pessoa buscarPorUsuario(Usuario usuario) {
 		TypedQuery<Pessoa> query = em.createQuery("from Pessoa pes where pes.usuario = :codUsuario",Pessoa.class);
@@ -31,6 +45,13 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		
 	}
 
+	/**
+	 * Busca seis membros do Grupo
+	 *
+	 * @param codGrupo Código do Grupo ser procurada
+	 * @return Membros encontrados
+	 * @author Johnatta Santos
+	 */
 	@Override
 	public List<Pessoa> buscarMembrosDoGrupoRow(int codGrupo) {
 		@SuppressWarnings("unchecked")
@@ -39,6 +60,12 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		return p.getResultList();
 	}
 
+	/**
+	 * Busca todas as Pessoas cadastradas
+	 *
+	 * @return Pessoas encontradas
+	 * @author Graziele Vasconcelos
+	 */
 	@Override
 	public List<Pessoa> buscarTodasPessoas() {
 		TypedQuery<Pessoa> pessoa = (TypedQuery<Pessoa>) em.createQuery("from Pessoa",Pessoa.class);

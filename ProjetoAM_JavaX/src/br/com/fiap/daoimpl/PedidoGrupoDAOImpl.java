@@ -15,6 +15,13 @@ public class PedidoGrupoDAOImpl extends DAOImpl<PedidoGrupo, Integer> implements
 		super(entityManager);
 	}
 
+	/**
+	 * Busca os pedidos para entrar no Grupo da Pessoa
+	 *
+	 * @param pessoa Pessoa a ser utilizada na busca
+	 * @return Pedidos de Grupo encontrados
+	 * @author Ariel Molina
+	 */
 	@Override
 	public List<PedidoGrupo> buscarPedidoGrupoPraPessoa(Pessoa pessoa) {
 		TypedQuery<PedidoGrupo> query = em.createQuery(" from PedidoGrupo where pessoa = :pes",PedidoGrupo.class);

@@ -12,6 +12,14 @@ public class UsuarioDAOImpl extends DAOImpl<Usuario, Integer> implements Usuario
 		super(entityManager);
 	}
 
+	/**
+	 * Busca o Usuario por email e senha
+	 *
+	 * @param email Email a ser utilizado na busca
+	 * @param senha Senha a ser utilizada na busca
+	 * @return Usuario encontrado
+	 * @author Ariel Molina
+	 */
 	@Override
 	public Usuario buscarEmailESenha(String email, String senha) {
 		TypedQuery<Usuario> query = em.createQuery("from Usuario where email = :em and senha = :pw",Usuario.class);
@@ -26,6 +34,13 @@ public class UsuarioDAOImpl extends DAOImpl<Usuario, Integer> implements Usuario
 		return usuarioRetorno;
 	}
 
+	/**
+	 * Busca o Usuario por email
+	 *
+	 * @param email Email a ser utilizado na busca
+	 * @return Usuario encontrado
+	 * @author Ariel Molina
+	 */
 	@Override
 	public Usuario buscarPorEmail(String email) {
 		TypedQuery<Usuario> query = em.createQuery("from Usuario where email = :em",Usuario.class);

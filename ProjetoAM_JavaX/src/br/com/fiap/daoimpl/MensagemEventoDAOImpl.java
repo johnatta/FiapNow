@@ -17,6 +17,13 @@ public class MensagemEventoDAOImpl extends DAOImpl<MensagemEvento, Integer> impl
 		super(entityManager);
 	}
 	
+	/**
+	* Busca as Mensagens de Evento para a Pessoa
+	*
+	* @param pessoa Pessoa a ser utilizada na busca
+	* @return Mensagens encontradas
+	* @author Ariel Molina
+	*/
 	public List<MensagemEvento> buscarMensagensDaPessoa(Pessoa pessoa){
 		TypedQuery<MensagemEvento> query = em.createQuery(" from MensagemEvento me where me.pessoa = :pes", MensagemEvento.class);
 		query.setParameter("pes", pessoa);
@@ -33,6 +40,13 @@ public class MensagemEventoDAOImpl extends DAOImpl<MensagemEvento, Integer> impl
 		return mensagens;
 	}
 	
+	/**
+	* Busca as Mensagens de Evento não lidas da Pessoa
+	*
+	* @param pessoa Pessoa a ser utilizada na busca
+	* @return Mensagens encontradas
+	* @author Ariel Molina
+	*/
 	public List<MensagemEvento> buscarMensagensNaoLidasDaPessoa(Pessoa pessoa){
 		TypedQuery<MensagemEvento> query = em.createQuery(" from MensagemEvento me where me.pessoa = :pes and me.confirmacao = :conf", MensagemEvento.class);
 		query.setParameter("pes", pessoa);

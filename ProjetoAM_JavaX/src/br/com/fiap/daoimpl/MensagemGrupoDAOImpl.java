@@ -16,6 +16,13 @@ public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implem
 		super(entityManager);
 	}
 
+	/**
+	* Busca as Mensagens de Grupo para a Pessoa
+	*
+	* @param pessoa Pessoa a ser utilizada na busca
+	* @return Mensagens encontradas
+	* @author Ariel Molina
+	*/
 	public List<MensagemGrupo> buscarMensagensDaPessoa(Pessoa pessoa){
 		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes order by me.codMensagem desc", MensagemGrupo.class);
 		query.setParameter("pes", pessoa);
@@ -32,6 +39,13 @@ public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implem
 		return mensagens;
 	}
 	
+	/**
+	* Busca as Mensagens de Grupo não lidas da Pessoa
+	*
+	* @param pessoa Pessoa a ser utilizada na busca
+	* @return Mensagens encontradas
+	* @author Ariel Molina
+	*/
 	public List<MensagemGrupo> buscarMensagensNaoLidasDaPessoa(Pessoa pessoa){
 		TypedQuery<MensagemGrupo> query = em.createQuery(" from MensagemGrupo me where me.pessoa = :pes and me.confirmacao = :conf", MensagemGrupo.class);
 		query.setParameter("pes", pessoa);
