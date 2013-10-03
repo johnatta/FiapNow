@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h1>#{msgs.create_group}</h1>
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:panel header="#{msgs.group_information}">
+				<h:messages ></h:messages>
+				<h:panelGrid columns="2" columnClasses="label, value"
+					styleClass="grid">
+					<h:outputText value="#{msgs.image}" />
+					<p:fileUpload
+						fileUploadListener="#{grupoBean.realizarUpload}"
+						required="true" mode="advanced" update="messages"
+						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+						auto="false" dragDropSupport="false" label="Select" />
+
+					<h:outputText value="#{msgs.name}"></h:outputText>
+					<p:inputText value="#{grupoBean.edicaoGrupo.nomeGrupo}" readonly="true" 
+						required="true" maxlength="50" size="48"  />
+
+					<h:outputText value="#{msgs.description}"></h:outputText>
+					<p:inputTextarea value="#{grupoBean.edicaoGrupo.descricao}" 
+						required="true" rows="5" cols="48" counter="counter"
+						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
+					</p:inputTextarea>
+					<br></br>
+					<h:outputText id="counter" />
+
+					<h:outputText value="#{msgs.privacy}"></h:outputText>
+					<p:selectOneMenu effect="fade"
+						value="#{grupoBean.edicaoGrupo.privacidade}" required="true">
+						<f:selectItem itemLabel="#{msgs.select_one}" itemValue=""
+							noSelectionOption="true"></f:selectItem>
+						<f:selectItems value="#{grupoBean.privs}" var="p"
+							itemLabel="#{p}" itemValue="#{p}" required="true" />
+					</p:selectOneMenu>
+					<br></br>
+					<p:dataTable id="multiCars" var="e" value="#{grupoBean.edm}"
+						selection="#{grupoBean.espSelecionados}">
+						<f:facet name="header">#{msgs.select_sports}</f:facet>
+						<p:column selectionMode="multiple" style="width:1%" />
+						<p:column headerText="#{msgs.sport}" style="width:25%">  #{e.nome} </p:column>
+					</p:dataTable>
+				</h:panelGrid>
+
+				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
+					id="criarGrupoPgInfoGrupo" icon="ui-icon-check"
+					action="#{grupoBean.salvarEdicao}" style="margin:0">
+				</p:commandButton>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

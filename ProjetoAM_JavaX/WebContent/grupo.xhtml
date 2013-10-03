@@ -40,7 +40,7 @@
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
 						<f:facet name="footer">
-							<p:commandButton type="button" value="#{msgs.edit}"
+							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}" action="#{grupoBean.edicaoGrupo}"
 								icon="ui-icon-check" style="margin:0" />
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
@@ -93,6 +93,26 @@
 							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}">
 								<h:outputText value="#{msgs.moderators}" />
 							</h:commandLink>
+						</f:facet>
+					</p:carousel>
+					<p:carousel id="proximosEventos"
+						value="#{grupoBean.proximosEventos}" var="proxEvento"
+						itemStyleClass="proxEventoItem">
+						<f:facet name="header">Próximo Evento</f:facet>
+						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+							<h:outputText value="#{proxEvento.nome} (#{proxEvento.dtEvento})" />
+						</h:panelGrid>
+						<f:facet name="footer">					
+						</f:facet>
+					</p:carousel>
+					<p:carousel id="historicoEventos"
+						value="#{grupoBean.historicoEventos}" var="histEvento"
+						itemStyleClass="histEventoItem" >
+						<f:facet name="header">Histórico Evento</f:facet>
+						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+							<h:outputText value="#{histEvento.nome} (#{histEvento.dtEvento})" />
+						</h:panelGrid>
+						<f:facet name="footer">					
 						</f:facet>
 					</p:carousel>
 				</p:panelGrid>
