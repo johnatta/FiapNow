@@ -39,9 +39,9 @@ import br.com.fiap.entity.Usuario;
 public class ConsoleViewGrupo {
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(30, 8, 22);
+		dtNascimento.set(1993, 8, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(30, 6, 12);
+		dtNascimentoA.set(1994, 6, 12);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		

@@ -27,9 +27,9 @@ public class TestePessoaDependentes {
 	 */
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(85, 1, 22);
+		dtNascimento.set(1985, 1, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(89, 6, 12);
+		dtNascimentoA.set(1989, 6, 12);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
@@ -102,8 +102,8 @@ public class TestePessoaDependentes {
 		pessoa.setCodEndereco(endereco);
 		
 		//pessoaDAO.insert(pessoa);
-		/*
 		
+		/*
 		//Buscando por ID - GRUPO
 		Grupo grupo = new Grupo();
 		grupo = grupoDAO.searchByID(1);

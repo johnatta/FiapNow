@@ -43,9 +43,9 @@ public class ConsoleViewGrupo02 {
 	 */
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(12, 10, 22);
+		dtNascimento.set(2012, 10, 22);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(91, 8, 20);
+		dtNascimentoA.set(1991, 8, 20);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		

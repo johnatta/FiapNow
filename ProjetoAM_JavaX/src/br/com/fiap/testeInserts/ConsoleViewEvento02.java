@@ -40,10 +40,10 @@ import br.com.fiap.entity.Usuario;
 public class ConsoleViewEvento02 {
 	
 	public static void main(String[] args) {
-		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(30, 8, 22);
-		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(30, 6, 12);
+		Calendar data = Calendar.getInstance();
+		data.set(2013,10, 01);
+		Calendar dataA = Calendar.getInstance();
+		dataA.set(2013,10, 02);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
@@ -80,7 +80,7 @@ public class ConsoleViewEvento02 {
 		grupoA.setPrivacidade(Privacidade.Aberto);
 		grupoA.setImgGrupo(new byte[3]);
 		grupoA.setEsportes(esportes);
-		pesADM = pessoaDAO.searchByID(5);
+		pesADM = pessoaDAO.searchByID(3);
 		grupoA.setAdm(pesADM);
 		grupos.add(grupoA);
 		
@@ -90,7 +90,7 @@ public class ConsoleViewEvento02 {
 		grupoB.setPrivacidade(Privacidade.Aberto);
 		grupoB.setImgGrupo(new byte[4]);
 		grupoB.setEsportes(esportesA);
-		pADM = pessoaDAO.searchByID(4);
+		pADM = pessoaDAO.searchByID(2);
 		grupoB.setAdm(pADM);
 		
 		Evento evento = new Evento();
@@ -100,7 +100,7 @@ public class ConsoleViewEvento02 {
 		evento.setCusto(0);
 		evento.setTelContato("01150652999");
 		evento.setImgEvento(new byte [4]);
-		evento.setDtEvento(Calendar.getInstance());
+		evento.setDtEvento(data);
 		evento.setGrupos(grupos);
 		admEvent = pessoaDAO.searchByID(1);
 		evento.setAdm(admEvent);
@@ -123,7 +123,7 @@ public class ConsoleViewEvento02 {
 
 		//Buscando por ID - PESSOA
 		Pessoa pes = new Pessoa();
-		pes = pessoaDAO.searchByID(4);
+		pes = pessoaDAO.searchByID(3);
 		
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");

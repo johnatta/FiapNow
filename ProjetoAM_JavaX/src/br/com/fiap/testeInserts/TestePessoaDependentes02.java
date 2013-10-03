@@ -29,14 +29,14 @@ public class TestePessoaDependentes02 {
 	 */
 	public static void main(String[] args) {
 		Calendar dtNascimento = Calendar.getInstance();
-		dtNascimento.set(87, 3, 26);
+		dtNascimento.set(1987, 3, 26);
 		Calendar dtNascimentoA = Calendar.getInstance();
-		dtNascimentoA.set(75, 10, 07);
+		dtNascimentoA.set(1975, 10, 07);
 		
 		Calendar dtNascimentoB = Calendar.getInstance();
-		dtNascimentoB.set(92, 9, 22);
+		dtNascimentoB.set(1992, 9, 22);
 		Calendar dtNascimentoC = Calendar.getInstance();
-		dtNascimentoC.set(91, 6, 12);
+		dtNascimentoC.set(1991, 6, 12);
 		
 		EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		
@@ -91,7 +91,6 @@ public class TestePessoaDependentes02 {
 
 		//pessoaDAO.insert(pessoa);
 
-		/*
 		//Buscando por ID - PESSOA  ATUALIZANDO
 		Pessoa pes = new Pessoa();
 		Pessoa pesB = new Pessoa();
@@ -117,6 +116,7 @@ public class TestePessoaDependentes02 {
 		pessoaE = pessoaDAO.searchByID(1);
 		pessoaE.setEventos(eventos);
 		pessoaDAO.update(pessoaE);
+		/*
 		 */
 		
 	}
