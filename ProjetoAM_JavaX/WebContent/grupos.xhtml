@@ -32,7 +32,9 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<p:graphicImage value="#{gru.foto}" width="80" height="110" style="margin-left:15px;"/>
+									<p:graphicImage value="#{testeImage.image}" width="80" height="110" style="margin-left:15px;">
+										<f:param name="id" value="${gru.codGrupo}"/>
+									</p:graphicImage>
 									<p:commandLink title="#{gru.nomeGrupo}" action="#{gruposBean.visualizarGrupo}">
 										<h:outputText value="#{gru.nomeGrupo} (#{gru.quantidade})" style="margin:0 auto;"/>
 										<f:setPropertyActionListener value="#{gru.codGrupo}"
@@ -58,7 +60,9 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<p:graphicImage value="#{gru.foto}" width="80" height="110" style="margin-left:15px;"/>
+									<p:graphicImage value="#{testeImage.image}" width="80" height="110" style="margin-left:15px;">
+										<f:param name="id" value="${gru.codGrupo}"/>
+									</p:graphicImage>
 									<p:commandLink title="#{gru.nomeGrupo}" action="#{gruposBean.visualizarGrupo}">
 										<h:outputText value="#{gru.nomeGrupo} (#{gru.quantidade})" style="margin:0 auto;" />
 										<f:setPropertyActionListener value="#{gru.codGrupo}"
