@@ -46,8 +46,6 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", grupo.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			grupo.setQuantidade(qtd);
-
-			grupo.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(grupo.getImgGrupo()), "image/jpg"));
 		}
 		
 		Collections.sort(grupos, new Comparator<Grupo>() {
@@ -75,8 +73,6 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", g.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			g.setQuantidade(qtd);
-
-			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
 		}
 		
 		Collections.sort(grupos, new Comparator<Grupo>() {
@@ -238,8 +234,6 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 			queryQtd.setParameter("codGrupo", g.getCodGrupo());
 			BigDecimal qtd = (BigDecimal) queryQtd.getSingleResult();
 			g.setQuantidade(qtd);
-
-			g.setFoto(new DefaultStreamedContent(new ByteArrayInputStream(g.getImgGrupo()), "image/jpg"));
 		}
 		
 		Collections.sort(grupos, new Comparator<Grupo>() {

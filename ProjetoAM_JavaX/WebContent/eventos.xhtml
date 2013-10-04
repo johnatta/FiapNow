@@ -32,7 +32,9 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
+									<p:graphicImage value="#{eventoImage.image}" width="80" height="110" style="margin-left:15px;">
+										<f:param name="id" value="${eve.codEvento}"/>
+									</p:graphicImage>
 									<p:commandLink title="#{eve.nome}" >
 										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;"/>
 										<f:setPropertyActionListener value="#{eve.codEvento}"
@@ -58,7 +60,9 @@
 						<p:panel>
 							<div id="painel">
 								<h:panelGrid columns="1" style="width:100%">
-									<h:graphicImage url="#{eve.imgEvento}" width="80" height="110" style="margin-left:15px;"/>
+									<p:graphicImage value="#{eventoImage.image}" width="80" height="110" style="margin-left:15px;">
+										<f:param name="id" value="${eve.codEvento}"/>
+									</p:graphicImage>
 									<p:commandLink title="#{eve.nome}">
 										<h:outputText value="#{eve.nome} (#{eve.quantidade})" style="margin:0 auto;" />
 										<f:setPropertyActionListener value="#{eve.codEvento}"

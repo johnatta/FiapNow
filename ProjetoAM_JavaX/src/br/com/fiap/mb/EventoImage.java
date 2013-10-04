@@ -2,23 +2,32 @@ package br.com.fiap.mb;
 
 import java.io.ByteArrayInputStream;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.entity.Grupo;
+import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.entity.Evento;
 
 @ManagedBean
 @ApplicationScoped
-public class TesteImage {
+public class EventoImage {
 
-	private GrupoDAO grupoDAO = new GrupoDAOImpl(EntityManagerFactorySingleton.getInstance().createEntityManager());
+	private EntityManager em;
+	private EventoDAO eventoDAO;
+	
+	@PostConstruct
+	public void onInit(){
+		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+		eventoDAO = new EventoDAOImpl(em);
+	}
 	
 	public StreamedContent getImage(){
 		 FacesContext context = FacesContext.getCurrentInstance();
@@ -30,8 +39,8 @@ public class TesteImage {
 	        else {
 	            // So, browser is requesting the image. Get ID value from actual request param.
 	            String id = context.getExternalContext().getRequestParameterMap().get("id");
-	            Grupo grupo = grupoDAO.searchByID(Integer.valueOf(id));
-	            return new DefaultStreamedContent(new ByteArrayInputStream(grupo.getImgGrupo()));
+	            Evento evento = eventoDAO.searchByID(Integer.valueOf(id));
+	            return new DefaultStreamedContent(new ByteArrayInputStream(evento.getImgEvento()));
 	        }
 	}
 }
