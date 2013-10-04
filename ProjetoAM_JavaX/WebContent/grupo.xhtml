@@ -17,10 +17,15 @@
 			<p:growl id="messages" showDetail="true" />
 			<div>
 				<p:panel>
+						<p:graphicImage value="#{testeImage.image}" width="160"
+							height="160" style="margin-left:15px;">
+							<f:param name="id" value="${grupoBean.grupo.codGrupo}" />
+						</p:graphicImage>
 					<p:panelGrid columns="2">
 						<f:facet name="header">
 							<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
 						</f:facet>
+						<br></br>
 						<p:outputLabel value="#{msgs.moderator}:"></p:outputLabel>
 						<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
 
@@ -40,14 +45,17 @@
 						<h:outputText value="#{grupoBean.grupo.privacidade}"></h:outputText>
 
 						<f:facet name="footer">
-							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}" action="#{grupoBean.edicaoGrupo}"
-								icon="ui-icon-check" style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" />
+							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}"
+								action="#{grupoBean.edicaoGrupo}" icon="ui-icon-check"
+								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" />
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
-								style="margin:0" action="#{grupoBean.btnExclusao}" rendered="#{grupoBean.btnRenderRemoveGroup()}"/>
+								style="margin:0" action="#{grupoBean.btnExclusao}"
+								rendered="#{grupoBean.btnRenderRemoveGroup()}" />
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.leave_group}" icon="ui-icon-closethick"
-								style="margin:0" action="#{grupoBean.sairGrupo}" rendered="#{grupoBean.btnRenderSairGroup()}"/>
+								style="margin:0" action="#{grupoBean.sairGrupo}"
+								rendered="#{grupoBean.btnRenderSairGroup()}" />
 						</f:facet>
 					</p:panelGrid>
 				</p:panel>
@@ -62,7 +70,8 @@
 						<h:outputText value="#{grupoBean.grupo.descricao}" />
 						<f:facet name="footer">
 							<p:commandButton type="button" value="#{msgs.edit}"
-								icon="ui-icon-check" style="margin:0" rendered="#{grupoBean.btnRenderEditDesc()}" />
+								icon="ui-icon-check" style="margin:0"
+								rendered="#{grupoBean.btnRenderEditDesc()}" />
 						</f:facet>
 					</h:panelGrid>
 				</p:panel>
@@ -77,7 +86,8 @@
 							<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:commandLink action="#{grupoBean.visualizarTodosMembros}" rendered="#{grupoBean.btnRenderTodosMembs()}">
+							<h:commandLink action="#{grupoBean.visualizarTodosMembros}"
+								rendered="#{grupoBean.btnRenderTodosMembs()}">
 								<h:outputText value="#{msgs.all_members}"></h:outputText>
 							</h:commandLink>
 						</f:facet>
@@ -90,7 +100,8 @@
 							<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}" rendered="#{grupoBean.btnRenderTodosModes()}">
+							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}"
+								rendered="#{grupoBean.btnRenderTodosModes()}">
 								<h:outputText value="#{msgs.moderators}" />
 							</h:commandLink>
 						</f:facet>
@@ -100,25 +111,28 @@
 						itemStyleClass="proxEventoItem">
 						<f:facet name="header">Próximo Evento</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
-							<h:outputText value="#{proxEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(proxEvento.dtEvento)})"/> 
+							<h:outputText
+								value="#{proxEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(proxEvento.dtEvento)})" />
 						</h:panelGrid>
-						<f:facet name="footer">	
+						<f:facet name="footer">
 						</f:facet>
 					</p:carousel>
 					<p:carousel id="historicoEventos"
 						value="#{grupoBean.historicoEventos}" var="histEvento"
-						itemStyleClass="histEventoItem" >
+						itemStyleClass="histEventoItem">
 						<f:facet name="header">Histórico Evento</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
-							<h:outputText value="#{histEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(histEvento.dtEvento)})" />
+							<h:outputText
+								value="#{histEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(histEvento.dtEvento)})" />
 						</h:panelGrid>
-						<f:facet name="footer">					
+						<f:facet name="footer">
 						</f:facet>
 					</p:carousel>
 				</p:panelGrid>
 			</div>
 		</h:form>
-		<h:form id="formComentario" rendered="#{grupoBean.btnRenderFormComents()}">
+		<h:form id="formComentario"
+			rendered="#{grupoBean.btnRenderFormComents()}">
 			<div>
 				<p:toolbar>
 					<p:toolbarGroup align="left">
@@ -141,7 +155,8 @@
 			</div>
 			<br></br>
 		</h:form>
-		<h:form id="formVisualizacaoComentario" rendered="#{grupoBean.btnRenderFormVisuComents()}">
+		<h:form id="formVisualizacaoComentario"
+			rendered="#{grupoBean.btnRenderFormVisuComents()}">
 			<div>
 				<p:dataGrid id="comentarios" var="posts"
 					value="#{grupoBean.listaComentarios}" columns="1" rows="10">
@@ -150,11 +165,14 @@
 							<f:facet name="header">
 								<h:outputLabel value="#{posts.apelido}"></h:outputLabel>
 							</f:facet>
-							<p:commandButton type="submit" value="#{msgs.delete}" ajax="false"
-								icon="ui-icon-trash" action="#{grupoBean.excluirComentario}"
-								update=":formVisualizacaoComentario:comentarios" rendered="#{grupoBean.btnRenderDeleteComent()}">
-								<f:setPropertyActionListener target="#{grupoBean.comentarioGrupoExcluido}" 
-								value="#{posts.codComentario}"></f:setPropertyActionListener>
+							<p:commandButton type="submit" value="#{msgs.delete}"
+								ajax="false" icon="ui-icon-trash"
+								action="#{grupoBean.excluirComentario}"
+								update=":formVisualizacaoComentario:comentarios"
+								rendered="#{grupoBean.btnRenderDeleteComent()}">
+								<f:setPropertyActionListener
+									target="#{grupoBean.comentarioGrupoExcluido}"
+									value="#{posts.codComentario}"></f:setPropertyActionListener>
 							</p:commandButton>
 							<h:outputText value="#{posts.comentario}" />
 							<f:facet name="footer">
