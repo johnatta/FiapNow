@@ -60,6 +60,7 @@ public class CriacaoGrupoBean implements Serializable {
 
 		pessoas = pesDAO.buscarTodasPessoas();
 		esportes = espDAO.buscarTodosEsportes();		
+		edm = new EsporteDataModel(esportes); 
 
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 
