@@ -251,7 +251,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	*
 	* @param codGrupo Código do Grupo
 	* @return Membros encontrados do Grupo
-	* @author Ariel Molina
+	* @author Ariel Molina/Graziele Vasconcelos
 	*/
 	@Override
 	public List<Pessoa> buscarMembrosDoGrupo(int codGrupo) {
