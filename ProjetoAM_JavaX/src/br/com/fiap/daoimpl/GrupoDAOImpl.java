@@ -115,7 +115,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	* @author Ariel Molina
 	*/
 	@Override
-	public List<Pessoa> buscarUsuariosParaAdicionarAoGrupo(int codGrupo) {
+	public List<Pessoa> buscarPessoasParaAdicionarAoGrupo(int codGrupo) {
 		TypedQuery<Pessoa> query = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA P where cod_pessoa not in" +
 				"(select cod_pessoa from am_pessoa_grupo where cod_grupo = :codGrupo)",Pessoa.class);
 		query.setParameter("codGrupo",codGrupo);
