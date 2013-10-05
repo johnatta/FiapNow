@@ -41,16 +41,13 @@ public class ModeradorGrupoBean {
 	private PessoaDataModel mdmExc;
 
 	public void infoGrupo(){
-		if(primeiraVez){
-			primeiraVez = false;
-			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
-			grupo = gruDAO.searchByID(codGrupo);
-			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
-			mdm = new PessoaDataModel(membrosGrp);
-			mdmExc = new PessoaDataModel(membrosGrp);
-		}
+		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
+		grupo = gruDAO.searchByID(codGrupo);
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+		mdm = new PessoaDataModel(membrosGrp);
+		mdmExc = new PessoaDataModel(moderadores);
 	}
-	
+
 	@PostConstruct
 	public void onInit() {
 		gruDAO = new GrupoDAOImpl(em);
@@ -72,27 +69,26 @@ public class ModeradorGrupoBean {
 				}
 			}
 		}		
-		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
+
 	}
-	
+
 	public void addModerador(){
 		for (Pessoa moderador : getModeradorSelecionados()){
-			moderadorGrupo.setGrupo(grupo);
+			moderadorGrupo.setGrupo(gruDAO.buscarInfoGrupo(codGrupo));
 			moderadorGrupo.setPessoa(moderador);
 			modDAO.insert(moderadorGrupo);
 		}
+
 	}
 
 	public void desabilitarModerador(int codPessoa){
 		moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
 		modDAO.remove(moderadorGrupo);
 		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
-		
+
 		pessoa = pDAO.searchByID(codPessoa);
 		pessoa.getGruposParticipantes().add(grupo);
 		pDAO.update(pessoa);
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 	}
 
 	public Pessoa getPessoa() {
@@ -151,20 +147,20 @@ public class ModeradorGrupoBean {
 		this.moderadorSelecionados = moderadorSelecionados;
 	}
 
-	public PessoaDataModel getMdm() {
-		return mdm;
-	}
-
-	public void setMdm(PessoaDataModel mdm) {
-		this.mdm = mdm;
-	}
-
 	public Pessoa[] getModeradorSelecionadosExc() {
 		return moderadorSelecionadosExc;
 	}
 
 	public void setModeradorSelecionadosExc(Pessoa[] moderadorSelecionadosExc) {
 		this.moderadorSelecionadosExc = moderadorSelecionadosExc;
+	}
+
+	public PessoaDataModel getMdm() {
+		return mdm;
+	}
+
+	public void setMdm(PessoaDataModel mdm) {
+		this.mdm = mdm;
 	}
 
 	public PessoaDataModel getMdmExc() {
@@ -175,5 +171,5 @@ public class ModeradorGrupoBean {
 		this.mdmExc = mdmExc;
 	}
 
-	
+
 }

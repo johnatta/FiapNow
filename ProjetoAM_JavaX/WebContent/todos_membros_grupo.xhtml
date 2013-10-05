@@ -5,48 +5,64 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"> <ui:composition
-	template="/_templateEE.xhtml">
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<f:metadata>
 			<f:event type="preRenderView" listener="#{membroGrupoBean.infoGrupo}" />
 		</f:metadata>
 		<h:form id="todosMembros">
-			<h1>Todos membros Grupo</h1>
+			<h1>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{membroGrupoBean.grupo.nomeGrupo}"></h:outputText>
+				</h:commandLink>
+			</h1>
 			<p:tabView id="tabMain">
-				<p:tab id="tabGroups" title="#{msgs.groups}">
-					<p:dataGrid var="mem" value="#{membroGrupoBean.membrosGrp}"
-						columns="5" rows="8" paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="9,12,15">
-						<p:panel>
-							<h:panelGrid columns="1" style="width:50%">
-								<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
-								<p:commandButton type="submit" value="Excluir" ajax="false"
-									icon="ui-icon-trash"
-									action="#{membroGrupoBean.excluirMembro(mem.codPessoa)}"
-									update=":todosMembros:membrosGrp">
-								</p:commandButton>
-							</h:panelGrid>
-						</p:panel>
-					</p:dataGrid>
-					<p:commandButton type="submit" value="Adicionar novos membros"
-						ajax="false" icon="ui-icon-check"
-						action="#{membroGrupoBean.addMembroGrupo}">
+				<p:tab id="tabMembersGroupExc" title="#{msgs.remove_group}">
+					<p:dataTable id="multiMembroExclusao" var="mem"
+						value="#{membroGrupoBean.pdmExc}" paginator="true" rows="10"
+						selection="#{membroGrupoBean.membrosSelecionadosExc}">
+						<f:facet name="header">#{msgs.select_members}</f:facet>
+
+						<p:column selectionMode="multiple" style="width:2%" />
+
+						<p:column headerText="#{msgs.photo}" style="width:32%">
+							<p:graphicImage value="#{pessoaImage.image}" width="160"
+								height="160" style="margin-left:15px;">
+								<f:param name="id" value="${mem.codPessoa}" />
+							</p:graphicImage>
+						</p:column>
+						<p:column headerText="#{msgs.nickname}" style="width:32%">#{mem.apelido} </p:column>
+						<p:column headerText="#{msgs.name}" style="width:33%">#{mem.nome} </p:column>
+						<f:facet name="footer">
+					<p:commandButton type="submit" value="#{msgs.remove}" ajax="false"
+						icon="ui-icon-trash"
+						action="#{membroGrupoBean.excluirMembro(mem.codPessoa)}"
+						update=":todosMembros:membrosGrp">
 					</p:commandButton>
+						</f:facet>
+
+					</p:dataTable>
 				</p:tab>
+
 				<p:tab id="tabAddMembers" title="#{msgs.add_members}">
 					<p:dataTable id="multiMembs" var="p" value="#{membroGrupoBean.pdm}"
 						paginator="true" rows="10"
-						selection="#{membroGrupoBean.membrosSelecionados}">
+						selection="#{membroGrupoBean.membrosSelecionadosAdd}">
 						<f:facet name="header">#{msgs.select_members}</f:facet>
 						<p:column selectionMode="multiple" style="width:2%" />
-						<p:column headerText="#{msgs.nickname}" style="width:32%">  #{p.apelido} </p:column>
-						<p:column headerText="#{msgs.name}" style="width:33%">  #{p.nome} </p:column>
+						<p:column headerText="#{msgs.photo}" style="width:32%">
+							<p:graphicImage value="#{pessoaImage.image}" width="160"
+								height="160" style="margin-left:15px;">
+								<f:param name="id" value="${p.codPessoa}" />
+							</p:graphicImage>
+						</p:column>						
+						<p:column headerText="#{msgs.nickname}" style="width:32%">#{p.apelido} </p:column>
+						<p:column headerText="#{msgs.name}" style="width:33%">#{p.nome} </p:column>
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.add_members}" id="addMembro" icon="ui-icon-check"
-								action="#{membroGrupoBean.relacionarMembros}" style="margin:0">
+								action="#{membroGrupoBean.addMembroGrupo}" style="margin:0">
 							</p:commandButton>
 						</f:facet>
 					</p:dataTable>
@@ -54,4 +70,5 @@
 			</p:tabView>
 		</h:form>
 	</ui:define>
-</ui:composition> </html>
+</ui:composition>
+</html>
