@@ -28,18 +28,8 @@ public class GruposBean implements Serializable {
 	private GrupoDAO grupoDAO;
 	private String filtro;
 	private Pessoa pessoa;
-	private List<Grupo> gruposFiltrados;
 
-	public List<Grupo> getGruposFiltrados() {
-		return gruposFiltrados;
-	}
-
-
-	public void setGruposFiltrados(List<Grupo> gruposFiltrados) {
-		this.gruposFiltrados = gruposFiltrados;
-	}
-
-
+	
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
