@@ -92,7 +92,7 @@
 
 						<p:column style="width:13%">
 							<p:commandButton id="viewButton" value="#{msgs.read}"
-								icon="ui-icon-search" update=":tabMain:msgEvento:visualizarMensagemEvento :tabMain:msgEvento:dialogMsgEvento"
+								icon="#{msg.icon}" update=":tabMain:msgEvento:visualizarMensagemEvento :tabMain:msgEvento:dialogMsgEvento"
 								action="#{mensagensBean.visualizarMensagemEvento(msg)}" />
 						</p:column>
 						
