@@ -5,28 +5,34 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
-
-<ui:composition template="/_templateEE.xhtml">
+	xmlns:p="http://primefaces.org/ui"> <ui:composition
+	template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	<h:form id="todosMembros">
-		<h1>Todos membros Grupo</h1>
-		<p:dataGrid var="mem" value="#{grupoBean.membrosGrp}" columns="5"
-			rows="8" paginator="true"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="9,12,15">
-			<p:panel>
-				<h:panelGrid columns="1" style="width:50%">
-					<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
-					<p:commandButton type="submit" value="Excluir" ajax="false"
-						icon="ui-icon-trash" action="#{grupoBean.excluirMembro(mem.codPessoa)}"
-						update=":todosMembros:membrosGrp">
-					</p:commandButton>
-				</h:panelGrid>
-			</p:panel>
-		</p:dataGrid>
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{membroGrupoBean.infoGrupo}" />
+		</f:metadata>
+		<h:form id="todosMembros">
+			<h1>Todos membros Grupo</h1>
+			<h:outputText value="#{membroGrupoBean.grupo.nomeGrupo}"></h:outputText>
+			<p:dataGrid var="mem" value="#{membroGrupoBean.membrosGrp}"
+				columns="5" rows="8" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="9,12,15">
+				<p:panel>
+					<h:panelGrid columns="1" style="width:50%">
+						<h:outputText value="#{mem.nome} (#{mem.apelido})"></h:outputText>
+						<p:commandButton type="submit" value="Excluir" ajax="false"
+							icon="ui-icon-trash"
+							action="#{membroGrupoBean.excluirMembro(mem.codPessoa)}"
+							update=":todosMembros:membrosGrp">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:panel>
+			</p:dataGrid>
+			<p:commandButton type="submit" value="Adicionar novos membros" ajax="false"
+				icon="ui-icon-check"
+				action="#{membroGrupoBean.addMembroGrupo}">
+			</p:commandButton>
 		</h:form>
 	</ui:define>
-</ui:composition>
-
-</html>
+</ui:composition> </html>

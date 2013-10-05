@@ -36,6 +36,7 @@ import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
+import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
@@ -81,13 +82,15 @@ public class GrupoBean implements Serializable {
 	private Esporte[] espSelecionados;
 	private List<Esporte> esportes;
 	private List<Esporte> listEsporte;
-	
+
 	public void buscaGrupo(){
+		if(primeiraVez){
+			primeiraVez = false;
 			if(codGrupo == 0 ){
 				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
 			}
-			
+
 			grupo = gruDAO.searchByID(codGrupo);
 			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
@@ -109,15 +112,16 @@ public class GrupoBean implements Serializable {
 					}
 				}
 			}		
-			
+
 			for(Pessoa moderadorGrupo : moderadores){
 				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
 					flagModerador = true;
 				}	
 			}
-			
+
 			if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
 				flagAdm = true;
+			}
 		}
 	}
 
@@ -132,7 +136,7 @@ public class GrupoBean implements Serializable {
 		comentarioGrupo = new ComentarioGrupo();
 		listEsporte = new ArrayList<Esporte>();
 		esportes = espDAO.buscarTodosEsportes();		
-		
+
 		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
 		edm = new EsporteDataModel(esportes); 
 
@@ -150,7 +154,7 @@ public class GrupoBean implements Serializable {
 		String dataFormatada = sdf.format(data);
 		return dataFormatada; 
 	}
-	
+
 	public String dataFormatadaDDMMYYYY(Calendar dataComentario){
 		Date data = dataComentario.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
@@ -167,7 +171,7 @@ public class GrupoBean implements Serializable {
 		pDAO.update(pessoa);
 		return "grupos.xhtml";
 	}
-	
+
 	public void btnEnviarComentario(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		comentarioPostado = new ComentarioGrupo();
@@ -184,26 +188,23 @@ public class GrupoBean implements Serializable {
 		fm.setSummary("Comentario cadastrado");
 		fc.addMessage("", fm);
 	}
-	
+
 	public void excluirComentario(){
 		System.out.println();
 		//comentarioGrupo = comentarioGrupoDAO.searchByID(comentarioGrupoExcluido);
 		//comentarioGrupoDAO.remove(comentarioGrupo);
 		//listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 	}
-	
+
 	public String visualizarTodosMembros(){
-		primeiraVez = true;
 		return "todos_membros_grupo.xhtml";
 	}
 
 	public String visualizarTodosModeradores(){
-		primeiraVez = true;
 		return "todos_moderadores_grupo.xhtml";
 	}	
 
 	public String btnExclusao(){
-		primeiraVez = true;
 		return "exclusao_grupo.xhtml";
 	}
 
@@ -219,13 +220,13 @@ public class GrupoBean implements Serializable {
 	public String paginaGrupo(){
 		return "grupo.xhtml";
 	}
-	
+
 	public String edicaoGrupo(){
-		primeiraVez = true;
+		primeiraVez = false;
 		edicaoGrupo = gruDAO.searchByID(grupo.getCodGrupo());
 		return "edicao_grupo.xhtml";
 	}
-	
+
 	public String salvarEdicao(){
 		for (Esporte esporte : getEspSelecionados()) {
 			listEsporte.add(esporte);
@@ -235,36 +236,26 @@ public class GrupoBean implements Serializable {
 		}
 		return "grupos.xhtml";
 	}
-	
-	public void excluirMembro(int codPessoa){
-		for (int i = 0; i < pDAO.searchByID(codPessoa).getGruposParticipantes().size() ; i++) {
-			if(pDAO.searchByID(codPessoa).getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
-				pDAO.searchByID(codPessoa).getGruposParticipantes().remove(i);
-			}
-		}
-		pDAO.update(pessoa);
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
-	}
-	
+
 	public void excluirModerador(int codPessoa){
 		ModeradorGrupo moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
 		modDAO.remove(moderadorGrupo);
 		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 	}
-	
+
 	public boolean btnRenderEditGroup(){
 		if(flagAdm)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public boolean btnRenderRemoveGroup(){
 		if(flagAdm)
 			return true;
 		else
 			return false;
-		}
+	}
 	public boolean btnRenderSairGroup(){
 		if(flagMembro || flagModerador)
 			return true;
@@ -277,21 +268,21 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}
-	
+
 	public boolean btnRenderFormComents(){
 		if(flagMembro || flagModerador || flagAdm)
 			return true;
 		else
 			return false;
 	}
-	
+
 	public boolean btnRenderFormVisuComents(){
 		if(!flagUserFechado) 
 			return true;
 		else
 			return false;
 	}
-	
+
 	public boolean btnRenderDeleteComent(){
 		if(flagAdm || flagModerador)
 			return true;
@@ -324,7 +315,7 @@ public class GrupoBean implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -547,5 +538,4 @@ public class GrupoBean implements Serializable {
 		this.flagUserFechado = flagUserFechado;
 	}
 
- 	
 }

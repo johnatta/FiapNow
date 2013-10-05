@@ -88,6 +88,7 @@
 						<f:facet name="footer">
 							<h:commandLink action="#{grupoBean.visualizarTodosMembros}"
 								rendered="#{grupoBean.btnRenderTodosMembs()}">
+								<f:setPropertyActionListener target="#{membroGrupoBean.codGrupo}" value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
 								<h:outputText value="#{msgs.all_members}"></h:outputText>
 							</h:commandLink>
 						</f:facet>

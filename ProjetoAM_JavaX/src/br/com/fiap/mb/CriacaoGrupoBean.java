@@ -2,6 +2,7 @@ package br.com.fiap.mb;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +54,7 @@ public class CriacaoGrupoBean implements Serializable {
 	private PessoaDataModel mdm;
 	private List<Esporte> listEsporte;
 	private ModeradorGrupo moderadorGrupo;
+	private boolean infoBasicaGrupo = true;
 	
 	@PostConstruct
 	public void init(){
@@ -88,7 +90,7 @@ public class CriacaoGrupoBean implements Serializable {
 				listEsporte.add(esporte);
 			}
 			grupo.setEsportes(listEsporte);
-			
+			infoBasicaGrupo = false;
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Informações grupo salvas, faça o próximo passo");
 			fc.addMessage("", fm);
@@ -127,9 +129,29 @@ public class CriacaoGrupoBean implements Serializable {
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		ModeradorGrupoDAO moderadorDAO = new ModeradorGrupoDAOImpl(em);
-		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
+		if(infoBasicaGrupo){
+			if(getGrupo().getDescricao() != null || getGrupo().getPrivacidade() != null 
+					|| getGrupo().getNomeGrupo() != null || getEspSelecionados() != null){
+
+				grupo.setAdm(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+				for (Esporte esporte : getEspSelecionados()) {
+					listEsporte.add(esporte);
+				}
+				grupo.setEsportes(listEsporte);
+				grupo = gDAO.insertEntity(grupo);
+				fm.setSummary("Grupo cadastrado com sucesso");
+				fc.addMessage("", fm);
+				return "grupo.xhtml";
+			}else{
+				fm = new FacesMessage("Campo obrigatório não preenchido. Favor preencher.");
+				fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+				fc.addMessage("", fm);
+				return "";
+			}
+		}
+		
 		try{
 			grupo = gDAO.insertEntity(grupo);
 			pessoa.getGruposParticipantes().add(grupo);
@@ -147,7 +169,7 @@ public class CriacaoGrupoBean implements Serializable {
 			
 			fm.setSummary("Cadastro Realizado com Sucesso");
 			fc.addMessage("", fm);
-			return "grupo";
+			return "grupo.xhtml";
 		} catch(Exception e){
 			e.printStackTrace();
 			fm.setSummary("Erro na Realização do Cadastro");
@@ -273,6 +295,14 @@ public class CriacaoGrupoBean implements Serializable {
 
 	public void setModeradorGrupo(ModeradorGrupo moderadorGrupo) {
 		this.moderadorGrupo = moderadorGrupo;
+	}
+
+	public boolean isInfoBasicaGrupo() {
+		return infoBasicaGrupo;
+	}
+
+	public void setInfoBasicaGrupo(boolean infoBasicaGrupo) {
+		this.infoBasicaGrupo = infoBasicaGrupo;
 	}
 
 	
