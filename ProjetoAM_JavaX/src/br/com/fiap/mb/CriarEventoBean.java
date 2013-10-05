@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
+import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
@@ -44,6 +46,8 @@ public class CriarEventoBean implements Serializable {
 	private PessoaDataModel mdm;
 	private Pessoa[] membrosSelecionados;
 	private Pessoa[] moderadorSelecionados;
+	private List<Pessoa> pessoas;
+//	private EventoDAO evDAO;
 	
 	@PostConstruct
 	public void onInit(){
@@ -53,12 +57,15 @@ public class CriarEventoBean implements Serializable {
 		evento = new Evento();
 		endereco = new Endereco();
 		
+		pessoas = pesDAO.buscarTodasPessoas();
+		
 		evento.setDtEvento(Calendar.getInstance());
-
+		
 		cal = new Date(evento.getDtEvento().getTimeInMillis());
 
 		edm = new EsporteDataModel(esportes);
-
+		pdm = new PessoaDataModel(pessoas);
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
@@ -74,7 +81,16 @@ public class CriarEventoBean implements Serializable {
 		//evento.setCodEndereco(codEndereco);
 		return "convite_evento";
 	}
-
+	
+	public void relacionarMembros() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		if(getMembrosSelecionados().length != 0){
+			FacesMessage fm = new FacesMessage();
+			fm.setSummary("Membros relacionados, faça o próximo passo.");
+			fc.addMessage("", fm);
+		}
+	} 
+	
 	public Endereco getEndereco() {
 		return endereco;
 	}

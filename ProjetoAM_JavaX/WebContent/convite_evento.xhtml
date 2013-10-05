@@ -16,7 +16,7 @@
 	   			<p:dataTable value="#{criarEventoBean.pdm}" var="p" paginator="true" rows="10" 
 	   			selection="#{criarEventoBean.membrosSelecionados}">
 	   			
-	   				<f:facet name="header">#{msgs.se'lect_members}</f:facet>
+	   				<f:facet name="header">#{msgs.select_members}</f:facet>
 	   				
 	   				<p:column selectionMode="multiple" style="width:2%" />
 	   				
@@ -32,7 +32,7 @@
 	   				<f:facet name="footer">
 	   					<p:commandButton ajax="false" type="submit"
 	   					value="#{msgs.add_members}" icon="ui-icon-check"
-	   					style="margin:0" >
+	   					action="criarEventoBean.relacionarMembros" style="margin:0" >
 	   					</p:commandButton>
 	   				</f:facet>
 	   				
