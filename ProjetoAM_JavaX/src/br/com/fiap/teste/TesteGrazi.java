@@ -72,6 +72,7 @@ public class TesteGrazi {
 		List<Evento> eventos ;
 		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
 		ComentarioGrupoDAO comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
 		/*
 		for (Pessoa mod : moderadores) {
@@ -285,8 +286,17 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		//mDAO.insert(mgB);
 		 */
 		
+		g = gDAO.searchByID(6);
 		
+		pessoas = gDAO.buscarMembrosDoGrupoRow(g.getCodGrupo());
+		for(Pessoa pesB : pessoas){
+			System.out.println("NOME: " + pesB.getNome());
+		}
 		
+		pessoas = gDAO.buscarMembrosDoGrupo(g.getCodGrupo());
+		for(Pessoa pesC : pessoas){
+			System.out.println("NOME: " + pesC.getNome());
+		}
 	}
 
 }

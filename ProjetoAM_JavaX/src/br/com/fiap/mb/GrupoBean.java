@@ -176,7 +176,7 @@ public class GrupoBean implements Serializable {
 		comentarioGrupo.setCodPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		comentarioGrupo.setDataHora(Calendar.getInstance());
 		comentarioPostado = comentarioGrupoDAO.insertEntity(comentarioGrupo);
-
+		comentarioGrupo.setComentario("");
 		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 
 		FacesContext fc = FacesContext.getCurrentInstance();

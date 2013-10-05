@@ -256,7 +256,12 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	@Override
 	public List<Pessoa> buscarMembrosDoGrupo(int codGrupo) {
 		@SuppressWarnings("unchecked")
-		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE cod_pessoa IN (SELECT cod_pessoa  FROM AM_PESSOA_GRUPO  WHERE cod_grupo = :codGrupo)", Pessoa.class);
+		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery
+		("SELECT * FROM AM_PESSOA  WHERE cod_pessoa IN (SELECT cod_pessoa FROM AM_PESSOA_GRUPO WHERE cod_grupo = :codGrupo) " +
+				"and cod_pessoa not in (select COD_MODERADOR_PESSOA from am_moderador_grupo where COD_MODERADOR_GRUPO = :codGrupo) " +
+				"and cod_pessoa not in (select cod_adm from am_grupo where cod_grupo = :codGrupo)",
+				Pessoa.class);
+
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 
@@ -348,12 +353,15 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	 *
 	 * @param codGrupo Código do Grupo ser procurada
 	 * @return Membros encontrados
-	 * @author Johnatta Santos
+	 * @author Johnatta Santos/Graziele Vasconcelos
 	 */
 	@Override
 	public List<Pessoa> buscarMembrosDoGrupoRow(int codGrupo) {
 		@SuppressWarnings("unchecked")
-		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE cod_pessoa IN (SELECT cod_pessoa  FROM AM_PESSOA_GRUPO  WHERE cod_grupo = :codGrupo and rownum <=6)", Pessoa.class);
+		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery
+		("SELECT * FROM AM_PESSOA  WHERE cod_pessoa IN (SELECT cod_pessoa FROM AM_PESSOA_GRUPO WHERE cod_grupo = :codGrupo) " +
+				"and cod_pessoa not in (select COD_MODERADOR_PESSOA from am_moderador_grupo where COD_MODERADOR_GRUPO = :codGrupo) " +
+				"and cod_pessoa not in (select cod_adm from am_grupo where cod_grupo = :codGrupo) and rownum <= 6", Pessoa.class);
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 	}
