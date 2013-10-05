@@ -17,7 +17,7 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	
 	List<Grupo> buscaGruposDaPessoa(Pessoa pessoa);
 	
-	List<Pessoa> buscarUsuariosParaAdicionarAoGrupo(int codGrupo);
+	List<Pessoa> buscarPessoasParaAdicionarAoGrupo(int codGrupo);
 	
 	Grupo buscarInfoGrupo (int codGrupo);
 	
