@@ -13,7 +13,7 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	
 	List<Grupo> buscarGrupos();
 	
-	List<Grupo> buscarGruposAbertos();
+	List<Grupo> buscarGruposVisiveis(Pessoa pessoa);
 	
 	List<Grupo> buscaGruposDaPessoa(Pessoa pessoa);
 	
@@ -23,7 +23,7 @@ public interface GrupoDAO extends DAO<Grupo, Integer> {
 	
 	BigDecimal buscarNumeroMembros(int codGrupo);
 
-	List<Grupo> buscarGruposAbertosPorNome(String nome);
+	List<Grupo> buscarGruposVisiveisPorNome(Pessoa pessoa, String nome);
 
 	List<Grupo> buscarMeusGruposPorNome(Pessoa pessoa, String nome);
 	

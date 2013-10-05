@@ -5,10 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.MensagemGrupoDAO;
-import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
-import br.com.fiap.entity.MensagemEvento;
-import br.com.fiap.entity.MensagemGrupo;
+import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
@@ -358,6 +357,32 @@ public class TesteAriel {
 			System.out.println("Confirmacao: " + mg.getConfirmacao());
 		}*/
 		
+		/*---------------------------------------------------*/
+		
+		//TELA GRUPOS
+		//Teste do método buscarGruposVisiveis(pessoa)
+		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(2);
+		List<Grupo> itens = grupoDAO.buscarGruposVisiveis(pessoa);
+		for(Grupo gru : itens){
+			System.out.println("Nome: " + gru.getNomeGrupo());
+		}
+		System.out.println("Total: " + itens.size());*/
+		
+		/*---------------------------------------------------*/
+		
+		//TELA GRUPOS
+		//Teste do método buscarGruposVisiveis(pessoa)
+		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(3);
+		List<Evento> itens = eventoDAO.buscarEventosVisiveis(pessoa);
+		for(Evento eve : itens){
+			System.out.println("Nome: " + eve.getNome());
+		}
+		System.out.println("Total: " + itens.size());
+				
 		/*---------------------------------------------------*/
 				
 	}

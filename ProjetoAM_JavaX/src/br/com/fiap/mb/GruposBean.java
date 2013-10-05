@@ -28,18 +28,30 @@ public class GruposBean implements Serializable {
 	private GrupoDAO grupoDAO;
 	private String filtro;
 	private Pessoa pessoa;
+	private List<Grupo> gruposFiltrados;
+
+	public List<Grupo> getGruposFiltrados() {
+		return gruposFiltrados;
+	}
+
+
+	public void setGruposFiltrados(List<Grupo> gruposFiltrados) {
+		this.gruposFiltrados = gruposFiltrados;
+	}
+
 
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		grupoDAO = new GrupoDAOImpl(em);
-		grupos = grupoDAO.buscarGruposAbertos();
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
+		
+		grupos = grupoDAO.buscarGruposVisiveis(pessoa);
 		meusGrupos = grupoDAO.buscaGruposDaPessoa(pessoa);
 	}
 	
@@ -82,7 +94,7 @@ public class GruposBean implements Serializable {
 	 * @author Ariel Molina 
 	 */
 	public void filtrar(ActionEvent ae){
-		grupos = grupoDAO.buscarGruposAbertosPorNome(filtro);
+		grupos = grupoDAO.buscarGruposVisiveisPorNome(pessoa, filtro);
 		meusGrupos = grupoDAO.buscarMeusGruposPorNome(pessoa, filtro);
 	}
 	

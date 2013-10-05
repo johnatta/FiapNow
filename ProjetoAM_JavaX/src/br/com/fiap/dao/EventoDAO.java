@@ -20,11 +20,11 @@ public interface EventoDAO extends DAO<Evento, Integer>{
 	
 	public List<Evento> buscarEventos();
 	
-	public List<Evento> buscarEventosAbertos();
+	public List<Evento> buscarEventosVisiveis(Pessoa pessoa);
 	
 	public List<Evento> buscarEventosDaPessoa(Pessoa pessoa);
 
-	public List<Evento> buscarEventosAbertosPorNome(String nome);
+	public List<Evento> buscarEventosVisiveisPorNome(Pessoa pessoa,String nome);
 
 	public List<Evento> buscarMeusEventosPorNome(Pessoa pessoa, String nome);
 	

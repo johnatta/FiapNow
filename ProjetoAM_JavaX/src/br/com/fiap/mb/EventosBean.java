@@ -35,13 +35,14 @@ public class EventosBean implements Serializable {
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		eventoDAO = new EventoDAOImpl(em);
-		eventos = eventoDAO.buscarEventosAbertos();
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
+		
+		eventos = eventoDAO.buscarEventosVisiveis(pessoa);
 		meusEventos = eventoDAO.buscarEventosDaPessoa(pessoa);
 	}
 	
@@ -84,7 +85,7 @@ public class EventosBean implements Serializable {
 	 * @author Ariel Molina 
 	 */
 	public void filtrar(ActionEvent ae){
-		eventos = eventoDAO.buscarEventosAbertosPorNome(filtro);
+		eventos = eventoDAO.buscarEventosVisiveisPorNome(pessoa, filtro);
 		meusEventos = eventoDAO.buscarMeusEventosPorNome(pessoa, filtro);
 	}
 	
