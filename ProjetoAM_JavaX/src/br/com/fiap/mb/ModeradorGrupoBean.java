@@ -16,6 +16,7 @@ import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
+import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
@@ -32,12 +33,21 @@ public class ModeradorGrupoBean {
 	private Grupo grupo;
 	private int codGrupo;
 	private boolean primeiraVez = true;
-	
+	private List<Pessoa> membrosGrp;
+	private ModeradorGrupo moderadorGrupo;
+	private Pessoa[] moderadorSelecionados;
+	private Pessoa[] moderadorSelecionadosExc;
+	private PessoaDataModel mdm;
+	private PessoaDataModel mdmExc;
+
 	public void infoGrupo(){
 		if(primeiraVez){
 			primeiraVez = false;
 			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 			grupo = gruDAO.searchByID(codGrupo);
+			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+			mdm = new PessoaDataModel(membrosGrp);
+			mdmExc = new PessoaDataModel(membrosGrp);
 		}
 	}
 	
@@ -49,17 +59,121 @@ public class ModeradorGrupoBean {
 		pessoa = new Pessoa();
 	}
 
-	public void excluirModerador(int codPessoa){
-		ModeradorGrupo moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
-		modDAO.remove(moderadorGrupo);
+	public void excluirModeradorDoGrupo(){
+		for (Pessoa moderador : getModeradorSelecionadosExc()){
+			moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), moderador.getCodPessoa());
+			moderadorGrupo.setGrupo(grupo);
+			moderadorGrupo.setPessoa(moderador);
+			modDAO.remove(moderadorGrupo);
+			for (int i = 0; i < moderador.getGruposParticipantes().size() ; i++) {
+				if(moderador.getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
+					moderador.getGruposParticipantes().remove(i);
+					pDAO.update(pessoa);
+				}
+			}
+		}		
 		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 	}
 	
-	public String addModerador(){
-		return "" ;
+	public void addModerador(){
+		for (Pessoa moderador : getModeradorSelecionados()){
+			moderadorGrupo.setGrupo(grupo);
+			moderadorGrupo.setPessoa(moderador);
+			modDAO.insert(moderadorGrupo);
+		}
 	}
 
-	public void desabilitarModerador(){
+	public void desabilitarModerador(int codPessoa){
+		moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
+		modDAO.remove(moderadorGrupo);
+		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+		
+		pessoa = pDAO.searchByID(codPessoa);
+		pessoa.getGruposParticipantes().add(grupo);
+		pDAO.update(pessoa);
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+	public List<Pessoa> getModeradores() {
+		return moderadores;
+	}
+
+	public void setModeradores(List<Pessoa> moderadores) {
+		this.moderadores = moderadores;
+	}
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
+	}
+
+	public int getCodGrupo() {
+		return codGrupo;
+	}
+
+	public void setCodGrupo(int codGrupo) {
+		this.codGrupo = codGrupo;
+	}
+
+	public List<Pessoa> getMembrosGrp() {
+		return membrosGrp;
+	}
+
+	public void setMembrosGrp(List<Pessoa> membrosGrp) {
+		this.membrosGrp = membrosGrp;
+	}
+
+	public ModeradorGrupo getModeradorGrupo() {
+		return moderadorGrupo;
+	}
+
+	public void setModeradorGrupo(ModeradorGrupo moderadorGrupo) {
+		this.moderadorGrupo = moderadorGrupo;
+	}
+
+	public Pessoa[] getModeradorSelecionados() {
+		return moderadorSelecionados;
+	}
+
+	public void setModeradorSelecionados(Pessoa[] moderadorSelecionados) {
+		this.moderadorSelecionados = moderadorSelecionados;
+	}
+
+	public PessoaDataModel getMdm() {
+		return mdm;
+	}
+
+	public void setMdm(PessoaDataModel mdm) {
+		this.mdm = mdm;
+	}
+
+	public Pessoa[] getModeradorSelecionadosExc() {
+		return moderadorSelecionadosExc;
+	}
+
+	public void setModeradorSelecionadosExc(Pessoa[] moderadorSelecionadosExc) {
+		this.moderadorSelecionadosExc = moderadorSelecionadosExc;
+	}
+
+	public PessoaDataModel getMdmExc() {
+		return mdmExc;
+	}
+
+	public void setMdmExc(PessoaDataModel mdmExc) {
+		this.mdmExc = mdmExc;
+	}
+
 	
 }

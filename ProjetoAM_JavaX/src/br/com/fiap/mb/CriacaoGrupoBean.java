@@ -70,7 +70,6 @@ public class CriacaoGrupoBean implements Serializable {
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
 		edm = new EsporteDataModel(esportes); 
 		pdm = new PessoaDataModel(pessoas);
-		mdm = new PessoaDataModel(pessoas);
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -107,6 +106,10 @@ public class CriacaoGrupoBean implements Serializable {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if(getMembrosSelecionados().length != 0){
 			FacesMessage fm = new FacesMessage();
+			for (Pessoa membro : getMembrosSelecionados()){
+				pessoas.add(membro);
+			}
+			mdm = new PessoaDataModel(pessoas);
 			fm.setSummary("Membros relacionados, faça o próximo passo.");
 			fc.addMessage("", fm);
 		}
@@ -141,6 +144,8 @@ public class CriacaoGrupoBean implements Serializable {
 				}
 				grupo.setEsportes(listEsporte);
 				grupo = gDAO.insertEntity(grupo);
+				grupo.getAdm().getGruposParticipantes().add(grupo);
+				pDAO.update(grupo.getAdm());
 				fm.setSummary("Grupo cadastrado com sucesso");
 				fc.addMessage("", fm);
 				return "grupo.xhtml";
@@ -154,6 +159,9 @@ public class CriacaoGrupoBean implements Serializable {
 		
 		try{
 			grupo = gDAO.insertEntity(grupo);
+			grupo.getAdm().getGruposParticipantes().add(grupo);
+			pDAO.update(grupo.getAdm());
+			
 			pessoa.getGruposParticipantes().add(grupo);
 			pDAO.update(pessoa);
 			

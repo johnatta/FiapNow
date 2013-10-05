@@ -9,23 +9,75 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-	<h:form id="todosModeradores">
-		<h1>Todos moderadores Grupo</h1>
-		<p:dataGrid var="moderadores" value="#{grupoBean.moderadores}"
-			columns="5" rows="8" paginator="true"
-			paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			rowsPerPageTemplate="9,12,15">
-			<p:panel>
-				<h:panelGrid columns="1" style="width:50%">
-					<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
-					<p:commandButton type="submit" value="Excluir" ajax="false"
-						icon="ui-icon-trash"
-						action="#{grupoBean.excluirModerador(moderador.codPessoa)}"
-						update=":todosModeradores:moderadores">
-					</p:commandButton>
-				</h:panelGrid>
-			</p:panel>
-		</p:dataGrid>
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{moderadorGrupoBean.infoGrupo}" />
+		</f:metadata>
+		<h:form id="todosModeradores">
+			<h1>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{moderadorGrupoBean.grupo.nomeGrupo}"></h:outputText>
+				</h:commandLink>
+			</h1>
+			<p:tabView id="tabMain">
+				<p:tab id="tabModerador" title="#{msgs.moderator}">
+					<p:dataTable id="multiModerators" var="moderador"
+						value="#{moderadorGrupoBean.moderadores}" paginator="true"
+						rows="10"
+						selection="#{moderadorGrupoBean.moderadorSelecionadosExc}">
+						<f:facet name="header"> #{msgs.select_moderator} </f:facet>
+
+						<p:column selectionMode="multiple" style="width:2%" />
+
+						<p:column headerText="#{msgs.nickname}" style="width:32%">  #{moderador.apelido} </p:column>
+
+						<p:column headerText="#{msgs.name}" style="width:33%">  #{moderador.nome} </p:column>
+
+						<f:facet name="footer">
+							<p:commandButton type="submit" value="Excluir do Grupo"
+								ajax="false" icon="ui-icon-trash"
+								action="#{moderadorGrupoBean.excluirModeradorDoGrupo(moderador.codPessoa)}"
+								update=":todosModeradores:moderadores">
+							</p:commandButton>
+							<p:commandButton type="submit" value="Desabilitar Moderador"
+								ajax="false" icon="ui-icon-trash"
+								action="#{moderadorGrupoBean.desabilitarModerador(moderador.codPessoa)}"
+								update=":todosModeradores:moderadores">
+							</p:commandButton>
+						</f:facet>
+
+					</p:dataTable>
+
+				</p:tab>
+				<p:tab id="tabAddModerator" title="Adicionar moderador">
+					<p:dataTable id="multiModerators" var="moderator"
+						value="#{moderadorGrupoBean.mdm}" paginator="true" rows="10"
+						selection="#{moderadorGrupoBean.moderadorSelecionados}">
+						<f:facet name="header"> #{msgs.select_moderator} </f:facet>
+
+						<p:column selectionMode="multiple" style="width:2%" />
+
+						<p:column headerText="#{msgs.image}" style="width:32%">
+							<p:graphicImage value="#{pessoaImage.image}" width="160"
+								height="160" style="margin-left:15px;">
+								<f:param name="id" value="${moderator.ImgPerfil}" />
+							</p:graphicImage>
+						</p:column>
+						<p:column headerText="#{msgs.nickname}" style="width:32%">  #{moderator.apelido} </p:column>
+
+						<p:column headerText="#{msgs.name}" style="width:33%">  #{moderator.nome} </p:column>
+
+						<f:facet name="footer">
+							<p:commandButton ajax="false" type="submit"
+								value="#{msgs.add_moderator}" id="addModerador"
+								icon="ui-icon-check" action="#{moderadorGrupoBean.addModerador}"
+								style="margin:0">
+							</p:commandButton>
+						</f:facet>
+
+					</p:dataTable>
+				</p:tab>
+			</p:tabView>
 		</h:form>
 	</ui:define>
 </ui:composition>

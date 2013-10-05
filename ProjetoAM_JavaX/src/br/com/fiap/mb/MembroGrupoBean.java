@@ -39,6 +39,7 @@ public class MembroGrupoBean {
 		if(primeiraVez){
 			primeiraVez = false;
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+			pessoas = pDAO.buscarTodasPessoas();
 			grupo = gruDAO.searchByID(codGrupo);
 			pdm = new PessoaDataModel(pessoas);
 		}

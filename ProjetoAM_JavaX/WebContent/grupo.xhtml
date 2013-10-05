@@ -103,6 +103,7 @@
 						<f:facet name="footer">
 							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}"
 								rendered="#{grupoBean.btnRenderTodosModes()}">
+								<f:setPropertyActionListener target="#{moderadorGrupoBean.codGrupo}" value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>								
 								<h:outputText value="#{msgs.moderators}" />
 							</h:commandLink>
 						</f:facet>
