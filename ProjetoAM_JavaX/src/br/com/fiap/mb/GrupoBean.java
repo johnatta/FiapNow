@@ -306,6 +306,7 @@ public class GrupoBean implements Serializable {
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão editar grupo
 	 * senão não renderizado na página
 	 * @return resposta em boolean para a renderização do botão edição
+	 * @author Graziele Vasconcelos
 	 */
 	public boolean btnRenderEditGroup(){
 		if(flagAdm)
@@ -318,6 +319,7 @@ public class GrupoBean implements Serializable {
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão exclusão grupo
 	 * senão não renderizado na página
 	 * @return resposta em boolean para a renderização do botão exclusão
+	 * @author Graziele Vasconcelos
 	 */
 	public boolean btnRenderRemoveGroup(){
 		if(flagAdm)
@@ -330,6 +332,7 @@ public class GrupoBean implements Serializable {
 	 * Verifica se o usuário da sessão é membro ou moderador caso for é possível a visualização do botão sair do grupo
 	 * senão não é renderizado na página
 	 * @return resposta em boolean para a renderização do botão sair do grupo
+	 * @author Graziele Vasconcelos
 	 */	
 	public boolean btnRenderSairGroup(){
 		if(flagMembro || flagModerador)
@@ -341,6 +344,7 @@ public class GrupoBean implements Serializable {
 	/**
 	 * Verifica se o grupo é fechado caso seja não renderiza o conteúdo do form grupo
 	 * @return resposta em boolean para a renderização do formulário Grupo
+	 * @author Graziele Vasconcelos
 	 */	
 	public boolean btnFormGrupo(){
 		if(!flagUserFechado)
@@ -352,6 +356,7 @@ public class GrupoBean implements Serializable {
 	 * Verifica se o usuário é moderador ou membro ou administrador se for verdade é renderizado
 	 * caixa de texto para inserir comentário
 	 * @return resposta em boolean para a renderização da caixa de texto para inserção do comentário
+	 * @author Graziele Vasconcelos
 	 */	
 	public boolean btnRenderFormComents(){
 		if(flagMembro || flagModerador || flagAdm)
@@ -363,6 +368,7 @@ public class GrupoBean implements Serializable {
 	/**
 	 * Verifica se o grupo é fechado caso seja não renderiza o conteúdo do form de visualização de comentários
 	 * @return resposta em boolean para a renderização dos comentários do grupo
+	 * @author Graziele Vasconcelos
 	 */
 	public boolean btnRenderFormVisuComents(){
 		if(!flagUserFechado) 
@@ -374,6 +380,7 @@ public class GrupoBean implements Serializable {
 	/**
 	 * Verifica se o usuário é administrador ou moderador para ter o privilégio da exclusão do comentário 
 	 * @return respota em boolean para a renderiza do botão de exclusão comentário.
+	 * @author Graziele Vasconcelos
 	 */
 	public boolean btnRenderDeleteComent(){
 		if(flagAdm || flagModerador)
@@ -386,6 +393,7 @@ public class GrupoBean implements Serializable {
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão 
 	 * editar descrição do grupo.
 	 * @return resposta em boolean para a renderização do botão editar descrição.
+	 * @author Graziele Vasconcelos
 	 */	
 	public boolean btnRenderEditDesc(){
 		if(flagAdm)
