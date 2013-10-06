@@ -1,11 +1,9 @@
 package br.com.fiap.mb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 
@@ -25,24 +23,29 @@ import br.com.fiap.entity.Pessoa;
 @SessionScoped
 public class ModeradorGrupoBean {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
+	private int codGrupo;
+	private List<Pessoa> moderadores; 
+	private List<Pessoa> membrosGrp;
+	private Pessoa[] moderadorSelecionados;
+	private Pessoa[] moderadorSelecionadosExc;
+	private ModeradorGrupo moderadorGrupo;
+	private Grupo grupo;
+	private Pessoa pessoa;
+	private PessoaDataModel mdm;
+	private PessoaDataModel mdmExc;
 	private PessoaDAO pDAO ;
 	private GrupoDAO gruDAO;
 	private ModeradorGrupoDAO modDAO;
-	private Pessoa pessoa;
-	private List<Pessoa> moderadores; 
-	private Grupo grupo;
-	private int codGrupo;
-	private boolean primeiraVez = true;
-	private List<Pessoa> membrosGrp;
-	private ModeradorGrupo moderadorGrupo;
-	private Pessoa[] moderadorSelecionados;
-	private Pessoa[] moderadorSelecionadosExc;
-	private PessoaDataModel mdm;
-	private PessoaDataModel mdmExc;
 
+	/**
+	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
+	 * passado por f:event
+	 * 
+	 * @author Graziele Vasconcelos
+	 */
 	public void infoGrupo(){
-		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 		grupo = gruDAO.searchByID(codGrupo);
+		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 		mdm = new PessoaDataModel(membrosGrp);
 		mdmExc = new PessoaDataModel(moderadores);
@@ -56,6 +59,10 @@ public class ModeradorGrupoBean {
 		pessoa = new Pessoa();
 	}
 
+	/**
+	 * Realiza a remoção do moderador daquele grupo
+	 * @author Graziele Vasconcelos 
+	 */
 	public void excluirModeradorDoGrupo(){
 		for (Pessoa moderador : getModeradorSelecionadosExc()){
 			moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), moderador.getCodPessoa());
@@ -72,23 +79,27 @@ public class ModeradorGrupoBean {
 
 	}
 
+	/**
+	 * Realiza o privilégio de moderador para membros selecionados
+	 * @author Graziele Vasconcelos
+	 */
 	public void addModerador(){
 		for (Pessoa moderador : getModeradorSelecionados()){
 			moderadorGrupo.setGrupo(gruDAO.buscarInfoGrupo(codGrupo));
 			moderadorGrupo.setPessoa(moderador);
 			modDAO.insert(moderadorGrupo);
 		}
-
 	}
-
+	
+	/**
+	 * Desabilita o moderador passando-o para apenas membro do grupo
+	 * @param codPessoa
+	 * @author Graziele Vasconcelos
+	 */
 	public void desabilitarModerador(int codPessoa){
 		moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
 		modDAO.remove(moderadorGrupo);
-		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
-
-		pessoa = pDAO.searchByID(codPessoa);
-		pessoa.getGruposParticipantes().add(grupo);
-		pDAO.update(pessoa);
+		//moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
 	}
 
 	public Pessoa getPessoa() {
