@@ -83,6 +83,12 @@ public class GrupoBean implements Serializable {
 	private List<Esporte> esportes;
 	private List<Esporte> listEsporte;
 
+	/**
+	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
+	 * passado por f:event
+	 * 
+	 * @author Graziele Vasconcelos
+	 */
 	public void buscaGrupo(){
 		if(primeiraVez){
 			primeiraVez = false;
@@ -101,6 +107,14 @@ public class GrupoBean implements Serializable {
 			proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 			historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
 
+			/**
+			 * Realizando comparaçõs para ter o conhecimento se o usuário é:
+			 * Administrador, Moderador, Membro do Grupo e não membro.
+			 * Também verifica se o grupo é fechado(apenas membros pode ver o conteúdo).
+			 * 
+			 * @author Graziele Vasconcelos
+			 */
+			
 			for(Grupo g : pessoa.getGruposParticipantes()){				
 				if(g.getCodGrupo() == codGrupo){
 					flagMembro = true;
@@ -148,13 +162,25 @@ public class GrupoBean implements Serializable {
 		primeiraVez = true;
 	}
 
+	/**
+	 * Formata a data para dd/mm/yyyy HH:mm
+	 * @param dataComentario
+	 * @return data formatada dd/mm/yyyy HH:mm
+	 * @author Graziele Vasconcelos
+	 */
 	public String dataFormatada(Calendar dataComentario){
 		Date data = dataComentario.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
 		String dataFormatada = sdf.format(data);
 		return dataFormatada; 
 	}
-
+	
+	/**
+	 * Formata a data para dd/mm/yyyy
+	 * @param dataComentario
+	 * @return data formatada dd/mm/yyyy
+	 * @author Graziele Vasconcelos
+	 */
 	public String dataFormatadaDDMMYYYY(Calendar dataComentario){
 		Date data = dataComentario.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
@@ -162,6 +188,11 @@ public class GrupoBean implements Serializable {
 		return dataFormatada; 
 	}
 
+	/**
+	 * Realiza o desmembramento do membro para o grupo
+	 * @return página grupos da aplicação
+	 * @author Graziele Vasconcelos
+	 */
 	public String sairGrupo(){
 		for (int i = 0; i < pessoa.getGruposParticipantes().size() ; i++) {
 			if(pessoa.getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
@@ -172,6 +203,10 @@ public class GrupoBean implements Serializable {
 		return "grupos.xhtml";
 	}
 
+	/**
+	 * Realiza o envio do comentário para o grupo à qual o usuário se encontra na página
+	 * @author Graziele Vasconcelos
+	 */
 	public void btnEnviarComentario(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		comentarioPostado = new ComentarioGrupo();
@@ -189,6 +224,11 @@ public class GrupoBean implements Serializable {
 		fc.addMessage("", fm);
 	}
 
+	/**
+	 * Realiza a exclusão do comentário. Se for Administrador está apto a excluir 
+	 * qualquer que seja e se for usuário apaga apenas o comentário que o mesmo fez.
+	 * @author Graziele Vasconcelos
+	 */
 	public void excluirComentario(){
 		System.out.println();
 		//comentarioGrupo = comentarioGrupoDAO.searchByID(comentarioGrupoExcluido);
@@ -196,18 +236,38 @@ public class GrupoBean implements Serializable {
 		//listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 	}
 
+	/**
+	 * Visualização de todos os membros do grupo
+	 * @return página para a visualização dos membros.
+	 * @author Graziele Vasconcelos
+	 */
 	public String visualizarTodosMembros(){
 		return "todos_membros_grupo.xhtml";
 	}
 
+	/**
+	 * Visualização de todos os moderadores do grupo
+	 * @return paágina para a visualização dos moderadores.
+	 * @author Graziele Vasconcelos
+	 */
 	public String visualizarTodosModeradores(){
 		return "todos_moderadores_grupo.xhtml";
 	}	
 
+	/**
+	 * Administrador direcionado para a uma página de confirmação da exclusão do grupo. 
+	 * @return página para a confirmação da exclusão do grupo.
+	 * @author Graziele Vasconcelos
+	 */
 	public String btnExclusao(){
 		return "exclusao_grupo.xhtml";
 	}
 
+	/**
+	 * Realiza a exclusão do grupo.
+	 * @return página grupos da aplicação.
+	 * @author Graziele Vasconcelos
+	 */
 	public String excluirGrupo(){
 		gruDAO.removeById(grupo.getCodGrupo());
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -217,16 +277,30 @@ public class GrupoBean implements Serializable {
 		return "grupos.xhtml";
 	}
 
+	/**
+	 * Direciona para a página grupo da sessão.
+	 * @return página grupo da sessão
+	 * @author Graziele Vasconcelos
+	 */
 	public String paginaGrupo(){
 		return "grupo.xhtml";
 	}
 
+	/**
+	 * Direciona para a página de edição do grupo
+	 * @return página para edição do grupo
+	 * @author Graziele Vasconcelos
+	 */
 	public String edicaoGrupo(){
-		primeiraVez = false;
 		edicaoGrupo = gruDAO.searchByID(grupo.getCodGrupo());
 		return "edicao_grupo.xhtml";
 	}
-
+	
+	/**
+	 * Salva as informações editadas do grupo
+	 * @return páginas do os grupos da aplicação
+	 * @author Graziele Vasconcelos
+	 */
 	public String salvarEdicao(){
 		for (Esporte esporte : getEspSelecionados()) {
 			listEsporte.add(esporte);
@@ -237,12 +311,12 @@ public class GrupoBean implements Serializable {
 		return "grupos.xhtml";
 	}
 
-	public void excluirModerador(int codPessoa){
-		ModeradorGrupo moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
-		modDAO.remove(moderadorGrupo);
-		moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
-	}
 
+	/**
+	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão editar grupo
+	 * senão não renderizado na página
+	 * @return resposta em boolean para a renderização do botão
+	 */
 	public boolean btnRenderEditGroup(){
 		if(flagAdm)
 			return true;
