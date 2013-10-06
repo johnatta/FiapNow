@@ -43,7 +43,7 @@ public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
 	private boolean primeiraVezRenderGrupo;
-	private boolean primeiraVezBuscaGrupo;
+	private static int primeiraVezBuscaGrupo;
 	private boolean flagAdm = false; 
 	private boolean flagModerador = false; 
 	private boolean flagMembro = false; 
@@ -81,23 +81,43 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void buscaGrupo(){
-		if(codGrupo != getCodGrupo() && grupo != null){
-			primeiraVezBuscaGrupo = true;
+		if(grupo != null && codGrupo != grupo.getCodGrupo()){
+			primeiraVezBuscaGrupo++;
 			FacesContext context = FacesContext.getCurrentInstance();
 			Map<String, Object> map = context.getExternalContext().getSessionMap();
 			map.remove("grupoBean");
+			if(primeiraVezBuscaGrupo > 0){
+				GrupoBean grupo = new GrupoBean();
+				preRenderGrupo();
+			}
 		}else{
 			if(primeiraVezRenderGrupo){
 				
 			}else{
+				FacesContext context = FacesContext.getCurrentInstance();
+				Map<String, Object> map = context.getExternalContext().getSessionMap();
+				LoginBean sessao = (LoginBean)map.get("loginBean");
+				pessoa = sessao.getPessoa();
 				preRenderGrupo();
-				
 			}
 		}
 	}
 
 	public void preRenderGrupo() {
 		primeiraVezRenderGrupo = true;
+		
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		gruDAO = new GrupoDAOImpl(em);
+		pDAO = new PessoaDAOImpl(em);
+		modDAO = new ModeradorGrupoDAOImpl(em);
+		edicaoGrupo = new Grupo();
+		comentarioGrupo = new ComentarioGrupo();
+		listEsporte = new ArrayList<Esporte>();
+
+		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
+		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
+		
 		if(codGrupo == 0 ){
 			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
@@ -146,31 +166,6 @@ public class GrupoBean implements Serializable {
 					}
 				}
 			}
-		}
-	}
-
-	@PostConstruct
-	public void onInit(){
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
-		modDAO = new ModeradorGrupoDAOImpl(em);
-		edicaoGrupo = new Grupo();
-		grupo = new Grupo();
-		comentarioGrupo = new ComentarioGrupo();
-		listEsporte = new ArrayList<Esporte>();
-
-		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
-		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		LoginBean sessao = (LoginBean)map.get("loginBean");
-		pessoa = sessao.getPessoa();
-
-		if(primeiraVezBuscaGrupo ){
-			preRenderGrupo();
 		}
 	}
 
