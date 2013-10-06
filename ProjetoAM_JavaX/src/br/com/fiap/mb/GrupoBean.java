@@ -103,10 +103,21 @@ public class GrupoBean implements Serializable {
 			 * 
 			 * @author Graziele Vasconcelos
 			 */
-			
+
 			for(Grupo g : pessoa.getGruposParticipantes()){				
 				if(g.getCodGrupo() == codGrupo){
 					flagMembro = true;
+
+					if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
+						flagAdm = true;
+						break;
+					}
+					for(Pessoa moderadorGrupo : moderadores){
+						if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
+							flagModerador = true;
+							break;
+						}	
+					}
 				}else{
 					if(grupo.getPrivacidade() == Privacidade.Fechado){
 						flagUserFechado = true;
@@ -115,16 +126,6 @@ public class GrupoBean implements Serializable {
 					}
 				}
 			}		
-
-			for(Pessoa moderadorGrupo : moderadores){
-				if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
-					flagModerador = true;
-				}	
-			}
-
-			if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
-				flagAdm = true;
-			}
 		}
 	}
 
@@ -162,7 +163,7 @@ public class GrupoBean implements Serializable {
 		String dataFormatada = sdf.format(data);
 		return dataFormatada; 
 	}
-	
+
 	/**
 	 * Formata a data para dd/mm/yyyy
 	 * @param dataComentario
@@ -283,7 +284,7 @@ public class GrupoBean implements Serializable {
 		edicaoGrupo = gruDAO.searchByID(grupo.getCodGrupo());
 		return "edicao_grupo.xhtml";
 	}
-	
+
 	/**
 	 * Salva as informações editadas do grupo
 	 * @return páginas do os grupos da aplicação
@@ -325,7 +326,7 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Verifica se o usuário da sessão é membro ou moderador caso for é possível a visualização do botão sair do grupo
 	 * senão não é renderizado na página
@@ -338,7 +339,7 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}
-	
+
 	/**
 	 * Verifica se o grupo é fechado caso seja não renderiza o conteúdo do form grupo
 	 * @return resposta em boolean para a renderização do formulário Grupo
@@ -386,7 +387,7 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}	
-	
+
 	/**
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão 
 	 * editar descrição do grupo.
@@ -399,7 +400,7 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}		
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
