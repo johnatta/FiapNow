@@ -19,11 +19,6 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
-import org.apache.commons.io.IOUtils;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
@@ -36,12 +31,10 @@ import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
-import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 import br.com.fiap.rc.ComentarioGrupoRC;
@@ -51,37 +44,35 @@ import br.com.fiap.rc.ComentarioGrupoRC;
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
+	private boolean primeiraVez;
+	private boolean flagAdm = false; 
+	private boolean flagModerador = false; 
+	private boolean flagMembro = false; 
+	private boolean flagUser = false;
+	private boolean flagUserFechado = false; 
 	private BigDecimal numMembros;
+	private int comentarioGrupoExcluido;
+	private int codGrupo;
 	private List<Pessoa> membrosGrp;
 	private List<Pessoa> moderadores;
 	private List<Pessoa> membrosGrpRow;
 	private List<Pessoa> moderadoresRow;
-	private int codGrupo;
-	private Grupo grupo;
-	private ComentarioGrupo cmtGrupo;
-	private GrupoDAO gruDAO;
-	private PessoaDAO pDAO;
-	private ModeradorGrupoDAO modDAO ;
-	private ComentarioGrupo comentarioGrupo;
-	private ComentarioGrupoDAO comentarioGrupoDAO;
-	private ComentarioGrupo comentarioPostado;
-	private Pessoa pessoa;
-	private boolean primeiraVez;
-	private List<ComentarioGrupoRC> listaComentarios;
 	private List<Evento> proximosEventos;
 	private List<Evento> historicoEventos;
-	boolean flagAdm = false; 
-	boolean flagModerador = false; 
-	boolean flagMembro = false; 
-	boolean flagUser = false;
-	boolean flagUserFechado = false; 
-	private int comentarioGrupoExcluido;
-	private Grupo edicaoGrupo; 
+	private List<ComentarioGrupoRC> listaComentarios;
 	private List<Privacidade> privs;
-	private EsporteDataModel edm;
-	private Esporte[] espSelecionados;
-	private List<Esporte> esportes;
 	private List<Esporte> listEsporte;
+	private Esporte[] espSelecionados;
+	private ComentarioGrupo comentarioGrupo;
+	private ComentarioGrupo comentarioPostado;
+	private Pessoa pessoa;
+	private Grupo grupo;
+	private Grupo edicaoGrupo; 
+	private EsporteDataModel edm;
+	private ComentarioGrupoDAO comentarioGrupoDAO;
+	private ModeradorGrupoDAO modDAO ;
+	private PessoaDAO pDAO;
+	private GrupoDAO gruDAO;
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -149,10 +140,9 @@ public class GrupoBean implements Serializable {
 		modDAO = new ModeradorGrupoDAOImpl(em);
 		comentarioGrupo = new ComentarioGrupo();
 		listEsporte = new ArrayList<Esporte>();
-		esportes = espDAO.buscarTodosEsportes();		
 
 		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
-		edm = new EsporteDataModel(esportes); 
+		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
 
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -225,7 +215,7 @@ public class GrupoBean implements Serializable {
 	}
 
 	/**
-	 * Realiza a exclusão do comentário. Se for Administrador está apto a excluir 
+	 * Realiza a exclusão do comentário. Se for Administrador ou Moderador está apto a excluir 
 	 * qualquer que seja e se for usuário apaga apenas o comentário que o mesmo fez.
 	 * @author Graziele Vasconcelos
 	 */
@@ -315,7 +305,7 @@ public class GrupoBean implements Serializable {
 	/**
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão editar grupo
 	 * senão não renderizado na página
-	 * @return resposta em boolean para a renderização do botão
+	 * @return resposta em boolean para a renderização do botão edição
 	 */
 	public boolean btnRenderEditGroup(){
 		if(flagAdm)
@@ -324,25 +314,45 @@ public class GrupoBean implements Serializable {
 			return false;
 	}
 
+	/**
+	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão exclusão grupo
+	 * senão não renderizado na página
+	 * @return resposta em boolean para a renderização do botão exclusão
+	 */
 	public boolean btnRenderRemoveGroup(){
 		if(flagAdm)
 			return true;
 		else
 			return false;
 	}
+	
+	/**
+	 * Verifica se o usuário da sessão é membro ou moderador caso for é possível a visualização do botão sair do grupo
+	 * senão não é renderizado na página
+	 * @return resposta em boolean para a renderização do botão sair do grupo
+	 */	
 	public boolean btnRenderSairGroup(){
 		if(flagMembro || flagModerador)
 			return true;
 		else
 			return false;
 	}
-	public boolean btnRenderTodosModes(){
+	
+	/**
+	 * Verifica se o grupo é fechado caso seja não renderiza o conteúdo do form grupo
+	 * @return resposta em boolean para a renderização do formulário Grupo
+	 */	
+	public boolean btnFormGrupo(){
 		if(!flagUserFechado)
 			return true;
 		else
 			return false;
 	}
-
+	/**
+	 * Verifica se o usuário é moderador ou membro ou administrador se for verdade é renderizado
+	 * caixa de texto para inserir comentário
+	 * @return resposta em boolean para a renderização da caixa de texto para inserção do comentário
+	 */	
 	public boolean btnRenderFormComents(){
 		if(flagMembro || flagModerador || flagAdm)
 			return true;
@@ -350,6 +360,10 @@ public class GrupoBean implements Serializable {
 			return false;
 	}
 
+	/**
+	 * Verifica se o grupo é fechado caso seja não renderiza o conteúdo do form de visualização de comentários
+	 * @return resposta em boolean para a renderização dos comentários do grupo
+	 */
 	public boolean btnRenderFormVisuComents(){
 		if(!flagUserFechado) 
 			return true;
@@ -357,39 +371,29 @@ public class GrupoBean implements Serializable {
 			return false;
 	}
 
+	/**
+	 * Verifica se o usuário é administrador ou moderador para ter o privilégio da exclusão do comentário 
+	 * @return respota em boolean para a renderiza do botão de exclusão comentário.
+	 */
 	public boolean btnRenderDeleteComent(){
 		if(flagAdm || flagModerador)
 			return true;
 		else
 			return false;
 	}	
-	public boolean btnRenderTodosMembs(){
-		if(!flagUserFechado)
-			return true;
-		else
-			return false;
-	}	
+	
+	/**
+	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão 
+	 * editar descrição do grupo.
+	 * @return resposta em boolean para a renderização do botão editar descrição.
+	 */	
 	public boolean btnRenderEditDesc(){
 		if(flagAdm)
 			return true;
 		else
 			return false;
 	}		
-	public void realizarUpload(FileUploadEvent event) {
-		try {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			edicaoGrupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
-			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
-			fc.addMessage("messages", fm);
-		} catch (IOException e) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Erro no Processo de Upload!");
-			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("messages", fm);
-			e.printStackTrace();
-		}
-	}
-
+	
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -422,29 +426,6 @@ public class GrupoBean implements Serializable {
 		this.membrosGrp = membrosGrp;
 	}
 
-	public ComentarioGrupo getCmtGrupo() {
-		return cmtGrupo;
-	}
-
-	public void setCmtGrupo(ComentarioGrupo cmtGrupo) {
-		this.cmtGrupo = cmtGrupo;
-	}
-
-	public StreamedContent getFoto() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		DefaultStreamedContent content = new DefaultStreamedContent();
-		content.setContentType("image/jpg");
-		try{
-			if (context.getRenderResponse() || grupo.getImgGrupo() == null){
-				content.setStream(context.getExternalContext().getResourceAsStream("/resources/img/semFoto.jpg"));
-			}else{
-				content.setStream(new ByteArrayInputStream(grupo.getImgGrupo()));
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return content;
-	}
 	public List<Pessoa> getModeradores() {
 		return moderadores;
 	}
@@ -586,14 +567,6 @@ public class GrupoBean implements Serializable {
 
 	public void setEspSelecionados(Esporte[] espSelecionados) {
 		this.espSelecionados = espSelecionados;
-	}
-
-	public List<Esporte> getEsportes() {
-		return esportes;
-	}
-
-	public void setEsportes(List<Esporte> esportes) {
-		this.esportes = esportes;
 	}
 
 	public List<Esporte> getListEsporte() {
