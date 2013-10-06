@@ -1,12 +1,10 @@
 package br.com.fiap.mb;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
@@ -28,7 +26,6 @@ import br.com.fiap.entity.Pessoa;
 public class MembroGrupoBean {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
-	private boolean primeiraVez = true;
 	private List<Pessoa> membrosGrp;
 	private Pessoa[] membrosSelecionadosExc;
 	private Pessoa[] membrosSelecionadosAdd;
@@ -49,7 +46,6 @@ public class MembroGrupoBean {
 	 * @author Graziele Vasconcelos
 	 */
 	public void infoGrupo(){
-			primeiraVez = false;
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 			pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
 			grupo = gruDAO.searchByID(codGrupo);
