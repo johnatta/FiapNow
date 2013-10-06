@@ -13,7 +13,7 @@
 			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}" />
 		</f:metadata>
 		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
-		<h:form id="formGrupo">
+		<h:form id="formGrupo" rendered="#{grupoBean.btnFormGrupo()}">
 			<p:growl id="messages" showDetail="true" />
 			<div>
 				<p:panel>
@@ -60,7 +60,7 @@
 					</p:panelGrid>
 				</p:panel>
 			</div>
-			<br></br>
+			<br/>
 			<div>
 				<p:panel header="#{msgs.description}">
 					<h:panelGrid columns="1">
@@ -76,21 +76,21 @@
 					</h:panelGrid>
 				</p:panel>
 			</div>
-			<br></br>
+			<br/>
 			<div>
 				<p:panelGrid columns="1">
 					<p:carousel id="membroCarousel" value="#{grupoBean.membrosGrpRow}"
-						var="membro" itemStyleClass="membroItem">
+						var="membro" itemStyleClass="membroItem" emptyMessage="#{msgs.no_records}">
 						<f:facet name="header">#{msgs.members}</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
+							<p:graphicImage value="#{pessoaImage.image}" width="160"
+								height="160" style="margin-left:15px;">
+								<f:param name="id" value="${membro.codPessoa}" />
+							</p:graphicImage>
 							<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:commandLink action="#{grupoBean.visualizarTodosMembros}"
-								rendered="#{grupoBean.btnRenderTodosMembs()}">
-								<f:setPropertyActionListener target="#{membroGrupoBean.codGrupo}" value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
-								<h:outputText value="#{msgs.all_members}"></h:outputText>
-							</h:commandLink>
+
 						</f:facet>
 					</p:carousel>
 					<p:carousel id="moderadoresRowCarousel"
@@ -101,8 +101,7 @@
 							<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
 						</h:panelGrid>
 						<f:facet name="footer">
-							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}"
-								rendered="#{grupoBean.btnRenderTodosModes()}">
+							<h:commandLink action="#{grupoBean.visualizarTodosModeradores}">
 								<f:setPropertyActionListener target="#{moderadorGrupoBean.codGrupo}" value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>								
 								<h:outputText value="#{msgs.moderators}" />
 							</h:commandLink>
@@ -155,7 +154,7 @@
 					<h:outputText id="counter" />
 				</p:panel>
 			</div>
-			<br></br>
+			<br/>
 		</h:form>
 		<h:form id="formVisualizacaoComentario"
 			rendered="#{grupoBean.btnRenderFormVisuComents()}">
