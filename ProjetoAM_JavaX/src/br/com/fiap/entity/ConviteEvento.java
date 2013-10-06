@@ -31,19 +31,19 @@ public class ConviteEvento implements Serializable{
 	@Column(nullable = false, length = 100)
 	private String descricao;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name= "convite_evento_pessoa")
+	@ManyToOne
+	@JoinColumn(name= "cod_pessoa")
 	private Pessoa pessoa;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name= "convite_evento")
+	@ManyToOne
+	@JoinColumn(name= "cod_evento")
 	private Evento evento;		
 
-	public ConviteEvento(String descricao, Pessoa codPessoa, Evento codEvento) {
+	public ConviteEvento(String descricao, Pessoa pessoa, Evento evento) {
 		super();
 		this.descricao = descricao;
-		this.pessoa = codPessoa;
-		this.evento = codEvento;
+		this.pessoa = pessoa;
+		this.evento = evento;
 	}
 
 	public ConviteEvento() {

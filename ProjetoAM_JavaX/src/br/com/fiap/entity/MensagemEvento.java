@@ -38,12 +38,12 @@ public class MensagemEvento implements Serializable{
 	@Column(name = "CONFIRMACAO", nullable = false)
 	private Confirmacao confirmacao;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="msg_evento_pessoa")
+	@ManyToOne
+	@JoinColumn(name="cod_pessoa")
 	private Pessoa pessoa;	
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="msg_evento")
+	@ManyToOne
+	@JoinColumn(name="cod_evento")
 	private Evento evento;
 	
 	@Transient

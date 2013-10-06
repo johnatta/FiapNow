@@ -12,7 +12,6 @@ import br.com.fiap.dao.ConviteGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
-import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
@@ -20,7 +19,6 @@ import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
-import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
@@ -30,7 +28,6 @@ import br.com.fiap.entity.Endereco;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemGrupo;
-import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
@@ -47,7 +44,6 @@ public class ConsoleViewGrupo {
 		
 		GrupoDAO grupoDAO = new GrupoDAOImpl(em);
 		PedidoGrupoDAO pedGrupoDAO = new PedidoGrupoDAOImpl(em);
-		ModeradorGrupoDAO modGrupoDAO = new ModeradorGrupoDAOImpl(em);
 		ComentarioGrupoDAO comentGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		MensagemGrupoDAO msgGrupoDAO = new MensagemGrupoDAOImpl(em);
 		ConviteGrupoDAO convtGrupoDAO = new ConviteGrupoDAOImpl(em);
@@ -133,18 +129,33 @@ public class ConsoleViewGrupo {
 		pedGrupoDAO.insert(pedidoGrupo);
 		
 		//MODERADOR GRUPO
-		ModeradorGrupo modGrupo = new ModeradorGrupo();
+		/*ModeradorGrupo modGrupo = new ModeradorGrupo();
 		modGrupo.setGrupo(grupo);
 		modGrupo.setPessoa(pessoa);
 		// INSERINDO MODERADOR
-		modGrupoDAO.insert(modGrupo);
+		modGrupoDAO.insert(modGrupo);*/
+		
+		//Ariel Molina - Nova forma de se inserir moderador
+		Pessoa moderador = new Pessoa(); 
+		moderador = pessoaDAO.searchByID(1);
+		if(grupo.getModeradores() == null){
+			List<Pessoa> moderadores = new ArrayList<Pessoa>();
+			moderadores.add(moderador);
+			grupo.setModeradores(moderadores);
+			//List<Grupo> grupos = new ArrayList<Grupo>();
+			//grupos.add(grupo);
+			//moderador.setGruposParticipantes(grupos);
+			grupo.setMembros(moderadores);
+		}else {
+			grupo.getModeradores().add(moderador);
+		}
 		
 		//COMENTARIO NO GRUPO
 		ComentarioGrupo comentGrupo = new ComentarioGrupo();
 		comentGrupo.setComentario("Curti muito a iniciativa de criar um grupo para ambos esporte que pratico. Temos que combinar de jogar ainda neste mês.");
 		comentGrupo.setDataHora(Calendar.getInstance());
-		comentGrupo.setCodGrupo(grupo);
-		comentGrupo.setCodPessoa(pessoa);
+		comentGrupo.setGrupo(grupo);
+		comentGrupo.setPessoa(pessoa);
 		// INSERINDO COMENTARIO
 		comentGrupoDAO.insert(comentGrupo);
 		

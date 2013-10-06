@@ -31,12 +31,12 @@ public class ConviteGrupo implements Serializable {
 	@Column(nullable = false, length = 100)
 	private String descricao;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="convite_grupo_pessoa")
+	@ManyToOne
+	@JoinColumn(name="cod_pessoa")
 	private Pessoa pessoa;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="convite_grupo")
+	@ManyToOne
+	@JoinColumn(name="cod_grupo")
 	private Grupo grupo;
 	
 	public ConviteGrupo(String descricao, Pessoa codPessoa, Grupo codGrupo) {

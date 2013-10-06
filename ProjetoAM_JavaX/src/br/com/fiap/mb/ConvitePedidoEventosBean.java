@@ -84,7 +84,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 	*/
 	public void aceitarConvite(ConviteEvento convite){
 		//Adiciono o Evento aos eventos da Pessoa, updato a Pessoa e removo o convite
-		pessoa.getEventos().add(convite.getEvento());
+		pessoa.getEventosParticipantes().add(convite.getEvento());
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 		activeTab = 0;
@@ -111,7 +111,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 	*/
 	public void aceitarPedido(PedidoEvento pedido){
 		//Adiciono um Evento para a pessoa que realizou o Pedido e removo o pedido
-		pedido.getPessoa().getEventos().add(pedido.getEvento());
+		pedido.getPessoa().getEventosParticipantes().add(pedido.getEvento());
 		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 		activeTab = 1;

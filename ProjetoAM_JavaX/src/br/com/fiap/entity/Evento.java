@@ -70,23 +70,45 @@ public class Evento implements Serializable {
 	@JoinColumn(name="cod_evento_endereco")
 	private Endereco codEndereco;	
 
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="cod_evento_esporte")
 	private Esporte codEsporte;
 
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="AM_EVENTO_GRUPO",
-	joinColumns={@JoinColumn(name="COD_EVENTO")},
-	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
-	private List<Grupo> grupos;
+	@OneToMany(mappedBy="evento",cascade=CascadeType.ALL)
+	private List<EventoGrupo> grupos;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="COD_ADM", nullable = false)
+	@ManyToOne
+	@JoinColumn(name="COD_ADM", nullable = false, updatable=false)
 	private Pessoa adm;
+	
+	@ManyToMany
+	@JoinTable(name="AM_MODERADOR_EVENTO",
+	joinColumns={@JoinColumn(name="COD_EVENTO")},
+	inverseJoinColumns={@JoinColumn(name="COD_PESSOA")})
+	private List<Pessoa> moderadores;
+	
+	@ManyToMany
+	@JoinTable(name="AM_PESSOA_EVENTO",
+	joinColumns={@JoinColumn(name="COD_EVENTO")},
+	inverseJoinColumns={@JoinColumn(name="COD_PESSOA")})
+	private List<Pessoa> membros;
+	
+	@OneToMany(mappedBy="evento",cascade=CascadeType.ALL)
+	private List<ComentarioEvento> comentarios;
+	
+	@OneToMany(mappedBy="evento",cascade=CascadeType.ALL)
+	private List<ConviteEvento> convites;
+	
+	@OneToMany(mappedBy="evento",cascade=CascadeType.ALL)
+	private List<MensagemEvento> mensagens;
+	
+	@OneToMany(mappedBy="evento",cascade=CascadeType.ALL)
+	private List<PedidoEvento> pedidos;
+
 	
 	public Evento(String nome, Calendar dtEvento, String telContato,
 			double custo, String descricao, Privacidade privacidade,
-			Endereco codEndereco, Esporte codEsporte, List<Grupo> grupos,
+			Endereco codEndereco, Esporte codEsporte, List<EventoGrupo> grupos,
 			byte[] imgEvento, Pessoa adm) {
 		super();
 		this.nome = nome;
@@ -178,14 +200,6 @@ public class Evento implements Serializable {
 		this.codEsporte = codEsporte;
 	}
 
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
-
 	public byte[] getImgEvento() {
 		return imgEvento;
 	}
@@ -206,6 +220,58 @@ public class Evento implements Serializable {
 	}
 	public void setQuantidade(BigDecimal quantidade) {
 		this.quantidade = quantidade;
+	}
+	public List<Pessoa> getModeradores() {
+		return moderadores;
+	}
+	public void setModeradores(List<Pessoa> moderadores) {
+		this.moderadores = moderadores;
+	}
+	public List<EventoGrupo> getGrupos() {
+		return grupos;
+	}
+	public void setGrupos(List<EventoGrupo> grupos) {
+		this.grupos = grupos;
+	}
+
+	public List<ComentarioEvento> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<ComentarioEvento> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public List<MensagemEvento> getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(List<MensagemEvento> mensagens) {
+		this.mensagens = mensagens;
+	}
+
+	public List<ConviteEvento> getConvites() {
+		return convites;
+	}
+
+	public void setConvites(List<ConviteEvento> convites) {
+		this.convites = convites;
+	}
+
+	public List<PedidoEvento> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<PedidoEvento> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public List<Pessoa> getMembros() {
+		return membros;
+	}
+
+	public void setMembros(List<Pessoa> membros) {
+		this.membros = membros;
 	}
 	
 }

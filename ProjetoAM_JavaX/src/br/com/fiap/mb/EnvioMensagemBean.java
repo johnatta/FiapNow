@@ -22,8 +22,6 @@ import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemEvento;
 import br.com.fiap.entity.MensagemGrupo;
-import br.com.fiap.entity.ModeradorEvento;
-import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean

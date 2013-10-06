@@ -11,16 +11,16 @@ import br.com.fiap.dao.ComentarioEventoDAO;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemEventoDAO;
-import br.com.fiap.dao.ModeradorEventoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
-import br.com.fiap.daoimpl.ModeradorEventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioEvento;
@@ -29,13 +29,16 @@ import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.Endereco;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.EventoGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemEvento;
-import br.com.fiap.entity.ModeradorEvento;
 import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 import br.com.fiap.entity.Usuario;
+//import br.com.fiap.dao.ModeradorEventoDAO;
+//import br.com.fiap.daoimpl.ModeradorEventoDAOImpl;
+//import br.com.fiap.entity.ModeradorEvento;
 
 public class ConsoleViewEvento {
 	
@@ -49,7 +52,7 @@ public class ConsoleViewEvento {
 		
 		EventoDAO eventoDAO = new EventoDAOImpl(em);
 		PedidoEventoDAO pedEventoDAO = new PedidoEventoDAOImpl(em);
-		ModeradorEventoDAO modEventoDAO = new ModeradorEventoDAOImpl(em);
+//		ModeradorEventoDAO modEventoDAO = new ModeradorEventoDAOImpl(em);
 		ComentarioEventoDAO comentEventoDAO = new ComentarioEventoDAOImpl(em);
 		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
 		ConviteEventoDAO convtEventoDAO = new ConviteEventoDAOImpl(em);
@@ -57,6 +60,7 @@ public class ConsoleViewEvento {
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		List<Grupo> grupos = new ArrayList<Grupo>();
+		List<EventoGrupo> eventoGrupos = new ArrayList<EventoGrupo>();
 		Pessoa pADM = new Pessoa();
 		Pessoa pesADM = new Pessoa();
 
@@ -76,7 +80,6 @@ public class ConsoleViewEvento {
 		grupoA.setEsportes(esportes);
 		pesADM = pessoaDAO.searchByID(2);
 		grupoA.setAdm(pesADM);
-		grupos.add(grupoA);
 		
 		Grupo grupoB = new Grupo();
 		grupoB.setNomeGrupo("Futebol Arte");
@@ -87,6 +90,10 @@ public class ConsoleViewEvento {
 		pADM = pessoaDAO.searchByID(1);
 		grupoB.setAdm(pADM);
 		grupos.add(grupoB);
+		
+		//Adicionando Grupo Cod 1 para teste de Exclusão do Evento
+		GrupoDAO grupoDAO = new GrupoDAOImpl(em);
+		grupos.add(grupoDAO.searchByID(1));
 		
 		Pessoa pessoa = new Pessoa();
 		pessoa.setNome("José");
@@ -118,7 +125,14 @@ public class ConsoleViewEvento {
 		enderecoP.setLongitude((float) -46.667178);
 		pessoa.setCodEndereco(enderecoP);
 		
-		pessoaDAO.insert(pessoa); 
+		pessoaDAO.insert(pessoa);
+		
+		//Inserindo o usuário 3 para o Grupo A
+		grupoA = grupoDAO.searchByID(1);
+		List<Pessoa> membros = grupoA.getMembros();
+		membros.add(pessoaDAO.searchByID(3));
+		grupoA = grupoDAO.searchByID(1);
+		grupoA.setMembros(membros);
 		
 		Evento evento = new Evento();
 		evento.setNome("Futebol Amigo");
@@ -129,7 +143,7 @@ public class ConsoleViewEvento {
 		evento.setImgEvento(new byte [4]);
 		evento.setDtEvento(dtNascimento);
 		evento.setAdm(pADM);
-		evento.setGrupos(grupos);
+		evento.setGrupos(eventoGrupos);
 		
 		Esporte esporteA = new Esporte();
 		esporteA = espDAO.searchByID(5);
@@ -150,6 +164,15 @@ public class ConsoleViewEvento {
 		
 		eventoDAO.insert(evento); 
 		
+		for(Grupo gru : grupos){
+			EventoGrupo eg = new EventoGrupo();
+			eg.setGrupo(gru);
+			eg.setEvento(evento);
+			eventoGrupos.add(eg);
+		}
+		
+		evento.setGrupos(eventoGrupos);
+		
 		// PEDIDO EVENTO
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");
@@ -158,17 +181,32 @@ public class ConsoleViewEvento {
 		pedEventoDAO.insert(pedidoEvento);  
 
 		// MODERADOR EVENTO
-		ModeradorEvento modEvento = new ModeradorEvento();
+		/*ModeradorEvento modEvento = new ModeradorEvento();
 		modEvento.setEvento(evento);
 		modEvento.setPessoa(pessoa);
-		modEventoDAO.insert(modEvento);  
+		modEventoDAO.insert(modEvento);*/
+		
+		//Ariel Molina - Nova forma de se inserir moderador
+		Pessoa moderador = new Pessoa();
+		moderador = pessoaDAO.searchByID(1);
+		if(evento.getModeradores() == null){
+			List<Pessoa> moderadores = new ArrayList<Pessoa>();
+			moderadores.add(moderador);
+			evento.setModeradores(moderadores);
+			evento.setMembros(moderadores);
+		}else {
+			evento.getModeradores().add(moderador);
+			evento.getMembros().add(moderador);
+		}
+		
+		
 		
 		// COMENTARIO EVENTO
 		ComentarioEvento comentEvento = new ComentarioEvento();
 		comentEvento.setComentario("Estou esperando todos na porta da quadra");
 		comentEvento.setDtHora(Calendar.getInstance());
-		comentEvento.setCodEvento(evento);
-		comentEvento.setCodPessoa(pessoa);
+		comentEvento.setEvento(evento);
+		comentEvento.setPessoa(pessoa);
 		comentEventoDAO.insert(comentEvento);
 		
 		// MENSAGEM EVENTO
@@ -231,5 +269,6 @@ public class ConsoleViewEvento {
 		//Removendo por Id
 		eventoDAO.removeById(3);
 		*/
+		
 	}
 }

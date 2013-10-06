@@ -38,21 +38,21 @@ public class ComentarioEvento implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private  Calendar dtHora;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="coment_evento")
-	private Evento codEvento;
+	@ManyToOne
+	@JoinColumn(name="cod_evento")
+	private Evento evento;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="coment_evento_pessoa")
-	private Pessoa codPessoa;
+	@ManyToOne
+	@JoinColumn(name="cod_pessoa")
+	private Pessoa pessoa;
 	
 	public ComentarioEvento(String comentario, Calendar dtHora,
-			Evento codEvento, Pessoa codPessoa) {
+			Evento evento, Pessoa pessoa) {
 		super();
 		this.comentario = comentario;
 		this.dtHora = dtHora;
-		this.codEvento = codEvento;
-		this.codPessoa = codPessoa;
+		this.evento = evento;
+		this.pessoa = pessoa;
 	}
 
 	public ComentarioEvento(){
@@ -83,19 +83,20 @@ public class ComentarioEvento implements Serializable {
 		this.dtHora = dtHora;
 	}
 
-	public Evento getCodEvento() {
-		return codEvento;
+	public Evento getEvento() {
+		return evento;
 	}
 
-	public void setCodEvento(Evento codEvento) {
-		this.codEvento = codEvento;
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
+
 }

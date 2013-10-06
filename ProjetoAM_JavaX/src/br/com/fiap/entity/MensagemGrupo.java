@@ -35,12 +35,12 @@ public class MensagemGrupo implements Serializable{
 	@Column(name ="CONFIRMACAO", nullable = false)
 	private Confirmacao confirmacao;	
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="msg_grupo_pessoa")
+	@ManyToOne
+	@JoinColumn(name="cod_pessoa")
 	private Pessoa pessoa;	
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="msg_grupo")
+	@ManyToOne
+	@JoinColumn(name="cod_grupo")
 	private Grupo grupo;
 	
 	@Transient

@@ -27,7 +27,7 @@ public class ComentarioGrupo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE ,generator="seqComentarioGrupo")
-	@Column(name="cod_comentario_grupo")
+	@Column(name="cod_comentario")
 	private int codComentario;
 
 	@Column(nullable = false, length = 300)
@@ -38,21 +38,21 @@ public class ComentarioGrupo implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private  Calendar dataHora;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="coment_grupo_pessoa")
-	private Pessoa codPessoa;
+	@ManyToOne
+	@JoinColumn(name="cod_pessoa")
+	private Pessoa pessoa;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="coment_cod_grupo")
-	private Grupo codGrupo;
+	@ManyToOne
+	@JoinColumn(name="cod_grupo")
+	private Grupo grupo;
 
 	public ComentarioGrupo(String comentario, Calendar dataHora,
-			Pessoa codPessoa, Grupo codGrupo) {
+			Pessoa pessoa, Grupo grupo) {
 		super();
 		this.comentario = comentario;
 		this.dataHora = dataHora;
-		this.codPessoa = codPessoa;
-		this.codGrupo = codGrupo;
+		this.pessoa = pessoa;
+		this.grupo = grupo;
 	}
 
 	public ComentarioGrupo() {
@@ -83,20 +83,20 @@ public class ComentarioGrupo implements Serializable {
 		this.dataHora = dataHora;
 	}
 
-	public Pessoa getCodPessoa() {
-		return codPessoa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCodPessoa(Pessoa codPessoa) {
-		this.codPessoa = codPessoa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public Grupo getCodGrupo() {
-		return codGrupo;
+	public Grupo getGrupo() {
+		return grupo;
 	}
 
-	public void setCodGrupo(Grupo codGrupo) {
-		this.codGrupo = codGrupo;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 	
 }

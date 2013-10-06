@@ -11,16 +11,16 @@ import br.com.fiap.dao.ComentarioEventoDAO;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
+import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemEventoDAO;
-import br.com.fiap.dao.ModeradorEventoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
+import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
-import br.com.fiap.daoimpl.ModeradorEventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioEvento;
@@ -29,13 +29,12 @@ import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.Endereco;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.EventoGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemEvento;
-import br.com.fiap.entity.ModeradorEvento;
 import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
-import br.com.fiap.entity.Usuario;
 
 public class ConsoleViewEvento02 {
 	
@@ -49,7 +48,6 @@ public class ConsoleViewEvento02 {
 		
 		EventoDAO eventoDAO = new EventoDAOImpl(em);
 		PedidoEventoDAO pedEventoDAO = new PedidoEventoDAOImpl(em);
-		ModeradorEventoDAO modEventoDAO = new ModeradorEventoDAOImpl(em);
 		ComentarioEventoDAO comentEventoDAO = new ComentarioEventoDAOImpl(em);
 		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
 		ConviteEventoDAO convtEventoDAO = new ConviteEventoDAOImpl(em);
@@ -57,6 +55,7 @@ public class ConsoleViewEvento02 {
 		EsporteDAO esporteDAO = new EsporteDAOImpl(em);
 		List<Esporte> esportes = new ArrayList<Esporte>();
 		List<Esporte> esportesA = new ArrayList<Esporte>();
+		List<EventoGrupo> eventoGrupos = new ArrayList<EventoGrupo>();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		Esporte espEvent = new Esporte();
 		Pessoa admEvent = new Pessoa();
@@ -101,7 +100,7 @@ public class ConsoleViewEvento02 {
 		evento.setTelContato("01150652999");
 		evento.setImgEvento(new byte [4]);
 		evento.setDtEvento(data);
-		evento.setGrupos(grupos);
+		evento.setGrupos(eventoGrupos);
 		admEvent = pessoaDAO.searchByID(1);
 		evento.setAdm(admEvent);
 		espEvent = espDAO.searchByID(4);
@@ -119,7 +118,21 @@ public class ConsoleViewEvento02 {
 		endereco.setLatitude((float) -23.579745);
 		endereco.setLongitude((float) -46.610244);
 		evento.setCodEndereco(endereco);
-		eventoDAO.insert(evento); 
+		eventoDAO.insert(evento);
+		
+		//Adicionando Grupo Cod 1 para teste de Exclusão do Evento
+		GrupoDAO grupoDAO = new GrupoDAOImpl(em);
+		grupos = new ArrayList<Grupo>();
+		grupos.add(grupoDAO.searchByID(2));
+		
+		for(Grupo gru : grupos){
+			EventoGrupo eg = new EventoGrupo();
+			eg.setGrupo(gru);
+			eg.setEvento(evento);
+			eventoGrupos.add(eg);
+		}
+		
+		evento.setGrupos(eventoGrupos);
 
 		//Buscando por ID - PESSOA
 		Pessoa pes = new Pessoa();
@@ -127,20 +140,31 @@ public class ConsoleViewEvento02 {
 		
 		PedidoEvento pedidoEvento = new PedidoEvento();
 		pedidoEvento.setDescricao("Eu desejo participar.");
-		pedidoEvento.setEvento(evento);
+		pedidoEvento.setEvento(eventoDAO.searchByID(2));
 		pedidoEvento.setPessoa(pes);
 		pedEventoDAO.insert(pedidoEvento);  
 
-		ModeradorEvento modEvento = new ModeradorEvento();
+		/*ModeradorEvento modEvento = new ModeradorEvento();
 		modEvento.setEvento(evento);
 		modEvento.setPessoa(pes);
-		modEventoDAO.insert(modEvento);  
+		modEventoDAO.insert(modEvento);*/
+		
+		//Ariel Molina - Nova forma de incluir moderador
+		Pessoa moderador = new Pessoa();
+		moderador = pessoaDAO.searchByID(2);
+		if(evento.getModeradores() == null){
+			List<Pessoa> moderadores = new ArrayList<Pessoa>();
+			moderadores.add(moderador);
+			evento.setModeradores(moderadores);
+		}else {
+			evento.getModeradores().add(moderador);
+		}
 		
 		ComentarioEvento comentEvento = new ComentarioEvento();
 		comentEvento.setComentario("Aguardando todos ao meio dia em frente ao monumento.");
 		comentEvento.setDtHora(Calendar.getInstance());
-		comentEvento.setCodEvento(evento);
-		comentEvento.setCodPessoa(pes);
+		comentEvento.setEvento(evento);
+		comentEvento.setPessoa(pes);
 		comentEventoDAO.insert(comentEvento);
 		
 		MensagemEvento msgEvento = new MensagemEvento();

@@ -101,11 +101,11 @@ public class TestePessoaDependentes {
 		endereco.setLongitude((float) -46.635555);
 		pessoa.setCodEndereco(endereco);
 		
-		//pessoaDAO.insert(pessoa);
+		pessoaDAO.insert(pessoa);
 		
-		/*
+		
 		//Buscando por ID - GRUPO
-		Grupo grupo = new Grupo();
+		/*Grupo grupo = new Grupo();
 		grupo = grupoDAO.searchByID(1);
 		grupos.add(grupo);
 		
@@ -125,8 +125,8 @@ public class TestePessoaDependentes {
 		Pessoa pessoaE = new Pessoa();
 		pessoaE = pessoaDAO.searchByID(2);
 		pessoaE.setEventos(eventos);
-		pessoaDAO.update(pessoaE);
-		 */
+		pessoaDAO.update(pessoaE);*/
+		 
 		
 	}
 

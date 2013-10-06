@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,17 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import br.com.fiap.entity.Endereco;
-import br.com.fiap.entity.Esporte;
-import br.com.fiap.entity.Evento;
-import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.Usuario;
 
 @Entity
 @Table(name="AM_PESSOA")
@@ -66,35 +62,59 @@ public class Pessoa implements Serializable {
 	private byte [] imgBackGround;
 
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="cod_pessoa_usuario")
+	@JoinColumn(name="cod_usuario")
 	private Usuario usuario;	
 
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="cod_pessoa_endereco")
+	@JoinColumn(name="cod_endereco")
 	private Endereco codEndereco;
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name="AM_PESSOA_ESPORTE",
 	joinColumns={@JoinColumn(name="COD_PESSOA")},
 	inverseJoinColumns={@JoinColumn(name="COD_ESPORTE")})
 	private List<Esporte> esportes;
+	
+	@OneToMany(mappedBy="adm",cascade=CascadeType.ALL)
+	private List<Grupo> gruposAdministrados;
 
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="AM_PESSOA_GRUPO",
-	joinColumns={@JoinColumn(name="COD_PESSOA")},
-	inverseJoinColumns={@JoinColumn(name="COD_GRUPO")})
+	@ManyToMany(mappedBy="membros",cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	private List<Grupo> gruposParticipantes;
 
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="AM_PESSOA_EVENTO",
-	joinColumns={@JoinColumn(name="COD_PESSOA")},
-	inverseJoinColumns={@JoinColumn(name="COD_EVENTO")})
-	private List<Evento> eventos;
+	@OneToMany(mappedBy="adm",cascade=CascadeType.ALL)
+	private List<Evento> eventosAdministrados;
+
+	@ManyToMany(mappedBy="membros",cascade={CascadeType.PERSIST,CascadeType.MERGE})
+	private List<Evento> eventosParticipantes;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<ComentarioEvento> comentariosEvento;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<ComentarioGrupo> comentariosGrupo;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<PedidoEvento> pedidosEvento;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<PedidoGrupo> pedidosGrupo;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<MensagemEvento> mensagensEvento;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<MensagemGrupo> mensagensGrupo;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<ConviteEvento> convitesEvento;
+	
+	@OneToMany(mappedBy="pessoa",cascade=CascadeType.ALL)
+	private List<ConviteGrupo> convitesGrupo;
 
 	public Pessoa(String nome, String sobrenome, Calendar dtNasc,
 			String apelido, String telRes, String cel, byte[] imgPerfil,
 			byte[] imgBackGround, Usuario codUsuario, Endereco codEndereco,
-			List<Esporte> esportes, List<Grupo> grupos, List<Evento> eventos) {
+			List<Esporte> esportes, List<Grupo> gruposParticipantes, List<Evento> eventosParticipantes) {
 		super();
 		this.nome = nome;
 		this.sobrenome = sobrenome;
@@ -107,8 +127,8 @@ public class Pessoa implements Serializable {
 		this.usuario = codUsuario;
 		this.codEndereco = codEndereco;
 		this.esportes = esportes;
-		this.gruposParticipantes = grupos;
-		this.eventos = eventos;
+		this.gruposParticipantes = gruposParticipantes;
+		this.eventosParticipantes = eventosParticipantes;
 	}
 
 	public Pessoa() {
@@ -210,14 +230,6 @@ public class Pessoa implements Serializable {
 		this.esportes = esportes;
 	}
 
-	public List<Evento> getEventos() {
-		return eventos;
-	}
-
-	public void setEventos(List<Evento> eventos) {
-		this.eventos = eventos;
-	}
-
 	public List<Grupo> getGruposParticipantes() {
 		return gruposParticipantes;
 	}
@@ -225,5 +237,93 @@ public class Pessoa implements Serializable {
 	public void setGruposParticipantes(List<Grupo> gruposParticipantes) {
 		this.gruposParticipantes = gruposParticipantes;
 	}
-	
+
+	public List<Grupo> getGruposAdministrados() {
+		return gruposAdministrados;
+	}
+
+	public void setGruposAdministrados(List<Grupo> gruposAdministrados) {
+		this.gruposAdministrados = gruposAdministrados;
+	}
+
+	public List<ComentarioEvento> getComentariosEvento() {
+		return comentariosEvento;
+	}
+
+	public void setComentariosEvento(List<ComentarioEvento> comentariosEvento) {
+		this.comentariosEvento = comentariosEvento;
+	}
+
+	public List<ComentarioGrupo> getComentariosGrupo() {
+		return comentariosGrupo;
+	}
+
+	public void setComentariosGrupo(List<ComentarioGrupo> comentariosGrupo) {
+		this.comentariosGrupo = comentariosGrupo;
+	}
+
+	public List<PedidoEvento> getPedidosEvento() {
+		return pedidosEvento;
+	}
+
+	public void setPedidosEvento(List<PedidoEvento> pedidosEvento) {
+		this.pedidosEvento = pedidosEvento;
+	}
+
+	public List<PedidoGrupo> getPedidosGrupo() {
+		return pedidosGrupo;
+	}
+
+	public void setPedidosGrupo(List<PedidoGrupo> pedidosGrupo) {
+		this.pedidosGrupo = pedidosGrupo;
+	}
+
+	public List<MensagemEvento> getMensagensEvento() {
+		return mensagensEvento;
+	}
+
+	public void setMensagensEvento(List<MensagemEvento> mensagensEvento) {
+		this.mensagensEvento = mensagensEvento;
+	}
+
+	public List<MensagemGrupo> getMensagensGrupo() {
+		return mensagensGrupo;
+	}
+
+	public void setMensagensGrupo(List<MensagemGrupo> mensagensGrupo) {
+		this.mensagensGrupo = mensagensGrupo;
+	}
+
+	public List<ConviteEvento> getConvitesEvento() {
+		return convitesEvento;
+	}
+
+	public void setConvitesEvento(List<ConviteEvento> convitesEvento) {
+		this.convitesEvento = convitesEvento;
+	}
+
+	public List<ConviteGrupo> getConvitesGrupo() {
+		return convitesGrupo;
+	}
+
+	public void setConvitesGrupo(List<ConviteGrupo> convitesGrupo) {
+		this.convitesGrupo = convitesGrupo;
+	}
+
+	public List<Evento> getEventosAdministrados() {
+		return eventosAdministrados;
+	}
+
+	public void setEventosAdministrados(List<Evento> eventosAdministrados) {
+		this.eventosAdministrados = eventosAdministrados;
+	}
+
+	public List<Evento> getEventosParticipantes() {
+		return eventosParticipantes;
+	}
+
+	public void setEventosParticipantes(List<Evento> eventosParticipantes) {
+		this.eventosParticipantes = eventosParticipantes;
+	}
+
 }
