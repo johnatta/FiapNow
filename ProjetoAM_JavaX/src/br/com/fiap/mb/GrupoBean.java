@@ -42,7 +42,8 @@ import br.com.fiap.rc.ComentarioGrupoRC;
 public class GrupoBean implements Serializable {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private static final long serialVersionUID = 1L;
-	private boolean primeiraVez;
+	private boolean primeiraVezRenderGrupo;
+	private boolean primeiraVezBuscaGrupo;
 	private boolean flagAdm = false; 
 	private boolean flagModerador = false; 
 	private boolean flagMembro = false; 
@@ -50,6 +51,7 @@ public class GrupoBean implements Serializable {
 	private boolean flagUserFechado = false; 
 	private BigDecimal numMembros;
 	private int comentarioGrupoExcluido;
+	private int controle;
 	private int codGrupo;
 	private List<Pessoa> membrosGrp;
 	private List<Pessoa> moderadores;
@@ -79,39 +81,57 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void buscaGrupo(){
-		if(primeiraVez){
-			primeiraVez = false;
-			if(codGrupo == 0 ){
-				CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
-				codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
+		if(codGrupo != getCodGrupo() && grupo != null){
+			primeiraVezBuscaGrupo = true;
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, Object> map = context.getExternalContext().getSessionMap();
+			map.remove("grupoBean");
+		}else{
+			if(primeiraVezRenderGrupo){
+				
+			}else{
+				preRenderGrupo();
+				
 			}
+		}
+	}
 
-			grupo = gruDAO.searchByID(codGrupo);
-			numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-			moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-			membrosGrpRow = gruDAO.buscarMembrosDoGrupoRow(codGrupo);
-			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
-			moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
-			listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
-			proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
-			historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
+	public void preRenderGrupo() {
+		primeiraVezRenderGrupo = true;
+		if(codGrupo == 0 ){
+			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
+			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, Object> map = context.getExternalContext().getSessionMap();
+			map.remove("criacaoGrupoBean");
+		}
 
-			/**
-			 * Realizando comparaçõs para ter o conhecimento se o usuário é:
-			 * Administrador, Moderador, Membro do Grupo e não membro.
-			 * Também verifica se o grupo é fechado(apenas membros pode ver o conteúdo).
-			 * 
-			 * @author Graziele Vasconcelos
-			 */
+		grupo = gruDAO.searchByID(codGrupo);
+		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
+		moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
+		membrosGrpRow = gruDAO.buscarMembrosDoGrupoRow(codGrupo);
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
+		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
+		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
+
+		/**
+		 * Realizando comparaçõs para ter o conhecimento se o usuário é:
+		 * Administrador, Moderador, Membro do Grupo e não membro.
+		 * Também verifica se o grupo é fechado(apenas membros pode ver o conteúdo).
+		 * 
+		 * @author Graziele Vasconcelos
+		 */
+
+		if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
+			flagAdm = true;
+		}else{
 
 			for(Grupo g : pessoa.getGruposParticipantes()){				
 				if(g.getCodGrupo() == codGrupo){
 					flagMembro = true;
 
-					if(pessoa.getCodPessoa() == grupo.getAdm().getCodPessoa()){
-						flagAdm = true;
-						break;
-					}
 					for(Pessoa moderadorGrupo : moderadores){
 						if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
 							flagModerador = true;
@@ -125,18 +145,19 @@ public class GrupoBean implements Serializable {
 						flagUser = true;
 					}
 				}
-			}		
+			}
 		}
 	}
 
 	@PostConstruct
 	public void onInit(){
-		edicaoGrupo = new Grupo();
 		EsporteDAO espDAO = new EsporteDAOImpl(em);
 		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		modDAO = new ModeradorGrupoDAOImpl(em);
+		edicaoGrupo = new Grupo();
+		grupo = new Grupo();
 		comentarioGrupo = new ComentarioGrupo();
 		listEsporte = new ArrayList<Esporte>();
 
@@ -148,7 +169,9 @@ public class GrupoBean implements Serializable {
 		LoginBean sessao = (LoginBean)map.get("loginBean");
 		pessoa = sessao.getPessoa();
 
-		primeiraVez = true;
+		if(primeiraVezBuscaGrupo ){
+			preRenderGrupo();
+		}
 	}
 
 	/**
@@ -400,6 +423,56 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}		
+
+	/**
+	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão
+	 * gerenciar membros
+	 * @return resposta em boolean para a renderização do botão gerenciar membros.
+	 * @author Graziele Vasconcelos
+	 */
+	public boolean btnRenderGerenciarMembers(){
+		if(flagAdm)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Verifica se o grupo é aberto
+	 * @return resposta em boolean para a renderização do botão visualizar todos os membros.
+	 * @author Graziele Vasconcelos
+	 */
+	public boolean btnRenderAllMembros(){
+		if(!flagUserFechado)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão
+	 * gerenciar moderadores
+	 * @return resposta em boolean para a renderização do botão gerenciar moderadores.
+	 * @author Graziele Vasconcelos
+	 */
+	public boolean btnRenderGerenciarModeradores(){
+		if(flagAdm)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Verifica se o grupo é aberto
+	 * @return resposta em boolean para a renderização do botão visualizar todos os moderadores.
+	 * @author Graziele Vasconcelos
+	 */
+	public boolean btnRenderAllModeradores(){
+		if(!flagUserFechado)
+			return true;
+		else
+			return false;
+	}
 
 	public Grupo getGrupo() {
 		return grupo;
