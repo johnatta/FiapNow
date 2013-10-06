@@ -27,30 +27,34 @@ import br.com.fiap.entity.Pessoa;
 @SessionScoped
 public class MembroGrupoBean {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-	private PessoaDAO pDAO ;
-	private GrupoDAO gruDAO;
-	private Pessoa pessoa;
+	private int codGrupo;
+	private boolean primeiraVez = true;
 	private List<Pessoa> membrosGrp;
 	private Pessoa[] membrosSelecionadosExc;
 	private Pessoa[] membrosSelecionadosAdd;
+	private List<Pessoa> pessoas;
+	private Pessoa pessoa;
+	private Grupo grupo;
 	private PessoaDataModel pdm;
 	private PessoaDataModel pdmExc;
-	private List<Pessoa> pessoas;
-	private Grupo grupo;
-	private int codGrupo;
-	private boolean primeiraVez = true;
 	private ConviteGrupo convite;
+	private PessoaDAO pDAO ;
+	private GrupoDAO gruDAO;
 	private ConviteGrupoDAO conviteDAO;
 
+	/**
+	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
+	 * passado por f:event
+	 * 
+	 * @author Graziele Vasconcelos
+	 */
 	public void infoGrupo(){
-		if(primeiraVez){
 			primeiraVez = false;
 			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 			pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
 			grupo = gruDAO.searchByID(codGrupo);
 			pdm = new PessoaDataModel(pessoas);
 			pdmExc = new PessoaDataModel(membrosGrp);
-		}
 	}
 
 	@PostConstruct
@@ -62,6 +66,10 @@ public class MembroGrupoBean {
 		convite = new ConviteGrupo();
 	}
 
+	/**
+	 * Realiza a exclusão de uma lista de membro do grupo
+	 * @author Graziele Vasconcelos
+	 */
 	public void excluirMembro(){
 		for (Pessoa membro : getMembrosSelecionadosExc()){
 			for (int i = 0; i < membro.getGruposParticipantes().size() ; i++) {
@@ -74,6 +82,10 @@ public class MembroGrupoBean {
 		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 	}
 
+	/**
+	 * Realiza o convite para o usuário aderir ao grupo
+	 * @author Graziele Vasconcelos
+	 */
 	public void addMembroGrupo(){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		if(getMembrosSelecionadosAdd().length != 0){
@@ -86,8 +98,6 @@ public class MembroGrupoBean {
 				//pDAO.update(membro);
 			} 
 			//membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
-			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
-			pdm = new PessoaDataModel(pessoas);
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Convite enviado.");
 			fc.addMessage("", fm);
