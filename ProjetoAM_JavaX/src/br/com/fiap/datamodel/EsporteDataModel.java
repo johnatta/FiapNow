@@ -13,6 +13,11 @@ public class EsporteDataModel extends ListDataModel<Esporte> implements Selectab
 	 */
 	public EsporteDataModel() {	}
 
+	/**
+	 * Método construtor que recebe uma lista de esportes(objeto que será selecionado)
+	 * @param lista de esportes 
+	 * @author Graziele Vasconcelos
+	 */	
 	public EsporteDataModel(List<Esporte> esportes) {
 		super(esportes);
 	}
