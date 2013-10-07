@@ -77,7 +77,7 @@ public class CriacaoGrupoBean implements Serializable {
 			grupo.setEsportes(listEsporte);
 			grupo = gDAO.insertEntity(grupo);
 			grupo.getAdm().getGruposParticipantes().add(grupo);
-			pesDAO.update(grupo.getAdm());
+			//pesDAO.update(grupo.getAdm());
 			fm.setSummary("Grupo cadastrado com sucesso");
 			fc.addMessage("", fm);
 			return "grupo.xhtml";

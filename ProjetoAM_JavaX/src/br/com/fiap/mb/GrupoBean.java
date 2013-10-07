@@ -198,7 +198,7 @@ public class GrupoBean implements Serializable {
 				pessoa.getGruposParticipantes().remove(i);
 			}
 		}
-		pDAO.update(pessoa);
+		//pDAO.update(pessoa);
 		return "grupos.xhtml";
 	}
 
@@ -213,7 +213,7 @@ public class GrupoBean implements Serializable {
 		comentarioGrupo.setDataHora(Calendar.getInstance());
 		comentarioGrupoDAO.insert(comentarioGrupo);
 		comentarioGrupo.setComentario("");
-		gruDAO.update(grupo);
+		//gruDAO.update(grupo);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
@@ -230,7 +230,7 @@ public class GrupoBean implements Serializable {
 		for (int i = 0; i < grupo.getComentarios().size(); i++) {
 			if(grupo.getComentarios().get(i).getCodComentario() == codComentario){
 				grupo.getComentarios().remove(i);
-				gruDAO.update(grupo);
+				//gruDAO.update(grupo);
 			}
 		}
 	}
@@ -301,13 +301,8 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String salvarEdicao(){
-		for (Esporte esporte : getEspSelecionados()) {
-			listEsporte.add(esporte);
-		}
-		if (getEspSelecionados().length != 0){
-			edicaoGrupo.setEsportes(listEsporte);
-		}
-		return "grupos.xhtml";
+		gruDAO.update(edicaoGrupo);
+		return "grupo.xhtml";
 	}
 
 

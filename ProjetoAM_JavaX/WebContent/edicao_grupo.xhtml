@@ -42,13 +42,7 @@
 						<f:selectItems value="#{grupoBean.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
-					<br></br>
-					<p:dataTable id="multiCars" var="e" value="#{grupoBean.edm}"
-						selection="#{grupoBean.espSelecionados}">
-						<f:facet name="header">#{msgs.select_sports}</f:facet>
-						<p:column selectionMode="multiple" style="width:1%" />
-						<p:column headerText="#{msgs.sport}" style="width:25%">  #{e.nome} </p:column>
-					</p:dataTable>
+
 				</h:panelGrid>
 
 				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
