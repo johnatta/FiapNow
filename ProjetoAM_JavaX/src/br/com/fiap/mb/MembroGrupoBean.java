@@ -1,5 +1,6 @@
 package br.com.fiap.mb;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +24,11 @@ import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
 @SessionScoped
-public class MembroGrupoBean {
+public class MembroGrupoBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
 	private Pessoa[] membrosSelecionadosExc;

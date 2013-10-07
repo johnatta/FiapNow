@@ -290,20 +290,8 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String edicaoGrupo(){
-		edicaoGrupo = gruDAO.searchByID(grupo.getCodGrupo());
 		return "edicao_grupo.xhtml";
 	}
-
-	/**
-	 * Salva as informações editadas do grupo
-	 * @return páginas do os grupos da aplicação
-	 * @author Graziele Vasconcelos
-	 */
-	public String salvarEdicao(){
-		gruDAO.update(edicaoGrupo);
-		return "grupo.xhtml";
-	}
-
 
 	/**
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão editar grupo

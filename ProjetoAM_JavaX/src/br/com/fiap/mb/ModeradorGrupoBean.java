@@ -1,5 +1,6 @@
 package br.com.fiap.mb;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -19,13 +20,17 @@ import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
 @RequestScoped
-public class ModeradorGrupoBean {
+public class ModeradorGrupoBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
 	private List<Pessoa> moderadores; 
 	private List<Pessoa> membrosGrp;
 	private Pessoa[] moderadorSelecionados;
-	private Pessoa[] moderadorSelecionadosExc;
+	private Pessoa[] modSelecionadosExc;
 	private Grupo grupo;
 	private Pessoa pessoa;
 	private PessoaDataModel mdm;
@@ -57,7 +62,7 @@ public class ModeradorGrupoBean {
 	 * @author Graziele Vasconcelos 
 	 */
 	public void excluirModeradorDoGrupo(){
-		for (Pessoa moderador : moderadorSelecionadosExc){
+		for (Pessoa moderador : modSelecionadosExc){
 			for (int i = 0; i < grupo.getModeradores().size() ; i++) {
 				if(grupo.getModeradores().get(i).getCodPessoa() == moderador.getCodPessoa()){
 					grupo.getModeradores().remove(i);
@@ -85,7 +90,7 @@ public class ModeradorGrupoBean {
 	 * @author Graziele Vasconcelos
 	 */
 	public void desabilitarModerador(int codPessoa){
-		for (Pessoa moderador : getModeradorSelecionadosExc()){
+		for (Pessoa moderador : modSelecionadosExc){
 			for (int i = 0; i < grupo.getMembros().size() ; i++) {
 				if(grupo.getMembros().get(i).getCodPessoa() == moderador.getCodPessoa()){
 					grupo.getMembros().remove(i);
@@ -143,12 +148,12 @@ public class ModeradorGrupoBean {
 		this.moderadorSelecionados = moderadorSelecionados;
 	}
 
-	public Pessoa[] getModeradorSelecionadosExc() {
-		return moderadorSelecionadosExc;
+	public Pessoa[] getModSelecionadosExc() {
+		return modSelecionadosExc;
 	}
 
-	public void setModeradorSelecionadosExc(Pessoa[] moderadorSelecionadosExc) {
-		this.moderadorSelecionadosExc = moderadorSelecionadosExc;
+	public void setModSelecionadosExc(Pessoa[] modSelecionadosExc) {
+		this.modSelecionadosExc = modSelecionadosExc;
 	}
 
 	public PessoaDataModel getMdm() {

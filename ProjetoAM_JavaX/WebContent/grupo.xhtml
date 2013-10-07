@@ -46,7 +46,11 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}"
 								action="#{grupoBean.edicaoGrupo}" icon="ui-icon-check"
-								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" />
+								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" >
+							<f:setPropertyActionListener
+									target="#{editarGrupoBean.codGrupo}"
+									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>								
+								</p:commandButton>
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
 								style="margin:0" action="#{grupoBean.btnExclusao}"

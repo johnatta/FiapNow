@@ -8,6 +8,9 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{editarGrupoBean.infoGrupo}" />
+		</f:metadata>	
 		<h1>#{msgs.create_group}</h1>
 		<h:form>
 			<p:growl id="messages" showDetail="true" />
@@ -17,17 +20,17 @@
 					styleClass="grid">
 					<h:outputText value="#{msgs.image}" />
 					<p:fileUpload
-						fileUploadListener="#{grupoBean.realizarUpload}"
+						fileUploadListener="#{editarGrupoBean.realizarUpload}"
 						required="true" mode="advanced" update="messages"
 						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 						auto="false" dragDropSupport="false" label="Select" />
 
 					<h:outputText value="#{msgs.name}"></h:outputText>
-					<p:inputText value="#{grupoBean.edicaoGrupo.nomeGrupo}" readonly="true" 
+					<p:inputText value="#{editarGrupoBean.grupo.nomeGrupo}" readonly="true" 
 						required="true" maxlength="50" size="48"  />
 
 					<h:outputText value="#{msgs.description}"></h:outputText>
-					<p:inputTextarea value="#{grupoBean.edicaoGrupo.descricao}" 
+					<p:inputTextarea value="#{editarGrupoBean.grupo.descricao}" 
 						required="true" rows="5" cols="48" counter="counter"
 						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
@@ -36,10 +39,10 @@
 
 					<h:outputText value="#{msgs.privacy}"></h:outputText>
 					<p:selectOneMenu effect="fade"
-						value="#{grupoBean.edicaoGrupo.privacidade}" required="true">
+						value="#{editarGrupoBean.grupo.privacidade}" required="true">
 						<f:selectItem itemLabel="#{msgs.select_one}" itemValue=""
 							noSelectionOption="true"></f:selectItem>
-						<f:selectItems value="#{grupoBean.privs}" var="p"
+						<f:selectItems value="#{editarGrupoBean.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
 
@@ -47,7 +50,7 @@
 
 				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
 					id="criarGrupoPgInfoGrupo" icon="ui-icon-check"
-					action="#{grupoBean.salvarEdicao}" style="margin:0">
+					action="#{editarGrupoBean.salvarEdicao}" style="margin:0">
 				</p:commandButton>
 			</p:panel>
 		</h:form>

@@ -24,7 +24,7 @@
 					<p:dataTable id="multiModeratorsExclusao" var="moderador"
 						value="#{moderadorGrupoBean.mdmExc}"  paginator="true"
 						rows="10"
-						selection="#{moderadorGrupoBean.moderadorSelecionadosExc}">
+						selection="#{moderadorGrupoBean.modSelecionadosExc}" >
 						<f:facet name="header"> #{msgs.select_moderator} </f:facet>
 
 						<p:column selectionMode="multiple" style="width:2%" />
