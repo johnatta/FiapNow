@@ -9,14 +9,11 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.Grupo;
-import br.com.fiap.entity.ModeradorGrupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
@@ -28,14 +25,12 @@ public class ModeradorGrupoBean {
 	private List<Pessoa> membrosGrp;
 	private Pessoa[] moderadorSelecionados;
 	private Pessoa[] moderadorSelecionadosExc;
-	private ModeradorGrupo moderadorGrupo;
 	private Grupo grupo;
 	private Pessoa pessoa;
 	private PessoaDataModel mdm;
 	private PessoaDataModel mdmExc;
 	private PessoaDAO pDAO ;
 	private GrupoDAO gruDAO;
-	private ModeradorGrupoDAO modDAO;
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -45,16 +40,14 @@ public class ModeradorGrupoBean {
 	 */
 	public void infoGrupo(){
 		grupo = gruDAO.searchByID(codGrupo);
-		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
 		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
 		mdm = new PessoaDataModel(membrosGrp);
-		mdmExc = new PessoaDataModel(moderadores);
+		mdmExc = new PessoaDataModel(grupo.getModeradores());
 	}
 
 	@PostConstruct
 	public void onInit() {
 		gruDAO = new GrupoDAOImpl(em);
-		modDAO = new ModeradorGrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		pessoa = new Pessoa();
 	}
@@ -65,14 +58,10 @@ public class ModeradorGrupoBean {
 	 */
 	public void excluirModeradorDoGrupo(){
 		for (Pessoa moderador : getModeradorSelecionadosExc()){
-			moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), moderador.getCodPessoa());
-			moderadorGrupo.setGrupo(grupo);
-			moderadorGrupo.setPessoa(moderador);
-			modDAO.remove(moderadorGrupo);
-			for (int i = 0; i < moderador.getGruposParticipantes().size() ; i++) {
-				if(moderador.getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
-					moderador.getGruposParticipantes().remove(i);
-					pDAO.update(pessoa);
+			for (int i = 0; i < grupo.getModeradores().size() ; i++) {
+				if(grupo.getModeradores().get(i).getCodPessoa() == moderador.getCodPessoa()){
+					grupo.getModeradores().remove(i);
+					gruDAO.update(grupo);
 				}
 			}
 		}		
@@ -85,9 +74,8 @@ public class ModeradorGrupoBean {
 	 */
 	public void addModerador(){
 		for (Pessoa moderador : getModeradorSelecionados()){
-			moderadorGrupo.setGrupo(gruDAO.buscarInfoGrupo(codGrupo));
-			moderadorGrupo.setPessoa(moderador);
-			modDAO.insert(moderadorGrupo);
+			grupo.getModeradores().add(moderador);
+			gruDAO.update(grupo);
 		}
 	}
 	
@@ -97,9 +85,14 @@ public class ModeradorGrupoBean {
 	 * @author Graziele Vasconcelos
 	 */
 	public void desabilitarModerador(int codPessoa){
-		moderadorGrupo =  modDAO.buscarModeradorGrupo(grupo.getCodGrupo(), codPessoa);
-		modDAO.remove(moderadorGrupo);
-		//moderadores = modDAO.buscarModeradoresDoGrupo(grupo.getCodGrupo());
+		for (Pessoa moderador : getModeradorSelecionadosExc()){
+			for (int i = 0; i < grupo.getMembros().size() ; i++) {
+				if(grupo.getMembros().get(i).getCodPessoa() == moderador.getCodPessoa()){
+					grupo.getMembros().remove(i);
+					gruDAO.update(grupo);
+				}
+			}
+		}	
 	}
 
 	public Pessoa getPessoa() {
@@ -140,14 +133,6 @@ public class ModeradorGrupoBean {
 
 	public void setMembrosGrp(List<Pessoa> membrosGrp) {
 		this.membrosGrp = membrosGrp;
-	}
-
-	public ModeradorGrupo getModeradorGrupo() {
-		return moderadorGrupo;
-	}
-
-	public void setModeradorGrupo(ModeradorGrupo moderadorGrupo) {
-		this.moderadorGrupo = moderadorGrupo;
 	}
 
 	public Pessoa[] getModeradorSelecionados() {

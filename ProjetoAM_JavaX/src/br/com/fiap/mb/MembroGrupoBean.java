@@ -26,7 +26,6 @@ import br.com.fiap.entity.Pessoa;
 public class MembroGrupoBean {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
-	private List<Pessoa> membrosGrp;
 	private Pessoa[] membrosSelecionadosExc;
 	private Pessoa[] membrosSelecionadosAdd;
 	private List<Pessoa> pessoas;
@@ -46,11 +45,10 @@ public class MembroGrupoBean {
 	 * @author Graziele Vasconcelos
 	 */
 	public void infoGrupo(){
-			membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
-			pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
-			grupo = gruDAO.searchByID(codGrupo);
-			pdm = new PessoaDataModel(pessoas);
-			pdmExc = new PessoaDataModel(membrosGrp);
+		grupo = gruDAO.searchByID(codGrupo);
+		pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
+		pdm = new PessoaDataModel(pessoas);
+		pdmExc = new PessoaDataModel(grupo.getMembros());
 	}
 
 	@PostConstruct
@@ -75,7 +73,6 @@ public class MembroGrupoBean {
 				}
 			}
 		}	
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 	}
 
 	/**
@@ -93,7 +90,6 @@ public class MembroGrupoBean {
 				//membro.getGruposParticipantes().add(grupo);
 				//pDAO.update(membro);
 			} 
-			//membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Convite enviado.");
 			fc.addMessage("", fm);
@@ -106,14 +102,6 @@ public class MembroGrupoBean {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getMembrosGrp() {
-		return membrosGrp;
-	}
-
-	public void setMembrosGrp(List<Pessoa> membrosGrp) {
-		this.membrosGrp = membrosGrp;
 	}
 
 	public Grupo getGrupo() {
