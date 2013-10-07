@@ -267,7 +267,7 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		@SuppressWarnings("unchecked")
 		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery
 		("SELECT * FROM AM_PESSOA  WHERE cod_pessoa IN (SELECT cod_pessoa FROM AM_PESSOA_GRUPO WHERE cod_grupo = :codGrupo) " +
-				"and cod_pessoa not in (select COD_MODERADOR_PESSOA from am_moderador_grupo where COD_MODERADOR_GRUPO = :codGrupo) " +
+				"and cod_pessoa not in (select COD_PESSOA from am_moderador_grupo where COD_GRUPO = :codGrupo) " +
 				"and cod_pessoa not in (select cod_adm from am_grupo where cod_grupo = :codGrupo)",
 				Pessoa.class);
 

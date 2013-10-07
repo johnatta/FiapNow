@@ -33,7 +33,6 @@ import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
-import br.com.fiap.rc.ComentarioGrupoRC;
 
 @ManagedBean
 @SessionScoped

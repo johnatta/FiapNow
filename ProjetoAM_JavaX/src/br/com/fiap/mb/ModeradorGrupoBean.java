@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 
@@ -17,7 +18,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class ModeradorGrupoBean {
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
@@ -29,7 +30,6 @@ public class ModeradorGrupoBean {
 	private Pessoa pessoa;
 	private PessoaDataModel mdm;
 	private PessoaDataModel mdmExc;
-	private PessoaDAO pDAO ;
 	private GrupoDAO gruDAO;
 
 	/**
@@ -41,14 +41,14 @@ public class ModeradorGrupoBean {
 	public void infoGrupo(){
 		grupo = gruDAO.searchByID(codGrupo);
 		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+		moderadores = grupo.getModeradores();
 		mdm = new PessoaDataModel(membrosGrp);
-		mdmExc = new PessoaDataModel(grupo.getModeradores());
+		mdmExc = new PessoaDataModel(moderadores);
 	}
 
 	@PostConstruct
 	public void onInit() {
 		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
 		pessoa = new Pessoa();
 	}
 
@@ -57,7 +57,7 @@ public class ModeradorGrupoBean {
 	 * @author Graziele Vasconcelos 
 	 */
 	public void excluirModeradorDoGrupo(){
-		for (Pessoa moderador : getModeradorSelecionadosExc()){
+		for (Pessoa moderador : moderadorSelecionadosExc){
 			for (int i = 0; i < grupo.getModeradores().size() ; i++) {
 				if(grupo.getModeradores().get(i).getCodPessoa() == moderador.getCodPessoa()){
 					grupo.getModeradores().remove(i);
@@ -73,7 +73,7 @@ public class ModeradorGrupoBean {
 	 * @author Graziele Vasconcelos
 	 */
 	public void addModerador(){
-		for (Pessoa moderador : getModeradorSelecionados()){
+		for (Pessoa moderador : moderadorSelecionados){
 			grupo.getModeradores().add(moderador);
 			gruDAO.update(grupo);
 		}

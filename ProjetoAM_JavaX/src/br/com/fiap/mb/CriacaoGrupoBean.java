@@ -2,6 +2,7 @@ package br.com.fiap.mb;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -76,8 +77,13 @@ public class CriacaoGrupoBean implements Serializable {
 			}
 			grupo.setEsportes(listEsporte);
 			grupo = gDAO.insertEntity(grupo);
-			grupo.getAdm().getGruposParticipantes().add(grupo);
-			//pesDAO.update(grupo.getAdm());
+			grupo.getCodGrupo();
+			System.out.println(grupo.getCodGrupo());
+			List<Pessoa> adm = new ArrayList<Pessoa>();
+			adm.add(pessoa);
+			grupo.setMembros(adm);
+			System.out.println(grupo.getMembros().get(0).getNome());
+			gDAO.update(grupo);
 			fm.setSummary("Grupo cadastrado com sucesso");
 			fc.addMessage("", fm);
 			return "grupo.xhtml";
