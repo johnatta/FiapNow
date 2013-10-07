@@ -52,13 +52,11 @@ public class GrupoBean implements Serializable {
 	private int codGrupo;
 	private List<Evento> proximosEventos;
 	private List<Evento> historicoEventos;
-	private List<Privacidade> privs;
 	private List<Esporte> listEsporte;
 	private Esporte[] espSelecionados;
 	private ComentarioGrupo comentarioGrupo;
 	private Pessoa pessoa;
 	private Grupo grupo;
-	private Grupo edicaoGrupo; 
 	private EsporteDataModel edm;
 	private ComentarioGrupoDAO comentarioGrupoDAO;
 	private PessoaDAO pDAO;
@@ -140,11 +138,9 @@ public class GrupoBean implements Serializable {
 		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
-		edicaoGrupo = new Grupo();
 		comentarioGrupo = new ComentarioGrupo();
 		listEsporte = new ArrayList<Esporte>();
 
-		this.privs = Arrays.asList(edicaoGrupo.getPrivacidade().values());
 		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
 
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -197,7 +193,7 @@ public class GrupoBean implements Serializable {
 				pessoa.getGruposParticipantes().remove(i);
 			}
 		}
-		//pDAO.update(pessoa);
+		pDAO.update(pessoa);
 		return "grupos.xhtml";
 	}
 
@@ -212,7 +208,7 @@ public class GrupoBean implements Serializable {
 		comentarioGrupo.setDataHora(Calendar.getInstance());
 		comentarioGrupoDAO.insert(comentarioGrupo);
 		comentarioGrupo.setComentario("");
-		//gruDAO.update(grupo);
+		gruDAO.update(grupo);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
@@ -537,22 +533,6 @@ public class GrupoBean implements Serializable {
 
 	public void setComentarioGrupoExcluido(int comentarioGrupoExcluido) {
 		this.comentarioGrupoExcluido = comentarioGrupoExcluido;
-	}
-
-	public Grupo getEdicaoGrupo() {
-		return edicaoGrupo;
-	}
-
-	public void setEdicaoGrupo(Grupo edicaoGrupo) {
-		this.edicaoGrupo = edicaoGrupo;
-	}
-
-	public List<Privacidade> getPrivs() {
-		return privs;
-	}
-
-	public void setPrivs(List<Privacidade> privs) {
-		this.privs = privs;
 	}
 
 	public EsporteDataModel getEdm() {
