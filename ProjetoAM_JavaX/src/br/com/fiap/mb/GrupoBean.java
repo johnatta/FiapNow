@@ -43,7 +43,6 @@ public class GrupoBean implements Serializable {
 	private boolean primeiraVezRenderGrupo;
 	private static int primeiraVezBuscaGrupo;
 	private static int codigoGrupo;
-
 	private boolean flagAdm = false; 
 	private boolean flagModerador = false; 
 	private boolean flagMembro = false; 
@@ -52,8 +51,6 @@ public class GrupoBean implements Serializable {
 	private BigDecimal numMembros;
 	private int comentarioGrupoExcluido;
 	private int codGrupo;
-	private List<Pessoa> moderadores;
-	private List<Pessoa> moderadoresRow;
 	private List<Evento> proximosEventos;
 	private List<Evento> historicoEventos;
 	private List<Privacidade> privs;
@@ -121,7 +118,7 @@ public class GrupoBean implements Serializable {
 				if(g.getCodGrupo() == codGrupo){
 					flagMembro = true;
 
-					for(Pessoa moderadorGrupo : moderadores){
+					for(Pessoa moderadorGrupo : grupo.getModeradores()){
 						if(pessoa.getCodPessoa() == moderadorGrupo.getCodPessoa()){
 							flagModerador = true;
 							break;
@@ -488,13 +485,6 @@ public class GrupoBean implements Serializable {
 		this.numMembros = numMembros;
 	}
 
-	public List<Pessoa> getModeradores() {
-		return moderadores;
-	}
-	public void setModeradores(List<Pessoa> moderadores) {
-		this.moderadores = moderadores;
-	}
-
 	public ComentarioGrupo getComentarioGrupo() {
 		return comentarioGrupo;
 	}
@@ -509,14 +499,6 @@ public class GrupoBean implements Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public List<Pessoa> getModeradoresRow() {
-		return moderadoresRow;
-	}
-
-	public void setModeradoresRow(List<Pessoa> moderadoresRow) {
-		this.moderadoresRow = moderadoresRow;
 	}
 
 	public List<Evento> getProximosEventos() {
