@@ -21,12 +21,10 @@ import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.dao.ModeradorGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.daoimpl.ModeradorGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
@@ -54,24 +52,19 @@ public class GrupoBean implements Serializable {
 	private BigDecimal numMembros;
 	private int comentarioGrupoExcluido;
 	private int codGrupo;
-	private List<Pessoa> membrosGrp;
 	private List<Pessoa> moderadores;
-	private List<Pessoa> membrosGrpRow;
 	private List<Pessoa> moderadoresRow;
 	private List<Evento> proximosEventos;
 	private List<Evento> historicoEventos;
-	private List<ComentarioGrupoRC> listaComentarios;
 	private List<Privacidade> privs;
 	private List<Esporte> listEsporte;
 	private Esporte[] espSelecionados;
 	private ComentarioGrupo comentarioGrupo;
-	private ComentarioGrupo comentarioPostado;
 	private Pessoa pessoa;
 	private Grupo grupo;
 	private Grupo edicaoGrupo; 
 	private EsporteDataModel edm;
 	private ComentarioGrupoDAO comentarioGrupoDAO;
-	private ModeradorGrupoDAO modDAO ;
 	private PessoaDAO pDAO;
 	private GrupoDAO gruDAO;
 
@@ -109,11 +102,6 @@ public class GrupoBean implements Serializable {
 
 		grupo = gruDAO.searchByID(codGrupo);
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
-		moderadoresRow = modDAO.buscarModeradoresDoGrupoRowNum(codGrupo);
-		membrosGrpRow = gruDAO.buscarMembrosDoGrupoRow(codGrupo);
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
-		moderadores = modDAO.buscarModeradoresDoGrupo(codGrupo);
-		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
 		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
 
@@ -156,7 +144,6 @@ public class GrupoBean implements Serializable {
 		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
-		modDAO = new ModeradorGrupoDAOImpl(em);
 		edicaoGrupo = new Grupo();
 		comentarioGrupo = new ComentarioGrupo();
 		listEsporte = new ArrayList<Esporte>();
@@ -224,14 +211,12 @@ public class GrupoBean implements Serializable {
 	 */
 	public void btnEnviarComentario(){
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		comentarioPostado = new ComentarioGrupo();
-
-		comentarioGrupo.setCodGrupo(grupo);
-		comentarioGrupo.setCodPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+		comentarioGrupo.setGrupo(grupo);
+		comentarioGrupo.setPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		comentarioGrupo.setDataHora(Calendar.getInstance());
-		comentarioPostado = comentarioGrupoDAO.insertEntity(comentarioGrupo);
+		comentarioGrupoDAO.insert(comentarioGrupo);
 		comentarioGrupo.setComentario("");
-		listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+		gruDAO.update(grupo);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
 		FacesMessage fm = new FacesMessage();
@@ -244,11 +229,13 @@ public class GrupoBean implements Serializable {
 	 * qualquer que seja e se for usuário apaga apenas o comentário que o mesmo fez.
 	 * @author Graziele Vasconcelos
 	 */
-	public void excluirComentario(){
-		System.out.println();
-		//comentarioGrupo = comentarioGrupoDAO.searchByID(comentarioGrupoExcluido);
-		//comentarioGrupoDAO.remove(comentarioGrupo);
-		//listaComentarios = gruDAO.buscarComentariosPeloGrupo(codGrupo);
+	public void excluirComentario(int codComentario){
+		for (int i = 0; i < grupo.getComentarios().size(); i++) {
+			if(grupo.getComentarios().get(i).getCodComentario() == codComentario){
+				grupo.getComentarios().remove(i);
+				gruDAO.update(grupo);
+			}
+		}
 	}
 
 	/**
@@ -501,14 +488,6 @@ public class GrupoBean implements Serializable {
 		this.numMembros = numMembros;
 	}
 
-	public List<Pessoa> getMembrosGrp() {
-		return membrosGrp;
-	}
-
-	public void setMembrosGrp(List<Pessoa> membrosGrp) {
-		this.membrosGrp = membrosGrp;
-	}
-
 	public List<Pessoa> getModeradores() {
 		return moderadores;
 	}
@@ -524,36 +503,12 @@ public class GrupoBean implements Serializable {
 		this.comentarioGrupo = comentarioGrupo;
 	}
 
-	public ComentarioGrupo getComentarioPostado() {
-		return comentarioPostado;
-	}
-
-	public void setComentarioPostado(ComentarioGrupo comentarioPostado) {
-		this.comentarioPostado = comentarioPostado;
-	}
-
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public List<ComentarioGrupoRC> getListaComentarios() {
-		return listaComentarios;
-	}
-
-	public void setListaComentarios(List<ComentarioGrupoRC> listaComentarios) {
-		this.listaComentarios = listaComentarios;
-	}
-
-	public List<Pessoa> getMembrosGrpRow() {
-		return membrosGrpRow;
-	}
-
-	public void setMembrosGrpRow(List<Pessoa> membrosGrpRow) {
-		this.membrosGrpRow = membrosGrpRow;
 	}
 
 	public List<Pessoa> getModeradoresRow() {
