@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<f:metadata>
+			<f:event type="preRenderView"
+				listener="#{mensagemGrupoBean.infoGrupo}" />
+		</f:metadata>
+		<h:form id="formMsg">
+			<h1>
+				<h:commandLink action="#{mensagemGrupoBean.paginaGrupo}">
+					<h:outputText value="#{mensagemGrupoBean.grupo.nomeGrupo}"></h:outputText>
+				</h:commandLink>
+			</h1>
+			<p:growl id="messages" showDetail="true" sticky="true" />
+			<h:panelGrid columns="2" border="1">
+				<h:outputText value="Título :"></h:outputText>
+				<p:inputText value="#{mensagemGrupoBean.mensagem.titulo}"></p:inputText>
+				<h:outputText value="Mensagem :"></h:outputText>
+				<p:inputTextarea id="msg"
+					value="#{mensagemGrupoBean.mensagem.descricao}" required="true"
+					rows="5" cols="48" counter="counter" maxlength="100"
+					counterTemplate="#{msgs.maximum_of_100_characters}">
+				</p:inputTextarea>
+				<br></br>
+				<h:outputText id="counter" />
+			</h:panelGrid>
+		</h:form>
+			<h:form id="buttons">
+			<h:panelGrid columns="2" style="margin-top:10px">
+				<p:commandButton ajax="false" id="submitButton" value="Enviar"
+					update=":formMsg" action="#{mensagemGrupoBean.enviarMsg}"
+					oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
+				<p:commandButton ajax="false" id="backButton" type="submit" value="Voltar"
+					action="#{mensagemGrupoBean.paginaGrupo}" icon="ui-icon-arrowrefresh-1-n" >
+				<f:setPropertyActionListener value="#{mensagemGrupoBean.grupo.codGrupo}" target="#{grupoBean.codGrupo}" />				
+				</p:commandButton>
+			</h:panelGrid>
+			</h:form>
+				
+	</ui:define>
+</ui:composition>
+
+</html>

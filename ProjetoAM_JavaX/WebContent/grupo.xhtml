@@ -13,6 +13,15 @@
 		</f:metadata>
 		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
 		<h:form id="formGrupo" rendered="#{grupoBean.btnFormGrupo()}">
+		<p:panel>
+			<p:commandButton ajax="false" type="submit"
+				value="Mensagem Grupo" icon="ui-icon-mail-closed"
+				style="margin:0" action="#{grupoBean.msgGrupo}" 
+				rendered="#{grupoBean.btnRenderPgMsg()}">
+				<f:setPropertyActionListener target="#{mensagemGrupoBean.codGrupo}"
+					value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
+			</p:commandButton>
+		</p:panel>
 			<p:growl id="messages" showDetail="true" />
 			<div>
 				<p:panel>
@@ -46,11 +55,11 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}"
 								action="#{grupoBean.edicaoGrupo}" icon="ui-icon-check"
-								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" >
-							<f:setPropertyActionListener
+								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}">
+								<f:setPropertyActionListener
 									target="#{editarGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>								
-								</p:commandButton>
+									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
+							</p:commandButton>
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
 								style="margin:0" action="#{grupoBean.btnExclusao}"
@@ -173,12 +182,14 @@
 							action="#{grupoBean.btnEnviarComentario}"
 							update=":formVisualizacaoComentario:comentarios" />
 						<p:separator />
+						<p:commandButton ajax="false" id="clearButton" type="button"
+							value="Limpar" onclick="PF('cmt').clear()" icon="ui-icon-close" />
 					</p:toolbarGroup>
 				</p:toolbar>
 				<p:panel id="comment" header="#{msgs.comment}">
-					<p:inputTextarea value="#{grupoBean.comentarioGrupo.comentario}"
-						required="true" rows="5" cols="48" counter="counter"
-						maxlength="300"
+					<p:inputTextarea id="cmt"
+						value="#{grupoBean.comentarioGrupo.comentario}" required="true"
+						rows="5" cols="48" counter="counter" maxlength="300"
 						counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
 					<br></br>

@@ -288,6 +288,15 @@ public class GrupoBean implements Serializable {
 	public String edicaoGrupo(){
 		return "edicao_grupo.xhtml";
 	}
+	
+	/**
+	 * Direciona para a página de mensagem grupo
+	 * @return página para mensagem grupo
+	 * @author Graziele Vasconcelos
+	 */	
+	public String msgGrupo(){
+		return "mensagem_grupo.xhtml";
+	}
 
 	/**
 	 * Verifica se o usuário da sessão é administrador caso for é possível a visualização do botão editar grupo
@@ -370,6 +379,19 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public boolean btnRenderDeleteComent(){
+		if(flagAdm || flagModerador)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Verifica se o usuário é administrador ou moderador para ter o privilégio de acessar a página de
+	 * mensagem grupo e enviar 
+	 * @return respota em boolean para renderizar botão para acesso da página mensagem grupo
+	 * @author Graziele Vasconcelos
+	 */
+	public boolean btnRenderPgMsg(){
 		if(flagAdm || flagModerador)
 			return true;
 		else

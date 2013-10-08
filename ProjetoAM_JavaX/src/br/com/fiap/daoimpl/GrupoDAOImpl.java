@@ -374,5 +374,22 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 		p.setParameter("codGrupo", codGrupo);
 		return p.getResultList();
 	}
+	
+	
+	/**
+	 * Busca os membros do grupo incluindo moderador
+	 *
+	 * @param codGrupo Código do Grupo ser procurada
+	 * @return Membros encontrados
+	 * @author Graziele Vasconcelos
+	 */
+	@Override
+	public List<Pessoa> buscarMembrosDoGrupoComModerador(int codGrupo) {
+		TypedQuery <Pessoa> p = (TypedQuery<Pessoa>) em.createNativeQuery
+		("SELECT * FROM AM_PESSOA  WHERE cod_pessoa IN (SELECT cod_pessoa FROM AM_PESSOA_GRUPO WHERE cod_grupo = :codGrupo) " +
+				"and cod_pessoa not in (select cod_adm from am_grupo where cod_grupo = :codGrupo)", Pessoa.class);
+		p.setParameter("codGrupo", codGrupo);
+		return p.getResultList();
+	}
 
 }
