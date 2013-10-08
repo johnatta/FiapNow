@@ -2,6 +2,7 @@ package br.com.fiap.mb;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -31,6 +32,7 @@ public class MembroGrupoBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 	private int codGrupo;
+	private boolean primeiraVez;
 	private Pessoa[] membrosSelecionadosExc;
 	private Pessoa[] membrosSelecionadosAdd;
 	private List<Pessoa> pessoas;
@@ -50,14 +52,18 @@ public class MembroGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void infoGrupo(){
-		grupo = gruDAO.searchByID(codGrupo);
-		pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
-		pdm = new PessoaDataModel(pessoas);
-		pdmExc = new PessoaDataModel(grupo.getMembros());
+		if(primeiraVez){
+			primeiraVez = false;
+			grupo = gruDAO.searchByID(codGrupo);
+			pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
+			pdm = new PessoaDataModel(pessoas);
+			pdmExc = new PessoaDataModel(grupo.getMembros());
+		}
 	}
 
 	@PostConstruct
 	public void onInit() {
+		primeiraVez = true;
 		gruDAO = new GrupoDAOImpl(em);
 		pDAO = new PessoaDAOImpl(em);
 		conviteDAO = new ConviteGrupoDAOImpl(em);
@@ -77,6 +83,7 @@ public class MembroGrupoBean implements Serializable {
 					pDAO.update(membro);
 				}
 			}
+			pdmExc = new PessoaDataModel(grupo.getMembros());
 		}	
 	}
 
@@ -92,13 +99,27 @@ public class MembroGrupoBean implements Serializable {
 				convite.setGrupo(grupo);
 				convite.setPessoa(membro);
 				conviteDAO.insert(convite);
-				//membro.getGruposParticipantes().add(grupo);
-				//pDAO.update(membro);
+
 			} 
+			
+			pdm = new PessoaDataModel(pessoas);
+
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Convite enviado.");
 			fc.addMessage("", fm);
 		}
+	}
+
+	/**
+	 * Direciona para a página grupo da sessão.
+	 * @return página grupo da sessão
+	 * @author Graziele Vasconcelos
+	 */
+	public String paginaGrupo(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		map.remove("membroGrupoBean");
+		return "grupo.xhtml";
 	}
 
 	public Pessoa getPessoa() {

@@ -40,12 +40,12 @@
 							<p:commandButton type="submit" value="#{msgs.remove}"
 								ajax="false" icon="ui-icon-trash"
 								action="#{moderadorGrupoBean.excluirModeradorDoGrupo(moderador.codPessoa)}"
-								update=":todosModeradores:mdmExc">
+								update=":todosModeradores:moderadores">
 							</p:commandButton>
 							<p:commandButton type="submit" value="#{msgs.disable_moderator}"
 								ajax="false" icon="ui-icon-closethick"
 								action="#{moderadorGrupoBean.desabilitarModerador(moderador.codPessoa)}"
-								update=":todosModeradores:mdmExc">
+								update=":todosModeradores:moderadores">
 							</p:commandButton>
 						</f:facet>
 

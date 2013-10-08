@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
+import br.com.fiap.dao.ConviteGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.GrupoDAO;
@@ -18,6 +19,7 @@ import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
+import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
@@ -26,6 +28,7 @@ import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Confirmacao;
+import br.com.fiap.entity.ConviteGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
@@ -67,6 +70,9 @@ public class TesteGrazi {
 		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
 		List<Pessoa> pessoas = new ArrayList<Pessoa>();
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		ConviteGrupo convite = new ConviteGrupo();
+		ConviteGrupoDAO conviteDAO = new ConviteGrupoDAOImpl(em);
+		/*
 		p = pDAO.searchByID(1);
 		
 		g = gDAO.searchByID(1);
@@ -108,6 +114,7 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		//Converte Objetos System.out.println(“Data convertida: ”+sdf.parse("02/08/1970")); }
 		}
 */
+		/*
 		System.err.println("---------------------------------------------------------------------");
 
 		g = gDAO.buscarInfoGrupo(2);
@@ -229,7 +236,6 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		eventoA.setAdm(p);
 		eventoA.setGrupos(grupos);
 		//eDAO.insert(eventoA);
-		*/
 		g = gDAO.searchByID(6);
 		p = pDAO.searchByID(1);
 
@@ -257,7 +263,16 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		mgB.setGrupo(g);
 		mgB.setPessoa(p);
 		//mDAO.insert(mgB);
+		 */
 		
+		g = gDAO.searchByID(15);
+		p = pDAO.searchByID(4);
+		
+		convite.setDescricao("Teste");
+		convite.setGrupo(g);
+		convite.setPessoa(p);
+		convite.setDescricao("TESTE DESCRICAO");
+		conviteDAO.insert(convite);
 	}
 
 }
