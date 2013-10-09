@@ -165,11 +165,10 @@ public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 	public List<Grupo> buscarGruposVisiveisPorNome(Pessoa pessoa, String nome){
 		TypedQuery<Grupo> query = (TypedQuery<Grupo>) em.createNativeQuery("SELECT * FROM AM_GRUPO WHERE privacidade = :priv " +
 				"OR cod_grupo in (SELECT cod_grupo " +
-				"FROM AM_PESSOA_GRUPO WHERE cod_pessoa = :codPessoa) AND UPPER(nome) LIKE UPPER(:nome)",Grupo.class);
+				"FROM AM_PESSOA_GRUPO WHERE cod_pessoa = :codPessoa) AND UPPER(nome_grupo) LIKE UPPER(:nome)",Grupo.class);
 		query.setParameter("priv", Privacidade.Aberto.ordinal());
 		query.setParameter("codPessoa", pessoa.getCodPessoa());
 		query.setParameter("nome", "%"+nome+"%");
-		query.setParameter("priv", Privacidade.Aberto);
 		List<Grupo> grupos = query.getResultList();
 
 		for (Grupo grupo : grupos) {

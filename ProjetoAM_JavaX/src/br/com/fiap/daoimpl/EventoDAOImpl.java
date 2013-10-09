@@ -50,8 +50,8 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	@Override
 	public List<ComentarioEventoRC> buscarComentariosPeloEvento(int codEvento) {
 		String queryStr = "SELECT NEW br.com.fiap.rc.ComentarioEventoRC(p.codPessoa, p.apelido, p.imgPerfil, c.comentario, c.dtHora) " +
-				"FROM ComentarioEvento c JOIN c.codPessoa p " +
-				"WHERE c.codEvento.codEvento = :cod and rownum <= 10";
+				"FROM ComentarioEvento c JOIN c.pessoa p " +
+				"WHERE c.evento.codEvento = :cod and rownum <= 10";
 		TypedQuery<ComentarioEventoRC> query = em.createQuery(queryStr, ComentarioEventoRC.class);
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
@@ -66,8 +66,8 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	 */
 	@Override
 	public List<Pessoa> buscarMembrosPorEvento(int codEvento) {
-		TypedQuery<Pessoa> query = em.createQuery("from Pessoa where exists " +
-				"(select codPessoa from am_pessoa_evento where codEvento = :cod)",Pessoa.class);
+		TypedQuery<Pessoa> query = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE cod_pessoa IN " +
+				"(SELECT cod_pessoa FROM AM_PESSOA_EVENTO WHERE COD_EVENTO = :cod)",Pessoa.class);
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
 	}
@@ -81,7 +81,8 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	 */
 	@Override
 	public List<Pessoa> buscarModeradoresDoEvento(int codEvento) {
-		TypedQuery<Pessoa> query = em.createQuery("",Pessoa.class);
+		TypedQuery<Pessoa> query = (TypedQuery<Pessoa>) em.createNativeQuery("SELECT * FROM AM_PESSOA WHERE COD_PESSOA IN " +
+				"(SELECT COD_PESSOA FROM AM_MODERADOR_EVENTO WHERE COD_EVENTO = :cod)",Pessoa.class);
 		query.setParameter("cod", codEvento);
 		return query.getResultList();
 	}
@@ -166,7 +167,7 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 				"OR cod_evento in (SELECT cod_evento " +
 				"FROM AM_PESSOA_EVENTO WHERE cod_pessoa = :codPessoa)) AND data_evento >= :today AND UPPER(nome) LIKE UPPER(:nome)",Evento.class);
 		query.setParameter("codPessoa", pessoa.getCodPessoa());
-		query.setParameter("priv", Privacidade.Aberto);
+		query.setParameter("priv", Privacidade.Aberto.ordinal());
 		query.setParameter("today", Calendar.getInstance());
 		query.setParameter("nome", "%"+nome+"%");
 		List<Evento> eventos = query.getResultList();
@@ -198,11 +199,11 @@ public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO
 	 */
 	@Override
 	public List<Evento> buscarMeusEventosPorNome(Pessoa pessoa, String nome) {
-		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = ?) and  and eve.data_evento >= ?" +
-				" and upper(eve.nome) like upper(?)", Evento.class);
-		query.setParameter(1, pessoa.getCodPessoa());
-		query.setParameter(2, "%"+nome+"%");
-		query.setParameter(3, Calendar.getInstance());
+		TypedQuery<Evento> query = (TypedQuery<Evento>) em.createNativeQuery("select * from am_evento eve where eve.cod_evento in (select pe.cod_evento from am_pessoa_evento pe where pe.cod_pessoa = :codPessoa) and eve.data_evento >= :dt" +
+				" and UPPER(eve.nome) like UPPER(:nome)", Evento.class);
+		query.setParameter("codPessoa", pessoa.getCodPessoa());
+		query.setParameter("nome", "%"+nome+"%");
+		query.setParameter("dt", Calendar.getInstance());
 
 		List<Evento> eventos = query.getResultList();
 

@@ -18,7 +18,7 @@ public class TesteWebServiceCep {
 			URL url = new URL( "http://cep.republicavirtual.com.br/web_cep.php?cep=09371160&formato=xml" );
 			Webservicecep cep = (Webservicecep) u.unmarshal( url );
 
-			System.out.println(cep.getCidade());
+			System.out.println(cep.getResultado_txt());
 
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

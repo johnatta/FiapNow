@@ -5,9 +5,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.EventoDAO;
-import br.com.fiap.daoimpl.EventoDAOImpl;
-import br.com.fiap.entity.Evento;
+import br.com.fiap.dao.MensagemGrupoDAO;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
+import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
@@ -19,7 +19,7 @@ public class TesteAriel {
 		//TELA ADICIONAR MEMBRO GRUPO
 		//Teste do método buscaUsuariosParaAdicionarAoGrupo(codGrupo)
 		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
-		List<Pessoa> pessoas = grupoDAO.buscarUsuariosParaAdicionarAoGrupo(1);
+		List<Pessoa> pessoas = grupoDAO.buscarPessoasParaAdicionarAoGrupo(1);
 		for(Pessoa pes : pessoas){
 			System.out.println("Código da pessoa que não está neste evento: " + pes.getCodPessoa());
 		}*/
@@ -121,7 +121,7 @@ public class TesteAriel {
 		//TELA INDEX
 		//Teste do método buscarEmailESenha(email,senha)
 		/*UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
-		Usuario usuario = usuarioDAO.buscarEmailESenha("barbara.alves@hotmail.com", "barbaraII");
+		Usuario usuario = usuarioDAO.buscarEmailESenha("joao@gmail.com", "123");
 		System.out.println(usuario.getCodUsuario());
 		System.out.println(usuario.getEmail());
 		System.out.println(usuario.getSenha());
@@ -139,7 +139,7 @@ public class TesteAriel {
 		//TELA INDEX
 		//Teste do método buscarPorEmail(email)
 		/*UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
-		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Usuario usuario = usuarioDAO.buscarPorEmail("joao@gmail.com");
 		System.out.println(usuario.getCodUsuario());
 		System.out.println(usuario.getEmail());
 		System.out.println(usuario.getSenha());
@@ -158,7 +158,7 @@ public class TesteAriel {
 		//Teste do método buscarPorUsuario(usuario)
 		/*PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
-		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Usuario usuario = usuarioDAO.buscarPorEmail("joao@gmail.com");
 		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
 		System.out.println("Cód. Usuário: " + pessoa.getUsuario().getCodUsuario());
 		System.out.println("Cód. Pessoa: " + pessoa.getCodPessoa());
@@ -170,7 +170,9 @@ public class TesteAriel {
 		//TELA GRUPOS
 		//Teste do método buscarGruposPorNome(nome)
 		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
-		List<Grupo> grupos = grupoDAO.buscarGruposPorNome("a");
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(1);
+		List<Grupo> grupos = grupoDAO.buscarGruposVisiveisPorNome(pessoa,"a");
 		for(Grupo grupo : grupos){
 			System.out.println("Cód.: " + grupo.getCodGrupo());
 			System.out.println("Nome: " + grupo.getNomeGrupo());
@@ -184,7 +186,7 @@ public class TesteAriel {
 		/*GrupoDAO grupoDAO = new GrupoDAOImpl(em);
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
-		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Usuario usuario = usuarioDAO.buscarPorEmail("joao@gmail.com");
 		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
 		List<Grupo> grupos = grupoDAO.buscarMeusGruposPorNome(pessoa, "a");
 		for(Grupo grupo : grupos){
@@ -198,7 +200,9 @@ public class TesteAriel {
 		//TELA EVENTOS
 		//Teste do método buscarEventosPorNome(nome)
 		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
-		List<Evento> eventos = eventoDAO.buscarEventosPorNome("p");
+		Pessoa pessoa = new Pessoa();
+		pessoa.setCodPessoa(1);
+		List<Evento> eventos = eventoDAO.buscarEventosVisiveisPorNome(pessoa,"p");
 		for(Evento eve : eventos){
 			System.out.println("Código: " + eve.getCodEvento());
 			System.out.println("Nome: " + eve.getNome());
@@ -211,7 +215,7 @@ public class TesteAriel {
 		//Teste do método buscarMeusEventosPorNome(pessoa, nome)
 		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
-		Usuario usuario = usuarioDAO.buscarPorEmail("barbara.alves@hotmail.com");
+		Usuario usuario = usuarioDAO.buscarPorEmail("ana@teste.com");
 		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		Pessoa pessoa = pessoaDAO.buscarPorUsuario(usuario);
 		List<Evento> eventos = eventoDAO.buscarMeusEventosPorNome(pessoa, "a");
@@ -257,7 +261,7 @@ public class TesteAriel {
 		//Teste do método buscarConviteGrupoPorPessoa(pessoa)
 		/*ConviteGrupoDAO conviteGrupoDAO = new ConviteGrupoDAOImpl(em);
 		Pessoa pessoa = new Pessoa();
-		pessoa.setCodPessoa(2);
+		pessoa.setCodPessoa(3);
 		List<ConviteGrupo> convitesGrupo = conviteGrupoDAO.buscarConviteGrupoPorPessoa(pessoa);
 		for(ConviteGrupo cg : convitesGrupo){
 			System.out.println("Cód.: " + cg.getCodConvite());
@@ -272,7 +276,7 @@ public class TesteAriel {
 		//Teste do método buscarPedidoGrupoPraPessoa 
 		/*PedidoGrupoDAO pedidoGrupoDAO = new PedidoGrupoDAOImpl(em);
 		Pessoa pessoa = new Pessoa();
-		pessoa.setCodPessoa(2);
+		pessoa.setCodPessoa(3);
 		List<PedidoGrupo> pedidosGrupo = pedidoGrupoDAO.buscarPedidoGrupoPraPessoa(pessoa);
 		for(PedidoGrupo pg : pedidosGrupo){
 			System.out.println("Cód.: " + pg.getCodPedidoGrupo());
@@ -300,7 +304,7 @@ public class TesteAriel {
 		/*Pessoa pessoa = new Pessoa();
 		pessoa.setCodPessoa(3);
 		MensagemEventoDAO msgEventoDAO = new MensagemEventoDAOImpl(em);
-		List<MensagemEvento> msgsEvento = msgEventoDAO.buscarMensagensLidasDaPessoa(pessoa);
+		List<MensagemEvento> msgsEvento = msgEventoDAO.buscarMensagensDaPessoa(pessoa);
 		for(MensagemEvento me : msgsEvento){
 			System.out.println("Cód: " + me.getCodMensagem());
 			System.out.println("Desc.: " + me.getDescricao());
@@ -330,9 +334,9 @@ public class TesteAriel {
 		//TELA MENSAGENS
 		//Teste do método buscarMensagensLidasDaPessoa(pessoa)
 		/*Pessoa pessoa = new Pessoa();
-		pessoa.setCodPessoa(2);
+		pessoa.setCodPessoa(3);
 		MensagemGrupoDAO msgGrupoDAO = new MensagemGrupoDAOImpl(em);
-		List<MensagemGrupo> msgsGrupo= msgGrupoDAO.buscarMensagensLidasDaPessoa(pessoa);
+		List<MensagemGrupo> msgsGrupo= msgGrupoDAO.buscarMensagensDaPessoa(pessoa);
 		for(MensagemGrupo mg : msgsGrupo){
 			System.out.println("Cód: " + mg.getCodMensagem());
 			System.out.println("Desc.: " + mg.getDescricao());
@@ -346,7 +350,7 @@ public class TesteAriel {
 		//TELA MENSAGENS
 		//Teste do método buscarMensagensNaoLidasDaPessoa(pessoa)
 		/*Pessoa pessoa = new Pessoa();
-		pessoa.setCodPessoa(2);
+		pessoa.setCodPessoa(3);
 		MensagemGrupoDAO msgGrupoDAO = new MensagemGrupoDAOImpl(em);
 		List<MensagemGrupo> msgsGrupo= msgGrupoDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
 		for(MensagemGrupo mg : msgsGrupo){
@@ -374,14 +378,14 @@ public class TesteAriel {
 		
 		//TELA GRUPOS
 		//Teste do método buscarGruposVisiveis(pessoa)
-		EventoDAO eventoDAO = new EventoDAOImpl(em);
+		/*EventoDAO eventoDAO = new EventoDAOImpl(em);
 		Pessoa pessoa = new Pessoa();
 		pessoa.setCodPessoa(3);
 		List<Evento> itens = eventoDAO.buscarEventosVisiveis(pessoa);
 		for(Evento eve : itens){
 			System.out.println("Nome: " + eve.getNome());
 		}
-		System.out.println("Total: " + itens.size());
+		System.out.println("Total: " + itens.size());*/
 				
 		/*---------------------------------------------------*/
 				
