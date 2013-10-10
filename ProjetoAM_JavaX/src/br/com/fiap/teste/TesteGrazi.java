@@ -31,6 +31,7 @@ import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.ConviteGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
+import br.com.fiap.entity.EventoGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.PedidoGrupo;
@@ -72,8 +73,10 @@ public class TesteGrazi {
 		GrupoDAO gDAO = new GrupoDAOImpl(em);
 		ConviteGrupo convite = new ConviteGrupo();
 		ConviteGrupoDAO conviteDAO = new ConviteGrupoDAOImpl(em);
-		/*
+		Calendar data = Calendar.getInstance();
+		data.set(2013, 8, 9);
 		p = pDAO.searchByID(1);
+		/*
 		
 		g = gDAO.searchByID(1);
 
@@ -265,6 +268,7 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		//mDAO.insert(mgB);
 		 */
 		
+		/*
 		g = gDAO.searchByID(15);
 		p = pDAO.searchByID(4);
 		
@@ -273,6 +277,30 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		convite.setPessoa(p);
 		convite.setDescricao("TESTE DESCRICAO");
 		conviteDAO.insert(convite);
+		*/
+		
+		/*
+		g = gDAO.searchByID(01);
+		EventoGrupo eg = new EventoGrupo();
+		EventoDAO eDAO = new EventoDAOImpl(em);
+		
+		Evento evento = new Evento();
+		
+		eg.setEvento(evento);
+		eg.setGrupo(g);
+		List<EventoGrupo> listEg = new ArrayList<EventoGrupo>();
+		
+		evento.setNome("Touchdown SP-BR");
+		evento.setDescricao("Touchdown em SP.");
+		evento.setPrivacidade(Privacidade.Aberto);
+		evento.setCusto(00);
+		evento.setTelContato("01120500059");
+		evento.setImgEvento(new byte [4]);
+		evento.setDtEvento(data);
+		evento.setAdm(p);
+		evento.setGrupos(listEg);
+		//eDAO.insert(evento);
+		  */
 	}
 
 }
