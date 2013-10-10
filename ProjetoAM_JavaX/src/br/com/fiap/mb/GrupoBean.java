@@ -460,6 +460,39 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}
+	
+	public boolean btnRenderMembrosNull(){
+		if (grupo.getMembros().size() == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean btnRenderModeradoresNull(){
+		if (grupo.getModeradores().size() == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean btnRenderProxEventoNull(){
+		if (proximosEventos.size() == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean btnRenderHistEventoNull(){
+	
+		if (historicoEventos.size() == 0)
+			return true;
+		else
+			return false;
+	}
+	
+	public boolean btnRenderTeste(){
+		return btnRenderHistEventoNull();
+	}
 
 	public Grupo getGrupo() {
 		return grupo;
