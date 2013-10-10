@@ -196,7 +196,17 @@ public class GrupoBean implements Serializable {
 		pDAO.update(pessoa);
 		return "grupos.xhtml";
 	}
-
+	
+	public String participarGrupo(){
+		grupo.getMembros().add(pessoa);
+		gruDAO.update(grupo);
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		map.remove("grupoBean");
+		codGrupo = grupo.getCodGrupo();
+		grupo.setCodGrupo(grupo.getCodGrupo());
+		return "grupo.xhtml";
+	}
 	/**
 	 * Realiza o envio do comentário para o grupo à qual o usuário se encontra na página
 	 * @author Graziele Vasconcelos
