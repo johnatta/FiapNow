@@ -12,6 +12,19 @@
 			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}" />
 		</f:metadata>
 		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
+				<p:panel style="text-align:right">
+				<p:commandButton ajax="false" type="button" value="Mensagem Grupo"
+					icon="ui-icon-mail-closed" style="margin:0" action="#{grupoBean.}">
+				</p:commandButton>
+				<p:commandButton ajax="false" type="submit" value="Participar"
+					icon="ui-icon-circle-plus" style="margin:0"
+					action="#{grupoBean.participarGrupo}">
+				</p:commandButton>
+				<p:commandButton ajax="false" type="submit"
+					value="Sair do grupo" icon="ui-icon-circle-close"
+					style="margin:0" action="#{grupoBean.sairGrupo}"
+					rendered="#{grupoBean.btnRenderSairGroup()}" />
+			</p:panel>
 		<h:form id="formGrupo" rendered="#{grupoBean.btnFormGrupo()}">
 			<p:panel>
 				<p:commandButton ajax="false" type="submit" value="Mensagem Grupo"
