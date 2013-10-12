@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -21,16 +20,19 @@ import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.entity.Privacidade;
 
@@ -57,11 +59,39 @@ public class GrupoBean implements Serializable {
 	private ComentarioGrupo comentarioGrupo;
 	private Pessoa pessoa;
 	private Grupo grupo;
+	private PedidoGrupo pedidoGrupo;
+	private PedidoGrupoDAO pedidoDAO;
 	private EsporteDataModel edm;
 	private ComentarioGrupoDAO comentarioGrupoDAO;
 	private PessoaDAO pDAO;
 	private GrupoDAO gruDAO;
 
+	@PostConstruct
+	public void onInit(){
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		gruDAO = new GrupoDAOImpl(em);
+		pDAO = new PessoaDAOImpl(em);
+		pedidoDAO = new PedidoGrupoDAOImpl(em);
+		comentarioGrupo = new ComentarioGrupo();
+		pedidoGrupo = new PedidoGrupo();
+		listEsporte = new ArrayList<Esporte>();
+
+		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		pessoa = sessao.getPessoa();
+
+		if(primeiraVezBuscaGrupo > 0 ){
+			codGrupo = codigoGrupo; 
+			primeiraVezBuscaGrupo = 0;
+			codigoGrupo = 0;
+			preRenderGrupo();
+		}
+	}
+	
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
 	 * passado por f:event
@@ -132,30 +162,6 @@ public class GrupoBean implements Serializable {
 		}
 	}
 	
-	@PostConstruct
-	public void onInit(){
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
-		comentarioGrupo = new ComentarioGrupo();
-		listEsporte = new ArrayList<Esporte>();
-
-		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		LoginBean sessao = (LoginBean)map.get("loginBean");
-		pessoa = sessao.getPessoa();
-
-		if(primeiraVezBuscaGrupo > 0 ){
-			codGrupo = codigoGrupo; 
-			primeiraVezBuscaGrupo = 0;
-			codigoGrupo = 0;
-			preRenderGrupo();
-		}
-	}
-	
 	/**
 	 * Formata a data para dd/mm/yyyy HH:mm
 	 * @param dataComentario
@@ -198,8 +204,13 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public String participarGrupo(){
-		grupo.getMembros().add(pessoa);
-		gruDAO.update(grupo);
+		pedidoGrupo.setDescricao("Desejo participar do seu grupo");
+		pedidoGrupo.setPessoa(pessoa);
+		pedidoGrupo.setGrupo(grupo);
+		pedidoDAO.insert(pedidoGrupo);
+		FacesMessage fm = new FacesMessage("Pedido enviado!");
+		FacesContext fc = FacesContext.getCurrentInstance();
+		fc.addMessage("messages", fm);
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		map.remove("grupoBean");
@@ -631,5 +642,15 @@ public class GrupoBean implements Serializable {
 	public void setFlagUserFechado(boolean flagUserFechado) {
 		this.flagUserFechado = flagUserFechado;
 	}
+
+	public PedidoGrupo getPedidoGrupo() {
+		return pedidoGrupo;
+	}
+
+	public void setPedidoGrupo(PedidoGrupo pedidoGrupo) {
+		this.pedidoGrupo = pedidoGrupo;
+	}
+	
+	
 
 }
