@@ -82,6 +82,12 @@ public class MobileBean implements Serializable {
 		this.cnvEventoSelecionado = cnvEventoSelecionado;
 	}
 
+	/**
+	 * Aceita o convite de um Grupo
+	 *
+	 * @return retorna para a página dos convites de Grupo
+	 * @author Ariel Molina 
+	 */
 	public String aceitarCnvGrupo(){
 		//Adiciono a Pessoa ao Grupo, update no Grupo removo o Convite
 		cnvGrupoSelecionado.getGrupo().getMembros().add(pessoa);
@@ -91,6 +97,12 @@ public class MobileBean implements Serializable {
 		return "pm:convitesGrupo";
 	}
 	
+	/**
+	 * Recusa o convite de um Grupo
+	 *
+	 * @return retorna para a página dos convites de Grupo
+	 * @author Ariel Molina 
+	 */
 	public String recusarCnvGrupo(){
 		//Apenas removo o convite
 		conviteGrupoDAO.remove(cnvGrupoSelecionado);
@@ -98,7 +110,12 @@ public class MobileBean implements Serializable {
 		return "pm:convitesGrupo";
 	}
 	
-	
+	/**
+	 * Aceita o convite de um Evento
+	 *
+	 * @return retorna para a página dos convites de Evento
+	 * @author Ariel Molina 
+	 */
 	public String aceitarCnvEvento(){
 		//Adiciono a Pessoa ao Grupo, update no Grupo removo o Convite
 		cnvEventoSelecionado.getEvento().getMembros().add(pessoa);
@@ -108,6 +125,12 @@ public class MobileBean implements Serializable {
 		return "pm:convitesEvento";
 	}
 	
+	/**
+	 * Aceita o convite de um Evento
+	 *
+	 * @return retorna para a página dos convites de Evento
+	 * @author Ariel Molina 
+	 */
 	public String recusarCnvEvento(){
 		//Apenas removo o convite
 		conviteEventoDAO.remove(cnvEventoSelecionado);
