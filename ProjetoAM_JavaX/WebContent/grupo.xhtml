@@ -9,12 +9,13 @@
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
 		<f:metadata>
-			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo}" />
+			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo()}" />
 		</f:metadata>
+		<h:form>
 		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
 				<p:panel style="text-align:right">
 				<p:commandButton ajax="false" type="button" value="Mensagem Grupo"
-					icon="ui-icon-mail-closed" style="margin:0" action="#{grupoBean.}">
+					icon="ui-icon-mail-closed" style="margin:0" action="#{grupoBean.msgGrupo}">
 				</p:commandButton>
 				<p:commandButton ajax="false" type="submit" value="Participar"
 					icon="ui-icon-circle-plus" style="margin:0"
@@ -25,6 +26,7 @@
 					style="margin:0" action="#{grupoBean.sairGrupo}"
 					rendered="#{grupoBean.btnRenderSairGroup()}" />
 			</p:panel>
+			</h:form>
 		<h:form id="formGrupo" rendered="#{grupoBean.btnFormGrupo()}">
 			<p:panel>
 				<p:commandButton ajax="false" type="submit" value="Mensagem Grupo"
@@ -107,14 +109,11 @@
 				<p:panelGrid columns="1">
 					<p:carousel id="historicoEventos"
 						value="#{grupoBean.historicoEventos}" var="histEvento"
-						itemStyle="height:200px;width:200px;"
-						rendered="#{grupoBean.btnRenderTeste()}">
-						<f:facet name="header"
-							rendered="#{grupoBean.btnRenderHistEventoNull()}">Histórico Evento</f:facet>
+						itemStyle="height:200px;width:200px;">
+						<f:facet name="header">Histórico Evento</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 							<h:outputText
 								value="#{histEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(histEvento.dtEvento)})"></h:outputText>
-							<h:outputText value="#{msgs.no_records}"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
 						</f:facet>
@@ -130,25 +129,18 @@
 								<f:param name="id" value="${membro.codPessoa}" />
 							</p:graphicImage>
 							<h:outputText value="#{membro.nome} (#{membro.apelido})"></h:outputText>
-							<h:outputText value="#{msgs.no_records}"
-								rendered="#{grupoBean.btnRenderMembrosNull()}"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.manage_members}" icon="ui-icon-wrench"
 								style="margin:0" action="#{grupoBean.visualizarTodosMembros()}"
 								rendered="#{grupoBean.btnRenderGerenciarMembers()}">
-								<f:setPropertyActionListener
-									target="#{membroGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
+
 							</p:commandButton>
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.all_members}" icon="ui-icon-check"
 								style="margin:0" action="#{grupoBean.visualizarTodosMembros()}"
 								rendered="#{grupoBean.btnRenderAllMembros()}">
-								<f:setPropertyActionListener
-									target="#{membroGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
 							</p:commandButton>
 						</f:facet>
 					</p:carousel>
@@ -158,26 +150,20 @@
 						<f:facet name="header">#{msgs.moderator}</f:facet>
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 							<h:outputText value="#{moderador.nome} (#{moderador.apelido})" />
-							<h:outputText value="#{msgs.no_records}"
-								rendered="#{grupoBean.btnRenderModeradoresNull()}"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.manage_moderators}" icon="ui-icon-wrench"
 								style="margin:0"
-								action="#{grupoBean.visualizarTodosModeradores}"
+								action="#{grupoBean.gerenciarModerador}"
 								rendered="#{grupoBean.btnRenderGerenciarModeradores()}">
-								<f:setPropertyActionListener
-									target="#{moderadorGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
+
 							</p:commandButton>
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.moderators}" icon="ui-icon-check" style="margin:0"
 								action="#{grupoBean.visualizarTodosModeradores}"
 								rendered="#{grupoBean.btnRenderAllModeradores()}">
-								<f:setPropertyActionListener
-									target="#{moderadorGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
+
 							</p:commandButton>
 						</f:facet>
 					</p:carousel>
@@ -188,8 +174,6 @@
 						<h:panelGrid columns="1" style="width:100%" cellpadding="5">
 							<h:outputText
 								value="#{proxEvento.nome} (#{grupoBean.dataFormatadaDDMMYYYY(proxEvento.dtEvento)})" />
-							<h:outputText value="#{msgs.no_records}"
-								rendered="#{grupoBean.btnRenderProxEventoNull()}"></h:outputText>
 						</h:panelGrid>
 						<f:facet name="footer">
 						</f:facet>

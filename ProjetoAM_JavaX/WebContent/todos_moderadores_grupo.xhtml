@@ -9,22 +9,18 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<f:metadata>
-			<f:event type="preRenderView"
-				listener="#{moderadorGrupoBean.infoGrupo}" />
-		</f:metadata>
 		<h:form id="todosModeradores">
 			<h1>
-				<h:commandLink action="#{moderadorGrupoBean.paginaGrupo}">
-					<h:outputText value="#{moderadorGrupoBean.grupo.nomeGrupo}"></h:outputText>
+				<h:commandLink action="#{grupoBean.moderadorGrupo.paginaGrupo}">
+					<h:outputText value="#{grupoBean.moderadorGrupo.grupo.nomeGrupo}"></h:outputText>
 				</h:commandLink>
 			</h1>
 			<p:tabView id="tabMain">
 				<p:tab id="tabModeradorExc" title="#{msgs.moderator}">
 					<p:dataTable id="multiModeratorsExclusao" var="moderador"
-						value="#{moderadorGrupoBean.mdmExc}"  paginator="true"
+						value="#{grupoBean.moderadorGrupo.mdmExc}"  paginator="true"
 						rows="10"
-						selection="#{moderadorGrupoBean.modSelecionadosExc}" >
+						selection="#{grupoBean.moderadorGrupo.modSelecionadosExc}" >
 						<f:facet name="header"> #{msgs.select_moderator} </f:facet>
 
 						<p:column selectionMode="multiple" style="width:2%" />
@@ -39,12 +35,12 @@
 						<f:facet name="footer">
 							<p:commandButton type="submit" value="#{msgs.remove}"
 								ajax="false" icon="ui-icon-trash"
-								action="#{moderadorGrupoBean.excluirModeradorDoGrupo(moderador.codPessoa)}"
+								action="#{grupoBean.moderadorGrupo.excluirModeradorDoGrupo}"
 								update=":todosModeradores:moderadores">
 							</p:commandButton>
 							<p:commandButton type="submit" value="#{msgs.disable_moderator}"
 								ajax="false" icon="ui-icon-closethick"
-								action="#{moderadorGrupoBean.desabilitarModerador(moderador.codPessoa)}"
+								action="#{grupoBean.moderadorGrupo.desabilitarModerador}"
 								update=":todosModeradores:moderadores">
 							</p:commandButton>
 						</f:facet>
@@ -54,8 +50,8 @@
 				</p:tab>
 				<p:tab id="tabAddModeratorAdd" title="#{msgs.members}">
 					<p:dataTable id="moderatorsAdicionar" var="m"
-						value="#{moderadorGrupoBean.mdm}" paginator="true" rows="10"
-						selection="#{moderadorGrupoBean.moderadorSelecionados}" >
+						value="#{grupoBean.moderadorGrupo.mdm}" paginator="true" rows="10"
+						selection="#{grupoBean.moderadorGrupo.moderadorSelecionados}" >
 						<f:facet name="header"> #{msgs.select_moderator} </f:facet>
 
 						<p:column selectionMode="multiple" style="width:2%" />
@@ -73,7 +69,7 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.add_moderator}" id="addModerador"
-								icon="ui-icon-check" action="#{moderadorGrupoBean.addModerador}"
+								icon="ui-icon-check" action="#{grupoBean.moderadorGrupo.addModerador}"
 								style="margin:0" update=":todosModeradores:mdm">
 							</p:commandButton>
 						</f:facet>

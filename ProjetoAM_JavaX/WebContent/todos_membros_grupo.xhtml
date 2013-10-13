@@ -8,20 +8,17 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<f:metadata>
-			<f:event type="preRenderView" listener="#{membroGrupoBean.infoGrupo}" />
-		</f:metadata>
 		<h:form id="todosMembros">
 			<h1>
 				<h:commandLink action="#{grupoBean.paginaGrupo}">
-					<h:outputText value="#{membroGrupoBean.grupo.nomeGrupo}"></h:outputText>
+					<h:outputText value="#{grupoBean.membroGrupo.grupo.nomeGrupo}"></h:outputText>
 				</h:commandLink>
 			</h1>
 			<p:tabView id="tabMain">
 				<p:tab id="tabMembersGroupExc" title="#{msgs.remove_group}">
 					<p:dataTable id="multiMembroExclusao" var="mem"
-						value="#{membroGrupoBean.pdmExc}" paginator="true" rows="10"
-						selection="#{membroGrupoBean.membrosSelecionadosExc}">
+						value="#{grupoBean.membroGrupo.pdmExc}" paginator="true" rows="10"
+						selection="#{grupoBean.membroGrupo.membrosSelecionadosExc}">
 						<f:facet name="header">#{msgs.select_members}</f:facet>
 
 						<p:column selectionMode="multiple" style="width:2%" />
@@ -37,7 +34,7 @@
 						<f:facet name="footer">
 					<p:commandButton type="submit" value="#{msgs.remove}" ajax="false"
 						icon="ui-icon-trash"
-						action="#{membroGrupoBean.excluirMembro(mem.codPessoa)}"
+						action="#{grupoBean.membroGrupo.excluirMembro}"
 						update=":todosMembros:membrosGrp">
 					</p:commandButton>
 						</f:facet>
@@ -46,9 +43,9 @@
 				</p:tab>
 
 				<p:tab id="tabAddMembers" title="#{msgs.add_members}">
-					<p:dataTable id="multiMembs" var="p" value="#{membroGrupoBean.pdm}"
+					<p:dataTable id="multiMembs" var="p" value="#{grupoBean.membroGrupo.pdm}"
 						paginator="true" rows="10"
-						selection="#{membroGrupoBean.membrosSelecionadosAdd}">
+						selection="#{grupoBean.membroGrupo.membrosSelecionadosAdd}">
 						<f:facet name="header">#{msgs.select_members}</f:facet>
 						<p:column selectionMode="multiple" style="width:2%" />
 						<p:column headerText="#{msgs.photo}" style="width:32%">
@@ -62,7 +59,7 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.add_members}" id="addMembro" icon="ui-icon-check"
-								action="#{membroGrupoBean.addMembroGrupo}" style="margin:0" update=":todosMembros:pdm">
+								action="#{grupoBean.membroGrupo.addMembroGrupo}" style="margin:0" update=":todosMembros:pdm">
 							</p:commandButton>
 						</f:facet>
 					</p:dataTable>

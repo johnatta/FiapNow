@@ -49,6 +49,7 @@ public class GrupoBean implements Serializable {
 	private boolean flagMembro = false; 
 	private boolean flagUser = false;
 	private boolean flagUserFechado = false; 
+	private boolean comentario = false;
 	private BigDecimal numMembros;
 	private int comentarioGrupoExcluido;
 	private int codGrupo;
@@ -65,33 +66,9 @@ public class GrupoBean implements Serializable {
 	private ComentarioGrupoDAO comentarioGrupoDAO;
 	private PessoaDAO pDAO;
 	private GrupoDAO gruDAO;
+	private ModeradorGrupoBean moderadorGrupo;
+	private MembroGrupoBean membroGrupo;
 
-	@PostConstruct
-	public void onInit(){
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
-		pedidoDAO = new PedidoGrupoDAOImpl(em);
-		comentarioGrupo = new ComentarioGrupo();
-		pedidoGrupo = new PedidoGrupo();
-		listEsporte = new ArrayList<Esporte>();
-
-		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		LoginBean sessao = (LoginBean)map.get("loginBean");
-		pessoa = sessao.getPessoa();
-
-		if(primeiraVezBuscaGrupo > 0 ){
-			codGrupo = codigoGrupo; 
-			primeiraVezBuscaGrupo = 0;
-			codigoGrupo = 0;
-			preRenderGrupo();
-		}
-	}
-	
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
 	 * passado por f:event
@@ -106,16 +83,16 @@ public class GrupoBean implements Serializable {
 			Map<String, Object> map = context.getExternalContext().getSessionMap();
 			map.remove("grupoBean");
 		}else{
-			if(primeiraVezRenderGrupo){
+			if(!primeiraVezRenderGrupo || comentario){
+				preRenderGrupo(); 
 			}else{
-				preRenderGrupo();
 			}
 		}
 	}
 
 	public void preRenderGrupo() {
 		primeiraVezRenderGrupo = true;
-		
+
 		if(codGrupo == 0 ){
 			CriacaoGrupoBean criacaoGrupoBean = (CriacaoGrupoBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("criacaoGrupoBean");
 			codGrupo = criacaoGrupoBean.getGrupo().getCodGrupo();
@@ -125,6 +102,8 @@ public class GrupoBean implements Serializable {
 		}
 
 		grupo = gruDAO.searchByID(codGrupo);
+		moderadorGrupo = new ModeradorGrupoBean(grupo);
+		membroGrupo = new MembroGrupoBean(grupo);
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
@@ -161,7 +140,32 @@ public class GrupoBean implements Serializable {
 			}
 		}
 	}
-	
+
+	@PostConstruct
+	public void onInit(){
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		gruDAO = new GrupoDAOImpl(em);
+		pDAO = new PessoaDAOImpl(em);
+		pedidoDAO = new PedidoGrupoDAOImpl(em);
+		comentarioGrupo = new ComentarioGrupo();
+		pedidoGrupo = new PedidoGrupo();
+		listEsporte = new ArrayList<Esporte>();
+		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		pessoa = sessao.getPessoa();
+
+		if(primeiraVezBuscaGrupo > 0 ){
+			codGrupo = codigoGrupo; 
+			primeiraVezBuscaGrupo = 0;
+			codigoGrupo = 0;
+			preRenderGrupo();
+		}
+	}	
+
 	/**
 	 * Formata a data para dd/mm/yyyy HH:mm
 	 * @param dataComentario
@@ -202,7 +206,7 @@ public class GrupoBean implements Serializable {
 		pDAO.update(pessoa);
 		return "grupos.xhtml";
 	}
-	
+
 	public String participarGrupo(){
 		pedidoGrupo.setDescricao("Desejo participar do seu grupo");
 		pedidoGrupo.setPessoa(pessoa);
@@ -223,12 +227,12 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void btnEnviarComentario(){
+		comentario = true;
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		comentarioGrupo.setGrupo(grupo);
 		comentarioGrupo.setPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
 		comentarioGrupo.setDataHora(Calendar.getInstance());
 		comentarioGrupoDAO.insert(comentarioGrupo);
-		comentarioGrupo.setComentario("");
 		gruDAO.update(grupo);
 
 		FacesContext fc = FacesContext.getCurrentInstance();
@@ -309,7 +313,7 @@ public class GrupoBean implements Serializable {
 	public String edicaoGrupo(){
 		return "edicao_grupo.xhtml";
 	}
-	
+
 	/**
 	 * Direciona para a página de mensagem grupo
 	 * @return página para mensagem grupo
@@ -482,37 +486,8 @@ public class GrupoBean implements Serializable {
 			return false;
 	}
 	
-	public boolean btnRenderMembrosNull(){
-		if (grupo.getMembros().size() == 0)
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean btnRenderModeradoresNull(){
-		if (grupo.getModeradores().size() == 0)
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean btnRenderProxEventoNull(){
-		if (proximosEventos.size() == 0)
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean btnRenderHistEventoNull(){
-	
-		if (historicoEventos.size() == 0)
-			return true;
-		else
-			return false;
-	}
-	
-	public boolean btnRenderTeste(){
-		return btnRenderHistEventoNull();
+	public String gerenciarModerador(){
+		return "todos_moderadores_grupo.xhtml";
 	}
 
 	public Grupo getGrupo() {
@@ -650,7 +625,29 @@ public class GrupoBean implements Serializable {
 	public void setPedidoGrupo(PedidoGrupo pedidoGrupo) {
 		this.pedidoGrupo = pedidoGrupo;
 	}
-	
-	
+
+	public boolean isComentario() {
+		return comentario;
+	}
+
+	public void setComentario(boolean comentario) {
+		this.comentario = comentario;
+	}
+
+	public ModeradorGrupoBean getModeradorGrupo() {
+		return moderadorGrupo;
+	}
+
+	public void setModeradorGrupo(ModeradorGrupoBean moderadorGrupo) {
+		this.moderadorGrupo = moderadorGrupo;
+	}
+
+	public MembroGrupoBean getMembroGrupo() {
+		return membroGrupo;
+	}
+
+	public void setMembroGrupo(MembroGrupoBean membroGrupo) {
+		this.membroGrupo = membroGrupo;
+	}
 
 }

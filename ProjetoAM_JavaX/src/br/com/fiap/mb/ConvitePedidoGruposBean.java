@@ -12,14 +12,15 @@ import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteGrupoDAO;
+import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
+import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
-import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.ConviteGrupo;
-import br.com.fiap.entity.PedidoEvento;
+import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 
@@ -86,8 +87,11 @@ public class ConvitePedidoGruposBean implements Serializable {
 	*/
 	public void aceitarConvite(ConviteGrupo convite){
 		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
-		pessoa.getGruposParticipantes().add(convite.getGrupo());
-		pessoaDAO.update(pessoa);
+		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		convite.getGrupo().getMembros().add(pessoa);
+		//pessoa.getGruposParticipantes().add(convite.getGrupo());
+		//pessoaDAO.update(pessoa);
+		gDAO.update(convite.getGrupo());
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
 		activeTab = 0;

@@ -20,8 +20,6 @@ import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
-@ManagedBean
-@SessionScoped
 public class ModeradorGrupoBean implements Serializable {
 	/**
 	 * 
@@ -45,34 +43,29 @@ public class ModeradorGrupoBean implements Serializable {
 	 * 
 	 * @author Graziele Vasconcelos
 	 */
+	public ModeradorGrupoBean(Grupo grupo){
+		this.grupo = grupo;
+		infoGrupo();
+	}
+
 	public void infoGrupo(){
-		grupo = gruDAO.searchByID(codGrupo);
-		membrosGrp = gruDAO.buscarMembrosDoGrupo(codGrupo);
+		gruDAO = new GrupoDAOImpl(em);
 		moderadores = grupo.getModeradores();
+		membrosGrp = gruDAO.buscarMembrosDoGrupo(grupo.getCodGrupo());
 		mdm = new PessoaDataModel(membrosGrp);
 		mdmExc = new PessoaDataModel(moderadores);
 	}
-
-	@PostConstruct
-	public void onInit() {
-		gruDAO = new GrupoDAOImpl(em);
-		pessoa = new Pessoa();
-	}
-
 	/**
 	 * Realiza a remoção do moderador daquele grupo
 	 * @author Graziele Vasconcelos 
 	 */
 	public void excluirModeradorDoGrupo(){
 		for (Pessoa moderador : modSelecionadosExc){
-			for (int i = 0; i < grupo.getModeradores().size() ; i++) {
-				if(grupo.getModeradores().get(i).getCodPessoa() == moderador.getCodPessoa()){
-					grupo.getModeradores().remove(i);
-					gruDAO.update(grupo);
-				}
-			}
+			grupo.getModeradores().remove(moderador);
+			grupo.getMembros().remove(moderador);
+			gruDAO.update(grupo);
 		}		
-
+		mdmExc = new PessoaDataModel(moderadores);
 	}
 
 	/**
@@ -84,36 +77,23 @@ public class ModeradorGrupoBean implements Serializable {
 			grupo.getModeradores().add(moderador);
 			gruDAO.update(grupo);
 		}
+		mdm = new PessoaDataModel(membrosGrp);
 	}
-	
-	/**
-	 * Direciona para a página grupo da sessão.
-	 * @return página grupo da sessão
-	 * @author Graziele Vasconcelos
-	 */
-	public String paginaGrupo(){
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		map.remove("moderadorGrupoBean");
-		return "grupo.xhtml";
-	}
-	
+
 	/**
 	 * Desabilita o moderador passando-o para apenas membro do grupo
 	 * @param codPessoa
 	 * @author Graziele Vasconcelos
 	 */
-	public void desabilitarModerador(int codPessoa){
+	public void desabilitarModerador(){
 		for (Pessoa moderador : modSelecionadosExc){
-			for (int i = 0; i < grupo.getMembros().size() ; i++) {
-				if(grupo.getMembros().get(i).getCodPessoa() == moderador.getCodPessoa()){
-					grupo.getMembros().remove(i);
-					gruDAO.update(grupo);
-				}
-			}
-		}	
-	}
+			grupo.getModeradores().remove(moderador);
+			gruDAO.update(grupo);		
+		}
+		mdmExc = new PessoaDataModel(moderadores);
 
+	}
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

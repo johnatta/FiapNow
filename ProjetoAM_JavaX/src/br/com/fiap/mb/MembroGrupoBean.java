@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -23,25 +24,19 @@ import br.com.fiap.entity.ConviteGrupo;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
-@ManagedBean
-@SessionScoped
 public class MembroGrupoBean implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-	private int codGrupo;
-	private boolean primeiraVez;
 	private Pessoa[] membrosSelecionadosExc;
 	private Pessoa[] membrosSelecionadosAdd;
 	private List<Pessoa> pessoas;
-	private Pessoa pessoa;
 	private Grupo grupo;
 	private PessoaDataModel pdm;
 	private PessoaDataModel pdmExc;
 	private ConviteGrupo convite;
-	private PessoaDAO pDAO ;
 	private GrupoDAO gruDAO;
 	private ConviteGrupoDAO conviteDAO;
 
@@ -51,24 +46,14 @@ public class MembroGrupoBean implements Serializable {
 	 * 
 	 * @author Graziele Vasconcelos
 	 */
-	public void infoGrupo(){
-		if(primeiraVez){
-			primeiraVez = false;
-			grupo = gruDAO.searchByID(codGrupo);
-			pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(codGrupo);
-			pdm = new PessoaDataModel(pessoas);
-			pdmExc = new PessoaDataModel(grupo.getMembros());
-		}
-	}
-
-	@PostConstruct
-	public void onInit() {
-		primeiraVez = true;
+	public MembroGrupoBean(Grupo grupo){
 		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
 		conviteDAO = new ConviteGrupoDAOImpl(em);
-		pessoa = new Pessoa();
 		convite = new ConviteGrupo();
+		this.grupo = grupo;
+		pessoas = gruDAO.buscarPessoasParaAdicionarAoGrupo(grupo.getCodGrupo());
+		pdm = new PessoaDataModel(pessoas);
+		pdmExc = new PessoaDataModel(grupo.getMembros());
 	}
 
 	/**
@@ -77,16 +62,11 @@ public class MembroGrupoBean implements Serializable {
 	 */
 	public void excluirMembro(){
 		for (Pessoa membro : getMembrosSelecionadosExc()){
-			for (int i = 0; i < membro.getGruposParticipantes().size() ; i++) {
-				if(membro.getGruposParticipantes().get(i).getCodGrupo() == grupo.getCodGrupo()){
-					membro.getGruposParticipantes().remove(i);
-					pDAO.update(membro);
-				}
-			}
-			pdmExc = new PessoaDataModel(grupo.getMembros());
-		}	
+			grupo.getMembros().remove(membro);
+			gruDAO.update(grupo);
+		}
+		pdmExc = new PessoaDataModel(grupo.getMembros());
 	}
-
 	/**
 	 * Realiza o convite para o usuário aderir ao grupo
 	 * @author Graziele Vasconcelos
@@ -99,9 +79,8 @@ public class MembroGrupoBean implements Serializable {
 				convite.setGrupo(grupo);
 				convite.setPessoa(membro);
 				conviteDAO.insert(convite);
-
 			} 
-			
+
 			pdm = new PessoaDataModel(pessoas);
 
 			FacesMessage fm = new FacesMessage();
@@ -110,40 +89,12 @@ public class MembroGrupoBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Direciona para a página grupo da sessão.
-	 * @return página grupo da sessão
-	 * @author Graziele Vasconcelos
-	 */
-	public String paginaGrupo(){
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		map.remove("membroGrupoBean");
-		return "grupo.xhtml";
-	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
 	public Grupo getGrupo() {
 		return grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
-	}
-
-	public int getCodGrupo() {
-		return codGrupo;
-	}
-
-	public void setCodGrupo(int codGrupo) {
-		this.codGrupo = codGrupo;
 	}
 
 	public PessoaDataModel getPdm() {
