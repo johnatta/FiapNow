@@ -17,6 +17,9 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bean.MembroGrupoBean;
+import br.com.fiap.bean.MensagemGrupoBean;
+import br.com.fiap.bean.ModeradorGrupoBean;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
