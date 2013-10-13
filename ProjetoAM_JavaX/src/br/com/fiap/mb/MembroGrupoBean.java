@@ -39,6 +39,7 @@ public class MembroGrupoBean implements Serializable {
 	private ConviteGrupo convite;
 	private GrupoDAO gruDAO;
 	private ConviteGrupoDAO conviteDAO;
+	private int activeTabMember;
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -66,6 +67,7 @@ public class MembroGrupoBean implements Serializable {
 			gruDAO.update(grupo);
 		}
 		pdmExc = new PessoaDataModel(grupo.getMembros());
+		activeTabMember = 0;
 	}
 	/**
 	 * Realiza o convite para o usuário aderir ao grupo
@@ -73,6 +75,7 @@ public class MembroGrupoBean implements Serializable {
 	 */
 	public void addMembroGrupo(){
 		FacesContext fc = FacesContext.getCurrentInstance();
+		
 		if(getMembrosSelecionadosAdd().length != 0){
 			for (Pessoa membro : getMembrosSelecionadosAdd()){
 				convite.setDescricao("Nós do grupo "+grupo.getNomeGrupo() + " convidamos você, " + membro.getNome() + " para participar do nosso grupo.");
@@ -83,6 +86,7 @@ public class MembroGrupoBean implements Serializable {
 
 			pdm = new PessoaDataModel(pessoas);
 
+			activeTabMember = 0;
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Convite enviado.");
 			fc.addMessage("", fm);
@@ -145,4 +149,11 @@ public class MembroGrupoBean implements Serializable {
 		this.convite = convite;
 	}
 
+	public int getActiveTabMember() {
+		return activeTabMember;
+	}
+
+	public void setActiveTabMember(int activeTabMember) {
+		this.activeTabMember = activeTabMember;
+	}
 }

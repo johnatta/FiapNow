@@ -273,6 +273,10 @@ public class LoginBean implements Serializable {
 	*/
 	public String logout(){
 
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		Map<String, Object> mapa = contexto.getExternalContext().getSessionMap();
+		mapa.remove("grupoBean");
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		map.remove("loginBean");

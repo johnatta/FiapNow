@@ -21,16 +21,12 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.Pessoa;
 
-@ManagedBean
-@SessionScoped
 public class MensagemGrupoBean implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	EntityManager em = EntityManagerFactorySingleton.getInstance().createEntityManager();
-	private boolean primeiraVez;
-	private int codGrupo;
 	private MensagemGrupo mensagem;
 	private List<Pessoa> membrosGrp;
 	private Grupo grupo;
@@ -43,20 +39,11 @@ public class MensagemGrupoBean implements Serializable {
 	 * 
 	 * @author Graziele Vasconcelos
 	 */
-	public void infoGrupo(){
-		if(primeiraVez){
-			primeiraVez = false;
-			grupo = gruDAO.searchByID(codGrupo);
-			membrosGrp = gruDAO.buscarMembrosDoGrupoComModerador(codGrupo);
-			mensagem = new MensagemGrupo();
-		}
-	}
-
-	@PostConstruct
-	public void onInit() {
-		primeiraVez = true;
+	public MensagemGrupoBean(Grupo grupo){
 		gruDAO = new GrupoDAOImpl(em);
 		msgDAO = new MensagemGrupoDAOImpl(em);
+		membrosGrp = gruDAO.buscarMembrosDoGrupoComModerador(grupo.getCodGrupo());
+		mensagem = new MensagemGrupo();
 	}
 
 	/**
@@ -70,6 +57,7 @@ public class MensagemGrupoBean implements Serializable {
 			mensagem.setGrupo(grupo);
 			mensagem.setConfirmacao(Confirmacao.NAO);
 			msgDAO.insert(mensagem);
+			mensagem = new MensagemGrupo();
 			envio = true;
 		}		
 		if(envio){
@@ -83,33 +71,12 @@ public class MensagemGrupoBean implements Serializable {
 		}
 	}
 
-	/**
-	 * Direciona para a página grupo da sessão.
-	 * @return página grupo da sessão
-	 * @author Graziele Vasconcelos
-	 */
-	public String paginaGrupo(){
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		map.remove("mensagemGrupoBean");		
-		return "grupo.xhtml";
-	}
-
-
 	public Grupo getGrupo() {
 		return grupo;
 	}
 
 	public void setGrupo(Grupo grupo) {
 		this.grupo = grupo;
-	}
-
-	public int getCodGrupo() {
-		return codGrupo;
-	}
-
-	public void setCodGrupo(int codGrupo) {
-		this.codGrupo = codGrupo;
 	}
 
 	public List<Pessoa> getMembrosGrp() {
@@ -127,7 +94,4 @@ public class MensagemGrupoBean implements Serializable {
 	public void setMensagem(MensagemGrupo mensagem) {
 		this.mensagem = mensagem;
 	}
-
-
-
 }

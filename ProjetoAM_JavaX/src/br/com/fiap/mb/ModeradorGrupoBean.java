@@ -36,7 +36,7 @@ public class ModeradorGrupoBean implements Serializable {
 	private PessoaDataModel mdm;
 	private PessoaDataModel mdmExc;
 	private GrupoDAO gruDAO;
-
+	private int activeTabModerador;
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
 	 * passado por f:event
@@ -66,6 +66,7 @@ public class ModeradorGrupoBean implements Serializable {
 			gruDAO.update(grupo);
 		}		
 		mdmExc = new PessoaDataModel(moderadores);
+		activeTabModerador = 0;
 	}
 
 	/**
@@ -78,6 +79,7 @@ public class ModeradorGrupoBean implements Serializable {
 			gruDAO.update(grupo);
 		}
 		mdm = new PessoaDataModel(membrosGrp);
+		activeTabModerador = 0;
 	}
 
 	/**
@@ -91,7 +93,7 @@ public class ModeradorGrupoBean implements Serializable {
 			gruDAO.update(grupo);		
 		}
 		mdmExc = new PessoaDataModel(moderadores);
-
+		activeTabModerador = 0;
 	}
 	
 	public Pessoa getPessoa() {
@@ -166,5 +168,12 @@ public class ModeradorGrupoBean implements Serializable {
 		this.mdmExc = mdmExc;
 	}
 
+	public int getActiveTabModerador() {
+		return activeTabModerador;
+	}
+
+	public void setActiveTabModerador(int activeTabModerador) {
+		this.activeTabModerador = activeTabModerador;
+	}
 
 }

@@ -9,42 +9,38 @@
 
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<f:metadata>
-			<f:event type="preRenderView"
-				listener="#{mensagemGrupoBean.infoGrupo}" />
-		</f:metadata>
 		<h:form id="formMsg">
 			<h1>
-				<h:commandLink action="#{mensagemGrupoBean.paginaGrupo}">
-					<h:outputText value="#{mensagemGrupoBean.grupo.nomeGrupo}"></h:outputText>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
 				</h:commandLink>
 			</h1>
 			<p:growl id="messages" showDetail="true" sticky="true" />
-			<h:panelGrid columns="2" border="1">
+			<h:panelGrid columns="2">
 				<h:outputText value="Título :"></h:outputText>
-				<p:inputText value="#{mensagemGrupoBean.mensagem.titulo}"></p:inputText>
+				<p:inputText value="#{grupoBean.mensagemGrupo.mensagem.titulo}"></p:inputText>
 				<h:outputText value="Mensagem :"></h:outputText>
 				<p:inputTextarea id="msg"
-					value="#{mensagemGrupoBean.mensagem.descricao}" required="true"
-					rows="5" cols="48" counter="counter" maxlength="100"
-					counterTemplate="#{msgs.maximum_of_100_characters}">
+					value="#{grupoBean.mensagemGrupo.mensagem.descricao}"
+					required="true" rows="5" cols="48" counter="counter"
+					maxlength="100" counterTemplate="#{msgs.maximum_of_100_characters}">
 				</p:inputTextarea>
 				<br></br>
 				<h:outputText id="counter" />
+				<br></br>
+				<p:commandButton ajax="false" id="submitButton" value="Enviar"
+					action="#{grupoBean.mensagemGrupo.enviarMsg}" icon="ui-icon-disk" style="text-align:right" />
 			</h:panelGrid>
 		</h:form>
-			<h:form id="buttons">
-			<h:panelGrid columns="2" style="margin-top:10px">
-				<p:commandButton ajax="false" id="submitButton" value="Enviar"
-					update=":formMsg" action="#{mensagemGrupoBean.enviarMsg}"
-					oncomplete="PF('dlg').show()" icon="ui-icon-disk" />
-				<p:commandButton ajax="false" id="backButton" type="submit" value="Voltar"
-					action="#{mensagemGrupoBean.paginaGrupo}" icon="ui-icon-arrowrefresh-1-n" >
-				<f:setPropertyActionListener value="#{mensagemGrupoBean.grupo.codGrupo}" target="#{grupoBean.codGrupo}" />				
+		<h:form id="buttons">
+			<p:panel style="text-align:right">
+				<p:commandButton ajax="false" id="backButton" type="submit"
+					value="Voltar" action="#{grupoBean.paginaGrupo}"
+					icon="ui-icon-arrowrefresh-1-n">
 				</p:commandButton>
-			</h:panelGrid>
-			</h:form>
-				
+			</p:panel>
+		</h:form>
+
 	</ui:define>
 </ui:composition>
 

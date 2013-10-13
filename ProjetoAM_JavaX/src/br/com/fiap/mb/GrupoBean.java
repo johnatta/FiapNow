@@ -68,6 +68,8 @@ public class GrupoBean implements Serializable {
 	private GrupoDAO gruDAO;
 	private ModeradorGrupoBean moderadorGrupo;
 	private MembroGrupoBean membroGrupo;
+	private MensagemGrupoBean mensagemGrupo; 
+
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -102,8 +104,6 @@ public class GrupoBean implements Serializable {
 		}
 
 		grupo = gruDAO.searchByID(codGrupo);
-		moderadorGrupo = new ModeradorGrupoBean(grupo);
-		membroGrupo = new MembroGrupoBean(grupo);
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
@@ -261,6 +261,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String visualizarTodosMembros(){
+		membroGrupo = new MembroGrupoBean(grupo);
 		return "todos_membros_grupo.xhtml";
 	}
 
@@ -320,6 +321,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */	
 	public String msgGrupo(){
+		mensagemGrupo = new MensagemGrupoBean(grupo);
 		return "mensagem_grupo.xhtml";
 	}
 
@@ -487,9 +489,10 @@ public class GrupoBean implements Serializable {
 	}
 	
 	public String gerenciarModerador(){
+		moderadorGrupo = new ModeradorGrupoBean(grupo);
 		return "todos_moderadores_grupo.xhtml";
 	}
-
+	
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -638,10 +641,6 @@ public class GrupoBean implements Serializable {
 		return moderadorGrupo;
 	}
 
-	public void setModeradorGrupo(ModeradorGrupoBean moderadorGrupo) {
-		this.moderadorGrupo = moderadorGrupo;
-	}
-
 	public MembroGrupoBean getMembroGrupo() {
 		return membroGrupo;
 	}
@@ -650,4 +649,15 @@ public class GrupoBean implements Serializable {
 		this.membroGrupo = membroGrupo;
 	}
 
+	public MensagemGrupoBean getMensagemGrupo() {
+		return mensagemGrupo;
+	}
+
+	public void setMensagemGrupo(MensagemGrupoBean mensagemGrupo) {
+		this.mensagemGrupo = mensagemGrupo;
+	}
+
+	public void setModeradorGrupo(ModeradorGrupoBean moderadorGrupo) {
+		this.moderadorGrupo = moderadorGrupo;
+	}
 }

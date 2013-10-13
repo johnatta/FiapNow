@@ -14,7 +14,7 @@
 					<h:outputText value="#{grupoBean.membroGrupo.grupo.nomeGrupo}"></h:outputText>
 				</h:commandLink>
 			</h1>
-			<p:tabView id="tabMain">
+			<p:tabView id="tabMain" activeIndex="#{grupoBean.membroGrupo.activeTabMember}">
 				<p:tab id="tabMembersGroupExc" title="#{msgs.remove_group}">
 					<p:dataTable id="multiMembroExclusao" var="mem"
 						value="#{grupoBean.membroGrupo.pdmExc}" paginator="true" rows="10"
@@ -32,19 +32,19 @@
 						<p:column headerText="#{msgs.nickname}" style="width:32%">#{mem.apelido} </p:column>
 						<p:column headerText="#{msgs.name}" style="width:33%">#{mem.nome} </p:column>
 						<f:facet name="footer">
-					<p:commandButton type="submit" value="#{msgs.remove}" ajax="false"
-						icon="ui-icon-trash"
-						action="#{grupoBean.membroGrupo.excluirMembro}"
-						update=":todosMembros:membrosGrp">
-					</p:commandButton>
+							<p:commandButton value="#{msgs.remove}"
+								icon="ui-icon-trash"
+								actionListener="#{grupoBean.membroGrupo.excluirMembro}"
+								update=":todosMembros:tabMain" ajax="true" >
+							</p:commandButton>
 						</f:facet>
 
 					</p:dataTable>
 				</p:tab>
 
 				<p:tab id="tabAddMembers" title="#{msgs.add_members}">
-					<p:dataTable id="multiMembs" var="p" value="#{grupoBean.membroGrupo.pdm}"
-						paginator="true" rows="10"
+					<p:dataTable id="multiMembs" var="p"
+						value="#{grupoBean.membroGrupo.pdm}" paginator="true" rows="10"
 						selection="#{grupoBean.membroGrupo.membrosSelecionadosAdd}">
 						<f:facet name="header">#{msgs.select_members}</f:facet>
 						<p:column selectionMode="multiple" style="width:2%" />
@@ -53,13 +53,14 @@
 								height="160" style="margin-left:15px;">
 								<f:param name="id" value="${p.codPessoa}" />
 							</p:graphicImage>
-						</p:column>						
+						</p:column>
 						<p:column headerText="#{msgs.nickname}" style="width:32%">#{p.apelido} </p:column>
 						<p:column headerText="#{msgs.name}" style="width:33%">#{p.nome} </p:column>
 						<f:facet name="footer">
-							<p:commandButton ajax="false" type="submit"
+							<p:commandButton  
 								value="#{msgs.add_members}" id="addMembro" icon="ui-icon-check"
-								action="#{grupoBean.membroGrupo.addMembroGrupo}" style="margin:0" update=":todosMembros:pdm">
+								actionListener="#{grupoBean.membroGrupo.addMembroGrupo}"
+								update=":todosMembros:tabMain" ajax="true">
 							</p:commandButton>
 						</f:facet>
 					</p:dataTable>
