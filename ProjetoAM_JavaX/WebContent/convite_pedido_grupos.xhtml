@@ -22,8 +22,8 @@
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{cnv.grupo.imgGrupo}" width="80" height="110"/>
 								<h:outputText value="#{cnv.descricao}"/>
-								<p:commandButton value="#{msgs.accept}" ajax="false" actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}" />
-								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
+								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}" value="#{msgs.accept}" update=":tabMain" ajax="true "/>
+								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>
@@ -43,8 +43,8 @@
 							<h:panelGrid columns="4" style="width:100%">
 								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
 								<h:outputText value="#{ped.descricao}" />
-								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarPedido}" value="#{msgs.accept}" />
-								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarPedido}" value="#{msgs.decline}" />
+								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarPedido(ped)}" value="#{msgs.accept}" ajax="false" update=":tabMain" />
+								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarPedido(ped)}" value="#{msgs.decline}" ajax="true" update=":tabMain" />
 							</h:panelGrid>
 						</p:panel>
 					</p:dataGrid>

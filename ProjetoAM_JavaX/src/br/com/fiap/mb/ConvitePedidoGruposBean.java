@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -20,18 +20,18 @@ import br.com.fiap.daoimpl.GrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteGrupo;
-import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ConvitePedidoGruposBean implements Serializable {
 	
 	private EntityManager em;
 	private ConviteGrupoDAO conviteDAO;
 	private PedidoGrupoDAO pedidoDAO;
 	private PessoaDAO pessoaDAO;
+	private GrupoDAO grupoDAO;
 	private List<ConviteGrupo> convites;
 	private List<PedidoGrupo> pedidos;
 	private Pessoa pessoa;
@@ -44,6 +44,7 @@ public class ConvitePedidoGruposBean implements Serializable {
 		conviteDAO = new ConviteGrupoDAOImpl(em);
 		pedidoDAO = new PedidoGrupoDAOImpl(em);
 		pessoaDAO = new PessoaDAOImpl(em);
+		grupoDAO = new GrupoDAOImpl(em);
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -86,12 +87,9 @@ public class ConvitePedidoGruposBean implements Serializable {
 	* @author Ariel Molina 
 	*/
 	public void aceitarConvite(ConviteGrupo convite){
-		//Adiciono o Grupo aos eventos da Pessoa, updato a Pessoa e removo o convite
-		GrupoDAO gDAO = new GrupoDAOImpl(em);
+		//Adiciono a Pessoa ao Grupo, realizo update no Grupo e removo o convite
 		convite.getGrupo().getMembros().add(pessoa);
-		//pessoa.getGruposParticipantes().add(convite.getGrupo());
-		//pessoaDAO.update(pessoa);
-		gDAO.update(convite.getGrupo());
+		grupoDAO.update(convite.getGrupo());
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteGrupoPorPessoa(pessoa);
 		activeTab = 0;
@@ -117,8 +115,9 @@ public class ConvitePedidoGruposBean implements Serializable {
 	* @author Ariel Molina 
 	*/
 	public void aceitarPedido(PedidoGrupo pedido){
-		//Removo o pedido e insiro um AM_PESSOA_EVENTO para aquela pessoa que pediu e aquele Evento
-		pedido.getPessoa().getGruposParticipantes().add(pedido.getGrupo());
+		//Adiciono a pessoa do Pedido ao Grupo, realizo o update no Grupo e deleto o pedido
+		pedido.getGrupo().getMembros().add(pedido.getPessoa());
+		grupoDAO.update(pedido.getGrupo());
 		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidoGrupoPraPessoa(pessoa);
 		activeTab = 1;

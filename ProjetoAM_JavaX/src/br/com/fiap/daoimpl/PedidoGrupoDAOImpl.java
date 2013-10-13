@@ -24,7 +24,7 @@ public class PedidoGrupoDAOImpl extends DAOImpl<PedidoGrupo, Integer> implements
 	 */
 	@Override
 	public List<PedidoGrupo> buscarPedidoGrupoPraPessoa(Pessoa pessoa) {
-		TypedQuery<PedidoGrupo> query = em.createQuery(" from PedidoGrupo where pessoa = :pes",PedidoGrupo.class);
+		TypedQuery<PedidoGrupo> query = em.createQuery(" from PedidoGrupo where grupo in (from Grupo where adm = :pes)",PedidoGrupo.class);
 		query.setParameter("pes", pessoa);
 		return query.getResultList();
 	}

@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -14,22 +14,21 @@ import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
-import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ConvitePedidoEventosBean implements Serializable {
 	
 	private EntityManager em;
 	private ConviteEventoDAO conviteDAO;
 	private PedidoEventoDAO pedidoDAO;
+	private EventoDAO eventoDAO;
 	private List<ConviteEvento> convites;
 	private List<PedidoEvento> pedidos;
 	private Pessoa pessoa;
@@ -41,6 +40,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		conviteDAO = new ConviteEventoDAOImpl(em);
 		pedidoDAO = new PedidoEventoDAOImpl(em);
+		eventoDAO = new EventoDAOImpl(em);
 		
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -83,8 +83,9 @@ public class ConvitePedidoEventosBean implements Serializable {
 	* @author Ariel Molina 
 	*/
 	public void aceitarConvite(ConviteEvento convite){
-		//Adiciono o Evento aos eventos da Pessoa, updato a Pessoa e removo o convite
-		pessoa.getEventosParticipantes().add(convite.getEvento());
+		//Adiciono a Pessoa ao Evento, realizo update no Evento e removo o convite
+		convite.getEvento().getMembros().add(pessoa);
+		eventoDAO.update(convite.getEvento());
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 		activeTab = 0;
@@ -110,8 +111,9 @@ public class ConvitePedidoEventosBean implements Serializable {
 	* @author Ariel Molina 
 	*/
 	public void aceitarPedido(PedidoEvento pedido){
-		//Adiciono um Evento para a pessoa que realizou o Pedido e removo o pedido
-		pedido.getPessoa().getEventosParticipantes().add(pedido.getEvento());
+		//Adiciono a pessoa do Pedido ao Evento, realizo o update no Evento e deleto o pedido
+		pedido.getEvento().getMembros().add(pedido.getPessoa());
+		eventoDAO.update(pedido.getEvento());
 		pedidoDAO.remove(pedido);
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 		activeTab = 1;
