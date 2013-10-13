@@ -19,7 +19,7 @@
 					icon="ui-icon-mail-closed" style="margin:0"
 					action="#{grupoBean.msgGrupo}"
 					rendered="#{grupoBean.btnRenderPgMsg()}" />
-				<p:commandButton ajax="false" type="submit" value="Participar"
+				<p:commandButton ajax="false" value="Participar"
 					icon="ui-icon-circle-plus" style="margin:0"
 					action="#{grupoBean.participarGrupo}">
 				</p:commandButton>
@@ -60,11 +60,7 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}"
 								action="#{grupoBean.edicaoGrupo}" icon="ui-icon-check"
-								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}">
-								<f:setPropertyActionListener
-									target="#{editarGrupoBean.codGrupo}"
-									value="#{grupoBean.codGrupo}"></f:setPropertyActionListener>
-							</p:commandButton>
+								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}"/>
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
 								style="margin:0" action="#{grupoBean.btnExclusao}"

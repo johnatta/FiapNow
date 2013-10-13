@@ -17,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bean.EditarGrupoBean;
 import br.com.fiap.bean.MembroGrupoBean;
 import br.com.fiap.bean.MensagemGrupoBean;
 import br.com.fiap.bean.ModeradorGrupoBean;
@@ -72,6 +73,7 @@ public class GrupoBean implements Serializable {
 	private ModeradorGrupoBean moderadorGrupo;
 	private MembroGrupoBean membroGrupo;
 	private MensagemGrupoBean mensagemGrupo; 
+	private EditarGrupoBean editarGrupo;
 
 
 	/**
@@ -136,12 +138,18 @@ public class GrupoBean implements Serializable {
 				}else{
 					if(grupo.getPrivacidade() == Privacidade.Fechado){
 						flagUserFechado = true;
+						grupoPrivado();
+						break;
 					}else{
 						flagUser = true;
 					}
 				}
 			}
 		}
+	}
+	
+	public String grupoPrivado(){
+		return "infoGrupoPrivado.xhtml";
 	}
 
 	@PostConstruct
@@ -318,6 +326,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String edicaoGrupo(){
+		editarGrupo = new EditarGrupoBean(grupo);
 		return "edicao_grupo.xhtml";
 	}
 
@@ -666,4 +675,14 @@ public class GrupoBean implements Serializable {
 	public void setModeradorGrupo(ModeradorGrupoBean moderadorGrupo) {
 		this.moderadorGrupo = moderadorGrupo;
 	}
+
+	public EditarGrupoBean getEditarGrupo() {
+		return editarGrupo;
+	}
+
+	public void setEditarGrupo(EditarGrupoBean editarGrupo) {
+		this.editarGrupo = editarGrupo;
+	}
+	
+	
 }

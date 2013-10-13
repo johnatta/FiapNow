@@ -8,49 +8,54 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="/_templateEE.xhtml">
 	<ui:define name="main_content">
-		<f:metadata>
-			<f:event type="preRenderView" listener="#{editarGrupoBean.infoGrupo}" />
-		</f:metadata>	
-		<h1>#{msgs.create_group}</h1>
-		<h:form>
+		<h:form id="editGrupo">
+			<h1>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
+				</h:commandLink>
+			</h1>
 			<p:growl id="messages" showDetail="true" />
 			<p:panel header="#{msgs.group_information}">
-				<h:messages ></h:messages>
+				<h:messages></h:messages>
 				<h:panelGrid columns="2" columnClasses="label, value"
 					styleClass="grid">
 					<h:outputText value="#{msgs.image}" />
 					<p:fileUpload
-						fileUploadListener="#{editarGrupoBean.realizarUpload}"
+						fileUploadListener="#{grupoBean.editarGrupo.realizarUpload}"
 						required="true" mode="advanced" update="messages"
 						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 						auto="false" dragDropSupport="false" label="Select" />
-
 					<h:outputText value="#{msgs.name}"></h:outputText>
-					<p:inputText value="#{editarGrupoBean.grupo.nomeGrupo}" readonly="true" 
-						required="true" maxlength="50" size="48"  />
-
+					<p:inputText value="#{grupoBean.editarGrupo.grupo.nomeGrupo}"
+						readonly="true" required="true" maxlength="50" size="48" />
 					<h:outputText value="#{msgs.description}"></h:outputText>
-					<p:inputTextarea value="#{editarGrupoBean.grupo.descricao}" 
+					<p:inputTextarea value="#{grupoBean.editarGrupo.grupo.descricao}"
 						required="true" rows="5" cols="48" counter="counter"
-						maxlength="300" counterTemplate="#{msgs.maximum_of_300_characters}">
+						maxlength="300"
+						counterTemplate="#{msgs.maximum_of_300_characters}">
 					</p:inputTextarea>
 					<br></br>
 					<h:outputText id="counter" />
-
 					<h:outputText value="#{msgs.privacy}"></h:outputText>
 					<p:selectOneMenu effect="fade"
-						value="#{editarGrupoBean.grupo.privacidade}" required="true">
+						value="#{grupoBean.editarGrupo.grupo.privacidade}" required="true">
 						<f:selectItem itemLabel="#{msgs.select_one}" itemValue=""
 							noSelectionOption="true"></f:selectItem>
-						<f:selectItems value="#{editarGrupoBean.privs}" var="p"
+						<f:selectItems value="#{grupoBean.editarGrupo.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
-
 				</h:panelGrid>
-
 				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
 					id="criarGrupoPgInfoGrupo" icon="ui-icon-check"
-					action="#{editarGrupoBean.salvarEdicao}" style="margin:0">
+					action="#{grupoBean.editarGrupo.salvarEdicao}" style="margin:0">
+				</p:commandButton>
+			</p:panel>
+		</h:form>
+		<h:form id="buttons">
+			<p:panel style="text-align:right">
+				<p:commandButton ajax="false" id="backButton" type="submit"
+					value="Voltar" action="#{grupoBean.paginaGrupo}"
+					icon="ui-icon-arrowrefresh-1-n">
 				</p:commandButton>
 			</p:panel>
 		</h:form>
