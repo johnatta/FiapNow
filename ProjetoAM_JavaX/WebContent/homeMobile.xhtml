@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+	renderKitId="PRIMEFACES_MOBILE">
+
+	<pm:page title="Notícias">
+
+		<!-- Início -->
+		<pm:view id="inicio" swatch="e">
+			<pm:header title="Encontro Esportivo:" swatch="e">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+			</pm:header>
+			
+			<pm:content>
+				<h:form id="inicioForm">
+
+					<p:commandButton value="Convites de Grupos"
+						update=":convitesGrupoForm:convites" action="pm:convitesGrupo" />
+
+					<p:commandButton value="Convites de Evento"
+						update=":convitesEventoForm:convites" action="pm:convitesEvento" />
+
+				</h:form>
+
+			</pm:content>
+		</pm:view>
+
+
+		<!-- Convites de Grupos -->
+		<pm:view id="convitesGrupo" swatch="e">
+			<pm:header title="Convites para Grupos:" swatch="e">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+				<f:facet name="left">
+					<p:button value="Voltar" icon="back" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="convitesGrupoForm">
+
+					<p:dataList id="convites" value="#{mobileBean.convitesGrupo}"
+						var="cnv">
+						<p:column>
+							<p:commandLink value="#{cnv.grupo.nomeGrupo}"
+								update=":headGru :cnvGruForm" action="pm:conviteGrupo">
+								<f:setPropertyActionListener value="#{cnv}"
+									target="#{mobileBean.cnvGrupoSelecionado}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataList>
+					
+					<h:outputText value="Não há nenhum convite de Grupo para você no momento."
+						rendered="#{empty mobileBean.convitesGrupo}" style="font-weight: bold;" />
+					
+				</h:form>
+
+			</pm:content>
+		</pm:view>
+
+
+		<!-- Ações do Convite Grupo -->
+		<pm:view id="conviteGrupo" swatch="e">
+			<pm:header id="headGru"
+				title="Convite de #{mobileBean.cnvGrupoSelecionado.grupo.nomeGrupo}" swatch="e">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+				<f:facet name="left">
+					<p:button value="Voltar" icon="back" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="cnvGruForm">
+					<h:outputText id="descricao"
+						value="#{mobileBean.cnvGrupoSelecionado.descricao}" />
+					<br />
+					
+					<p:commandButton value="Aceitar"
+						update=":convitesGrupoForm:convites" action="#{mobileBean.aceitarCnvGrupo}" />
+						
+					<p:commandButton value="Recusar"
+						update=":convitesGrupoForm:convites" action="#{mobileBean.recusarCnvGrupo}" />
+				</h:form>
+			</pm:content>
+		</pm:view>
+		
+		
+		<!-- Convites de Eventos -->
+		<pm:view id="convitesEvento" swatch="e">
+			<pm:header title="Convites para Eventos:" swatch="e">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+				<f:facet name="left">
+					<p:button value="Voltar" icon="back" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="convitesEventoForm">
+
+					<p:dataList id="convites" value="#{mobileBean.convitesEvento}"
+						var="cnv">
+						<p:column>
+							<p:commandLink value="#{cnv.evento.nome}"
+								update=":headEve :cnvEveForm" action="pm:conviteEvento">
+								<f:setPropertyActionListener value="#{cnv}"
+									target="#{mobileBean.cnvEventoSelecionado}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataList>
+
+					<h:outputText value="Não há nenhum convite de Evento para você no momento."
+						rendered="#{empty mobileBean.convitesEvento}" style="font-weight: bold;"/>
+
+				</h:form>
+	
+			</pm:content>
+		</pm:view>
+		
+
+		<!-- Ações do Convite Evento -->
+		<pm:view id="conviteEvento" swatch="e">
+			<pm:header id="headEve"
+				title="Convite de #{mobileBean.cnvEventoSelecionado.evento.nome}" swatch="e">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+				<f:facet name="left">
+					<p:button value="Voltar" icon="back" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="cnvEveForm">
+					<h:outputText id="descricao"
+						value="#{mobileBean.cnvEventoSelecionado.descricao}" />
+					<br />
+					
+					<p:commandButton value="Aceitar"
+						update=":convitesEventoForm:convites" action="#{mobileBean.aceitarCnvEvento}" />
+						
+					<p:commandButton value="Recusar"
+						update=":convitesEventoForm:convites" action="#{mobileBean.recusarCnvEvento}" />
+				</h:form>
+			</pm:content>
+		</pm:view>
+
+	</pm:page>
+	
+</f:view>

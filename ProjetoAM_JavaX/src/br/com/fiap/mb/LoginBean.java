@@ -226,7 +226,7 @@ public class LoginBean implements Serializable {
 		if(user != null){
 			PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 			pessoa = pessoaDAO.buscarPorUsuario(user);
-			returnPage = "home.xhtml?faces-redirect=true";
+			returnPage = "home?faces-redirect=true";
 		} else {
 			fc.addMessage("", fm);
 		}
@@ -305,4 +305,37 @@ public class LoginBean implements Serializable {
 		view.setLocale(locale);
 	}
 
+	
+	/**
+	* Realizar o login no sistema mobile
+	*
+	* @return retorna vazio caso login seja inválido, e para a home caso seja válido
+	* @author Ariel Molina 
+	*/
+	public String loginMobile(){
+		
+		String returnPage = "";
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		String mensagem =
+				UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_login",
+				null, fc.getViewRoot().getLocale());
+		
+		FacesMessage fm = new FacesMessage(mensagem);
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAOImpl(em);
+		Usuario user = usuarioDAO.buscarEmailESenha(usuario, senha);
+		
+		if(user != null){
+			PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
+			pessoa = pessoaDAO.buscarPorUsuario(user);
+			returnPage = "homeMobile?faces-redirect=true";
+		} else {
+			fc.addMessage("", fm);
+		}
+		
+		return returnPage;
+	}
+	
 }

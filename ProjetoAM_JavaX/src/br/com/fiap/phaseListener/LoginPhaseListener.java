@@ -35,20 +35,34 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 		NavigationHandler handler = 
 				context.getApplication().getNavigationHandler();
 
-		//Caso tente entrar em outra página e não exista sessão, vai pra index
-		if( !paginaOrigem.equals("/index.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
-			handler.handleNavigation(context, null, "index");
-		//Caso esteja na index e selecionar a internacionalização
-		} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() == null) ) {
-			handler.handleNavigation(context, null, "index");
-		//Caso tente ir pra index e a pessoa da sessão esteja ativa
-		} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() != null) ){
-			handler.handleNavigation(context, null, "home");
-		//Caso esteja criando um perfil e esteja em sessão
-		} else if(paginaOrigem.equals("/criacao_perfil.xhtml") && (sessao != null && sessao.getPessoa() != null)){
-			handler.handleNavigation(context, null, "home");
+		//Recebendo o Browser do usuário
+		String browser = (String) context.getExternalContext().getRequestHeaderMap().get("User-Agent");
+		
+		if (!browser.contains("OPWV-SDK")) {
+			
+			//Caso tente entrar em outra página e não exista sessão, vai pra index
+			if( !paginaOrigem.equals("/index.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
+				handler.handleNavigation(context, null, "index");
+				//Caso esteja na index e selecionar a internacionalização
+			} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() == null) ) {
+				handler.handleNavigation(context, null, "index");
+				//Caso tente ir pra index e a pessoa da sessão esteja ativa
+			} else if( paginaOrigem.equals("/index.xhtml") && (sessao != null && sessao.getPessoa() != null) ){
+				handler.handleNavigation(context, null, "home");
+				//Caso esteja criando um perfil e esteja em sessão
+			} else if(paginaOrigem.equals("/criacao_perfil.xhtml") && (sessao != null && sessao.getPessoa() != null)){
+				handler.handleNavigation(context, null, "home");
+			} else {
+				handler.handleNavigation(context, null, paginaOrigem);
+			}
+			
 		} else {
-			handler.handleNavigation(context, null, paginaOrigem);
+			
+			//Caso tente entrar em outra página e não exista sessão, vai pra index
+			if( !paginaOrigem.equals("/indexMobile.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
+				handler.handleNavigation(context, null, "indexMobile");
+			}
+			
 		}
 
 	}

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
+	renderKitId="PRIMEFACES_MOBILE">
+
+	<pm:page title="Notícias">
+
+		<!-- Esportes -->
+		<pm:view id="esportes" swatch="c">
+			<pm:header title="Escolha o esporte:" swatch="b">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="esportesForm">
+
+					<p:dataList value="#{noticiasMobileBean.esportes}" var="esporte">
+						<p:column>
+							<p:commandLink value="#{esporte.nome}"
+								update=":headNot :noticiasForm:noticias" action="pm:summaries">
+								<f:setPropertyActionListener value="#{esporte}"
+									target="#{noticiasMobileBean.esporteSelecionado}" />
+							</p:commandLink>
+						</p:column>
+					</p:dataList>
+
+				</h:form>
+
+			</pm:content>
+		</pm:view>
+
+		<!-- Summaries -->
+		<pm:view id="summaries" swatch="c">
+			<pm:header id="headNot"
+				title="Notícias de #{noticiasMobileBean.esporteSelecionado.nome}:"
+				swatch="b">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:form id="noticiasForm">
+
+					<p:dataList id="noticias">
+						<p:column>
+							<p:feedReader
+								value="#{noticiasMobileBean.buscaFeed(noticiasMobileBean.esporteSelecionado.nome)}"
+								var="feed" size="5"  >
+
+								<p:commandLink value="#{feed.title}" update=":content" action="pm:details">
+									<f:setPropertyActionListener value="#{feed.title}"
+										target="#{noticiasMobileBean.noticiaSelecionada.title}" />
+								</p:commandLink>
+
+								<p:separator />
+								
+							</p:feedReader>
+						</p:column>
+					</p:dataList>
+
+
+				</h:form>
+			</pm:content>
+		</pm:view>
+
+		<!-- Details -->
+		<pm:view id="details" swatch="c">
+			<pm:header title="#{feed.title}" swatch="b">
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+			</pm:header>
+
+			<pm:content>
+				<h:outputText id="title"
+					value="#{noticiasMobileBean.noticiaSelecionada.title}"
+					style="font-weight:bold;" escape="false" />
+				<br />
+				<h:outputText id="description"
+					value="#{noticiasMobileBean.noticiaSelecionada.description.value}"
+					style="font-weight:bold;" escape="false" />
+			</pm:content>
+		</pm:view>
+
+	</pm:page>
+
+</f:view>

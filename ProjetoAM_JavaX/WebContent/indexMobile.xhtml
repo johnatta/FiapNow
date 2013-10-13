@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:p="http://primefaces.org/ui"
+	 contentType="text/html"
+	renderKitId="PRIMEFACES_MOBILE">
+
+
+	<f:loadBundle var="msgs" basename="nls.mensagem" />
+
+	<pm:page title="Encontro Esportivo">	
+		
+		<pm:view swatch="e">
+			<pm:header title="Login" swatch="e" />
+							
+			<h:form id="login">
+				<pm:field>
+					<h:outputLabel value="Usuário: " /> 
+					<h:inputText id="usuario" value="#{loginBean.usuario}"/>
+				</pm:field>
+
+				<pm:field>
+					<h:outputLabel value="Senha: " />
+					<h:inputSecret id="senha" value="#{loginBean.senha}" />
+				</pm:field>
+				<p:dataList type="inset" styleClass="ui-li-custom">
+					<p:commandLink value="Entrar" action="#{loginBean.loginMobile}" ajax="false" />
+				</p:dataList>
+	
+			</h:form>
+		</pm:view>
+		
+	</pm:page>
+
+</f:view>
