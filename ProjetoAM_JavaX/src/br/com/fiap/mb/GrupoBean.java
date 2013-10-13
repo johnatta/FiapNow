@@ -208,19 +208,22 @@ public class GrupoBean implements Serializable {
 	}
 
 	public String participarGrupo(){
-		pedidoGrupo.setDescricao("Desejo participar do seu grupo");
-		pedidoGrupo.setPessoa(pessoa);
-		pedidoGrupo.setGrupo(grupo);
-		pedidoDAO.insert(pedidoGrupo);
-		FacesMessage fm = new FacesMessage("Pedido enviado!");
-		FacesContext fc = FacesContext.getCurrentInstance();
-		fc.addMessage("messages", fm);
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		map.remove("grupoBean");
-		codGrupo = grupo.getCodGrupo();
-		grupo.setCodGrupo(grupo.getCodGrupo());
-		return "grupo.xhtml";
+		try {
+			pedidoGrupo.setDescricao("Eu, "+pessoa.getNome()+", desejo participar do seu grupo");
+			pedidoGrupo.setPessoa(pessoa);
+			pedidoGrupo.setGrupo(grupo);
+			pedidoDAO.insert(pedidoGrupo);
+			FacesMessage fm = new FacesMessage("Pedido enviado!");
+			FacesContext fc = FacesContext.getCurrentInstance();
+			fc.addMessage("messages", fm);
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("Pedido não enviado, por favor tente mais tarde.");
+			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage("messages", fm);
+		}
+		return "";
 	}
 	/**
 	 * Realiza o envio do comentário para o grupo à qual o usuário se encontra na página
