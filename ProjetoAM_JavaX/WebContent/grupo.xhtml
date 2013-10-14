@@ -80,7 +80,6 @@
 				</div>
 			</div>
 		</h:form>
-		<br style="clear: both;" />
 
 		<div id="blocoDois">
 			<div id="caixasComentarios">
@@ -89,7 +88,7 @@
 					<p:panel id="comment" header="#{msgs.comment}">
 						<p:inputTextarea id="cmt"
 							value="#{grupoBean.comentarioGrupo.comentario}" required="true"
-							rows="5" cols="35" counter="counter" maxlength="300"
+							rows="5" cols="30" counter="counter" maxlength="300"
 							counterTemplate="#{msgs.maximum_of_300_characters}">
 						</p:inputTextarea>
 						<br></br>
@@ -148,7 +147,7 @@
 								</p:commandButton>
 								<p:commandButton ajax="false" type="submit"
 									value="#{msgs.all_members}" icon="ui-icon-check"
-									action="#{grupoBean.visualizarTodosMembros()}"
+									action="#{grupoBean.TodosMembros()}"
 									rendered="#{grupoBean.btnRenderAllMembros()}">
 								</p:commandButton>
 							</f:facet>
@@ -170,7 +169,7 @@
 								</p:commandButton>
 								<p:commandButton ajax="false" type="submit"
 									value="#{msgs.moderators}" icon="ui-icon-check"
-									action="#{grupoBean.visualizarTodosModeradores}"
+									action="#{grupoBean.TodosModeradores()}"
 									rendered="#{grupoBean.btnRenderAllModeradores()}">
 								</p:commandButton>
 							</f:facet>
