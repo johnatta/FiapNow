@@ -11,8 +11,15 @@
 	<ui:define name="main_content">
 	    <h1>#{msgs.welcome}</h1>
 	    
-	    <div id="coluna_esquerda">
-	    	<p style="margin-left='10px;'">#{msgs.welcomeMessage}</p>
+	    <div id="coluna_esquerda" style="text-align: justify;">
+	    
+	    	<p style="margin-left='10px;'">#{msgs.welcomeMessage}<b><a href="home.xhtml">Encontro Esportivo</a></b>#{msgs.initialMessage}</p>
+	    	<p style="margin-left='10px;'">#{msgs.a} <b><a href="grupos.xhtml">#{msgs.group}</a></b> #{msgs.groupMessage}</p>
+	    	<p style="margin-left='10px;'">#{msgs.a} <b><a href="eventos.xhtml">#{msgs.event}</a></b> #{msgs.eventMessage}</p>
+	    
+	    	<p:separator />
+	    	
+	    	<p style="margin-left='10px;'">#{msgs.welcomeMessage2}</p>
 	    	<p:media value="https://youtube.googleapis.com/v/Lxn1-pKY-9I?showinfo=0;rel=0;" width="640" 
 				height="360" player="flash"/>
 	    </div>
