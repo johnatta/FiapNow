@@ -19,6 +19,12 @@ public class TesteWebServiceCep {
 			Webservicecep cep = (Webservicecep) u.unmarshal( url );
 
 			System.out.println(cep.getResultado_txt());
+			System.out.println(cep.getResultado());
+			System.out.println(cep.getUf());
+			System.out.println(cep.getCidade());
+			System.out.println(cep.getBairro());
+			System.out.println(cep.getLogradouro());
+			System.out.println(cep.getTipo_logradouro());
 
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block

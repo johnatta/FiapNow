@@ -13,7 +13,7 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.evento.nome}" required="true" maxlength="25" size="30" />
+				<p:inputText value="#{criarEventoBean.evento.nome}" maxlength="25" size="30" />
 				<h:outputText value="Data do Evento"></h:outputText>
 				<p:calendar value="#{criarEventoBean.cal}" pattern="dd/MM/yyyy" />
 				<h:outputText value="Categoria:"></h:outputText>
@@ -25,14 +25,18 @@
 				</p:dataTable>
 				<h:outputText value="Telefone"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.telContato}" ></p:inputText>
+				<h:outputText value="Cep:"></h:outputText>
+				<p:inputText value="#{criarEventoBean.endereco.cep}" ></p:inputText>
+				<p:commandButton type="submit" value="Buscar CEP" action="#{criarEventoBean.buscarCep}" ajax="false" />
+				<div />
 				<h:outputText value="Pais:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.endereco.pais}" required="true" ></p:inputText>
+				<p:inputText value="#{criarEventoBean.endereco.pais}" ></p:inputText>
 				<h:outputText value="Estado:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.endereco.estado}" required="true" ></p:inputText>
+				<p:inputText value="#{criarEventoBean.endereco.estado}" ></p:inputText>
 				<h:outputText value="Cidade:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.endereco.cidade}" required="true" ></p:inputText>
+				<p:inputText value="#{criarEventoBean.endereco.cidade}" ></p:inputText>
 				<h:outputText value="Bairro:"></h:outputText>
-				<p:inputText value="#{criarEventoBean.endereco.bairro}" required="true" ></p:inputText>
+				<p:inputText value="#{criarEventoBean.endereco.bairro}" ></p:inputText>
 				<h:outputText value="Custo por Pessoa"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.custo}" ></p:inputText>
 				<h:outputText value="Descrição"></h:outputText>

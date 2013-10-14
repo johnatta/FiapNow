@@ -1,6 +1,8 @@
 package br.com.fiap.mb;
 
 import java.io.Serializable;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,12 +14,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
+import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.EsporteDAO;
-import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.datamodel.PessoaDataModel;
 import br.com.fiap.entity.Endereco;
@@ -25,6 +31,7 @@ import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
+import br.com.fiap.ws.Cep;
 
 @ManagedBean
 @SessionScoped
@@ -57,6 +64,7 @@ public class CriarEventoBean implements Serializable {
 		evento = new Evento();
 		endereco = new Endereco();
 		
+		pesDAO = new PessoaDAOImpl(em);
 		pessoas = pesDAO.buscarTodasPessoas();
 		
 		evento.setDtEvento(Calendar.getInstance());
@@ -89,7 +97,50 @@ public class CriarEventoBean implements Serializable {
 			fm.setSummary("Membros relacionados, faça o próximo passo.");
 			fc.addMessage("", fm);
 		}
-	} 
+	}
+	
+	public void buscarCep(){
+		
+		FacesContext fc = FacesContext.getCurrentInstance();
+		
+		if(endereco.getPais() != null && endereco.getPais().equals("Brasil")){ 
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_cep",
+							null, fc.getViewRoot().getLocale());
+			
+			FacesMessage fm = new FacesMessage(mensagem);
+			
+			try {
+				JAXBContext jc = JAXBContext.newInstance(Cep.class);
+	
+				Unmarshaller u = jc.createUnmarshaller();
+				URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + endereco.getCep() + "&formato=xml");
+				Cep cep = (Cep) u.unmarshal(url);
+	
+				if(cep.getResultado_txt().contains("não encontrado")){
+					fc.addMessage("", fm);
+				} else {
+					endereco.setEstado(cep.getUf());
+					endereco.setCidade(cep.getCidade());
+					endereco.setBairro(cep.getBairro());
+					endereco.setRua(cep.getTipo_logradouro() + " " + cep.getLogradouro());
+				}
+	
+			} catch (JAXBException e) {
+				e.printStackTrace();
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		} else {
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_country",
+							null, fc.getViewRoot().getLocale());
+			
+			FacesMessage fm = new FacesMessage(mensagem);
+			
+			fc.addMessage("", fm);
+		}
+	}
 	
 	public Endereco getEndereco() {
 		return endereco;
