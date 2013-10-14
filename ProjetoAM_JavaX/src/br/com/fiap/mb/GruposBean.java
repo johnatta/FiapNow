@@ -19,7 +19,7 @@ import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class GruposBean implements Serializable {
 	
 	private List<Grupo> grupos;
