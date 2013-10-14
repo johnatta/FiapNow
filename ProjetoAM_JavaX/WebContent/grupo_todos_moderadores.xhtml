@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<ui:composition template="/_templateEE.xhtml">
+	<ui:define name="main_content">
+		<h:form id="todosMembros">
+			<h1>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
+				</h:commandLink>
+			</h1>
+			<p:dataGrid var="gru" value="#{grupoBean.grupo.moderadores}" columns="5"
+				rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,30" emptyMessage="#{msgs.no_records}">
+				<p:panel>
+					<div id="painel">
+						<h:panelGrid columns="1" style="width:100%">
+							<h:outputText value="#{gru.nome}" style="margin:0 auto;" />
+						</h:panelGrid>
+					</div>
+				</p:panel>
+			</p:dataGrid>
+			<p:commandButton ajax="false" icon="ui-icon-cancel" type="button"
+				value="#{msgs.cancel}" action="#{grupoBean.paginaGrupo}" />
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
