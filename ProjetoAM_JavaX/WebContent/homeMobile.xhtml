@@ -22,10 +22,10 @@
 			<pm:content>
 				<h:form id="inicioForm">
 
-					<p:commandButton value="Convites de Grupos"
+					<p:commandButton value="Convites de Grupos (#{mobileBean.convitesGrupo.size()})"
 						update=":convitesGrupoForm:convites" action="pm:convitesGrupo" />
 
-					<p:commandButton value="Convites de Evento"
+					<p:commandButton value="Convites de Evento (#{mobileBean.convitesEvento.size()})"
 						update=":convitesEventoForm:convites" action="pm:convitesEvento" />
 
 				</h:form>
