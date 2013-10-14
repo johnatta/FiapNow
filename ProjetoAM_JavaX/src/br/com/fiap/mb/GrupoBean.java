@@ -255,6 +255,7 @@ public class GrupoBean implements Serializable {
 	public void excluirComentario(int codComentario){
 		comentarioGrupo = comentarioGrupoDAO.searchByID(codComentario);
 		grupo.getComentarios().remove(comentarioGrupo);
+		comentarioGrupoDAO.remove(comentarioGrupo);
 		comentarioGrupo = new ComentarioGrupo();
 		gruDAO.update(grupo);
 	}
