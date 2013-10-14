@@ -301,6 +301,7 @@ Leia mais em: Trabalhando com as classes Date, Calendar e SimpleDateFormat em Ja
 		evento.setGrupos(listEg);
 		//eDAO.insert(evento);
 		  */
+	
 	}
 
 }
