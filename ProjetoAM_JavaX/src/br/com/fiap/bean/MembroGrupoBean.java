@@ -67,7 +67,7 @@ public class MembroGrupoBean implements Serializable {
 			gruDAO.update(grupo);
 		}
 		pdmExc = new PessoaDataModel(grupo.getMembros());
-		activeTabMember = 0;
+		activeTabMember = 1;
 	}
 	/**
 	 * Realiza o convite para o usuário aderir ao grupo

@@ -79,7 +79,7 @@ public class ModeradorGrupoBean implements Serializable {
 			gruDAO.update(grupo);
 		}
 		mdm = new PessoaDataModel(membrosGrp);
-		activeTabModerador = 0;
+		activeTabModerador = 1;
 	}
 
 	/**

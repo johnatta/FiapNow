@@ -46,8 +46,8 @@ public class EditarGrupoBean implements Serializable {
 	 */
 	public EditarGrupoBean(Grupo grupo){
 		gruDAO = new GrupoDAOImpl(em);
-		grupo = gruDAO.searchByID(grupo.getCodGrupo());
-		this.privs = Arrays.asList(grupo.getPrivacidade().values());
+		this.grupo = grupo;
+		this.privs = Arrays.asList(this.grupo.getPrivacidade().values());
 	}
 
 	/**
@@ -105,4 +105,5 @@ public class EditarGrupoBean implements Serializable {
 	public void setCodGrupo(int codGrupo) {
 		this.codGrupo = codGrupo;
 	}
+	
 }

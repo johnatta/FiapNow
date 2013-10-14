@@ -11,8 +11,8 @@
 	<ui:define name="main_content">
 		<h:form id="todosModeradores">
 			<h1>
-				<h:commandLink action="#{grupoBean.moderadorGrupo.paginaGrupo}">
-					<h:outputText value="#{grupoBean.moderadorGrupo.grupo.nomeGrupo}"></h:outputText>
+				<h:commandLink action="#{grupoBean.paginaGrupo}">
+					<h:outputText value="#{grupoBean.grupo.nomeGrupo}"></h:outputText>
 				</h:commandLink>
 			</h1>
 			<p:tabView id="tabMain">

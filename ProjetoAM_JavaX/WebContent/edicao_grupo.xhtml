@@ -21,15 +21,15 @@
 					styleClass="grid">
 					<h:outputText value="#{msgs.image}" />
 					<p:fileUpload
-						fileUploadListener="#{grupoBean.editarGrupo.realizarUpload}"
+						fileUploadListener="#{grupoBean.editGrupo.realizarUpload}"
 						required="true" mode="advanced" update="messages"
 						sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 						auto="false" dragDropSupport="false" label="Select" />
 					<h:outputText value="#{msgs.name}"></h:outputText>
-					<p:inputText value="#{grupoBean.editarGrupo.grupo.nomeGrupo}"
+					<p:inputText value="#{grupoBean.editGrupo.grupo.nomeGrupo}"
 						readonly="true" required="true" maxlength="50" size="48" />
 					<h:outputText value="#{msgs.description}"></h:outputText>
-					<p:inputTextarea value="#{grupoBean.editarGrupo.grupo.descricao}"
+					<p:inputTextarea value="#{grupoBean.editGrupo.grupo.descricao}"
 						required="true" rows="5" cols="48" counter="counter"
 						maxlength="300"
 						counterTemplate="#{msgs.maximum_of_300_characters}">
@@ -38,16 +38,16 @@
 					<h:outputText id="counter" />
 					<h:outputText value="#{msgs.privacy}"></h:outputText>
 					<p:selectOneMenu effect="fade"
-						value="#{grupoBean.editarGrupo.grupo.privacidade}" required="true">
+						value="#{grupoBean.editGrupo.grupo.privacidade}" required="true">
 						<f:selectItem itemLabel="#{msgs.select_one}" itemValue=""
 							noSelectionOption="true"></f:selectItem>
-						<f:selectItems value="#{grupoBean.editarGrupo.privs}" var="p"
+						<f:selectItems value="#{grupoBean.editGrupo.privs}" var="p"
 							itemLabel="#{p}" itemValue="#{p}" required="true" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 				<p:commandButton ajax="false" type="submit" value="#{msgs.conclude}"
 					id="criarGrupoPgInfoGrupo" icon="ui-icon-check"
-					action="#{grupoBean.editarGrupo.salvarEdicao}" style="margin:0">
+					action="#{grupoBean.editGrupo.salvarEdicao}" style="margin:0">
 				</p:commandButton>
 			</p:panel>
 		</h:form>

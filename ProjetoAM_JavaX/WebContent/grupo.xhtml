@@ -11,7 +11,7 @@
 		<f:metadata>
 			<f:event type="preRenderView" listener="#{grupoBean.buscaGrupo()}" />
 		</f:metadata>
-			<h1>#{grupoBean.grupo.nomeGrupo}</h1>
+		<h1>#{grupoBean.grupo.nomeGrupo}</h1>
 		<h:form id="formGrupo" rendered="#{grupoBean.btnFormGrupo()}">
 			<p:growl id="messages" showDetail="true" />
 			<p:panel style="text-align:right">
@@ -60,7 +60,7 @@
 						<f:facet name="footer">
 							<p:commandButton ajax="false" type="submit" value="#{msgs.edit}"
 								action="#{grupoBean.edicaoGrupo}" icon="ui-icon-check"
-								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}"/>
+								style="margin:0" rendered="#{grupoBean.btnRenderEditGroup()}" />
 							<p:commandButton ajax="false" type="submit"
 								value="#{msgs.remove_group}" icon="ui-icon-trash"
 								style="margin:0" action="#{grupoBean.btnExclusao}"
@@ -168,27 +168,18 @@
 		</h:form>
 		<h:form id="formComentario"
 			rendered="#{grupoBean.btnRenderFormComents()}">
-			<div>
-				<p:toolbar>
-					<p:toolbarGroup align="left">
-						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
-							action="#{grupoBean.btnEnviarComentario}"
-							update=":formVisualizacaoComentario:comentarios" />
-						<p:separator />
-						<p:commandButton ajax="false" id="clearButton" type="button"
-							value="Limpar" onclick="PF('cmt').clear()" icon="ui-icon-close" />
-					</p:toolbarGroup>
-				</p:toolbar>
-				<p:panel id="comment" header="#{msgs.comment}">
-					<p:inputTextarea id="cmt"
-						value="#{grupoBean.comentarioGrupo.comentario}" required="true"
-						rows="5" cols="48" counter="counter" maxlength="300"
-						counterTemplate="#{msgs.maximum_of_300_characters}">
-					</p:inputTextarea>
-					<br></br>
-					<h:outputText id="counter" />
-				</p:panel>
-			</div>
+			<p:panel id="comment" header="#{msgs.comment}">
+				<p:inputTextarea id="cmt"
+					value="#{grupoBean.comentarioGrupo.comentario}" required="true"
+					rows="5" cols="48" counter="counter" maxlength="300"
+					counterTemplate="#{msgs.maximum_of_300_characters}">
+				</p:inputTextarea>
+				<br></br>
+				<h:outputText id="counter" />
+				<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
+					action="#{grupoBean.btnEnviarComentario}"
+					update=":formVisualizacaoComentario:comentarios" />
+			</p:panel>
 			<br />
 		</h:form>
 		<h:form id="formVisualizacaoComentario"

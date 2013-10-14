@@ -73,7 +73,7 @@ public class GrupoBean implements Serializable {
 	private ModeradorGrupoBean moderadorGrupo;
 	private MembroGrupoBean membroGrupo;
 	private MensagemGrupoBean mensagemGrupo; 
-	private EditarGrupoBean editarGrupo;
+	private EditarGrupoBean editGrupo;
 
 
 	/**
@@ -147,7 +147,7 @@ public class GrupoBean implements Serializable {
 			}
 		}
 	}
-	
+
 	public String grupoPrivado(){
 		return "infoGrupoPrivado.xhtml";
 	}
@@ -241,18 +241,16 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void btnEnviarComentario(){
-		comentario = true;
-		PessoaDAO pDAO = new PessoaDAOImpl(em);
-		comentarioGrupo.setGrupo(grupo);
-		comentarioGrupo.setPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-		comentarioGrupo.setDataHora(Calendar.getInstance());
-		comentarioGrupoDAO.insert(comentarioGrupo);
-		gruDAO.update(grupo);
-
-		FacesContext fc = FacesContext.getCurrentInstance();
-		FacesMessage fm = new FacesMessage();
-		fm.setSummary("Comentario cadastrado");
-		fc.addMessage("", fm);
+		try {
+			comentarioGrupo.setGrupo(grupo);
+			comentarioGrupo.setPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
+			comentarioGrupo.setDataHora(Calendar.getInstance());
+			comentarioGrupoDAO.insert(comentarioGrupo);
+			comentarioGrupo = new ComentarioGrupo();
+			gruDAO.update(grupo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -261,12 +259,10 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void excluirComentario(int codComentario){
-		for (int i = 0; i < grupo.getComentarios().size(); i++) {
-			if(grupo.getComentarios().get(i).getCodComentario() == codComentario){
-				grupo.getComentarios().remove(i);
-				//gruDAO.update(grupo);
-			}
-		}
+		comentarioGrupo = comentarioGrupoDAO.searchByID(codComentario);
+		grupo.getComentarios().remove(comentarioGrupo);
+		comentarioGrupo = new ComentarioGrupo();
+		gruDAO.update(grupo);
 	}
 
 	/**
@@ -326,7 +322,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String edicaoGrupo(){
-		editarGrupo = new EditarGrupoBean(grupo);
+		editGrupo = new EditarGrupoBean(grupo);
 		return "edicao_grupo.xhtml";
 	}
 
@@ -502,12 +498,12 @@ public class GrupoBean implements Serializable {
 		else
 			return false;
 	}
-	
+
 	public String gerenciarModerador(){
 		moderadorGrupo = new ModeradorGrupoBean(grupo);
 		return "todos_moderadores_grupo.xhtml";
 	}
-	
+
 	public Grupo getGrupo() {
 		return grupo;
 	}
@@ -676,13 +672,12 @@ public class GrupoBean implements Serializable {
 		this.moderadorGrupo = moderadorGrupo;
 	}
 
-	public EditarGrupoBean getEditarGrupo() {
-		return editarGrupo;
+	public EditarGrupoBean getEditGrupo() {
+		return editGrupo;
 	}
 
-	public void setEditarGrupo(EditarGrupoBean editarGrupo) {
-		this.editarGrupo = editarGrupo;
+	public void setEditGrupo(EditarGrupoBean editGrupo) {
+		this.editGrupo = editGrupo;
 	}
-	
-	
+
 }
