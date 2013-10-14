@@ -12,6 +12,12 @@ import br.com.fiap.entity.Pessoa;
 
 public class MensagemGrupoDAOImpl extends DAOImpl<MensagemGrupo, Integer> implements MensagemGrupoDAO{
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public MensagemGrupoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

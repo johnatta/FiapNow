@@ -22,6 +22,12 @@ import br.com.fiap.rc.ComentarioEventoRC;
 
 public class EventoDAOImpl extends DAOImpl<Evento, Integer> implements EventoDAO{
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public EventoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

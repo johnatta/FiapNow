@@ -24,7 +24,7 @@ import br.com.fiap.entity.Pessoa;
 @ManagedBean
 @RequestScoped
 public class ConvitePedidoEventosBean implements Serializable {
-	
+
 	private EntityManager em;
 	private ConviteEventoDAO conviteDAO;
 	private PedidoEventoDAO pedidoDAO;
@@ -33,7 +33,12 @@ public class ConvitePedidoEventosBean implements Serializable {
 	private List<PedidoEvento> pedidos;
 	private Pessoa pessoa;
 	private int activeTab;
-	
+
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit() {
 		activeTab = 0;
@@ -41,7 +46,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 		conviteDAO = new ConviteEventoDAOImpl(em);
 		pedidoDAO = new PedidoEventoDAOImpl(em);
 		eventoDAO = new EventoDAOImpl(em);
-		
+
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -50,7 +55,7 @@ public class ConvitePedidoEventosBean implements Serializable {
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 	}
-	
+
 	public List<ConviteEvento> getConvites() {
 		return convites;
 	}
@@ -77,11 +82,11 @@ public class ConvitePedidoEventosBean implements Serializable {
 	}
 
 	/**
-	* Aceita o convite de um Evento.
-	*
-	* @param convite Convite que será aceito
-	* @author Ariel Molina 
-	*/
+	 * Aceita o convite de um Evento.
+	 *
+	 * @param convite Convite que será aceito
+	 * @author Ariel Molina 
+	 */
 	public void aceitarConvite(ConviteEvento convite){
 		//Adiciono a Pessoa ao Evento, realizo update no Evento e removo o convite
 		convite.getEvento().getMembros().add(pessoa);
@@ -90,26 +95,26 @@ public class ConvitePedidoEventosBean implements Serializable {
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 		activeTab = 0;
 	}
-	
+
 	/**
-	* Recusa o convite de um Evento.
-	*
-	* @param convite Convite que será recusado
-	* @author Ariel Molina 
-	*/
+	 * Recusa o convite de um Evento.
+	 *
+	 * @param convite Convite que será recusado
+	 * @author Ariel Molina 
+	 */
 	public void recusarConvite(ConviteEvento convite){
 		//Apenas removo o convite
 		conviteDAO.remove(convite);
 		convites = conviteDAO.buscarConviteEventoPorPessoa(pessoa);
 		activeTab = 0;
 	}
-	
+
 	/**
-	* Aceita o pedido para entrar em um Evento.
-	*
-	* @param pedido Pedido que será aceito
-	* @author Ariel Molina 
-	*/
+	 * Aceita o pedido para entrar em um Evento.
+	 *
+	 * @param pedido Pedido que será aceito
+	 * @author Ariel Molina 
+	 */
 	public void aceitarPedido(PedidoEvento pedido){
 		//Adiciono a pessoa do Pedido ao Evento, realizo o update no Evento e deleto o pedido
 		pedido.getEvento().getMembros().add(pedido.getPessoa());
@@ -118,13 +123,13 @@ public class ConvitePedidoEventosBean implements Serializable {
 		pedidos = pedidoDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 		activeTab = 1;
 	}
-	
+
 	/**
-	* Recusa o pedido para entrar em um Evento.
-	*
-	* @param pedido Pedido que será recusado
-	* @author Ariel Molina 
-	*/
+	 * Recusa o pedido para entrar em um Evento.
+	 *
+	 * @param pedido Pedido que será recusado
+	 * @author Ariel Molina 
+	 */
 	public void recusarPedido(PedidoEvento pedido){
 		//Apenas removo o pedido
 		pedidoDAO.remove(pedido);

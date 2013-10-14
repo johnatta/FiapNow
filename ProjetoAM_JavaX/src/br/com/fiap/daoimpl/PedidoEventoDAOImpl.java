@@ -11,6 +11,12 @@ import br.com.fiap.entity.Pessoa;
 
 public class PedidoEventoDAOImpl extends DAOImpl<PedidoEvento, Integer> implements PedidoEventoDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public PedidoEventoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.persistence.EntityManager;
@@ -30,7 +29,11 @@ public class GruposBean implements Serializable {
 	private String filtro;
 	private Pessoa pessoa;
 
-	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();

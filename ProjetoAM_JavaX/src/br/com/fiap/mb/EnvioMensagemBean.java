@@ -45,6 +45,11 @@ public class EnvioMensagemBean implements Serializable {
 	private MensagemEvento msgEvento;
 	private MensagemEventoDAO msgEventoDAO;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();

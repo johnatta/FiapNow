@@ -39,6 +39,11 @@ public class MobileBean implements Serializable {
 	private ConviteGrupo cnvGrupoSelecionado;
 	private ConviteEvento cnvEventoSelecionado;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit() {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();

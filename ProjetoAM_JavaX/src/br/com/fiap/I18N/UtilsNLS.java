@@ -14,6 +14,16 @@ public class UtilsNLS {
 		}
 		return loader;
 	}
+	
+	/**
+	 * Retorna a String da internacionalização conforme parâmetros
+	 *
+	 * @param bundleName Bundle das mensagens
+	 * @param key Chave da mensagem
+	 * @param params[] parâmetros para retorno da mensaagem
+	 * @param locale Local/Linguagem que será retornada a mensagem
+	 * @author Ariel Molina 
+	 */
 	public static String getMessageResourceString(String bundleName, String key, Object params[], Locale locale){
 		String text = null;
 		ResourceBundle bundle = ResourceBundle.getBundle(bundleName, locale, getCurrentClassLoader(params));

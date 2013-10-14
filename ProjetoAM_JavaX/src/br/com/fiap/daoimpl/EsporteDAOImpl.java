@@ -13,6 +13,13 @@ import br.com.fiap.entity.Esporte;
 import br.com.fiap.pesquisa.ItemGrafico;
 
 public class EsporteDAOImpl extends DAOImpl<Esporte, Integer> implements EsporteDAO {
+	
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public EsporteDAOImpl(EntityManager em) {
 		super(em);
 	}

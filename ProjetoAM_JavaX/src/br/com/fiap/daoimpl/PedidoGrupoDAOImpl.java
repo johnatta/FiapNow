@@ -11,6 +11,12 @@ import br.com.fiap.entity.Pessoa;
 
 public class PedidoGrupoDAOImpl extends DAOImpl<PedidoGrupo, Integer> implements PedidoGrupoDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public PedidoGrupoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

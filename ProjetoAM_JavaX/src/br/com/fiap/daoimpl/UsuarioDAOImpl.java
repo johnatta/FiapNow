@@ -8,6 +8,12 @@ import br.com.fiap.entity.Usuario;
 
 public class UsuarioDAOImpl extends DAOImpl<Usuario, Integer> implements UsuarioDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public UsuarioDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

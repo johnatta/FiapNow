@@ -25,6 +25,11 @@ public class EnviaEmailBean implements Serializable {
 	private String corpo;
 	private boolean enviado;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		

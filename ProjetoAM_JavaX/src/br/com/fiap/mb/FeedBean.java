@@ -25,13 +25,11 @@ public class FeedBean implements Serializable {
 	private int styleCount;
 	private String styleSize;
 	
-	public List<String> getEsportes() {
-		return esportes;
-	}
-	public void setEsportes(List<String> esportes) {
-		this.esportes = esportes;
-	}
-	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
@@ -61,6 +59,13 @@ public class FeedBean implements Serializable {
 			break;
 		}
 		
+	}
+	
+	public List<String> getEsportes() {
+		return esportes;
+	}
+	public void setEsportes(List<String> esportes) {
+		this.esportes = esportes;
 	}
 	
 	/**

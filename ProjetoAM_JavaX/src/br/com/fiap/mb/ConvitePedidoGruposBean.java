@@ -37,6 +37,11 @@ public class ConvitePedidoGruposBean implements Serializable {
 	private Pessoa pessoa;
 	private int activeTab;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit() {
 		activeTab = 0;

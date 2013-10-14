@@ -26,6 +26,11 @@ public class NoticiasMobileBean implements Serializable {
 	private Esporte esporteSelecionado;
 	private Noticia noticiaSelecionada;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
@@ -57,40 +62,16 @@ public class NoticiasMobileBean implements Serializable {
 		this.pessoa = pessoa;
 	}
 	public Esporte getEsporteSelecionado() {
-		System.out.println();
-		System.out.println("-----------------------------------------");
-		System.out.println(esporteSelecionado.getNome());
-		System.out.println("-----------------------------------------");
-		System.out.println();
 		return esporteSelecionado;
 	}
 	public void setEsporteSelecionado(Esporte esporteSelecionado) {
 		this.esporteSelecionado = esporteSelecionado;
-		
-		System.out.println();
-		System.out.println("-----------------------------------------");
-		System.out.println(esporteSelecionado.getNome());
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		
 	}
 	public Noticia getNoticiaSelecionada() {
-		System.out.println();
-		System.out.println("-----------------------------------------");
-		System.out.println(noticiaSelecionada.getTitle());
-		System.out.println("-----------------------------------------");
-		System.out.println();
 		return noticiaSelecionada;
 	}
 	public void setNoticiaSelecionada(Noticia noticiaSelecionada) {
 		this.noticiaSelecionada = noticiaSelecionada;
-		
-		System.out.println();
-		System.out.println("-----------------------------------------");
-		System.out.println(noticiaSelecionada.getTitle());
-		System.out.println("-----------------------------------------");
-		System.out.println();
-		
 	}
 
 

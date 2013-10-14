@@ -61,6 +61,11 @@ public class LoginBean implements Serializable {
 	private MensagemEventoDAO msgEveDAO;
 	private MensagemGrupoDAO msgGruDAO;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
@@ -73,26 +78,6 @@ public class LoginBean implements Serializable {
 		msgGruDAO = new MensagemGrupoDAOImpl(em);
 	}
 	
-	/**
-	 * Procura pelas notificações do usuário
-	 *
-	 * @author Ariel Molina 
-	 */
-	public void getNews(){
-		eventsInvites = convEveDAO.buscarConviteEventoPorPessoa(pessoa).size();
-		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();
-		groupsInvites = convGruDAO.buscarConviteGrupoPorPessoa(pessoa).size();
-		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
-		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
-							msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();
-		
-		imgEventos = (eventsInvites > 0 || eventsRequests > 0 ? "eventosBranco.png" : "eventos.png");
-		
-		imgGrupos = (groupsInvites > 0 || groupsRequests > 0 ? "gruposBranco.png" : "grupos.png");
-		
-		imgMensagens = (unreadMessages > 0 ? "mensagensBranco.png" : "mensagens.png");
-		
-	}
 	
 	public String getUsuario() {
 		return usuario;
@@ -179,6 +164,28 @@ public class LoginBean implements Serializable {
 		this.unreadMessages = unreadMessages;
 	}
 
+	/**
+	 * Procura pelas notificações do usuário
+	 *
+	 * @author Ariel Molina 
+	 */
+	public void getNews(){
+		eventsInvites = convEveDAO.buscarConviteEventoPorPessoa(pessoa).size();
+		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();
+		groupsInvites = convGruDAO.buscarConviteGrupoPorPessoa(pessoa).size();
+		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
+		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
+				msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();
+		
+		imgEventos = (eventsInvites > 0 || eventsRequests > 0 ? "eventosBranco.png" : "eventos.png");
+		
+		imgGrupos = (groupsInvites > 0 || groupsRequests > 0 ? "gruposBranco.png" : "grupos.png");
+		
+		imgMensagens = (unreadMessages > 0 ? "mensagensBranco.png" : "mensagens.png");
+		
+	}
+	
+	
 	/**
 	* Realiza a validação do campo que está chamando, verificando se possui o formato de email.
 	*

@@ -23,12 +23,23 @@ public class EventoImage {
 	private EntityManager em;
 	private EventoDAO eventoDAO;
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void onInit(){
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		eventoDAO = new EventoDAOImpl(em);
 	}
 	
+	/**
+	 * Retorna a imagem do Evento em StreamedContent
+	 *
+	 * @return imagem do Evento em StreamedContent
+	 * @author Ariel Molina 
+	 */
 	public StreamedContent getImage(){
 		 FacesContext context = FacesContext.getCurrentInstance();
 

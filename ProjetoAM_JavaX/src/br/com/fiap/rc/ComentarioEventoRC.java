@@ -10,6 +10,16 @@ public class ComentarioEventoRC {
 	private String comentario;
 	private Calendar dataHora;
 	
+	/**
+	 * Contrutor padrão para o ComentarioEventoRC
+	 *  
+	 * @param codPessoa Código da pessoa que realizou o comentário
+	 * @param apelido Apelido da pessoa que realizou o comentário
+	 * @param imgPerfil Imagem de perfil de quem realizou o comentário
+	 * @param comentario Descrição do comentário
+	 * @param dataHora Data e Hora do comentário
+	 *  
+	 */
 	public ComentarioEventoRC(int codPessoa, String apelido,
 			byte[] imgPerfil, String comentario, Calendar dataHora){
 		this.codPessoa = codPessoa;

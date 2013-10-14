@@ -20,6 +20,12 @@ public class PessoaImage {
 
 	private PessoaDAO pessoaDAO = new PessoaDAOImpl(EntityManagerFactorySingleton.getInstance().createEntityManager());
 	
+	/**
+	 * Retorna a imagem da Pessoa em StreamedContent
+	 *
+	 * @return imagem da Pessoa em StreamedContent
+	 * @author Ariel Molina 
+	 */
 	public StreamedContent getImage(){
 		 FacesContext context = FacesContext.getCurrentInstance();
 

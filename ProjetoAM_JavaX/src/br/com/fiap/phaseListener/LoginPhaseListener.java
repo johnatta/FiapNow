@@ -14,11 +14,24 @@ import br.com.fiap.mb.LoginBean;
 
 public class LoginPhaseListener implements Serializable, PhaseListener {
 	
+	/**
+	 * Método executado antes de iniciar a renderização da página
+	 *
+	 * @param event Fase em que está executando o método
+	 * @author Ariel Molina 
+	 */
 	@Override
 	public void afterPhase(PhaseEvent event) {
 
 	}
 
+	/**
+	 * Método executado antes de iniciar a renderização da página, redirecionando para outras páginas
+	 * caso estejam inválidas
+	 *
+	 * @param event Fase em que está executando o método
+	 * @author Ariel Molina 
+	 */
 	@Override
 	public void beforePhase(PhaseEvent event) {
 		//Obtém o Contexto do Evento
@@ -67,6 +80,12 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 
 	}
 
+	/**
+	 * Método para receber o Id da Fase que está em execução
+	 *
+	 * @return fase da paginação
+	 * @author Ariel Molina 
+	 */
 	@Override
 	public PhaseId getPhaseId() {
 		return PhaseId.RENDER_RESPONSE;

@@ -13,6 +13,12 @@ import br.com.fiap.entity.Pessoa;
 
 public class MensagemEventoDAOImpl extends DAOImpl<MensagemEvento, Integer> implements MensagemEventoDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public MensagemEventoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

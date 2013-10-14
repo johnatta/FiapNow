@@ -12,6 +12,12 @@ import br.com.fiap.entity.Usuario;
 
 public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO{
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public PessoaDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

@@ -27,6 +27,12 @@ public class HomeBean implements Serializable {
 		return estatisticaEsportes;
 	}
 	
+	/**
+	 * Método executado no momento da instanciação do ManagedBean, realizando as estatísticas
+	 * que são exibidas na Home
+	 *
+	 * @author Ariel Molina 
+	 */
 	@PostConstruct
 	public void inicializarEstatisticas() {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();

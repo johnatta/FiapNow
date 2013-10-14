@@ -20,6 +20,12 @@ public class GrupoImage {
 
 	private GrupoDAO grupoDAO = new GrupoDAOImpl(EntityManagerFactorySingleton.getInstance().createEntityManager());
 	
+	/**
+	 * Retorna a imagem do Grupo em StreamedContent
+	 *
+	 * @return imagem do Grupo em StreamedContent
+	 * @author Ariel Molina 
+	 */
 	public StreamedContent getImage(){
 		 FacesContext context = FacesContext.getCurrentInstance();
 

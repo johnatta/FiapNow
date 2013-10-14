@@ -24,6 +24,12 @@ import br.com.fiap.rc.ComentarioGrupoRC;
 
 public class GrupoDAOImpl extends DAOImpl<Grupo, Integer> implements GrupoDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public GrupoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}

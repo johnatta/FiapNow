@@ -11,6 +11,12 @@ import br.com.fiap.entity.Pessoa;
 
 public class ConviteEventoDAOImpl extends DAOImpl<ConviteEvento, Integer> implements ConviteEventoDAO {
 
+	/**
+	 * Construtor padrão
+	 *
+	 * @param entityManager Gerenciador das persistências
+	 * @author Ariel Molina 
+	 */
 	public ConviteEventoDAOImpl(EntityManager entityManager) {
 		super(entityManager);
 	}
