@@ -20,7 +20,9 @@
 						rowsPerPageTemplate="5,10,20" emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{cnv.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{cnv.grupo.imgGrupo}" width="80" height="110"/>
+								<p:graphicImage value="#{grupoImage.image}" width="80" height="110">
+										<f:param name="id" value="${cnv.grupo.codGrupo}"/>
+								</p:graphicImage>
 								<h:outputText value="#{cnv.descricao}"/>
 								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}" value="#{msgs.accept}" update=":tabMain" ajax="true "/>
 								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}" value="#{msgs.decline}" update=":tabMain" ajax="true" />
@@ -41,7 +43,9 @@
 						rowsPerPageTemplate="5,10,20" emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{ped.grupo.nomeGrupo}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
+								<p:graphicImage value="#{grupoImage.image}" width="80" height="110">
+										<f:param name="id" value="${ped.grupo.codGrupo}"/>
+								</p:graphicImage>
 								<h:outputText value="#{ped.descricao}" />
 								<p:commandButton actionListener="#{convitePedidoGruposBean.aceitarPedido(ped)}" value="#{msgs.accept}" ajax="false" update=":tabMain" />
 								<p:commandButton actionListener="#{convitePedidoGruposBean.recusarPedido(ped)}" value="#{msgs.decline}" ajax="true" update=":tabMain" />

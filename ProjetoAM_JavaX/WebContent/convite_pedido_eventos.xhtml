@@ -20,7 +20,9 @@
 						rowsPerPageTemplate="5,10,20"  emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{cnv.evento.nome}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:graphicImage url="#{cnv.evento.imgEvento}" width="80" height="110"/>
+								<p:graphicImage value="#{eventoImage.image}" width="80" height="110">
+									<f:param name="id" value="${cnv.evento.codEvento}"/>
+								</p:graphicImage>
 								<h:outputText value="#{cnv.descricao}"/>
 								<p:commandButton value="#{msgs.accept}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" update=":tabMain" ajax="true" />
 								<p:commandButton value="#{msgs.decline}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}" update=":tabMain" ajax="true"/>
@@ -42,7 +44,9 @@
 						<p:panel header="#{ped.evento.nome}" >
 							<h:panelGrid columns="4" style="width:100%">
 								<h:column>
-									<h:graphicImage url="#{ped.pessoa.imgPerfil}" width="80" height="110"/>
+									<p:graphicImage value="#{eventoImage.image}" width="80" height="110">
+										<f:param name="id" value="${ped.evento.codEvento}"/>
+									</p:graphicImage>
 									<br/>
 									<h:outputText value="#{ped.pessoa.apelido}"/>
 								</h:column>
