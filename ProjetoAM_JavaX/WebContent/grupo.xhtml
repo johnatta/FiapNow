@@ -39,8 +39,7 @@
 							<f:param name="id" value="${grupoBean.grupo.codGrupo}" />
 						</p:graphicImage>
 						<br></br>
-						<p:outputLabel value="#{msgs.adm}:"></p:outputLabel>
-						<h:outputText value="#{grupoBean.grupo.adm.nome}"></h:outputText>
+						<p:outputLabel value="#{msgs.adm: grupoBean.grupo.adm.nome}"></p:outputLabel>
 
 						<p:outputLabel value="#{msgs.category}"></p:outputLabel>
 
@@ -178,14 +177,14 @@
 				<h:outputText id="counter" />
 				<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
 					action="#{grupoBean.btnEnviarComentario}"
-					update=":formVisualizacaoComentario:comentarios" />
+					update=":formVisualizacaoComentario:comentariosList" />
 			</p:panel>
 			<br />
 		</h:form>
 		<h:form id="formVisualizacaoComentario"
 			rendered="#{grupoBean.btnRenderFormVisuComents()}">
 			<div>
-				<p:dataGrid id="comentarios" var="posts"
+				<p:dataGrid id="comentariosList" var="posts"
 					value="#{grupoBean.grupo.comentarios}" columns="1" rows="10">
 					<p:panel header="#{msgs.comment}">
 						<h:panelGrid columns="1">

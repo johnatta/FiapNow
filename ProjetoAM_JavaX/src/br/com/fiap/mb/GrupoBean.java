@@ -138,18 +138,12 @@ public class GrupoBean implements Serializable {
 				}else{
 					if(grupo.getPrivacidade() == Privacidade.Fechado){
 						flagUserFechado = true;
-						grupoPrivado();
-						break;
 					}else{
 						flagUser = true;
 					}
 				}
 			}
 		}
-	}
-
-	public String grupoPrivado(){
-		return "infoGrupoPrivado.xhtml";
 	}
 
 	@PostConstruct
