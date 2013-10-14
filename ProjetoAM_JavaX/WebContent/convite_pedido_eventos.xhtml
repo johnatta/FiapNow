@@ -43,13 +43,9 @@
 						rowsPerPageTemplate="5,10,20" emptyMessage="#{msgs.no_records}">
 						<p:panel header="#{ped.evento.nome}" >
 							<h:panelGrid columns="4" style="width:100%">
-								<h:column>
-									<p:graphicImage value="#{eventoImage.image}" width="80" height="110">
-										<f:param name="id" value="${ped.evento.codEvento}"/>
-									</p:graphicImage>
-									<br/>
-									<h:outputText value="#{ped.pessoa.apelido}"/>
-								</h:column>
+								<p:graphicImage value="#{eventoImage.image}" width="80" height="110">
+									<f:param name="id" value="${ped.evento.codEvento}"/>
+								</p:graphicImage>
 								<h:outputText value="#{ped.descricao}" />
 								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido(ped)}" value="#{msgs.accept}" update=":tabMain" ajax="true"/>
 								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido(ped)}" value="#{msgs.decline}" update=":tabMain" ajax="true"/>
