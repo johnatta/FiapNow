@@ -70,11 +70,6 @@
 					<p:panel header="#{msgs.description}">
 						<h:panelGrid columns="1">
 							<h:outputText value="#{grupoBean.grupo.descricao}" />
-							<f:facet name="footer">
-								<p:commandButton type="button" value="#{msgs.edit}"
-									icon="ui-icon-check" style="margin:0"
-									rendered="#{grupoBean.btnRenderEditDesc()}" />
-							</f:facet>
 						</h:panelGrid>
 					</p:panel>
 				</div>
