@@ -112,6 +112,7 @@ public class GrupoBean implements Serializable {
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
+		
 
 		/**
 		 * Realizando comparaçõs para ter o conhecimento se o usuário é:
@@ -262,7 +263,7 @@ public class GrupoBean implements Serializable {
 
 	/**
 	 * Visualização de todos os membros do grupo
-	 * @return página para a visualização dos membros.
+	 * @return página para a visualização dos membros. VISAO GERENCIADOR
 	 * @author Graziele Vasconcelos
 	 */
 	public String visualizarTodosMembros(){
@@ -272,13 +273,29 @@ public class GrupoBean implements Serializable {
 
 	/**
 	 * Visualização de todos os moderadores do grupo
-	 * @return paágina para a visualização dos moderadores.
+	 * @return paágina para a visualização dos moderadores.  VISAO GERENCIADOR
 	 * @author Graziele Vasconcelos
 	 */
 	public String visualizarTodosModeradores(){
 		return "todos_moderadores_grupo.xhtml";
 	}	
+	/**
+	 * Visualização de todos os membros do grupo
+	 * @return página para a visualização dos membros.
+	 * @author Graziele Vasconcelos
+	 */
+	public String TodosMembros(){
+		return "grupo_todos_membros.xhtml";
+	}
 
+	/**
+	 * Visualização de todos os moderadores do grupo
+	 * @return paágina para a visualização dos moderadores.
+	 * @author Graziele Vasconcelos
+	 */
+	public String TodosModeradores(){
+		return "grupo_todos_moderadores.xhtml";
+	}	
 	/**
 	 * Administrador direcionado para a uma página de confirmação da exclusão do grupo. 
 	 * @return página para a confirmação da exclusão do grupo.
