@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -25,7 +25,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.mb.LoginBean;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class MobileBean implements Serializable {
 	
 	private EntityManager em;

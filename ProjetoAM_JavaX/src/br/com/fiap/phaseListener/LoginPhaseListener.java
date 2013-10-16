@@ -51,7 +51,32 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 		//Recebendo o Browser do usuário
 		String browser = (String) context.getExternalContext().getRequestHeaderMap().get("User-Agent");
 		
-		if (!browser.contains("OPWV-SDK")) {
+		if (browser.contains("avantgo") || browser.contains("bolt") || browser.contains("docomo") || browser.contains("up.browser") || browser.contains("vodafone") 
+				|| browser.contains("j-phone") || browser.contains("ddipocket") || browser.contains("pdxgw") || browser.contains("astel") || browser.contains("android")
+				|| browser.contains("eudoraweb") || browser.contains("ppc") || browser.contains("minimo") || browser.contains("plink") || browser.contains("plucker") 
+				|| browser.contains("netfront") || browser.contains("wm5 pie") || browser.contains("xiino") || browser.contains("tablet") || browser.contains("ipad")
+				|| browser.contains("iphone") || browser.contains("itunes") || browser.contains("vendorid") || browser.contains("wap") || browser.contains("bb10") 
+				|| browser.contains("blackberry") || browser.contains("opera mini") || browser.contains("cricket") || browser.contains("iemobile") 
+				|| browser.contains("wosbrowser") || browser.contains("windows phone") || browser.contains("htc") || browser.contains("xv6850") 
+				|| browser.contains("kindle") || browser.contains("teleca") || browser.contains("mib/") || browser.contains("portalmmm") || browser.contains("nintendo") 
+				|| browser.contains("mobile") || browser.contains("nokia") || browser.contains("symbian") || browser.contains("opera mobi") || browser.contains("fennec") 
+				|| browser.contains("tear") || browser.contains("midori") || browser.contains("prism") || browser.contains("smartphone") || browser.contains("webos") 
+				|| browser.contains("palm") || browser.contains("blazer") || browser.contains("palmsource") || browser.contains("mobileexplorer") 
+				|| browser.contains("regking") || browser.contains("epoc") || browser.contains("samsung-gt-s3653w") || browser.contains("samsung-gt-s5620")
+				|| browser.contains("samsung-s8003") || browser.contains("bada") || browser.contains("samsung-sphm800") || browser.contains("sec-sghe600")
+				|| browser.contains("sec-sgh600") || browser.contains("sec-sghd410") || browser.contains("j2me") || browser.contains("reqwirelessweb/3.2 s55")
+				|| browser.contains("sonyericssonk800i") || browser.contains("sonyericssonk608i") || browser.contains("semc-browser") 
+				|| browser.contains("sonyericssont200") || browser.contains("sonyericssonp800") || browser.contains("sonyericssonp900") 
+				|| browser.contains("sonyericssont610")	|| browser.contains("playstation") || browser.contains("ucweb") || browser.contains("wp7")
+				|| browser.contains("OPWV-SDK") || browser.contains("Android") ){
+			
+			//Caso tente entrar em outra página e não exista sessão, vai pra index
+			if( !paginaOrigem.equals("/indexMobile.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
+				handler.handleNavigation(context, null, "indexMobile");
+			}
+			
+		} else {
+			
 			
 			//Caso tente entrar em outra página e não exista sessão, vai pra index
 			if( !paginaOrigem.equals("/index.xhtml") && !paginaOrigem.equals("/criacao_perfil.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
@@ -72,12 +97,6 @@ public class LoginPhaseListener implements Serializable, PhaseListener {
 				handler.handleNavigation(context, null, paginaOrigem);
 			}
 			
-		} else {
-			
-			//Caso tente entrar em outra página e não exista sessão, vai pra index
-			if( !paginaOrigem.equals("/indexMobile.xhtml") && (sessao == null || sessao.getPessoa() == null) ){
-				handler.handleNavigation(context, null, "indexMobile");
-			}
 			
 		}
 

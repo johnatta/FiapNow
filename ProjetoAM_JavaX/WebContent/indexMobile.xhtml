@@ -16,7 +16,7 @@
 		
 		<pm:view swatch="e">
 			<pm:header title="Login" swatch="e" />
-							
+
 			<h:form id="login">
 				<pm:field>
 					<h:outputLabel value="Usuário: " /> 
@@ -27,6 +27,9 @@
 					<h:outputLabel value="Senha: " />
 					<h:inputSecret id="senha" value="#{loginBean.senha}" />
 				</pm:field>
+				
+				<h:messages></h:messages>
+				
 				<p:dataList type="inset" styleClass="ui-li-custom">
 					<p:commandLink value="Entrar" action="#{loginBean.loginMobile}" ajax="false" />
 				</p:dataList>
