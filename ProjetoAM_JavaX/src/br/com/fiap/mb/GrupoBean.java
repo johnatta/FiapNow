@@ -257,16 +257,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void btnEnviarComentario(){
-		try {
-			comentarioGrupo.setGrupo(grupo);
-			comentarioGrupo.setPessoa(pDAO.buscarInformacoes(pessoa.getCodPessoa()));
-			comentarioGrupo.setDataHora(Calendar.getInstance());
-			comentarioGrupoDAO.insert(comentarioGrupo);
-			comentarioGrupo = new ComentarioGrupo();
-			gruDAO.update(grupo);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		grupoBO.enviarComentarioGrupo(grupo, pessoa);
 	}
 
 	/**
@@ -275,11 +266,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void excluirComentario(int codComentario){
-		comentarioGrupo = comentarioGrupoDAO.searchByID(codComentario);
-		grupo.getComentarios().remove(comentarioGrupo);
-		comentarioGrupoDAO.remove(comentarioGrupo);
-		comentarioGrupo = new ComentarioGrupo();
-		gruDAO.update(grupo);
+		grupoBO.excluirComentarioGrupo(grupo, pessoa, codComentario);
 	}
 
 	/**
@@ -332,12 +319,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String excluirGrupo(){
-		gruDAO.removeById(grupo.getCodGrupo());
-		FacesContext fc = FacesContext.getCurrentInstance();
-		FacesMessage fm = new FacesMessage();
-		fm.setSummary("Grupo excluído com sucesso.");
-		fc.addMessage("", fm);
-		return "grupos.xhtml";
+		return grupoBO.excluirGrupo(grupo);
 	}
 
 	/**
