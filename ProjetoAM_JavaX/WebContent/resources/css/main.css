@@ -200,14 +200,14 @@ h3{
 }
 /* ----------- Fim da Estilização da Notícias ----------- */
 /* ----------- Estilização da página Grupo ----------- */
-#caixas { width: 880px; height: 300px;}
-.caixa1 { width: 260px; height: 270px; float: left; }
+#caixas { width: 880px; }
+.caixa1 { width: 260px; float: left; }
 .caixa2 { width: 600px; height: 270px; float: left; margin-left: 20px;}
 
-#blocoDois { margin-top:60px; float:left; width:800;}
+#blocoDois { margin-top:5px; float:left; }
 #caixasComentarios {width: 350px; float:left; margin-right: 5px; }
 .bloco1 {width:350px;float:left; height: 40px; margin-top: 10px; margin-left: 5px;}
 
-#caixasDetalhes {width:400px;float:left; margin-left:20px; }
+#caixasDetalhes {float:left; margin-left:370px; }
 .bloco2 {width:400px;float:left; margin-top: 10px;} 
 /* ----------- Fim da Estilização da Grupo----------- */

@@ -86,7 +86,7 @@
 					<p:panel id="comment" header="#{msgs.comment}">
 						<p:inputTextarea id="cmt"
 							value="#{grupoBean.comentarioGrupo.comentario}" required="true"
-							rows="5" cols="30" counter="counter" maxlength="300"
+							rows="8" cols="25" counter="counter" maxlength="300"
 							counterTemplate="#{msgs.maximum_of_300_characters}">
 						</p:inputTextarea>
 						<br></br>
@@ -101,7 +101,7 @@
 					<h:form id="formVisualizacaoComentario"
 						rendered="#{grupoBean.btnRenderFormVisuComents()}">
 						<p:dataGrid id="listComentarios" var="posts"
-							value="#{grupoBean.grupo.comentarios}" columns="1" rows="10">
+							value="#{grupoBean.grupo.comentarios}" columns="1" rows="8">
 							<p:panel header="#{msgs.comment}">
 								<h:panelGrid columns="1">
 									<f:facet name="header">

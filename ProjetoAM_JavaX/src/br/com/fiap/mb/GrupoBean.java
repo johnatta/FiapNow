@@ -22,15 +22,14 @@ import br.com.fiap.bean.EditarGrupoBean;
 import br.com.fiap.bean.MembroGrupoBean;
 import br.com.fiap.bean.MensagemGrupoBean;
 import br.com.fiap.bean.ModeradorGrupoBean;
+import br.com.fiap.bo.GrupoBO;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
-import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
-import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.datamodel.EsporteDataModel;
 import br.com.fiap.entity.ComentarioGrupo;
@@ -65,8 +64,6 @@ public class GrupoBean implements Serializable {
 	private ComentarioGrupo comentarioGrupo;
 	private Pessoa pessoa;
 	private Grupo grupo;
-	private PedidoGrupo pedidoGrupo;
-	private PedidoGrupoDAO pedidoDAO;
 	private EsporteDataModel edm;
 	private ComentarioGrupoDAO comentarioGrupoDAO;
 	private PessoaDAO pDAO;
@@ -75,7 +72,31 @@ public class GrupoBean implements Serializable {
 	private MembroGrupoBean membroGrupo;
 	private MensagemGrupoBean mensagemGrupo; 
 	private EditarGrupoBean editGrupo;
+	private GrupoBO grupoBO;
 
+	@PostConstruct
+	public void onInit(){
+		EsporteDAO espDAO = new EsporteDAOImpl(em);
+		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
+		gruDAO = new GrupoDAOImpl(em);
+		pDAO = new PessoaDAOImpl(em);
+		grupoBO = new GrupoBO();
+		comentarioGrupo = new ComentarioGrupo();
+		listEsporte = new ArrayList<Esporte>();
+		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
+
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		LoginBean sessao = (LoginBean)map.get("loginBean");
+		pessoa = sessao.getPessoa();
+
+		if(primeiraVezBuscaGrupo > 0 ){
+			codGrupo = codigoGrupo; 
+			primeiraVezBuscaGrupo = 0;
+			codigoGrupo = 0;
+			preRenderGrupo();
+		}
+	}
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -158,15 +179,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void moderadoresGrupoNull() {
-		if(grupo.getModeradores().size() == 0 ){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Pessoa pessoaNull = new Pessoa();
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
-			pessoaNull.setNome("");
-			pessoaNull.setApelido(mensagem);
-			grupo.getModeradores().add(pessoaNull);
-		}
+		grupoBO.verificaConteudoModerador(grupo);
 	}
 
 	/**
@@ -175,15 +188,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void membrosGrupoNull() {
-		if(grupo.getMembros().size() == 0 ){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Pessoa pessoaNull = new Pessoa();
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
-			pessoaNull.setNome("");
-			pessoaNull.setApelido(mensagem);
-			grupo.getMembros().add(pessoaNull);
-		}
+		grupoBO.verificaConteudoMembro(grupo);
 	}
 
 	/**
@@ -192,15 +197,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void proximosEventosNull() {
-		if(proximosEventos.size() == 0){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Evento eventoNull = new Evento();
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
-			eventoNull.setNome(mensagem);
-			eventoNull.setDtEvento(Calendar.getInstance());
-			proximosEventos.add(eventoNull);
-		}
+		grupoBO.verificaProximosEventos(proximosEventos);
 	}
 	/**
 	 * Caso não haja histórico de eventos, cria uma instância do mesmo e popula com mensagem pertinente
@@ -208,41 +205,8 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void historicoEventoNull() {
-		FacesContext fc = FacesContext.getCurrentInstance();
-		if(historicoEventos.size() <= 0){
-			Evento eventoNull = new Evento();
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
-			eventoNull.setNome(mensagem);
-			eventoNull.setDtEvento(Calendar.getInstance());
-			historicoEventos.add(eventoNull);
-		}
+		grupoBO.verificaHistoricoEventos(historicoEventos);
 	}
-
-	@PostConstruct
-	public void onInit(){
-		EsporteDAO espDAO = new EsporteDAOImpl(em);
-		comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
-		gruDAO = new GrupoDAOImpl(em);
-		pDAO = new PessoaDAOImpl(em);
-		pedidoDAO = new PedidoGrupoDAOImpl(em);
-		comentarioGrupo = new ComentarioGrupo();
-		pedidoGrupo = new PedidoGrupo();
-		listEsporte = new ArrayList<Esporte>();
-		edm = new EsporteDataModel(espDAO.buscarTodosEsportes()); 
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, Object> map = context.getExternalContext().getSessionMap();
-		LoginBean sessao = (LoginBean)map.get("loginBean");
-		pessoa = sessao.getPessoa();
-
-		if(primeiraVezBuscaGrupo > 0 ){
-			codGrupo = codigoGrupo; 
-			primeiraVezBuscaGrupo = 0;
-			codigoGrupo = 0;
-			preRenderGrupo();
-		}
-	}	
 
 	/**
 	 * Formata a data para dd/mm/yyyy HH:mm
@@ -286,22 +250,7 @@ public class GrupoBean implements Serializable {
 	}
 
 	public String participarGrupo(){
-		try {
-			pedidoGrupo.setDescricao("Eu, "+pessoa.getNome()+", desejo participar do seu grupo");
-			pedidoGrupo.setPessoa(pessoa);
-			pedidoGrupo.setGrupo(grupo);
-			pedidoDAO.insert(pedidoGrupo);
-			FacesMessage fm = new FacesMessage("Pedido enviado!");
-			FacesContext fc = FacesContext.getCurrentInstance();
-			fc.addMessage("messages", fm);
-		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Pedido não enviado, por favor tente mais tarde.");
-			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("messages", fm);
-		}
-		return "";
+		return grupoBO.participarDoGrupo(grupo, pessoa);
 	}
 	/**
 	 * Realiza o envio do comentário para o grupo à qual o usuário se encontra na página
@@ -714,14 +663,6 @@ public class GrupoBean implements Serializable {
 
 	public void setFlagUserFechado(boolean flagUserFechado) {
 		this.flagUserFechado = flagUserFechado;
-	}
-
-	public PedidoGrupo getPedidoGrupo() {
-		return pedidoGrupo;
-	}
-
-	public void setPedidoGrupo(PedidoGrupo pedidoGrupo) {
-		this.pedidoGrupo = pedidoGrupo;
 	}
 
 	public boolean isComentario() {
