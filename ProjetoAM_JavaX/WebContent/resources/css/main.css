@@ -205,8 +205,8 @@ h3{
 .caixa2 { width: 600px; height: 270px; float: left; margin-left: 20px;}
 
 #blocoDois { margin-top:5px; float:left; }
-#caixasComentarios {width: 350px; float:left; margin-right: 5px; }
-.bloco1 {width:350px;float:left; height: 40px; margin-top: 10px; margin-left: 5px;}
+#caixasComentarios {width: 320px; float:left; margin-right: 5px; }
+.bloco1 {width:320px;float:left; height: 40px; margin-top: 10px; margin-left: 5px;}
 
 #caixasDetalhes {float:left; margin-left:370px; }
 .bloco2 {width:400px;float:left; margin-top: 10px;} 

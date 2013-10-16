@@ -17,16 +17,20 @@ import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ComentarioGrupoDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ComentarioGrupoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
 import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ComentarioGrupo;
+import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.Esporte;
 import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
+import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 
@@ -195,7 +199,7 @@ public class GrupoBO implements Serializable {
 			return "";
 		}
 	}
-	
+
 	public void enviarComentarioGrupo(Grupo grupo, Pessoa pessoa){
 		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
 		ComentarioGrupoDAO comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
@@ -221,7 +225,7 @@ public class GrupoBO implements Serializable {
 			fc.addMessage("messages", fm);
 		}
 	}
-	
+
 	public void excluirComentarioGrupo(Grupo grupo, Pessoa pessoa, int codComentario){
 		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
 		ComentarioGrupoDAO comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
@@ -243,5 +247,38 @@ public class GrupoBO implements Serializable {
 			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
 			fc.addMessage("messages", fm);
 		}
-	}	
+	}
+
+	public Grupo excluirMembroGrupo(Grupo grupo, Pessoa[] membrosSelecionadosExc){
+		GrupoDAO gruDAO = new GrupoDAOImpl(em);
+		for (Pessoa membro : membrosSelecionadosExc){
+			grupo.getMembros().remove(membro);
+			gruDAO.update(grupo);
+		}
+		return grupo; 
+	}
+
+	public void enviarMsgParaMembrosGrupo(List<Pessoa> membrosGrp, Grupo grupo){
+		MensagemGrupo mensagem = new MensagemGrupo();
+		MensagemGrupoDAO msgDAO = new MensagemGrupoDAOImpl(em);
+		try {
+			for (Pessoa membro : membrosGrp){
+				mensagem.setPessoa(membro);
+				mensagem.setGrupo(grupo);
+				mensagem.setConfirmacao(Confirmacao.NAO);
+				msgDAO.insert(mensagem);
+				mensagem = new MensagemGrupo();
+			}		
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage();
+			fm.setSummary("Mensagem enviada com sucesso.");
+			fc.addMessage("", fm);
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("Mensagem não enviada, por favor tente mais tarde.");
+			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage("messages", fm);		
+		}
+	}
 }

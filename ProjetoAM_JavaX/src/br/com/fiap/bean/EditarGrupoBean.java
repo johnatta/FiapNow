@@ -18,8 +18,11 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bo.GrupoBO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Privacidade;
 
@@ -36,7 +39,7 @@ public class EditarGrupoBean implements Serializable {
 	private GrupoDAO gruDAO;
 	private List<Privacidade> privs;
 	private boolean primeiraVezInfoGrupo;
-
+	private GrupoBO grupoBO;
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -61,18 +64,8 @@ public class EditarGrupoBean implements Serializable {
 	}
 
 	public void realizarUpload(FileUploadEvent event) {
-		try {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
-			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
-			fc.addMessage("messages", fm);
-		} catch (IOException e) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Erro no Processo de Upload!");
-			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("messages", fm);
-			e.printStackTrace();
-		}
+		grupoBO = new GrupoBO();
+		grupoBO.uploadFoto(grupo, event);
 	}
 	public Grupo getGrupo() {
 		return grupo;

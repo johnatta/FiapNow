@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bo.GrupoBO;
 import br.com.fiap.dao.ConviteGrupoDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
@@ -40,6 +41,7 @@ public class MembroGrupoBean implements Serializable {
 	private GrupoDAO gruDAO;
 	private ConviteGrupoDAO conviteDAO;
 	private int activeTabMember;
+	private GrupoBO grupoBO;
 
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
@@ -62,10 +64,8 @@ public class MembroGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void excluirMembro(){
-		for (Pessoa membro : getMembrosSelecionadosExc()){
-			grupo.getMembros().remove(membro);
-			gruDAO.update(grupo);
-		}
+		grupoBO = new GrupoBO();
+		grupo = grupoBO.excluirMembroGrupo(grupo, membrosSelecionadosExc);
 		pdmExc = new PessoaDataModel(grupo.getMembros());
 		activeTabMember = 1;
 	}

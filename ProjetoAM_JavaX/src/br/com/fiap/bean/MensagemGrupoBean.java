@@ -12,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bo.GrupoBO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
@@ -32,7 +33,7 @@ public class MensagemGrupoBean implements Serializable {
 	private Grupo grupo;
 	private GrupoDAO gruDAO;
 	private MensagemGrupoDAO msgDAO;
-
+	private GrupoBO grupoBO;
 	/**
 	 * Efetua a renderização do conteúdo que deve estar pre-renderizado por meio do codGrupo que é 
 	 * passado por f:event
@@ -51,24 +52,8 @@ public class MensagemGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos 
 	 */
 	public void enviarMsg(){
-		boolean envio = false;
-		for (Pessoa membro : membrosGrp){
-			mensagem.setPessoa(membro);
-			mensagem.setGrupo(grupo);
-			mensagem.setConfirmacao(Confirmacao.NAO);
-			msgDAO.insert(mensagem);
-			mensagem = new MensagemGrupo();
-			envio = true;
-		}		
-		if(envio){
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Mensagens enviada com Sucesso!");
-			fc.addMessage("messages", fm);
-		}else{
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Erro no envio!");
-			fc.addMessage("messages", fm);
-		}
+		grupoBO = new GrupoBO();
+		grupoBO.enviarMsgParaMembrosGrupo(membrosGrp, grupo);
 	}
 
 	public Grupo getGrupo() {
