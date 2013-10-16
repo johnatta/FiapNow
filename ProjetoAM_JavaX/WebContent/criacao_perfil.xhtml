@@ -46,7 +46,7 @@
 				
 			<h1>Cadastrar Perfil</h1>
 		
-			<h:form>
+			<h:form id="cadastro">
 				<p:growl id="messages" showDetail="true" />
 				<h:messages ></h:messages>
 				<h:panelGrid columns="2">
@@ -64,6 +64,9 @@
 				
 				<h:outputText value="Senha: " />
 				<p:password value="#{criacaoPerfilBean.usuario.senha}" feedback="true" />
+				
+				<h:outputText value="Senha: " />
+				<p:password value="#{criacaoPerfilBean.senha}" feedback="true" />
 				
 				<h:outputText value="#{msgs.image}" />
 				<p:fileUpload
@@ -93,19 +96,20 @@
 				
 				<h:outputText value="Cep:" />
 				<p:inputText value="#{criacaoPerfilBean.endereco.cep}" ></p:inputText>
-				<p:commandButton type="submit" value="Buscar CEP" action="#{criacaoPerfilBean.buscarCep}" ajax="false" />
+				<p:commandButton value="Buscar CEP" action="#{criacaoPerfilBean.buscarCep}"
+					ajax="true" update=":cadastro:pais :cadastro:estado :cadastro:cidade :cadastro:bairro :cadastro:rua" />
 				<div />
 				
 				<h:outputText value="Pais:" />
-				<p:inputText value="#{criacaoPerfilBean.endereco.pais}" />
+				<p:inputText value="#{criacaoPerfilBean.endereco.pais}" id="pais" />
 				<h:outputText value="Estado:" />
-				<p:inputText value="#{criacaoPerfilBean.endereco.estado}" />
+				<p:inputText value="#{criacaoPerfilBean.endereco.estado}" id="estado"/>
 				<h:outputText value="Cidade:" />
-				<p:inputText value="#{criacaoPerfilBean.endereco.cidade}" />
+				<p:inputText value="#{criacaoPerfilBean.endereco.cidade}" id="cidade" />
 				<h:outputText value="Bairro:" />
-				<p:inputText value="#{criacaoPerfilBean.endereco.bairro}" />
+				<p:inputText value="#{criacaoPerfilBean.endereco.bairro}" id="bairro" />
 				<h:outputText value="Rua:" />
-				<p:inputText value="#{criacaoPerfilBean.endereco.rua}" />
+				<p:inputText value="#{criacaoPerfilBean.endereco.rua}" id="rua" />
 				<h:outputText value="Número:" />
 				<p:inputText value="#{criacaoPerfilBean.endereco.numero}" />
 				<h:outputText value="Complemento:" />

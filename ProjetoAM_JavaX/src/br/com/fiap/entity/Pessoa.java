@@ -57,7 +57,7 @@ public class Pessoa implements Serializable {
 	@Lob
 	private byte [] imgPerfil;
 
-	@Column(name="IMAGEM_BACK_GROUND")
+	@Column(name="IMAGEM_BACK_GROUND", nullable = false)
 	@Lob
 	private byte [] imgBackGround;
 

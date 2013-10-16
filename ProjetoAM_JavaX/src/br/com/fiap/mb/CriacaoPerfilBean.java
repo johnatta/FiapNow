@@ -51,6 +51,7 @@ public class CriacaoPerfilBean implements Serializable {
 	private EsporteDAO esporteDAO;
 	private EntityManager em;
 	private LoginBean sessao;
+	private String senha;
 
 	@PostConstruct
 	public void onInit(){
@@ -118,6 +119,12 @@ public class CriacaoPerfilBean implements Serializable {
 	public void setEdm(EsporteDataModel edm) {
 		this.edm = edm;
 	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	/**
 	 * Cadastra a Pessoa conforme as informações inseridas
@@ -147,14 +154,15 @@ public class CriacaoPerfilBean implements Serializable {
 		cal.setTime(dtNasc);
 		pessoa.setDtNasc(cal);
 		
-		retorno = "home.xhtml";
+		pessoa.setImgBackGround(new byte[3]);
 		
 		try{
 			pessoa = pessoaDAO.insertEntity(pessoa);
+			retorno = "home.xhtml";
 		} catch (Exception e) {
-			e.printStackTrace();
 			fc.addMessage("", fm);
 			retorno = "";
+			e.printStackTrace();
 		}
 
 		sessao.setPessoa(pessoa);
@@ -196,6 +204,7 @@ public class CriacaoPerfilBean implements Serializable {
 					endereco.setCidade(cep.getCidade());
 					endereco.setBairro(cep.getBairro());
 					endereco.setRua(cep.getTipo_logradouro() + " " + cep.getLogradouro());
+					endereco.setNumero(0);
 				}
 
 			} catch (JAXBException e) {
