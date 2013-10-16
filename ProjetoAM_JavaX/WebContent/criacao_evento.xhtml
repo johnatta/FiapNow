@@ -11,6 +11,8 @@
 	<ui:define name="main_content">
 		<h2>Criar Evento</h2>
 		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<h:messages ></h:messages>
 			<h:panelGrid columns="2">
 				<h:outputText value="Nome:"></h:outputText>
 				<p:inputText value="#{criarEventoBean.evento.nome}" maxlength="25" size="30" />

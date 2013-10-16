@@ -263,7 +263,7 @@ public class LoginBean implements Serializable {
 		Usuario user = usuarioDAO.buscarPorEmail(email);
 		
 		if(user == null){
-			returnPage = "home";
+			returnPage = "criacao_perfil?faces-redirect=true";
 		} else {
 			fc.addMessage("", fm);
 		}

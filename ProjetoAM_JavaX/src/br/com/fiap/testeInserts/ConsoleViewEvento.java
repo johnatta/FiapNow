@@ -123,7 +123,7 @@ public class ConsoleViewEvento {
 		enderecoP.setComplemento(null);
 		enderecoP.setLatitude((float) -23.601981);
 		enderecoP.setLongitude((float) -46.667178);
-		pessoa.setCodEndereco(enderecoP);
+		pessoa.setEndereco(enderecoP);
 		
 		pessoaDAO.insert(pessoa);
 		

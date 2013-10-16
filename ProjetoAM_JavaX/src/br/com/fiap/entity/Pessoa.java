@@ -57,7 +57,7 @@ public class Pessoa implements Serializable {
 	@Lob
 	private byte [] imgPerfil;
 
-	@Column(name="IMAGEM_BACK_GROUND", nullable = false)
+	@Column(name="IMAGEM_BACK_GROUND")
 	@Lob
 	private byte [] imgBackGround;
 
@@ -67,7 +67,7 @@ public class Pessoa implements Serializable {
 
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cod_endereco")
-	private Endereco codEndereco;
+	private Endereco endereco;
 
 	@ManyToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name="AM_PESSOA_ESPORTE",
@@ -113,7 +113,7 @@ public class Pessoa implements Serializable {
 
 	public Pessoa(String nome, String sobrenome, Calendar dtNasc,
 			String apelido, String telRes, String cel, byte[] imgPerfil,
-			byte[] imgBackGround, Usuario codUsuario, Endereco codEndereco,
+			byte[] imgBackGround, Usuario codUsuario, Endereco endereco,
 			List<Esporte> esportes, List<Grupo> gruposParticipantes, List<Evento> eventosParticipantes) {
 		super();
 		this.nome = nome;
@@ -125,7 +125,7 @@ public class Pessoa implements Serializable {
 		this.imgPerfil = imgPerfil;
 		this.imgBackGround = imgBackGround;
 		this.usuario = codUsuario;
-		this.codEndereco = codEndereco;
+		this.endereco = endereco;
 		this.esportes = esportes;
 		this.gruposParticipantes = gruposParticipantes;
 		this.eventosParticipantes = eventosParticipantes;
@@ -214,12 +214,12 @@ public class Pessoa implements Serializable {
 		this.usuario = usuario;
 	}
 
-	public Endereco getCodEndereco() {
-		return codEndereco;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setCodEndereco(Endereco codEndereco) {
-		this.codEndereco = codEndereco;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	public List<Esporte> getEsportes() {

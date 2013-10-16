@@ -7,6 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import br.com.fiap.ws.Webservicecep;
+
 public class TesteWebServiceCep {
 
 	public static void main(String[] args){

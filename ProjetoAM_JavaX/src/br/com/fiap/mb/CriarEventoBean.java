@@ -32,6 +32,7 @@ import br.com.fiap.entity.Evento;
 import br.com.fiap.entity.Grupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.ws.Cep;
+import br.com.fiap.ws.Webservicecep;
 
 @ManagedBean
 @SessionScoped
@@ -99,23 +100,31 @@ public class CriarEventoBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * Buscar o CEP no WebService através do CEP inserido
+	 * 
+	 * @author Ariel Molina
+	 */
 	public void buscarCep(){
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
-		if(endereco.getPais() != null && endereco.getPais().equals("Brasil")){ 
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_cep",
-							null, fc.getViewRoot().getLocale());
-			
-			FacesMessage fm = new FacesMessage(mensagem);
-			
+		endereco.setPais("Brasil");
+		
+		String mensagem =
+				UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_cep",
+						null, fc.getViewRoot().getLocale());
+		
+		FacesMessage fm = new FacesMessage(mensagem);
+		
+		if(!endereco.getCep().equals("")){
+		
 			try {
-				JAXBContext jc = JAXBContext.newInstance(Cep.class);
+				JAXBContext jc = JAXBContext.newInstance(Webservicecep.class);
 	
 				Unmarshaller u = jc.createUnmarshaller();
 				URL url = new URL("http://cep.republicavirtual.com.br/web_cep.php?cep=" + endereco.getCep() + "&formato=xml");
-				Cep cep = (Cep) u.unmarshal(url);
+				Webservicecep cep = (Webservicecep) u.unmarshal(url);
 	
 				if(cep.getResultado_txt().contains("não encontrado")){
 					fc.addMessage("", fm);
@@ -132,14 +141,9 @@ public class CriarEventoBean implements Serializable {
 				e.printStackTrace();
 			}
 		} else {
-			String mensagem =
-					UtilsNLS.getMessageResourceString("nls.mensagem", "invalid_country",
-							null, fc.getViewRoot().getLocale());
-			
-			FacesMessage fm = new FacesMessage(mensagem);
-			
 			fc.addMessage("", fm);
 		}
+		
 	}
 	
 	public Endereco getEndereco() {

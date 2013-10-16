@@ -1,4 +1,4 @@
-package br.com.fiap.teste;
+package br.com.fiap.ws;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

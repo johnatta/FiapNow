@@ -92,7 +92,7 @@ public class ConsoleViewGrupo02 {
 		enderecoP.setComplemento(null);
 		enderecoP.setLatitude((float) -23.604525);
 		enderecoP.setLongitude((float) -46.668428);
-		pessoa.setCodEndereco(enderecoP);
+		pessoa.setEndereco(enderecoP);
 		
 		pessoaDAO.insert(pessoa); 
 		

@@ -99,7 +99,7 @@ public class TestePessoaDependentes {
 		endereco.setComplemento(null);
 		endereco.setLatitude((float) -23.626926);
 		endereco.setLongitude((float) -46.635555);
-		pessoa.setCodEndereco(endereco);
+		pessoa.setEndereco(endereco);
 		
 		pessoaDAO.insert(pessoa);
 		
