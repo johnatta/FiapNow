@@ -18,6 +18,7 @@ import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bo.GrupoBO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.GrupoDAO;
 import br.com.fiap.dao.PessoaDAO;
@@ -41,20 +42,23 @@ public class CriacaoGrupoBean implements Serializable {
 	private Grupo grupo;
 	private Pessoa pessoa;
 	private EsporteDataModel edm;
-	private PessoaDAO pesDAO;
 	private EsporteDAO espDAO;
+	private GrupoBO grupoBO;
 	
 	@PostConstruct
 	public void init(){
 		FacesContext contexto = FacesContext.getCurrentInstance();
 		Map<String, Object> mapa = contexto.getExternalContext().getSessionMap();
 		mapa.remove("grupoBean");
-		pesDAO = new PessoaDAOImpl(em);
+		
+		grupoBO = new GrupoBO();
 		espDAO = new EsporteDAOImpl(em);
 		grupo = new Grupo();
+		
 		listEsporte = espDAO.buscarTodosEsportes();		
 		edm = new EsporteDataModel(listEsporte); 
 		this.privs = Arrays.asList(grupo.getPrivacidade().values());
+		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
 		LoginBean sessao = (LoginBean)map.get("loginBean");
@@ -67,35 +71,7 @@ public class CriacaoGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public String concluirCriacaoGrupo() {  
-		FacesContext fc = FacesContext.getCurrentInstance();
-		FacesMessage fm = new FacesMessage();
-		if(getGrupo().getDescricao() != null || getGrupo().getPrivacidade() != null 
-				|| getGrupo().getNomeGrupo() != null || getEspSelecionados() != null){
-
-			GrupoDAO gDAO = new GrupoDAOImpl(em);
-			
-			grupo.setAdm(pesDAO.buscarInformacoes(pessoa.getCodPessoa()));
-			for (Esporte esporte : getEspSelecionados()) {
-				listEsporte.add(esporte);
-			}
-			grupo.setEsportes(listEsporte);
-			grupo = gDAO.insertEntity(grupo);
-			grupo.getCodGrupo();
-			System.out.println(grupo.getCodGrupo());
-			List<Pessoa> adm = new ArrayList<Pessoa>();
-			adm.add(pessoa);
-			grupo.setMembros(adm);
-			System.out.println(grupo.getMembros().get(0).getNome());
-			gDAO.update(grupo);
-			fm.setSummary("Grupo cadastrado com sucesso");
-			fc.addMessage("", fm);
-			return "grupo.xhtml";
-		}else{
-			fm = new FacesMessage("Campo obrigatório não preenchido. Favor preencher.");
-			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("", fm);
-			return "";
-		}
+		return grupoBO.criacaoGrupo(grupo, espSelecionados, pessoa);
 	}
 	
 	/**
@@ -104,18 +80,7 @@ public class CriacaoGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void realizarUpload(FileUploadEvent event) {
-		try {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			grupo.setImgGrupo(IOUtils.toByteArray(event.getFile().getInputstream()));
-			FacesMessage fm = new FacesMessage("Upload Concluído com Sucesso!");
-			fc.addMessage("messages", fm);
-		} catch (IOException e) {
-			FacesContext fc = FacesContext.getCurrentInstance();
-			FacesMessage fm = new FacesMessage("Erro no Processo de Upload!");
-			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
-			fc.addMessage("messages", fm);
-			e.printStackTrace();
-		}
+		grupoBO.uploadFoto(grupo, event);
 	}
 
 	public List<Privacidade> getPrivs() {
