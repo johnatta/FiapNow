@@ -45,8 +45,8 @@ public class EsporteDAOImpl extends DAOImpl<Esporte, Integer> implements Esporte
 	*/
 	@Override
 	public Esporte buscarPorNome(String nome) {
-		TypedQuery<Esporte> query = em.createQuery("from Esporte e where upper(e.nome) like upper(:nome)",Esporte.class);
-		query.setParameter("nome", "%"+nome+"%");
+		TypedQuery<Esporte> query = em.createQuery("from Esporte e where upper(e.nome) = upper(:nome)",Esporte.class);
+		query.setParameter("nome", nome);
 		return query.getSingleResult();
 	}
 

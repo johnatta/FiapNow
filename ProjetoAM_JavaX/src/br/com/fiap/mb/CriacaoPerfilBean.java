@@ -141,34 +141,9 @@ public class CriacaoPerfilBean implements Serializable {
 		String msg = "";
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
-
-		List<Esporte> esps = new ArrayList<Esporte>();
-		for(Esporte esp : esportesSelecionados){
-			esps.add(esp);
-		}
-
-		pessoa.setEsportes(esps);
-		pessoa.setEndereco(endereco);
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(dtNasc);
-		pessoa.setDtNasc(cal);
 		
-		pessoa.setImgBackGround(new byte[3]);
-		
-		msg = pessoaBO.cadastrar(pessoa);
-
-		if(msg.equals("")){
-			pessoa = pessoaBO.getPessoa();
-			sessao.setPessoa(pessoa);
-			retorno = "home.xhtml";
-			
-			pessoa = new Pessoa();
-			usuario = new Usuario();
-			endereco = new Endereco();
-			esportesSelecionados = null;
-			
-		} else {
-			
+		if(usuario.getSenha() != senha){
+			msg = "incompatiblePassword";
 			String mensagem =
 					UtilsNLS.getMessageResourceString("nls.mensagem", msg,
 							null, fc.getViewRoot().getLocale());
@@ -178,9 +153,45 @@ public class CriacaoPerfilBean implements Serializable {
 			fc.addMessage("", fm);
 			retorno = "";
 			
+		} else {
+		
+			List<Esporte> esps = new ArrayList<Esporte>();
+			for(Esporte esp : esportesSelecionados){
+				esps.add(esp);
+			}
+	
+			pessoa.setEsportes(esps);
+			pessoa.setEndereco(endereco);
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(dtNasc);
+			pessoa.setDtNasc(cal);
+			
+			pessoa.setImgBackGround(new byte[3]);
+			
+			msg = pessoaBO.cadastrar(pessoa);
+	
+			if(msg.equals("")){
+				pessoa = pessoaBO.getPessoa();
+				sessao.setPessoa(pessoa);
+				retorno = "home.xhtml";
+				
+				pessoa = new Pessoa();
+				usuario = new Usuario();
+				endereco = new Endereco();
+				esportesSelecionados = null;
+			} else {
+				String mensagem =
+						UtilsNLS.getMessageResourceString("nls.mensagem", msg,
+								null, fc.getViewRoot().getLocale());
+	
+				FacesMessage fm = new FacesMessage(mensagem);
+				
+				fc.addMessage("", fm);
+				retorno = "";
+			}
+			
 		}
-
-
+			
 		return retorno;
 
 	}
