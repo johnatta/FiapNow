@@ -25,6 +25,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
+import br.com.fiap.bo.PessoaBO;
 import br.com.fiap.dao.EsporteDAO;
 import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.EsporteDAOImpl;
@@ -49,6 +50,7 @@ public class CriacaoPerfilBean implements Serializable {
 	private EsporteDataModel edm;
 	private PessoaDAO pessoaDAO;
 	private EsporteDAO esporteDAO;
+	private PessoaBO pessoaBO;
 	private EntityManager em;
 	private LoginBean sessao;
 	private String senha;
@@ -58,6 +60,7 @@ public class CriacaoPerfilBean implements Serializable {
 		em = EntityManagerFactorySingleton.getInstance().createEntityManager();
 		pessoaDAO = new PessoaDAOImpl(em);
 		esporteDAO = new EsporteDAOImpl(em);
+		pessoaBO = new PessoaBO();
 
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -73,6 +76,7 @@ public class CriacaoPerfilBean implements Serializable {
 		dtNasc = new Date();
 		pessoa.setNome(sessao.getNome());
 		usuario.setEmail(sessao.getEmail());
+		
 		pessoa.setUsuario(usuario);
 
 	}
@@ -134,15 +138,10 @@ public class CriacaoPerfilBean implements Serializable {
 	public String cadastrar(){
 		
 		String retorno = "";
+		String msg = "";
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
 
-		String mensagem =
-				UtilsNLS.getMessageResourceString("nls.mensagem", "impossibleInsert",
-						null, fc.getViewRoot().getLocale());
-
-		FacesMessage fm = new FacesMessage(mensagem);
-		
 		List<Esporte> esps = new ArrayList<Esporte>();
 		for(Esporte esp : esportesSelecionados){
 			esps.add(esp);
@@ -156,16 +155,31 @@ public class CriacaoPerfilBean implements Serializable {
 		
 		pessoa.setImgBackGround(new byte[3]);
 		
-		try{
-			pessoa = pessoaDAO.insertEntity(pessoa);
+		msg = pessoaBO.cadastrar(pessoa);
+
+		if(msg.equals("")){
+			pessoa = pessoaBO.getPessoa();
+			sessao.setPessoa(pessoa);
 			retorno = "home.xhtml";
-		} catch (Exception e) {
+			
+			pessoa = new Pessoa();
+			usuario = new Usuario();
+			endereco = new Endereco();
+			esportesSelecionados = null;
+			
+		} else {
+			
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", msg,
+							null, fc.getViewRoot().getLocale());
+
+			FacesMessage fm = new FacesMessage(mensagem);
+			
 			fc.addMessage("", fm);
 			retorno = "";
-			e.printStackTrace();
+			
 		}
 
-		sessao.setPessoa(pessoa);
 
 		return retorno;
 
@@ -215,6 +229,25 @@ public class CriacaoPerfilBean implements Serializable {
 		} else {
 			fc.addMessage("", fm);
 		}
+
+	}
+	
+	/**
+	 * Cadastra a Pessoa conforme as informações inseridas
+	 * 
+	 * @author Ariel Molina
+	 */
+	public String cancelar(){
+		
+		sessao.setEmail("");
+		sessao.setNome("");
+		
+		pessoa = new Pessoa();
+		usuario = new Usuario();
+		endereco = new Endereco();
+		esportesSelecionados = null;
+			
+		return "index.xhtml?faces-redirect=true";
 
 	}
 	

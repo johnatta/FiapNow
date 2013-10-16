@@ -62,4 +62,17 @@ public class PessoaDAOImpl extends DAOImpl<Pessoa, Integer> implements PessoaDAO
 		TypedQuery<Pessoa> pessoa = (TypedQuery<Pessoa>) em.createQuery("from Pessoa",Pessoa.class);
 		return pessoa.getResultList();
 	}
+
+	/**
+	 * Busca uma pessoa pelo apelido
+	 *
+	 * @return pessoa encontrada a partir do apelido
+	 * @author Ariel Molina
+	 */
+	@Override
+	public List<Pessoa> buscarPorApelido(String apelido) {
+		TypedQuery<Pessoa> query = (TypedQuery<Pessoa>) em.createQuery("from Pessoa pes where pes.apelido = :apel",Pessoa.class);
+		query.setParameter("apel", apelido);
+		return query.getResultList();
+	}
 }

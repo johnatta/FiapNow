@@ -5,9 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 import br.com.fiap.banco.EntityManagerFactorySingleton;
-import br.com.fiap.dao.MensagemGrupoDAO;
-import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
-import br.com.fiap.entity.MensagemGrupo;
+import br.com.fiap.dao.PessoaDAO;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.Pessoa;
 
 public class TesteAriel {
@@ -389,6 +388,14 @@ public class TesteAriel {
 				
 		/*---------------------------------------------------*/
 				
+		
+		PessoaDAO pesDAO = new PessoaDAOImpl(em);
+		List<Pessoa> lista = pesDAO.buscarPorApelido("Jo");
+		if(lista.size() == 0){
+			System.out.println("Certo");
+		} else {
+			System.out.println("Errado!");
+		}
 	}
 	
 }

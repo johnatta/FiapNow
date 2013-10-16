@@ -45,11 +45,27 @@
 		<div id="main_content">
 				
 			<h1>Cadastrar Perfil</h1>
+
 		
 			<h:form id="cadastro">
 				<p:growl id="messages" showDetail="true" />
 				<h:messages ></h:messages>
-				<h:panelGrid columns="2">
+				
+				<div style="margin: 10px 100px 15px 200px; height: 20px; float:left;">
+					<h:outputText value=" ---------------------------- Informações Pessoais: ---------------------------" />
+				</div>
+			
+				<h:panelGrid columns="2" style="float:left; margin-left:30px; border: 1px solid #878b8b; padding: 5px 15px 5px 10px;">
+			
+				<h:outputText value="Usuário: " />
+				<p:inputText value="#{criacaoPerfilBean.usuario.email}" />
+				
+				<h:outputText value="Senha: " />
+				<p:password value="#{criacaoPerfilBean.usuario.senha}" feedback="true" />
+				
+				<h:outputText value="Confirmação de Senha: " />
+				<p:password value="#{criacaoPerfilBean.senha}" feedback="true" />
+				
 				<h:outputText value="Nome: " />
 				<p:inputText value="#{criacaoPerfilBean.pessoa.nome}" />
 				
@@ -59,34 +75,8 @@
 				<h:outputText value="Apelido: " />
 				<p:inputText value="#{criacaoPerfilBean.pessoa.apelido}" />
 				
-				<h:outputText value="Usuário: " />
-				<p:inputText value="#{criacaoPerfilBean.usuario.email}" />
-				
-				<h:outputText value="Senha: " />
-				<p:password value="#{criacaoPerfilBean.usuario.senha}" feedback="true" />
-				
-				<h:outputText value="Senha: " />
-				<p:password value="#{criacaoPerfilBean.senha}" feedback="true" />
-				
-				<h:outputText value="#{msgs.image}" />
-				<p:fileUpload
-					fileUploadListener="#{criacaoPerfilBean.realizarUpload}"
-					required="true" mode="advanced" update="messages"
-					sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-					auto="false" dragDropSupport="false" label="Select" />
-				
-				
 				<h:outputText value="Data de Nascimento:" />
 				<p:calendar value="#{criacaoPerfilBean.dtNasc}" pattern="dd/MM/yyyy" />
-				
-				<h:outputText value="Categoria: " />
-				
-				<p:dataTable id="multiCars" var="e" value="#{criacaoPerfilBean.edm}"
-						selection="#{criacaoPerfilBean.esportesSelecionados}">
-						<f:facet name="header">#{msgs.select_sports}</f:facet>
-						<p:column selectionMode="multiple" style="width:1%" />
-						<p:column headerText="#{msgs.sport}" style="width:25%">  #{e.nome} </p:column>
-				</p:dataTable>
 				
 				<h:outputText value="Telefone: " />
 				<p:inputText value="#{criacaoPerfilBean.pessoa.telRes}" />
@@ -94,11 +84,43 @@
 				<h:outputText value="Celular: " />
 				<p:inputText value="#{criacaoPerfilBean.pessoa.cel}" />
 				
+			</h:panelGrid>
+
+			<br />
+			
+			<div style="float:left; margin-left:40px;">
+				<p:dataTable id="multiCars" var="e" value="#{criacaoPerfilBean.edm}"
+					selection="#{criacaoPerfilBean.esportesSelecionados}" style="width:250px;">
+					<f:facet name="header">#{msgs.select_sports}</f:facet>
+					<p:column selectionMode="multiple" style="width:1%" />
+					<p:column headerText="#{msgs.sport}" style="width:25%">  #{e.nome} </p:column>
+				</p:dataTable>
+			</div>
+			
+			<br />
+			
+			<div style="margin: 30px 200px 15px 100px; height: 20px; float:left;">
+				<h:outputText value=" ------------------------------- Foto de perfil: ------------------------------" />
+			</div>
+			
+			<h:panelGrid style="float:left; width:600px; margin-left:30px; border: 1px solid #878b8b; padding: 5px 15px 5px 10px;">
+				<h:outputText value="#{msgs.image}" />
+				<p:fileUpload
+					fileUploadListener="#{criacaoPerfilBean.realizarUpload}"
+					required="true" mode="advanced" update="messages"
+					sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+					auto="false" dragDropSupport="false" label="Select" />
+			</h:panelGrid>
+			
+			<br/>
+			
+			<div style="margin: 30px 200px 15px 100px; height: 20px; float:left;">
+				<h:outputText value=" ------------------------------- Endereço ------------------------------" />
+			</div>
+			
+			<h:panelGrid columns="2" style="float:left; margin-left:30px; border: 1px solid #878b8b; padding: 5px 30px 5px 10px;">
 				<h:outputText value="Cep:" />
 				<p:inputText value="#{criacaoPerfilBean.endereco.cep}" ></p:inputText>
-				<p:commandButton value="Buscar CEP" action="#{criacaoPerfilBean.buscarCep}"
-					ajax="true" update=":cadastro:pais :cadastro:estado :cadastro:cidade :cadastro:bairro :cadastro:rua" />
-				<div />
 				
 				<h:outputText value="Pais:" />
 				<p:inputText value="#{criacaoPerfilBean.endereco.pais}" id="pais" />
@@ -117,7 +139,19 @@
 				
 			</h:panelGrid>
 			
-			<p:commandButton ajax="false" value="Cadastrar" action="#{criacaoPerfilBean.cadastrar}" style="margin-bottom:40px;" />
+			<p:commandButton value="Buscar CEP" action="#{criacaoPerfilBean.buscarCep}" style="float:left; margin-top:7px; margin-left:15px;"
+					ajax="true" update=":cadastro:pais :cadastro:estado :cadastro:cidade :cadastro:bairro :cadastro:rua" />
+			
+			<br />
+			
+			<div style="margin: 30px 150px 15px 200px; height: 20px; float:left;">
+				<h:outputText value=" ------------------------------- Finalizar Cadastro ------------------------------" />
+			</div>
+			
+			<div style="margin: 10px 100px 40px 200px; float:left; border: 1px solid #878b8b; padding: 10px 110px 10px 100px">
+				<p:commandButton ajax="false" value="Cadastrar" action="#{criacaoPerfilBean.cadastrar}" style="float:left;"/>
+				<p:commandButton value="Cancelar" action="#{criacaoPerfilBean.cancelar}" style="float:left; margin-left:20px;" />
+			</div>
 		
 		</h:form>				
 			
