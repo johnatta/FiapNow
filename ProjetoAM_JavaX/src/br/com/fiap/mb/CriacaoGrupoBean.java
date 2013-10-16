@@ -46,6 +46,9 @@ public class CriacaoGrupoBean implements Serializable {
 	
 	@PostConstruct
 	public void init(){
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		Map<String, Object> mapa = contexto.getExternalContext().getSessionMap();
+		mapa.remove("grupoBean");
 		pesDAO = new PessoaDAOImpl(em);
 		espDAO = new EsporteDAOImpl(em);
 		grupo = new Grupo();

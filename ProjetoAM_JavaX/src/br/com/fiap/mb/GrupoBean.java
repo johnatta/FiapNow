@@ -16,6 +16,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
+import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.bean.EditarGrupoBean;
 import br.com.fiap.bean.MembroGrupoBean;
@@ -112,7 +113,11 @@ public class GrupoBean implements Serializable {
 		numMembros = gruDAO.buscarNumeroMembros(codGrupo);
 		proximosEventos = gruDAO.buscarProximosEventos(codGrupo);
 		historicoEventos = gruDAO.buscarHistoricoEvento(codGrupo);
-		
+
+		proximosEventosNull();
+		historicoEventoNull();
+		membrosGrupoNull();
+		moderadoresGrupoNull();
 
 		/**
 		 * Realizando comparaçõs para ter o conhecimento se o usuário é:
@@ -144,6 +149,73 @@ public class GrupoBean implements Serializable {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Caso não haja moderadores, cria uma instância de Pessoa e popula com mensagem pertinente
+	 * no caso "sem registro"
+	 * @author Graziele Vasconcelos
+	 */
+	public void moderadoresGrupoNull() {
+		if(grupo.getModeradores().size() == 0 ){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Pessoa pessoaNull = new Pessoa();
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
+			pessoaNull.setNome("");
+			pessoaNull.setApelido(mensagem);
+			grupo.getModeradores().add(pessoaNull);
+		}
+	}
+
+	/**
+	 * Caso não haja membros, cria uma instância de Pessoa e popula com mensagem pertinente
+	 * no caso "sem registro"
+	 * @author Graziele Vasconcelos
+	 */
+	public void membrosGrupoNull() {
+		if(grupo.getMembros().size() == 0 ){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Pessoa pessoaNull = new Pessoa();
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
+			pessoaNull.setNome("");
+			pessoaNull.setApelido(mensagem);
+			grupo.getMembros().add(pessoaNull);
+		}
+	}
+
+	/**
+	 * Caso não haja próximos eventos, cria uma instância do mesmo e popula com mensagem pertinente
+	 * no caso "sem registro"
+	 * @author Graziele Vasconcelos
+	 */
+	public void proximosEventosNull() {
+		if(proximosEventos.size() == 0){
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Evento eventoNull = new Evento();
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
+			eventoNull.setNome(mensagem);
+			eventoNull.setDtEvento(Calendar.getInstance());
+			proximosEventos.add(eventoNull);
+		}
+	}
+	/**
+	 * Caso não haja histórico de eventos, cria uma instância do mesmo e popula com mensagem pertinente
+	 * no caso "sem registro"
+	 * @author Graziele Vasconcelos
+	 */
+	public void historicoEventoNull() {
+		FacesContext fc = FacesContext.getCurrentInstance();
+		if(historicoEventos.size() <= 0){
+			Evento eventoNull = new Evento();
+			String mensagem =
+					UtilsNLS.getMessageResourceString("nls.mensagem", "no_records",	null, fc.getViewRoot().getLocale());
+			eventoNull.setNome(mensagem);
+			eventoNull.setDtEvento(Calendar.getInstance());
+			historicoEventos.add(eventoNull);
 		}
 	}
 
