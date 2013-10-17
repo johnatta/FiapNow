@@ -203,11 +203,12 @@ h3{
 #caixas { width: 880px; }
 .caixa1 { width: 260px; float: left; }
 .caixa2 { width: 600px; height: 270px; float: left; margin-left: 20px;}
+.caixaAux {width: 600px; height: 40px; float: left; margin-left: 50px;}
+.caixa3maior{width: 360px;float:left; margin-left: 10px; }
+.caixa3 {width:350px;float:left; margin-top: 20px;
+		margin-left:20px;} 
+.blocomaior {width: 320px; float:left;}
+.bloco1 {width: 340px;float:left;border: 0px hidden; margin-top: 17px;}
+.bloco1Coment{width:320px;}
 
-#blocoDois { margin-top:5px; float:left; }
-#caixasComentarios {width: 320px; float:left; margin-right: 5px; }
-.bloco1 {width:320px;float:left; height: 40px; margin-top: 10px; margin-left: 5px;}
-
-#caixasDetalhes {float:left; margin-left:370px; }
-.bloco2 {width:400px;float:left; margin-top: 10px;} 
 /* ----------- Fim da Estilização da Grupo----------- */

@@ -42,13 +42,13 @@
 						<p:outputLabel value="#{msgs.adm}: #{grupoBean.grupo.adm.nome}"></p:outputLabel>
 
 						<p:outputLabel value="#{msgs.category}">
-							<br/>
+							<br />
 							<h:outputText value="#{grupoBean.grupo.esportes[0].nome}"
 								rendered="#{!empty grupoBean.grupo.esportes[0].nome}" />
-								<br/>
+							<br />
 							<h:outputText value="#{grupoBean.grupo.esportes[1].nome}"
 								rendered="#{!empty grupoBean.grupo.esportes[1].nome}" />
-								<br/>
+							<br />
 							<h:outputText value="#{grupoBean.grupo.esportes[2].nome}"
 								rendered="#{!empty grupoBean.grupo.esportes[2].nome}" />
 						</p:outputLabel>
@@ -68,7 +68,7 @@
 						</f:facet>
 					</p:panelGrid>
 				</div>
-				<br />
+
 				<div class="caixa2">
 					<p:panel header="#{msgs.description}">
 						<h:panelGrid columns="1">
@@ -78,31 +78,32 @@
 				</div>
 			</div>
 		</h:form>
-
-		<div id="blocoDois">
-			<div id="caixasComentarios">
-				<h:form id="formComentario"
-					rendered="#{grupoBean.btnRenderFormComents()}">
-					<p:panel id="comment" header="#{msgs.comment}">
-						<p:inputTextarea id="cmt"
-							value="#{grupoBean.comentarioGrupo.comentario}" required="true"
-							rows="6" cols="32" counter="counter" maxlength="300"
-							counterTemplate="#{msgs.maximum_of_300_characters}">
-						</p:inputTextarea>
-						<br></br>
-						<h:outputText id="counter" />
-						<br></br>
-						<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
-							action="#{grupoBean.btnEnviarComentario}"
-							update=":formVisualizacaoComentario:listComentarios" />
-					</p:panel>
-				</h:form>
+		<div class="caixaAux"> </div>
+			<div class="blocomaior">
+				<div class="bloco1">
+					<h:form id="formComentario"
+						rendered="#{grupoBean.btnRenderFormComents()}">
+						<p:panel id="comment" header="#{msgs.comment}" styleClass="bloco1Coment"> 
+							<p:inputTextarea id="coment"
+								value="#{grupoBean.comentarioGrupo.comentario}" required="true"
+								rows="6" cols="32" counter="counter" maxlength="300"
+								counterTemplate="#{msgs.maximum_of_300_characters}">
+							</p:inputTextarea>
+							<br></br>
+							<h:outputText id="counter" />
+							<br></br>
+							<p:commandButton type="submit" value="Enviar" icon="ui-icon-disk"
+								action="#{grupoBean.btnEnviarComentario}"
+								update=":formVisualizacaoComentario:listComentarios" />
+						</p:panel>
+					</h:form>
+				</div>
 				<div class="bloco1">
 					<h:form id="formVisualizacaoComentario"
 						rendered="#{grupoBean.btnRenderFormVisuComents()}">
 						<p:dataGrid id="listComentarios" var="posts"
 							value="#{grupoBean.grupo.comentarios}" columns="1" rows="8">
-							<p:panel header="#{msgs.comment}">
+							<p:panel header="#{msgs.comment}" styleClass="bloco1Coment">
 								<h:panelGrid columns="1">
 									<f:facet name="header">
 										<h:outputLabel value="#{posts.pessoa.apelido}"></h:outputLabel>
@@ -128,8 +129,8 @@
 				</div>
 			</div>
 			<h:form id="detalhesInfo">
-				<div id="caixasDetalhes">
-					<div class="bloco2">
+				<div class="caixa3maior">
+					<div class="caixa3">
 						<p:carousel id="membroCarousel" value="#{grupoBean.grupo.membros}"
 							var="membro" rows="2" numVisible="3" effect="easeInStrong"
 							itemStyle="height:90px;width:250px">
@@ -151,7 +152,7 @@
 							</f:facet>
 						</p:carousel>
 					</div>
-					<div class="bloco2">
+					<div class="caixa3">
 						<p:carousel id="moderadoresRowCarousel" rows="2" numVisible="3"
 							value="#{grupoBean.grupo.moderadores}" var="moderador"
 							itemStyle="height:90px;width:250px">
@@ -173,7 +174,7 @@
 							</f:facet>
 						</p:carousel>
 					</div>
-					<div class="bloco2">
+					<div class="caixa3">
 						<p:carousel id="proximosEventos" rows="2" numVisible="3"
 							value="#{grupoBean.proximosEventos}" var="proxEvento"
 							itemStyle="height:90px;width:250px">
@@ -186,7 +187,7 @@
 							</f:facet>
 						</p:carousel>
 					</div>
-					<div class="bloco2">
+					<div class="caixa3">
 						<p:carousel id="historicoEventos" rows="2" numVisible="3"
 							value="#{grupoBean.historicoEventos}" var="histEvento"
 							itemStyle="height:90px;width:250px">
@@ -199,7 +200,6 @@
 					</div>
 				</div>
 			</h:form>
-		</div>
 	</ui:define>
 </ui:composition>
 </html>
