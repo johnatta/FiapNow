@@ -257,7 +257,7 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void btnEnviarComentario(){
-		grupoBO.enviarComentarioGrupo(grupo, pessoa);
+		this.grupo = grupoBO.enviarComentarioGrupo(grupo, pessoa, comentarioGrupo);
 	}
 
 	/**
@@ -266,7 +266,23 @@ public class GrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public void excluirComentario(int codComentario){
-		grupoBO.excluirComentarioGrupo(grupo, pessoa, codComentario);
+		try {
+			comentarioGrupo = comentarioGrupoDAO.searchByID(codComentario);
+			grupo.getComentarios().remove(comentarioGrupo);
+			comentarioGrupoDAO.remove(comentarioGrupo);
+			comentarioGrupo = new ComentarioGrupo();
+			gruDAO.update(grupo);
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage();
+			fm.setSummary("Comentário excluido com sucesso.");
+			fc.addMessage("", fm);
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext fc = FacesContext.getCurrentInstance();
+			FacesMessage fm = new FacesMessage("O comentário não foi excluido, por favor tente mais tarde.");
+			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
+			fc.addMessage("messages", fm);
+		}
 	}
 
 	/**

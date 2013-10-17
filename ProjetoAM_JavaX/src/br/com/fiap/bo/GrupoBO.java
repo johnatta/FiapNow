@@ -200,8 +200,7 @@ public class GrupoBO implements Serializable {
 		}
 	}
 
-	public void enviarComentarioGrupo(Grupo grupo, Pessoa pessoa){
-		ComentarioGrupo comentarioGrupo = new ComentarioGrupo();
+	public Grupo enviarComentarioGrupo(Grupo grupo, Pessoa pessoa, ComentarioGrupo comentarioGrupo){
 		ComentarioGrupoDAO comentarioGrupoDAO = new ComentarioGrupoDAOImpl(em);
 		PessoaDAO pDAO = new PessoaDAOImpl(em);
 		GrupoDAO gruDAO = new GrupoDAOImpl(em);
@@ -217,12 +216,14 @@ public class GrupoBO implements Serializable {
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Comentário enviado com sucesso.");
 			fc.addMessage("", fm);
+			return grupo;
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage("Comentário não enviado, por favor tente mais tarde.");
 			fm.setSeverity(FacesMessage.SEVERITY_ERROR);
 			fc.addMessage("messages", fm);
+			return grupo;
 		}
 	}
 
