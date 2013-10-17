@@ -142,7 +142,7 @@ public class CriacaoPerfilBean implements Serializable {
 		
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
-		if(usuario.getSenha() != senha){
+		if(!usuario.getSenha().equals(senha)){
 			msg = "incompatiblePassword";
 			String mensagem =
 					UtilsNLS.getMessageResourceString("nls.mensagem", msg,

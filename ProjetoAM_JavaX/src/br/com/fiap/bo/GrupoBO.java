@@ -258,17 +258,21 @@ public class GrupoBO implements Serializable {
 		return grupo; 
 	}
 
-	public void enviarMsgParaMembrosGrupo(List<Pessoa> membrosGrp, Grupo grupo){
-		MensagemGrupo mensagem = new MensagemGrupo();
+	public void enviarMsgParaMembrosGrupo(List<Pessoa> membrosGrp, Grupo grupo, MensagemGrupo mensagem){
 		MensagemGrupoDAO msgDAO = new MensagemGrupoDAOImpl(em);
 		try {
+			String descricao = mensagem.getDescricao();
+			String titulo = mensagem.getTitulo();
 			for (Pessoa membro : membrosGrp){
 				mensagem.setPessoa(membro);
 				mensagem.setGrupo(grupo);
 				mensagem.setConfirmacao(Confirmacao.NAO);
+				mensagem.setDescricao(descricao);
+				mensagem.setTitulo(titulo);
 				msgDAO.insert(mensagem);
 				mensagem = new MensagemGrupo();
 			}		
+			
 			FacesContext fc = FacesContext.getCurrentInstance();
 			FacesMessage fm = new FacesMessage();
 			fm.setSummary("Mensagem enviada com sucesso.");

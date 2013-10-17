@@ -41,6 +41,7 @@ public class MensagemGrupoBean implements Serializable {
 	 * @author Graziele Vasconcelos
 	 */
 	public MensagemGrupoBean(Grupo grupo){
+		this.grupo = grupo;
 		gruDAO = new GrupoDAOImpl(em);
 		msgDAO = new MensagemGrupoDAOImpl(em);
 		membrosGrp = gruDAO.buscarMembrosDoGrupoComModerador(grupo.getCodGrupo());
@@ -53,7 +54,7 @@ public class MensagemGrupoBean implements Serializable {
 	 */
 	public void enviarMsg(){
 		grupoBO = new GrupoBO();
-		grupoBO.enviarMsgParaMembrosGrupo(membrosGrp, grupo);
+		grupoBO.enviarMsgParaMembrosGrupo(membrosGrp, grupo, mensagem);
 	}
 
 	public Grupo getGrupo() {

@@ -76,7 +76,7 @@ public class MembroGrupoBean implements Serializable {
 	public void addMembroGrupo(){
 		FacesContext fc = FacesContext.getCurrentInstance();
 		
-		if(getMembrosSelecionadosAdd().length != 0){
+		if(getMembrosSelecionadosAdd() != null ){
 			for (Pessoa membro : getMembrosSelecionadosAdd()){
 				convite.setDescricao("Nós do grupo "+grupo.getNomeGrupo() + " convidamos você, " + membro.getNome() + " para participar do nosso grupo.");
 				convite.setGrupo(grupo);
