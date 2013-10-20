@@ -142,5 +142,13 @@ public class MobileBean implements Serializable {
 		convitesEvento = conviteEventoDAO.buscarConviteEventoPorPessoa(pessoa);
 		return "pm:convitesEvento";
 	}
+	/**
+	 * Realiza o direcionamento para a página de mensagens mobile
+	 * @return página mensagens mobile
+	 * @author Graziele Vasconcelos
+	 */
+	public String pagMensagens(){
+		return "mensagens_mobile?faces-redirect=true";
+	}
 
 }

@@ -8,6 +8,8 @@
 	xmlns:pm="http://primefaces.org/mobile" contentType="text/html"
 	renderKitId="PRIMEFACES_MOBILE">
 
+	<f:loadBundle var="msgs" basename="nls.mensagem" />
+
 	<pm:page title="Notícias">
 
 		<!-- Início -->
@@ -27,12 +29,18 @@
 
 					<p:commandButton value="Convites de Evento (#{mobileBean.convitesEvento.size()})"
 						update=":convitesEventoForm:convites" action="pm:convitesEvento" />
+					<p:commandButton value="#{msgs.messages}"
+					action="#{mobileBean.pagMensagens}" />
 
 				</h:form>
 
 			</pm:content>
 		</pm:view>
 
+		<!-- Redirecionamento para a página de mensagens -->
+		<pm:view id="mensagensMobile">
+			<ui:include src="mensagens_mobile.xhtml" />
+		</pm:view>
 
 		<!-- Convites de Grupos -->
 		<pm:view id="convitesGrupo" swatch="e">
