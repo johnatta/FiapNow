@@ -18,6 +18,10 @@
 				<f:facet name="left">
 					<p:button value="Back" icon="back" onclick="PrimeFaces.back()" />
 				</f:facet>
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
 			</pm:header>
 			<h:form id="MensagemGrupo">
 				<h:messages></h:messages>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pm="http://primefaces.org/mobile"
+	xmlns:p="http://primefaces.org/ui" contentType="text/html"
+	renderKitId="PRIMEFACES_MOBILE">
+
+
+	<f:loadBundle var="msgs" basename="nls.mensagem" />
+
+	<pm:page title="#{msgs.messages}">
+
+		<pm:view swatch="e">
+			<pm:header title="#{msgs.eventsReqInv}" swatch="e">
+				<f:facet name="left">
+					<p:button value="Back" icon="back" onclick="PrimeFaces.back()" />
+				</f:facet>
+				<f:facet name="right">
+					<p:commandLink value="Sair" icon="back"
+						action="#{loginBean.logout}" />
+				</f:facet>
+			</pm:header>
+			<h:form id="ConviteEvento">
+				<h:messages></h:messages>
+				<h3>#{msgs.invites}</h3>
+				<p:dataList var="cnv" value="#{convitePedidoEventosBean.convites}">
+					<p:accordionPanel activeIndex="1" id="tabMainCon">
+						<p:tab title="#{cnv.evento.nome}">
+							<p:column>
+								<p:graphicImage value="#{eventoImage.image}" width="40"
+									height="55">
+									<f:param name="id" value="${cnv.evento.codEvento}" />
+								</p:graphicImage>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{cnv.descricao}" />
+							</p:column>
+							<p:column>
+								<p:commandButton value="#{msgs.accept}" actionListener="#{convitePedidoEventosBean.aceitarConvite(cnv)}" 
+									update=":tabMainCon" ajax="true " />
+								<p:commandButton value="#{msgs.decline}" actionListener="#{convitePedidoEventosBean.recusarConvite(cnv)}"  
+								update=":tabMainCon" ajax="true" />
+							</p:column>
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>
+			</h:form>
+			<h:form id="PedidoEvento">
+				<h3>#{msgs.requests}</h3>
+				<p:dataList id="pedidosGrupo" var="ped"
+					value="#{convitePedidoGruposBean.pedidos}">
+					<p:accordionPanel activeIndex="1" id="tabMainPed">
+						<p:tab title="#{ped.evento.nome}">
+							<p:column>
+								<p:graphicImage value="#{eventoImage.image}" width="40"
+									height="55">
+									<f:param name="id" value="${ped.evento.codGrupo}" />
+								</p:graphicImage>
+							</p:column>
+							<p:column>
+								<h:outputText value="#{ped.descricao}" />
+							</p:column>
+							<p:column>
+								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido(ped)}" 
+									value="#{msgs.accept}" 
+									ajax="true" update=":tabMainPed" />
+								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido(ped)}" 
+								value="#{msgs.decline}" ajax="true" update=":tabMainPed" />
+							</p:column>
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>
+			</h:form>
+		</pm:view>
+
+	</pm:page>
+
+</f:view>
