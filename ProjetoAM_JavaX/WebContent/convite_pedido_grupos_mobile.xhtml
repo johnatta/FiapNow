@@ -27,8 +27,8 @@
 				<h:messages></h:messages>
 				<h3>#{msgs.invites}</h3>
 				<p:dataList var="cnv" value="#{convitePedidoGruposBean.convites}">
-					<p:accordionPanel activeIndex="1" id="tabMainCon">
-						<p:tab title="#{cnv.grupo.nome}">
+					<p:accordionPanel activeIndex="1" id="Con">
+						<p:tab title="#{cnv.grupo.nomeGrupo}">
 							<p:column>
 								<p:graphicImage value="#{grupoImage.image}" width="40"
 									height="55">
@@ -41,10 +41,10 @@
 							<p:column>
 								<p:commandButton
 									actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}"
-									value="#{msgs.accept}" update=":tabMainCon" ajax="true " />
+									value="#{msgs.accept}" update=":ConviteGrupo" ajax="true " />
 								<p:commandButton
 									actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}"
-									value="#{msgs.decline}" update=":tabMainCon" ajax="true" />
+									value="#{msgs.decline}" update=":ConviteGrupo" ajax="true" />
 							</p:column>
 						</p:tab>
 					</p:accordionPanel>
@@ -55,7 +55,7 @@
 				<p:dataList id="pedidosGrupo" var="ped"
 					value="#{convitePedidoGruposBean.pedidos}">
 					<p:accordionPanel activeIndex="1" id="tabMainPed">
-						<p:tab title="#{ped.grupo.nome}">
+						<p:tab title="#{ped.grupo.nomeGrupo}">
 							<p:column>
 								<p:graphicImage value="#{grupoImage.image}" width="40"
 									height="55">
