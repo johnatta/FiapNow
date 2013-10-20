@@ -55,6 +55,10 @@ public class MensagemGrupoBean implements Serializable {
 	public void enviarMsg(){
 		grupoBO = new GrupoBO();
 		grupoBO.enviarMsgParaMembrosGrupo(membrosGrp, grupo, mensagem);
+		//linha inserida recente, testar pois no momento que foi alterado o banco estava sendo reiniciado
+		//alterar para
+		//	public void enviarMsg(){} RETORNA PARA A MESMA PAGINA
+
 	}
 
 	public Grupo getGrupo() {

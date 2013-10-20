@@ -261,6 +261,7 @@ public class GrupoBO implements Serializable {
 
 	public void enviarMsgParaMembrosGrupo(List<Pessoa> membrosGrp, Grupo grupo, MensagemGrupo mensagem){
 		MensagemGrupoDAO msgDAO = new MensagemGrupoDAOImpl(em);
+		PessoaDAO pessoaDAO = new PessoaDAOImpl(em);
 		try {
 			String descricao = mensagem.getDescricao();
 			String titulo = mensagem.getTitulo();
@@ -271,6 +272,8 @@ public class GrupoBO implements Serializable {
 				mensagem.setDescricao(descricao);
 				mensagem.setTitulo(titulo);
 				msgDAO.insert(mensagem);
+				//linha inserida recente, testar pois no momento que foi alterado o banco estava sendo reiniciado
+				pessoaDAO.update(membro);
 				mensagem = new MensagemGrupo();
 			}		
 			
