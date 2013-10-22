@@ -14,46 +14,19 @@
 	<pm:page title="#{msgs.messages}">
 
 		<pm:view swatch="e">
-			<pm:header title="#{msgs.groupsReqInv}" swatch="e">
+			<pm:header title="#{msgs.groupsReq}" swatch="e">
 				<f:facet name="left">
-					<p:button value="Back" icon="back" onclick="PrimeFaces.back()" />
+					<p:button value="#{msgs.back}" icon="back" href="homeMobile.xhtml" />
 				</f:facet>
 				<f:facet name="right">
 					<p:commandLink value="Sair" icon="back"
 						action="#{loginBean.logout}" />
 				</f:facet>
 			</pm:header>
-			<h:form id="ConviteGrupo">
-				<h:messages></h:messages>
-				<h3>#{msgs.invites}</h3>
-				<p:dataList var="cnv" value="#{convitePedidoGruposBean.convites}">
-					<p:accordionPanel activeIndex="1" id="Con">
-						<p:tab title="#{cnv.grupo.nomeGrupo}">
-							<p:column>
-								<p:graphicImage value="#{grupoImage.image}" width="40"
-									height="55">
-									<f:param name="id" value="${cnv.grupo.codGrupo}" />
-								</p:graphicImage>
-							</p:column>
-							<p:column>
-								<h:outputText value="#{cnv.descricao}" />
-							</p:column>
-							<p:column>
-								<p:commandButton
-									actionListener="#{convitePedidoGruposBean.aceitarConvite(cnv)}"
-									value="#{msgs.accept}" update=":ConviteGrupo" ajax="true " />
-								<p:commandButton
-									actionListener="#{convitePedidoGruposBean.recusarConvite(cnv)}"
-									value="#{msgs.decline}" update=":ConviteGrupo" ajax="true" />
-							</p:column>
-						</p:tab>
-					</p:accordionPanel>
-				</p:dataList>
-			</h:form>
 			<h:form id="PedidoGrupo">
 				<h3>#{msgs.requests}</h3>
 				<p:dataList id="pedidosGrupo" var="ped"
-					value="#{convitePedidoGruposBean.pedidos}">
+					value="#{convitePedidoGruposBean.pedidos}" emptyMessage="#{msgs.no_records}">
 					<p:accordionPanel activeIndex="1" id="tabMainPed">
 						<p:tab title="#{ped.grupo.nomeGrupo}">
 							<p:column>
@@ -68,10 +41,10 @@
 							<p:column>
 								<p:commandButton
 									actionListener="#{convitePedidoGruposBean.aceitarPedido(ped)}"
-									value="#{msgs.accept}" ajax="false" update=":tabMainPed" />
+									value="#{msgs.accept}" ajax="false" update=":PedidoGrupo" />
 								<p:commandButton
 									actionListener="#{convitePedidoGruposBean.recusarPedido(ped)}"
-									value="#{msgs.decline}" ajax="true" update=":tabMainPed" />
+									value="#{msgs.decline}" ajax="true" update=":PedidoGrupo" />
 							</p:column>
 						</p:tab>
 					</p:accordionPanel>

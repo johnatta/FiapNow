@@ -155,8 +155,8 @@ public class MobileBean implements Serializable {
 	 * @return página convite/pedidos grupo mobile
 	 * @author Graziele Vasconcelos
 	 */
-	public String pagConvitePedidoGrupo(){
-		return "convite_pedido_grupos_mobile.xhtml?faces-redirect=true";
+	public String pagPedidoGrupo(){
+		return "pedidos_grupos_mobile.xhtml?faces-redirect=true";
 	}
 	
 	/**
@@ -164,8 +164,8 @@ public class MobileBean implements Serializable {
 	 * @return página convite/pedidos evento mobile
 	 * @author Graziele Vasconcelos
 	 */
-	public String pagConvitePedidoEvento(){
-		return "convite_pedido_eventos_mobile.xhtml?faces-redirect=true";
+	public String pagPedidoEvento(){
+		return "pedidos_eventos_mobile.xhtml?faces-redirect=true";
 	}
 
 }

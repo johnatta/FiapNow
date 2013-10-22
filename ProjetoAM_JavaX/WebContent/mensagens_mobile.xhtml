@@ -30,12 +30,12 @@
 					value="#{mensagensBean.msgGrupoModel}">
 					<p:accordionPanel activeIndex="1">
 						<p:tab title="#{msg.grupo.nomeGrupo}">
-							<p:column headerText="#{msgs.from}:" style="width:25%">  
-            				#{msg.grupo.nomeGrupo}  
-        					</p:column>
-
-							<p:column headerText="#{msgs.title}" style="width:60%">  
+							<p:column headerText="#{msgs.title}" style="width:40%">  
             				#{msg.titulo}  
+        					</p:column>
+        					
+							<p:column headerText="#{msgs.description}" style="width:60%">  
+            				#{msg.descricao}  
         					</p:column>
 						</p:tab>
 					</p:accordionPanel>
@@ -46,12 +46,12 @@
 					value="#{mensagensBean.msgEventoModel}">
 					<p:accordionPanel activeIndex="1">
 						<p:tab title="#{msg.evento.nome}">
-							<p:column headerText="#{msgs.from}:">  
-            				#{msg.evento.nome}  
-        					</p:column>
-
-							<p:column headerText="#{msgs.title}">  
+							<p:column headerText="#{msgs.title}" style="width:40%">  
             				#{msg.titulo}  
+        					</p:column>
+        					
+							<p:column headerText="#{msgs.description}" style="width:60%">  
+            				#{msg.descricao}  
         					</p:column>
 						</p:tab>
 					</p:accordionPanel>

@@ -31,10 +31,10 @@
 						update=":convitesEventoForm:convites" action="pm:convitesEvento" />
 					<p:commandButton value="#{msgs.messages} (#{loginBean.unreadMessages})"
 					action="#{mobileBean.pagMensagens}"  />
-					<p:commandButton value="#{msgs.groupsReqInv} (#{loginBean.groupsInvites}) #{msgs.invites_and} (#{loginBean.groupsRequests})"
-					action="#{mobileBean.pagConvitePedidoGrupo}"  />
-					<p:commandButton value="#{msgs.eventsReqInv} (#{loginBean.eventsInvites}) #{msgs.invites_and} (#{loginBean.eventsRequests})"
-					action="#{mobileBean.pagConvitePedidoEvento}"  />
+					<p:commandButton value="#{msgs.groupsReq} (#{loginBean.groupsRequests})"
+					action="#{mobileBean.pagPedidoGrupo}"  />
+					<p:commandButton value="#{msgs.eventsReq} (#{loginBean.eventsRequests})"
+					action="#{mobileBean.pagPedidoEvento}"  />
 				</h:form>
 
 			</pm:content>
@@ -47,12 +47,12 @@
 		
 		<!-- Redirecionamento para a página de convites/pedidos grupo -->
 		<pm:view id="convitesPedidosGrupoMobile">
-			<ui:include src="convite_pedido_grupos_mobile.xhtml" />
+			<ui:include src="pedidos_grupos_mobile.xhtml" />
 		</pm:view>
 
 		<!-- Redirecionamento para a página de convites/pedidos evento -->
 		<pm:view id="convitesPedidosEventoMobile">
-			<ui:include src="convite_pedido_eventos_mobile.xhtml" />
+			<ui:include src="pedidos_eventos_mobile.xhtml" />
 		</pm:view>
 
 		<!-- Convites de Grupos -->
