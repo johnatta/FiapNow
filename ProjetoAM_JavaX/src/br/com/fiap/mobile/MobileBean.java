@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
@@ -19,7 +19,6 @@ import br.com.fiap.dao.MensagemEventoDAO;
 import br.com.fiap.dao.MensagemGrupoDAO;
 import br.com.fiap.dao.PedidoEventoDAO;
 import br.com.fiap.dao.PedidoGrupoDAO;
-import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
@@ -28,7 +27,6 @@ import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
-import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.ConviteGrupo;
 import br.com.fiap.entity.PedidoEvento;
@@ -37,7 +35,7 @@ import br.com.fiap.entity.Pessoa;
 import br.com.fiap.mb.LoginBean;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class MobileBean implements Serializable {
 
 	private EntityManager em;

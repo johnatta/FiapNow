@@ -349,4 +349,26 @@ public class LoginBean implements Serializable {
 		return returnPage;
 	}
 	
+	
+	/**
+	* Realiza o logout do site mobile e finaliza a sessão
+	* 
+	* @return retorna para a página index
+	* @author Ariel Molina 
+	*/
+	public String logoutMobile(){
+
+		FacesContext contexto = FacesContext.getCurrentInstance();
+		Map<String, Object> mapa = contexto.getExternalContext().getSessionMap();
+		mapa.remove("grupoBean");
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, Object> map = context.getExternalContext().getSessionMap();
+		map.remove("loginBean");
+		map.remove("mobileBean");
+		
+		return "indexMobile.xhtml?faces-redirect=true";
+		
+	}
+	
 }
