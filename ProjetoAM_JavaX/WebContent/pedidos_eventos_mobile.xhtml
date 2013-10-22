@@ -27,23 +27,17 @@
 			<h:form id="PedidoEvento">
 				<h3>#{msgs.requests}</h3>
 				<p:dataList id="pedidosGrupo" var="ped"
-					value="#{convitePedidoEventosBean.pedidos}" emptyMessage="#{msgs.no_records}">
+					value="#{mobileBean.pedidosEvento}" emptyMessage="#{msgs.no_records}">
 					<p:accordionPanel activeIndex="1" id="tabMainPed">
 						<p:tab title="#{ped.evento.nome}">
-							<p:column>
-								<p:graphicImage value="#{eventoImage.image}" width="40"
-									height="55">
-									<f:param name="id" value="${ped.evento.codEvento}" />
-								</p:graphicImage>
-							</p:column>
 							<p:column>
 								<h:outputText value="#{ped.descricao}" />
 							</p:column>
 							<p:column>
-								<p:commandButton actionListener="#{convitePedidoEventosBean.aceitarPedido(ped)}" 
+								<p:commandButton actionListener="#{mobileBean.aceitarPedidoEvento(ped)}" 
 									value="#{msgs.accept}" 
 									ajax="true" update=":PedidoEvento" />
-								<p:commandButton actionListener="#{convitePedidoEventosBean.recusarPedido(ped)}" 
+								<p:commandButton actionListener="#{mobileBean.recusarPedidoEvento(ped)}" 
 								value="#{msgs.decline}" ajax="true" update=":PedidoEvento" />
 							</p:column>
 						</p:tab>

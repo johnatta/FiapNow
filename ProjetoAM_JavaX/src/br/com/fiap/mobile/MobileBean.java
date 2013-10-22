@@ -15,19 +15,31 @@ import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
 import br.com.fiap.dao.EventoDAO;
 import br.com.fiap.dao.GrupoDAO;
+import br.com.fiap.dao.MensagemEventoDAO;
+import br.com.fiap.dao.MensagemGrupoDAO;
+import br.com.fiap.dao.PedidoEventoDAO;
+import br.com.fiap.dao.PedidoGrupoDAO;
+import br.com.fiap.dao.PessoaDAO;
 import br.com.fiap.daoimpl.ConviteEventoDAOImpl;
 import br.com.fiap.daoimpl.ConviteGrupoDAOImpl;
 import br.com.fiap.daoimpl.EventoDAOImpl;
 import br.com.fiap.daoimpl.GrupoDAOImpl;
+import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
+import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
+import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
+import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
+import br.com.fiap.daoimpl.PessoaDAOImpl;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.ConviteGrupo;
+import br.com.fiap.entity.PedidoEvento;
+import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
 import br.com.fiap.mb.LoginBean;
 
 @ManagedBean
 @ViewScoped
 public class MobileBean implements Serializable {
-	
+
 	private EntityManager em;
 	private ConviteGrupoDAO conviteGrupoDAO;
 	private ConviteEventoDAO conviteEventoDAO;
@@ -35,10 +47,19 @@ public class MobileBean implements Serializable {
 	private EventoDAO eventoDAO;
 	private List<ConviteGrupo> convitesGrupo;
 	private List<ConviteEvento> convitesEvento;
+	private List<PedidoGrupo> pedidosGrupo;
+	private List<PedidoEvento> pedidosEvento;
 	private Pessoa pessoa;
 	private ConviteGrupo cnvGrupoSelecionado;
 	private ConviteEvento cnvEventoSelecionado;
-	
+	private PedidoEventoDAO pedEveDAO;
+	private PedidoGrupoDAO pedGruDAO;
+	private MensagemEventoDAO msgEveDAO;
+	private MensagemGrupoDAO msgGruDAO;
+	private int eventsRequests;
+	private int groupsRequests;
+	private int unreadMessages;
+
 	/**
 	 * Método executado no momento da instanciação do ManagedBean, iniciando todas as variáveis necessárias
 	 *
@@ -51,7 +72,11 @@ public class MobileBean implements Serializable {
 		conviteEventoDAO = new ConviteEventoDAOImpl(em);
 		grupoDAO = new GrupoDAOImpl(em);
 		eventoDAO = new EventoDAOImpl(em);
-		
+		pedEveDAO = new PedidoEventoDAOImpl(em);
+		pedGruDAO = new PedidoGrupoDAOImpl(em);
+		msgEveDAO = new MensagemEventoDAOImpl(em);
+		msgGruDAO = new MensagemGrupoDAOImpl(em);
+
 		//Obter a Pessoa da sessão
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, Object> map = context.getExternalContext().getSessionMap();
@@ -59,9 +84,18 @@ public class MobileBean implements Serializable {
 		pessoa = sessao.getPessoa();
 		convitesGrupo = conviteGrupoDAO.buscarConviteGrupoPorPessoa(pessoa);
 		convitesEvento = conviteEventoDAO.buscarConviteEventoPorPessoa(pessoa);
-		
+
+		pedidosGrupo = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa);
+		pedidosEvento = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+
+		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
+				msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();	
+		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
+		eventsRequests = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa).size();	
+
+
 	}
-	
+
 	public List<ConviteGrupo> getConvitesGrupo() {
 		return convitesGrupo;
 	}
@@ -87,6 +121,46 @@ public class MobileBean implements Serializable {
 		this.cnvEventoSelecionado = cnvEventoSelecionado;
 	}
 
+	public int getEventsRequests() {
+		return eventsRequests;
+	}
+
+	public void setEventsRequests(int eventsRequests) {
+		this.eventsRequests = eventsRequests;
+	}
+
+	public int getGroupsRequests() {
+		return groupsRequests;
+	}
+
+	public void setGroupsRequests(int groupsRequests) {
+		this.groupsRequests = groupsRequests;
+	}
+
+	public int getUnreadMessages() {
+		return unreadMessages;
+	}
+
+	public void setUnreadMessages(int unreadMessages) {
+		this.unreadMessages = unreadMessages;
+	}
+
+	public List<PedidoGrupo> getPedidosGrupo() {
+		return pedidosGrupo;
+	}
+
+	public void setPedidosGrupo(List<PedidoGrupo> pedidosGrupo) {
+		this.pedidosGrupo = pedidosGrupo;
+	}
+
+	public List<PedidoEvento> getPedidosEvento() {
+		return pedidosEvento;
+	}
+
+	public void setPedidosEvento(List<PedidoEvento> pedidosEvento) {
+		this.pedidosEvento = pedidosEvento;
+	}
+
 	/**
 	 * Aceita o convite de um Grupo
 	 *
@@ -101,7 +175,7 @@ public class MobileBean implements Serializable {
 		convitesGrupo = conviteGrupoDAO.buscarConviteGrupoPorPessoa(pessoa);
 		return "pm:convitesGrupo";
 	}
-	
+
 	/**
 	 * Recusa o convite de um Grupo
 	 *
@@ -114,7 +188,7 @@ public class MobileBean implements Serializable {
 		convitesGrupo = conviteGrupoDAO.buscarConviteGrupoPorPessoa(pessoa);
 		return "pm:convitesGrupo";
 	}
-	
+
 	/**
 	 * Aceita o convite de um Evento
 	 *
@@ -129,7 +203,7 @@ public class MobileBean implements Serializable {
 		convitesEvento = conviteEventoDAO.buscarConviteEventoPorPessoa(pessoa);
 		return "pm:convitesEvento";
 	}
-	
+
 	/**
 	 * Aceita o convite de um Evento
 	 *
@@ -142,6 +216,59 @@ public class MobileBean implements Serializable {
 		convitesEvento = conviteEventoDAO.buscarConviteEventoPorPessoa(pessoa);
 		return "pm:convitesEvento";
 	}
+
+	/**
+	 * Aceita o pedido para entrar em um Grupo.
+	 *
+	 * @param pedido Pedido que será aceito
+	 * @author Graziele Vasconcelos
+	 */
+	public void aceitarPedidoGrupo(PedidoGrupo pedido){
+		//Adiciono a pessoa do Pedido ao Grupo, realizo o update no Grupo e deleto o pedido
+		pedido.getGrupo().getMembros().add(pedido.getPessoa());
+		grupoDAO.update(pedido.getGrupo());
+		pedGruDAO.remove(pedido);
+		pedidosGrupo = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa);
+	}
+
+	/**
+	 * Recusa o pedido para entrar em um Grupo.
+	 *
+	 * @param pedido Pedido que será recusado
+	 * @author Graziele Vasconcelos
+	 */
+	public void recusarPedidoGrupo(PedidoGrupo pedido){
+		//Apenas removo o pedido
+		pedGruDAO.remove(pedido);
+		pedidosGrupo = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa);
+	}
+
+	/**
+	 * Aceita o pedido para entrar em um Evento.
+	 *
+	 * @param pedido Pedido que será aceito
+	 * @author Graziele Vasconcelos 
+	 */
+	public void aceitarPedidoEvento(PedidoEvento pedido){
+		//Adiciono a pessoa do Pedido ao Evento, realizo o update no Evento e deleto o pedido
+		pedido.getEvento().getMembros().add(pedido.getPessoa());
+		eventoDAO.update(pedido.getEvento());
+		pedEveDAO.remove(pedido);
+		pedidosEvento = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+	}
+
+	/**
+	 * Recusa o pedido para entrar em um Evento.
+	 *
+	 * @param pedido Pedido que será recusado
+	 * @author Graziele Vasconcelos 
+	 */
+	public void recusarPedidoEvento(PedidoEvento pedido){
+		//Apenas removo o pedido
+		pedEveDAO.remove(pedido);
+		pedidosEvento = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa);
+	}
+
 	/**
 	 * Realiza o direcionamento para a página de mensagens mobile
 	 * @return página mensagens mobile
@@ -167,5 +294,4 @@ public class MobileBean implements Serializable {
 	public String pagPedidoEvento(){
 		return "pedidos_eventos_mobile.xhtml?faces-redirect=true";
 	}
-
 }

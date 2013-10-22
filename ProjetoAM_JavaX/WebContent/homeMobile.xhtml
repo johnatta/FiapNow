@@ -29,11 +29,11 @@
 
 					<p:commandButton value="Convites de Evento (#{mobileBean.convitesEvento.size()})"
 						update=":convitesEventoForm:convites" action="pm:convitesEvento" />
-					<p:commandButton value="#{msgs.messages} (#{loginBean.unreadMessages})"
+					<p:commandButton value="#{msgs.messages} (#{mobileBean.unreadMessages})"
 					action="#{mobileBean.pagMensagens}"  />
-					<p:commandButton value="#{msgs.groupsReq} (#{loginBean.groupsRequests})"
+					<p:commandButton value="#{msgs.groupsReq} (#{mobileBean.groupsRequests})"
 					action="#{mobileBean.pagPedidoGrupo}"  />
-					<p:commandButton value="#{msgs.eventsReq} (#{loginBean.eventsRequests})"
+					<p:commandButton value="#{msgs.eventsReq} (#{mobileBean.eventsRequests})"
 					action="#{mobileBean.pagPedidoEvento}"  />
 				</h:form>
 
