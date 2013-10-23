@@ -44,6 +44,24 @@
 						</p:tab>
 					</p:accordionPanel>
 				</p:dataList>
+				<p:dataList id="mensagensGrupoAll" var="msg"
+					value="#{mobileBean.msgsGrupoAll}">
+					<p:accordionPanel activeIndex="1">
+						<p:tab title="#{msg.grupo.nomeGrupo}">
+							<p:column headerText="#{msgs.title}" style="width:40%">  
+            				#{msg.titulo} :  
+        					</p:column>
+							<p:column headerText="#{msgs.description}" style="width:50%">  
+            				#{msg.descricao}  
+        					</p:column>
+							<p:column style="width:10%">
+								<p:commandButton
+									action="#{mobileBean.excluirMsgsGrupo(msg)}"
+									value="Excluir" ajax="true" update=":MensagemGrupo" />
+							</p:column>
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>
 			</h:form>
 			<h:form id="MensagemEvento">
 				<h3>#{msgs.event}</h3>
@@ -67,6 +85,26 @@
 						</p:tab>
 					</p:accordionPanel>
 				</p:dataList>
+				<p:dataList id="mensagensEventoAll" var="msg"
+					value="#{mobileBean.msgsEventoAll}">
+					<p:accordionPanel activeIndex="1">
+						<p:tab title="#{msg.evento.nome}">
+							<p:column headerText="#{msgs.title}" style="width:40%; ">  
+            				#{msg.titulo} :  
+        					</p:column>
+
+							<p:column headerText="#{msgs.description}" style="width:50%">  
+            				#{msg.descricao}  
+        					</p:column>
+							<p:column style="width:10%">
+								<p:commandButton
+									action="#{mobileBean.excluirMsgsEvento(msg)}"
+									value="Excluir" ajax="true" update=":MensagemEvento" />
+							</p:column>
+
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>				
 			</h:form>
 		</pm:view>
 

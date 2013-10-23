@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 
 import org.primefaces.context.RequestContext;
 
+import br.com.fiap.I18N.UtilsNLS;
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
@@ -56,6 +58,8 @@ public class MobileBean implements Serializable {
 	private List<PedidoEvento> pedidosEvento;
 	private List<MensagemGrupo> mensagensGrupo;
 	private List<MensagemEvento> mensagensEvento;
+	private List<MensagemGrupo> msgsGrupoAll;
+	private List<MensagemEvento> msgsEventoAll;
 	private Pessoa pessoa;
 	private ConviteGrupo cnvGrupoSelecionado;
 	private ConviteEvento cnvEventoSelecionado;
@@ -97,6 +101,9 @@ public class MobileBean implements Serializable {
 
 		mensagensEvento = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
 		mensagensGrupo = msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		
+		msgsEventoAll = msgEveDAO.buscarMensagensDaPessoa(pessoa);
+		msgsGrupoAll = msgGruDAO.buscarMensagensDaPessoa(pessoa);
 		
 		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
 				msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();	
@@ -185,6 +192,24 @@ public class MobileBean implements Serializable {
 
 	public void setMensagensEvento(List<MensagemEvento> mensagensEvento) {
 		this.mensagensEvento = mensagensEvento;
+	}
+	
+	
+
+	public List<MensagemGrupo> getMsgsGrupoAll() {
+		return msgsGrupoAll;
+	}
+
+	public void setMsgsGrupoAll(List<MensagemGrupo> msgsGrupoAll) {
+		this.msgsGrupoAll = msgsGrupoAll;
+	}
+
+	public List<MensagemEvento> getMsgsEventoAll() {
+		return msgsEventoAll;
+	}
+
+	public void setMsgsEventoAll(List<MensagemEvento> msgsEventoAll) {
+		this.msgsEventoAll = msgsEventoAll;
 	}
 
 	/**
@@ -325,6 +350,27 @@ public class MobileBean implements Serializable {
 		}
 		mensagensGrupo = msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
 		unreadMessages = this.mensagensEvento.size() + mensagensGrupo.size();
+	}
+	
+	/**
+	* Exclui as MensagemGrupo 
+	*
+	* @param mensagem Mensagem grupo a ser excluida
+	* @author Graziele Vasconcelos
+	*/
+	public void excluirMsgsGrupo(MensagemGrupo mensagem){
+		msgGruDAO.remove(mensagem);
+		msgsGrupoAll = msgGruDAO.buscarMensagensDaPessoa(pessoa);
+	}
+	
+	/**
+	* Exclui as MensagemEvento 
+	* @param mensagem Mensagem Evento a ser excluida
+	* @author Graziele Vasconcelos 
+	*/
+	public void excluirMsgsEvento(MensagemEvento mensagem){
+		msgEveDAO.remove(mensagem);
+		msgsEventoAll = msgEveDAO.buscarMensagensDaPessoa(pessoa);
 	}
 	/**
 	 * Realiza o direcionamento para a página de mensagens mobile
