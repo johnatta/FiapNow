@@ -27,32 +27,43 @@
 				<h:messages></h:messages>
 				<h3>#{msgs.group}</h3>
 				<p:dataList id="mensagensGrupo" var="msg"
-					value="#{mensagensBean.msgGrupoModel}">
+					value="#{mobileBean.mensagensGrupo}">
 					<p:accordionPanel activeIndex="1">
 						<p:tab title="#{msg.grupo.nomeGrupo}">
 							<p:column headerText="#{msgs.title}" style="width:40%">  
-            				#{msg.titulo}  
+            				#{msg.titulo} :  
         					</p:column>
-        					
-							<p:column headerText="#{msgs.description}" style="width:60%">  
+							<p:column headerText="#{msgs.description}" style="width:50%">  
             				#{msg.descricao}  
         					</p:column>
+							<p:column style="width:10%">
+								<p:commandButton
+									action="#{mobileBean.marcarLidaMensagemGrupo(msg)}"
+									value="Marcar como lida" ajax="true" update=":MensagemGrupo" />
+							</p:column>
 						</p:tab>
 					</p:accordionPanel>
 				</p:dataList>
-
+			</h:form>
+			<h:form id="MensagemEvento">
 				<h3>#{msgs.event}</h3>
 				<p:dataList id="mensagensEvento" var="msg"
-					value="#{mensagensBean.msgEventoModel}">
+					value="#{mobileBean.mensagensEvento}">
 					<p:accordionPanel activeIndex="1">
 						<p:tab title="#{msg.evento.nome}">
-							<p:column headerText="#{msgs.title}" style="width:40%">  
-            				#{msg.titulo}  
+							<p:column headerText="#{msgs.title}" style="width:40%; ">  
+            				#{msg.titulo} :  
         					</p:column>
-        					
-							<p:column headerText="#{msgs.description}" style="width:60%">  
+
+							<p:column headerText="#{msgs.description}" style="width:50%">  
             				#{msg.descricao}  
         					</p:column>
+							<p:column style="width:10%">
+								<p:commandButton
+									action="#{mobileBean.marcarLidaMensagemEvento(msg)}"
+									value="Marcar como lida" ajax="true" update=":MensagemEvento" />
+							</p:column>
+
 						</p:tab>
 					</p:accordionPanel>
 				</p:dataList>

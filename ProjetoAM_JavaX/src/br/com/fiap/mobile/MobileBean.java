@@ -10,6 +10,8 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.persistence.EntityManager;
 
+import org.primefaces.context.RequestContext;
+
 import br.com.fiap.banco.EntityManagerFactorySingleton;
 import br.com.fiap.dao.ConviteEventoDAO;
 import br.com.fiap.dao.ConviteGrupoDAO;
@@ -27,8 +29,13 @@ import br.com.fiap.daoimpl.MensagemEventoDAOImpl;
 import br.com.fiap.daoimpl.MensagemGrupoDAOImpl;
 import br.com.fiap.daoimpl.PedidoEventoDAOImpl;
 import br.com.fiap.daoimpl.PedidoGrupoDAOImpl;
+import br.com.fiap.datamodel.MensagemEventoDataModel;
+import br.com.fiap.datamodel.MensagemGrupoDataModel;
+import br.com.fiap.entity.Confirmacao;
 import br.com.fiap.entity.ConviteEvento;
 import br.com.fiap.entity.ConviteGrupo;
+import br.com.fiap.entity.MensagemEvento;
+import br.com.fiap.entity.MensagemGrupo;
 import br.com.fiap.entity.PedidoEvento;
 import br.com.fiap.entity.PedidoGrupo;
 import br.com.fiap.entity.Pessoa;
@@ -47,6 +54,8 @@ public class MobileBean implements Serializable {
 	private List<ConviteEvento> convitesEvento;
 	private List<PedidoGrupo> pedidosGrupo;
 	private List<PedidoEvento> pedidosEvento;
+	private List<MensagemGrupo> mensagensGrupo;
+	private List<MensagemEvento> mensagensEvento;
 	private Pessoa pessoa;
 	private ConviteGrupo cnvGrupoSelecionado;
 	private ConviteEvento cnvEventoSelecionado;
@@ -86,6 +95,9 @@ public class MobileBean implements Serializable {
 		pedidosGrupo = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa);
 		pedidosEvento = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 
+		mensagensEvento = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		mensagensGrupo = msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		
 		unreadMessages = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size() +
 				msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa).size();	
 		groupsRequests = pedGruDAO.buscarPedidoGrupoPraPessoa(pessoa).size();
@@ -93,7 +105,7 @@ public class MobileBean implements Serializable {
 
 
 	}
-
+	
 	public List<ConviteGrupo> getConvitesGrupo() {
 		return convitesGrupo;
 	}
@@ -157,6 +169,22 @@ public class MobileBean implements Serializable {
 
 	public void setPedidosEvento(List<PedidoEvento> pedidosEvento) {
 		this.pedidosEvento = pedidosEvento;
+	}
+
+	public List<MensagemGrupo> getMensagensGrupo() {
+		return mensagensGrupo;
+	}
+
+	public void setMensagensGrupo(List<MensagemGrupo> mensagensGrupo) {
+		this.mensagensGrupo = mensagensGrupo;
+	}
+
+	public List<MensagemEvento> getMensagensEvento() {
+		return mensagensEvento;
+	}
+
+	public void setMensagensEvento(List<MensagemEvento> mensagensEvento) {
+		this.mensagensEvento = mensagensEvento;
 	}
 
 	/**
@@ -267,6 +295,37 @@ public class MobileBean implements Serializable {
 		pedidosEvento = pedEveDAO.buscarPedidosDeEventoPraPessoa(pessoa);
 	}
 
+	/**
+	 * Marca como lida a mensagem
+	 *
+	 * @param mensagemEvento Mensagem que será marcada como lida
+	 * @author Graziele Vasconcelos 
+	 */
+	public void marcarLidaMensagemEvento(MensagemEvento msgEvento){
+		System.err.println("AQUI 01");
+		if(msgEvento.getConfirmacao() == Confirmacao.NAO){
+			msgEvento.setConfirmacao(Confirmacao.SIM);
+			msgEveDAO.update(msgEvento);
+		}
+		mensagensEvento = msgEveDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		unreadMessages =  mensagensEvento.size() + this.mensagensGrupo.size();
+	}
+
+	/**
+	* Marca como lida a mensagem
+	*	
+	* @param mensagemGrupo Mensagem que será marcada como lida
+	* @author Graziele Vasconcelos 
+	*/
+	public void marcarLidaMensagemGrupo(MensagemGrupo msgGrupo){
+		System.err.println("AQUI 02");
+		if(msgGrupo.getConfirmacao() == Confirmacao.NAO){
+			msgGrupo.setConfirmacao(Confirmacao.SIM);
+			msgGruDAO.update(msgGrupo);
+		}
+		mensagensGrupo = msgGruDAO.buscarMensagensNaoLidasDaPessoa(pessoa);
+		unreadMessages = this.mensagensEvento.size() + mensagensGrupo.size();
+	}
 	/**
 	 * Realiza o direcionamento para a página de mensagens mobile
 	 * @return página mensagens mobile
